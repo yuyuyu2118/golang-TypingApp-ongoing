@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
@@ -103,6 +102,5 @@ func bottleRoundCenterPos(win *pixelgl.Window, txt *text.Text, size int) pixel.V
 		win.Bounds().Max.X/2-txt.Bounds().Center().X,
 		-win.Bounds().Center().Y/2,
 	)
-	log.Println(win.Bounds().Center().Y, float64(size/5))
 	return bottleCenterPos
 }
