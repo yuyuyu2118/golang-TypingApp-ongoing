@@ -1,8 +1,6 @@
 package main
 
 import (
-	"log"
-
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
 	"github.com/faiface/pixel/pixelgl"
@@ -23,12 +21,7 @@ func newEnemyStatus(MaxHP float64, HP float64, OP float64, DP float64, Gold int,
 }
 
 func setEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP float64, pos pixel.Vec) {
-	// Define rect parameters
 	rectWidth := scaledSize.X * ((MaxHP - (MaxHP - HP)) * 0.01)
-	//rectHeight := 50.0 // Change this value to set the height of the rectangle
-	//rectPosY := win.Bounds().Center().Y - (scaledSize.Y / 2) - rectHeight
-
-	// Create rect and draw it using a filled shape
 	rect := pixel.R(
 		win.Bounds().Center().X-(rectWidth/2),
 		win.Bounds().Center().Y-50,
@@ -43,12 +36,6 @@ func setEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP 
 }
 
 func setEnemyHPBarOut(win *pixelgl.Window, scaledSize pixel.Vec, pos pixel.Vec) {
-	// Define rect parameters
-	// rectWidth := scaledSize.X
-	// rectHeight := 50.0 // Change this value to set the height of the rectangle
-	// rectPosY := win.Bounds().Center().Y - (scaledSize.Y / 2) - rectHeight
-
-	// Create rect and draw it using a filled shape
 	rect := pixel.R(
 		win.Bounds().Center().X-pos.X/2,
 		win.Bounds().Center().Y-50,
@@ -74,7 +61,6 @@ func setEnemyPic(win *pixelgl.Window, enemyInf *EnemyStatus, path string, scaleF
 		picMonster.Picture().Bounds().W()*scaleFactor,
 		picMonster.Picture().Bounds().H()*scaleFactor,
 	)
-	log.Println(barPosition)
 
 	pic.Bounds()
 

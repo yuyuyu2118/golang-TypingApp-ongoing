@@ -29,7 +29,7 @@ func run() {
 	endTxt := initializeAnyText("assets\\fonts\\NotoSans-Black.ttf", 60, colornames.White)
 
 	//playerStatusインスタンスを生成
-	player := newPlayerStatus(30, 30, 1, 1, 0, "")
+	player := newPlayerStatus(30, 30, 1, 1, 50, 0, 5, 0, "")
 	stage := newStageInf(0)
 	enemyKnight := newEnemyStatus(100, 100, 1, 1, 30, "knight")
 
@@ -82,6 +82,7 @@ func run() {
 
 			//set Enemy Picture&HPbar
 			setEnemyPic(win, enemyKnight, "assets\\monster\\monster1.png", 4.0)
+			setPlayerInf(win, player)
 			//TODO Player HPbar(右に縦長ゲージ) & PlayerSkillBar
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 
@@ -102,7 +103,7 @@ func run() {
 
 			offset := basicTxt.Bounds().W()
 			basicTxtOrigX := basicTxt.Dot.X
-			spacing := 100.0
+			spacing := 60.0
 			if len(words)-score != 1 {
 				basicTxt.Color = colornames.Darkgray
 				offset := basicTxt.Bounds().W()
@@ -140,6 +141,7 @@ func run() {
 					index++
 					collectType++
 					enemyKnight.enemyHP -= 1
+					player.playerSP += player.playerBaseSP
 					//enemy Down
 					if enemyKnight.enemyHP < 0 {
 						index = 0
@@ -159,6 +161,18 @@ func run() {
 				} else {
 					missType++
 					log.Println("missType = ", missType)
+				}
+			}
+
+			if win.JustPressed(pixelgl.KeySpace) {
+				log.Println("Skill!!!")
+				player.playerSP = 0
+				if player.playerJob == "Warrior" {
+					enemyKnight.enemyHP -= 15
+				} else if player.playerJob == "Priest" {
+					//TODO 僧侶の回復スキル
+				} else if player.playerJob == "Wizard" {
+					//TODO 魔法使いの時止めスキル
 				}
 			}
 
