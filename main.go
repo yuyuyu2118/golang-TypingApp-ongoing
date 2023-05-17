@@ -1,13 +1,10 @@
 package main
 
 import (
-	"encoding/csv"
 	"flag"
 	"fmt"
 	_ "image/png"
-	"io"
 	"log"
-	"os"
 	"strconv"
 	"time"
 
@@ -23,152 +20,75 @@ func init() {
 	flag.Parse()
 }
 func run() {
+	//init
 	windowHeightSize := 1440
 	win, _ := initializeWindow(windowHeightSize)
-	face, _ := loadTTF("NotoSans-Black.ttf", 40)
-	basicTxt := initializeText(face, colornames.White)
 
-	pic, _ := openDecodePictureData("assets\\monster\\monster1.png")
-	picMonster := pixel.NewSprite(pic, pic.Bounds())
+	basicTxt := initializeAnyText("assets\\fonts\\NotoSans-Black.ttf", 40, colornames.White)
+	startTxt := initializeAnyText("assets\\fonts\\NotoSans-Black.ttf", 80, colornames.White)
+	endTxt := initializeAnyText("assets\\fonts\\NotoSans-Black.ttf", 60, colornames.White)
 
 	//playerStatusインスタンスを生成
 	player := newPlayerStatus(30, 30, 1, 1, 0, "")
+	stage := newStageInf(0)
+	enemyKnight := newEnemyStatus(100, 100, 1, 1, 30, "knight")
+
+	words := initializeQuestion()
 
 	var (
-		words = []string{}
 		//wordsMap    = make(map[string]string)
 		index       = 0
 		score       = 0
 		collectType = 0
 		missType    = 0
 
-		startTime  = time.Now()
-		yourTime   = 0.0
-		tempString = ""
+		startTime = time.Now()
+		yourTime  = 0.0
 	)
-	enemy := enemyStatus{}
-	enemy.enemyHP = 100
-	enemy.enemyMaxHP = enemy.enemyHP
-
-	// //csvRead
-	file, _ := os.Open("question2_4.csv")
-	defer file.Close()
-	reader := csv.NewReader(file)
-	for {
-		record, err := reader.Read()
-		if err == io.EOF {
-			break
-		}
-		//wordsMap[record[1]] = record[2]
-		words = append(words, record[2])
-	}
-	shuffle(words)
-	//wordsMap = shuffleMap(wordsMap)
 
 	var currentGameState GameState
-
-	startFace, _ := loadTTF("NotoSans-Black.ttf", 80)
-	startTxt := initializeText(startFace, colornames.White)
-	startLines := []string{
-		"This is a TypingBattleGame",
-		"\n",
-		"START : Press Enter",
-	}
-
-	swordsManButton := pixel.Rect{}
-	jobSelectFace, _ := loadTTF("NotoSans-Black.ttf", 80)
-	jobSelectTxt := initializeText(jobSelectFace, colornames.White)
-	jobSelectLines := []string{
-		"Select your Job",
-		"\n",
-		"job1 : Swordsman",
-	}
-
-	stage1Button := pixel.Rect{}
-	stageSelectFace, _ := loadTTF("NotoSans-Black.ttf", 80)
-	stageSelectTxt := initializeText(stageSelectFace, colornames.White)
-	stageSelectLines := []string{
-		"Select play Stage",
-		"\n",
-		"stage1 : VS Knight",
-	}
-
-	endFace, _ := loadTTF("NotoSans-Black.ttf", 60)
-	endTxt := initializeText(endFace, colornames.White)
-
 	for !win.Closed() {
 		switch currentGameState {
 		case StartScreen:
-
-			//windowのリセットとテキストの描画
-			win.Clear(colornames.Darkcyan)
-			startTxt.Clear()
-
-			lineCenterAlign(win, windowHeightSize, startLines, startTxt, "center")
-
-			//画面遷移
+			initStartScreen(win, startTxt, windowHeightSize)
 			if win.JustPressed(pixelgl.KeyEnter) {
 				currentGameState = JobSelect
 				log.Println("Press:Enter -> GameState:jobSelect")
 				//TODO スタートするところに持っていく
 				startTime = time.Now()
 			}
+			//testMode
 			if win.JustPressed(pixelgl.KeyT) {
 				currentGameState = TestState
 				log.Println("TestMode")
 			}
-
 		case JobSelect:
+			initJobSelect(win, basicTxt, windowHeightSize)
 
-			//windowのリセットとテキストの描画
-			win.Clear(colornames.Black)
-			jobSelectTxt.Clear()
-
-			lineCenterAlign(win, windowHeightSize, jobSelectLines, jobSelectTxt, "center")
-			swordsManButton = jobSelectTxt.Bounds()
-
-			if win.JustPressed(pixelgl.MouseButtonLeft) {
-				mousePos := win.MousePosition()
-				// クリックがStart テキストの範囲内で発生した場合、画面遷移を実行
-				if swordsManButton.Contains(mousePos) {
-					currentGameState = StageSelect
-					log.Println("YourJob is swordsMan")
-					player.playerJob = "swordsMan"
-				}
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
+				currentGameState = jobClickEvent(win, win.MousePosition(), currentGameState, player)
 			}
 
 		case StageSelect:
+			initStageSlect(win, basicTxt, windowHeightSize)
 
-			win.Clear(colornames.Black)
-			stageSelectTxt.Clear()
-
-			lineCenterAlign(win, windowHeightSize, stageSelectLines, stageSelectTxt, "center")
-			stage1Button = stageSelectTxt.Bounds()
-
-			if win.JustPressed(pixelgl.MouseButtonLeft) {
-				mousePos := win.MousePosition()
-				// クリックがStart テキストの範囲内で発生した場合、画面遷移を実行
-				if stage1Button.Contains(mousePos) {
-					currentGameState = Playing
-					log.Println("PlayStage is VS knight")
-				}
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) {
+				currentGameState = stageClickEvent(win, win.MousePosition(), currentGameState, stage)
 			}
 
-		case Playing:
+		case PlayingScreen:
 
-			win.Clear(colornames.Black)
-			basicTxt.Clear()
+			initPlayingScreen(win, basicTxt, windowHeightSize)
 
-			//set Enemy
-			scaleFactor := 3.0
-			scaledSize := pic.Bounds().Size().Scaled(scaleFactor)
-			picMonster.Draw(win, pixel.IM.Moved(win.Bounds().Center()).Scaled(win.Bounds().Center(), scaleFactor))
-			setEnemyHPBarOut(win, scaledSize)
-			setEnemyHPBar(win, scaledSize, enemy.enemyHP, enemy.enemyMaxHP)
+			//set Enemy Picture&HPbar
+			setEnemyPic(win, enemyKnight, "assets\\monster\\monster1.png", 4.0)
+			//TODO Player HPbar(右に縦長ゲージ) & PlayerSkillBar
+			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 
+			//TODO ここからplaying.goに関数化
 			//set Time+rule
 			basicTxt.Color = colornames.White
-			fmt.Fprintln(basicTxt, "EnemyHP : ", enemy.enemyHP)
+			fmt.Fprintln(basicTxt, "EnemyHP : ", enemyKnight.enemyHP)
 			drawPos(win, basicTxt, topCenterPos(win, basicTxt, windowHeightSize))
 
 			question := words[score]
@@ -178,17 +98,17 @@ func run() {
 			basicTxt.Clear()
 			basicTxt.Color = colornames.White
 			fmt.Fprintln(basicTxt, "> ", words[score])
-			drawPos(win, basicTxt, bottleCenterPos(win, basicTxt, windowHeightSize))
+			drawPos(win, basicTxt, bottleRoundCenterPos(win, basicTxt, windowHeightSize))
 
 			offset := basicTxt.Bounds().W()
 			basicTxtOrigX := basicTxt.Dot.X
-			spacing := 50.0
+			spacing := 100.0
 			if len(words)-score != 1 {
 				basicTxt.Color = colornames.Darkgray
 				offset := basicTxt.Bounds().W()
 				basicTxt.Clear()
 				fmt.Fprintln(basicTxt, words[score+1])
-				drawPos(win, basicTxt, bottleCenterPos(win, basicTxt, windowHeightSize).Add(pixel.V(offset+spacing, 0)))
+				drawPos(win, basicTxt, bottleRoundCenterPos(win, basicTxt, windowHeightSize).Add(pixel.V(offset+spacing, 0)))
 				basicTxt.Dot.X = basicTxtOrigX
 			}
 			if !(len(words)-score == 2 || len(words)-score == 1) {
@@ -196,14 +116,14 @@ func run() {
 				offset += basicTxt.Bounds().W()
 				basicTxt.Clear()
 				fmt.Fprintln(basicTxt, words[score+2])
-				drawPos(win, basicTxt, bottleCenterPos(win, basicTxt, windowHeightSize).Add(pixel.V(offset+spacing*2, 0)))
+				drawPos(win, basicTxt, bottleRoundCenterPos(win, basicTxt, windowHeightSize).Add(pixel.V(offset+spacing*2, 0)))
 			}
 			//basicTxt.Dot.X = basicTxtOrigX
 
 			basicTxt.Color = colornames.White
 			basicTxt.Clear()
 			fmt.Fprintln(basicTxt, "\n\n", "collectType = ", collectType, " missType = ", missType)
-			drawPos(win, basicTxt, bottleCenterPos(win, basicTxt, windowHeightSize))
+			drawPos(win, basicTxt, bottleRoundCenterPos(win, basicTxt, windowHeightSize))
 			basicTxt.Dot.X = basicTxtOrigX
 
 			//set Time+rule
@@ -212,14 +132,16 @@ func run() {
 			elapsed := time.Since(startTime)
 			fmt.Fprintln(basicTxt, "time = ", elapsed.Milliseconds())
 			drawPos(win, basicTxt, bottleLeftPos(win, basicTxt, windowHeightSize))
+			//TODO ここまで
 
+			//TODO タイピングの処理部分で、スペースキーによるスキルの発動処理、一定間隔での敵の攻撃の追加
 			if typed != "" {
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++
-					enemy.enemyHP -= 3
+					enemyKnight.enemyHP -= 1
 					//enemy Down
-					if enemy.enemyHP < 0 {
+					if enemyKnight.enemyHP < 0 {
 						index = 0
 						score++
 						currentGameState = EndScreen
@@ -257,39 +179,18 @@ func run() {
 
 			//画面遷移,いろいろリセット
 			if win.JustPressed(pixelgl.KeyEscape) {
-				currentGameState = Playing
+				currentGameState = PlayingScreen
 				collectType, missType, index, score = 0, 0, 0, 0
-				enemy.enemyHP = 100
+				enemyKnight.enemyHP = enemyKnight.enemyMaxHP
 				log.Println("Press:Enter -> GameState:Playing")
 			} else if win.JustPressed(pixelgl.KeyTab) {
 				currentGameState = StartScreen
 				collectType, missType, index, score = 0, 0, 0, 0
-				enemy.enemyHP = 100
+				enemyKnight.enemyHP = enemyKnight.enemyMaxHP
 				log.Println("Press:Enter -> GameState:StartScreen")
 			}
 		case TestState:
-			win.Clear(colornames.Mediumblue)
-			//picMonster.Draw(win, pixel.IM)
-
-			basicTxt.Clear()
-			tempString = "RightPosition"
-			fmt.Fprintln(basicTxt, tempString)
-			drawPos(win, basicTxt, topRightPos(win, basicTxt, windowHeightSize))
-
-			basicTxt.Clear()
-			tempString = "LeftPosition"
-			fmt.Fprintln(basicTxt, tempString)
-			drawPos(win, basicTxt, topLeftPos(win, basicTxt, windowHeightSize))
-
-			basicTxt.Clear()
-			tempString = "bottleCenterPosition"
-			fmt.Fprintln(basicTxt, tempString)
-			drawPos(win, basicTxt, bottleCenterPos(win, basicTxt, windowHeightSize))
-
-			basicTxt.Clear()
-			tempString = "bottleLeftPosition"
-			fmt.Fprintln(basicTxt, tempString)
-			drawPos(win, basicTxt, bottleLeftPos(win, basicTxt, windowHeightSize))
+			testMode(win, basicTxt, windowHeightSize)
 		}
 		win.Update()
 	}

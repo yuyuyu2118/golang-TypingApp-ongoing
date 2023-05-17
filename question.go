@@ -1,10 +1,30 @@
 package main
 
 import (
-	"log"
+	"encoding/csv"
+	"io"
 	"math/rand"
+	"os"
 	"time"
 )
+
+func initializeQuestion() []string {
+	words := []string{}
+	file, _ := os.Open("assets\\question\\question2_4.csv")
+	defer file.Close()
+	reader := csv.NewReader(file)
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+		//wordsMap[record[1]] = record[2]
+		words = append(words, record[2])
+	}
+	shuffle(words)
+	//wordsMap = shuffleMap(wordsMap)
+	return words
+}
 
 func shuffle(data []string) {
 	n := len(data)
@@ -15,21 +35,21 @@ func shuffle(data []string) {
 	}
 }
 
-func shuffleMap(data map[string]string) map[string]string {
-	pairs := make([]struct{ key, value string }, 0, len(data))
-	for k, v := range data {
-		pairs = append(pairs, struct{ key, value string }{key: k, value: v})
-	}
-	//	log.Println(pairs)
+// func shuffleMap(data map[string]string) map[string]string {
+// 	pairs := make([]struct{ key, value string }, 0, len(data))
+// 	for k, v := range data {
+// 		pairs = append(pairs, struct{ key, value string }{key: k, value: v})
+// 	}
+// 	//	log.Println(pairs)
 
-	rand.Seed(time.Now().Unix())
-	rand.Shuffle(len(pairs), func(i, j int) { pairs[i], pairs[j] = pairs[j], pairs[i] })
+// 	rand.Seed(time.Now().Unix())
+// 	rand.Shuffle(len(pairs), func(i, j int) { pairs[i], pairs[j] = pairs[j], pairs[i] })
 
-	shuffledData := make(map[string]string)
-	for _, pair := range pairs {
-		shuffledData[pair.key] = pair.value
-		log.Println(pair.key)
-	}
+// 	shuffledData := make(map[string]string)
+// 	for _, pair := range pairs {
+// 		shuffledData[pair.key] = pair.value
+// 		log.Println(pair.key)
+// 	}
 
-	return shuffledData
-}
+// 	return shuffledData
+// }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
@@ -20,6 +21,24 @@ func centerPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
 	return centerPos
 }
 
+// 画面中央の右隅にテキストを描画
+func centerRightPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
+	centerLeftPos := pixel.V(
+		win.Bounds().Center().Sub(txt.Bounds().Center()).X+win.Bounds().Max.X/3,
+		win.Bounds().Center().Sub(txt.Bounds().Center()).Y,
+	)
+	return centerLeftPos
+}
+
+// 画面中央の左隅にテキストを描画
+func centerLeftPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
+	centerLeftPos := pixel.V(
+		win.Bounds().Center().Sub(txt.Bounds().Center()).X-win.Bounds().Max.X/3,
+		win.Bounds().Center().Sub(txt.Bounds().Center()).Y,
+	)
+	return centerLeftPos
+}
+
 func topCenterPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
 	TopCenterPos := pixel.V(
 		win.Bounds().Max.X/2-txt.Bounds().Center().X,
@@ -30,31 +49,39 @@ func topCenterPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
 
 func topRightPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
 	TopCenterPos := pixel.V(
-		win.Bounds().Max.X-win.Bounds().Max.X/3,
+		win.Bounds().Max.X/2-txt.Bounds().Center().X+win.Bounds().Max.X/3,
 		win.Bounds().Min.Y+float64(size/6),
 	)
 	return TopCenterPos
 }
 
 func topLeftPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
-	TopCenterPos := pixel.V(
-		win.Bounds().Min.X,
+	centerLeftPos := pixel.V(
+		win.Bounds().Max.X/2-txt.Bounds().Center().X-win.Bounds().Max.X/3,
 		win.Bounds().Min.Y+float64(size/6),
 	)
-	return TopCenterPos
+	return centerLeftPos
 }
 
 func bottleCenterPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
 	bottleCenterPos := pixel.V(
 		win.Bounds().Max.X/2-txt.Bounds().Center().X,
-		-float64(size/4),
+		-float64(size/3),
 	)
 	return bottleCenterPos
 }
 
+func bottleRightPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
+	bottleLeftPos := pixel.V(
+		win.Bounds().Max.X/2-txt.Bounds().Center().X+win.Bounds().Max.X/3,
+		-float64(size/3),
+	)
+	return bottleLeftPos
+}
+
 func bottleLeftPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
 	bottleLeftPos := pixel.V(
-		win.Bounds().Min.X,
+		win.Bounds().Max.X/2-txt.Bounds().Center().X-win.Bounds().Max.X/3,
 		-float64(size/3),
 	)
 	return bottleLeftPos
@@ -69,4 +96,13 @@ func lineCenterAlign(win *pixelgl.Window, winSize int, lines []string, txt *text
 	if position == "center" {
 		drawPos(win, txt, centerPos(win, txt, winSize))
 	}
+}
+
+func bottleRoundCenterPos(win *pixelgl.Window, txt *text.Text, size int) pixel.Vec {
+	bottleCenterPos := pixel.V(
+		win.Bounds().Max.X/2-txt.Bounds().Center().X,
+		-win.Bounds().Center().Y/2,
+	)
+	log.Println(win.Bounds().Center().Y, float64(size/5))
+	return bottleCenterPos
 }
