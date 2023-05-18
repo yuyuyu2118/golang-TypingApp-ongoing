@@ -24,7 +24,7 @@ func initWeapon(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	Txt.Color = colornames.White
 	//csv読み込み
 	weaponSlice := []string{"1. WoodenKatana", "2. IronKatana", "3. goldKatanaButton", "4", "5", "6", "7", "8", "9", "10"}
-	descWeapon1 := []string{"WoodenKatana", "攻撃力3", "この剣はサンプルの剣です\n説明はサンプルです。", "強化回数", "未強化", "強化上昇値", "特殊能力", "この剣の特殊能力は？です。\nサンプルです。"}
+	descWeapon1 := []string{"WoodenKatana", "OP : 3", "この剣はサンプルの剣です\n説明はサンプルです。", "強化回数", "未強化", "強化上昇値", "特殊能力", "この剣の特殊能力は？です。\nサンプルです。"}
 
 	for _, weaponName := range weaponSlice {
 		Txt.Clear()
@@ -36,10 +36,32 @@ func initWeapon(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 		buttonSlice = append(buttonSlice, Txt.Bounds().Moved(txtPos))
 	}
 
-	if win.JustPressed(pixelgl.Key1) {
+	xOffSet := win.Bounds().W() / 3
+	var tempPosition pixel.Matrix
+	if win.Pressed(pixelgl.Key1) {
 		Txt.Clear()
-		fmt.Fprintln(Txt, weaponSlice[0])
+		fmt.Fprintln(Txt, descWeapon1[0])
+		xOffSet = win.Bounds().W() / 3
+		yOffSet = win.Bounds().H() / 4
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition = pixel.IM.Moved(txtPos)
+		Txt.Draw(win, tempPosition)
 
+		Txt.Clear()
+		fmt.Fprintln(Txt, descWeapon1[1])
+		xOffSet = win.Bounds().W() / 3
+		yOffSet -= Txt.TabWidth + 50
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition = pixel.IM.Moved(txtPos)
+		Txt.Draw(win, tempPosition)
+
+		Txt.Clear()
+		fmt.Fprintln(Txt, descWeapon1[2])
+		xOffSet = win.Bounds().W() / 3
+		yOffSet -= Txt.TabWidth + 100
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition = pixel.IM.Moved(txtPos)
+		Txt.Draw(win, tempPosition)
 	}
 }
 
