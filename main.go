@@ -5,6 +5,7 @@ import (
 	"fmt"
 	_ "image/png"
 	"log"
+	"math/rand"
 	"strconv"
 	"time"
 
@@ -23,13 +24,14 @@ func run() {
 	//init
 	windowHeightSize := 1440
 	win, _ := initializeWindow(windowHeightSize)
+	rand.Seed(time.Now().UnixNano())
 
 	basicTxt := initializeAnyText("assets\\fonts\\NotoSans-Black.ttf", 40, colornames.White)
 	startTxt := initializeAnyText("assets\\fonts\\NotoSans-Black.ttf", 80, colornames.White)
 	endTxt := initializeAnyText("assets\\fonts\\NotoSans-Black.ttf", 60, colornames.White)
 
 	//playerStatusインスタンスを生成
-	player := newPlayerStatus(30, 30, 1, 1, 50, 0, 5, 0, "")
+	player := newPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "")
 	stage := newStageInf(0)
 	enemyKnight := newEnemyStatus(100, 100, 1, 1, 30, "knight")
 
@@ -64,6 +66,7 @@ func run() {
 			}
 		case JobSelect:
 			initJobSelect(win, basicTxt, windowHeightSize)
+			initPlayerGold(win, basicTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
 				currentGameState = jobClickEvent(win, win.MousePosition(), currentGameState, player)
@@ -71,6 +74,7 @@ func run() {
 
 		case StageSelect:
 			initStageSlect(win, basicTxt, windowHeightSize)
+			initPlayerGold(win, basicTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) {
 				currentGameState = stageClickEvent(win, win.MousePosition(), currentGameState, stage)
@@ -79,6 +83,7 @@ func run() {
 		case PlayingScreen:
 
 			initPlayingScreen(win, basicTxt, windowHeightSize)
+			initPlayerGold(win, basicTxt, windowHeightSize, player)
 
 			//set Enemy Picture&HPbar
 			setEnemyPic(win, enemyKnight, "assets\\monster\\monster1.png", 4.0)
@@ -88,6 +93,7 @@ func run() {
 
 			//TODO ここからplaying.goに関数化
 			//set Time+rule
+			basicTxt.Clear()
 			basicTxt.Color = colornames.White
 			fmt.Fprintln(basicTxt, "EnemyHP : ", enemyKnight.enemyHP)
 			drawPos(win, basicTxt, topCenterPos(win, basicTxt, windowHeightSize))
@@ -140,19 +146,24 @@ func run() {
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++
-					enemyKnight.enemyHP -= 1
+					enemyKnight.enemyHP -= 10
 					player.playerSP += player.playerBaseSP
 					//enemy Down
 					if enemyKnight.enemyHP < 0 {
+						min := int(float64(enemyKnight.enemyGold) * 0.7)
+						max := int(float64(enemyKnight.enemyGold) * 1.3)
 						index = 0
 						score++
+						player.playerGold += rand.Intn(max-min+1) + min
 						currentGameState = EndScreen
 						yourTime = float64(elapsed.Seconds())
 					}
 					log.Println("collectType = ", collectType)
+					//1 word end type
 					if index == len(question) {
 						index = 0
 						score++
+						//全部打ち切っちゃった場合
 						if score == len(words) {
 							currentGameState = EndScreen
 							yourTime = float64(elapsed.Seconds())
@@ -196,11 +207,13 @@ func run() {
 				currentGameState = PlayingScreen
 				collectType, missType, index, score = 0, 0, 0, 0
 				enemyKnight.enemyHP = enemyKnight.enemyMaxHP
+				shuffle(words)
 				log.Println("Press:Enter -> GameState:Playing")
 			} else if win.JustPressed(pixelgl.KeyTab) {
 				currentGameState = StartScreen
 				collectType, missType, index, score = 0, 0, 0, 0
 				enemyKnight.enemyHP = enemyKnight.enemyMaxHP
+				shuffle(words)
 				log.Println("Press:Enter -> GameState:StartScreen")
 			}
 		case TestState:
