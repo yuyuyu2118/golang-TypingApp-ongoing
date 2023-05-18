@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	_ "image/png"
 	"log"
@@ -16,19 +15,20 @@ import (
 
 var t int
 
-func init() {
-	flag.IntVar(&t, "t", 1, "時間")
-	flag.Parse()
-}
+// func init() {
+// 	flag.IntVar(&t, "t", 1, "時間")
+// 	flag.Parse()
+// }
+
 func run() {
-	//init
 	windowHeightSize := 1440
 	win, _ := initializeWindow(windowHeightSize)
 	rand.Seed(time.Now().UnixNano())
 
-	basicTxt := initializeAnyText("assets\\fonts\\NotoSans-Black.ttf", 40, colornames.White)
-	startTxt := initializeAnyText("assets\\fonts\\NotoSans-Black.ttf", 80, colornames.White)
-	endTxt := initializeAnyText("assets\\fonts\\NotoSans-Black.ttf", 60, colornames.White)
+	fontPath := "assets\\fonts\\NotoSans-Black.ttf"
+	basicTxt := initializeAnyText(fontPath, 40, colornames.White)
+	startTxt := initializeAnyText(fontPath, 80, colornames.White)
+	endTxt := initializeAnyText(fontPath, 60, colornames.White)
 
 	//playerStatusインスタンスを生成
 	player := newPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "")
@@ -95,6 +95,13 @@ func run() {
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
 				currentGameState = townClickEvent(win, win.MousePosition(), currentGameState)
+			}
+		case WeaponShop:
+			initWeaponShop(win, basicTxt, windowHeightSize)
+			initPlayerGold(win, basicTxt, windowHeightSize, player)
+
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
+				currentGameState = weaponClickEvent(win, win.MousePosition(), currentGameState)
 			}
 		case EquipmentScreen:
 			initEquipmentScreen(win, basicTxt, windowHeightSize)

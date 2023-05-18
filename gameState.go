@@ -63,6 +63,12 @@ func initTownScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	initTown(win, Txt, windowHeightSize)
 }
 
+func initWeaponShop(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+	win.Clear(colornames.Black)
+
+	initWeapon(win, Txt, windowHeightSize)
+}
+
 func initEquipmentScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	win.Clear(colornames.Black)
 
