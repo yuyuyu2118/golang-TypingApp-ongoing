@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
@@ -50,4 +51,20 @@ func initJob(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	tempPosition = centerRightPos(win, Txt, windowHeightSize)
 	drawPos(win, Txt, tempPosition)
 	job3Button = Txt.Bounds().Moved(tempPosition)
+}
+
+func jobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState, player *PlayerStatus) GameState {
+
+	if job1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+		currentGameState = StageSelect
+		player.playerJob = "Warrior"
+	} else if job2Button.Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
+		currentGameState = StageSelect
+		player.playerJob = "Priest"
+	} else if job3Button.Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
+		currentGameState = StageSelect
+		player.playerJob = "Wizard"
+	}
+	log.Println("YourJob is", player.playerJob)
+	return currentGameState
 }

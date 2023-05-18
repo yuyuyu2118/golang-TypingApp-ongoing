@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
@@ -35,4 +36,15 @@ func initStage(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	tempPosition = centerLeftPos(win, Txt, windowHeightSize)
 	drawPos(win, Txt, tempPosition)
 	stage1Button = Txt.Bounds().Moved(tempPosition)
+}
+
+func stageClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState, stage *stageInf) GameState {
+
+	if stage1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+		currentGameState = PlayingScreen
+		log.Println("PlayStage is VS knight")
+		stage.stageNum = 1
+	}
+	log.Println("YourJob is", stage.stageNum)
+	return currentGameState
 }

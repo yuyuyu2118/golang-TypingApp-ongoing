@@ -10,11 +10,22 @@ type GameState int
 
 const (
 	StartScreen GameState = iota
-	JobSelect
+	GoToScreen
+
 	StageSelect
+	TownScreen
+	EquipmentScreen
+	JobSelect
+	SaveScreen
+
 	PlayingScreen
 	EndScreen
 	TestState
+
+	WeaponShop
+	ArmorShop
+	AccessoryShop
+	BlackSmith
 )
 
 var (
@@ -33,17 +44,41 @@ func initStartScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) 
 	lineCenterAlign(win, windowHeightSize, startLines, Txt, "center")
 }
 
-func initJobSelect(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
-	//windowのリセットとテキストの描画
-	win.Clear(colornames.Black)
+func initGoToScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+	win.Clear(colornames.Darkcyan)
+	Txt.Clear()
 
-	initJob(win, Txt, windowHeightSize)
+	initGoTo(win, Txt, windowHeightSize)
 }
 
 func initStageSlect(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	win.Clear(colornames.Black)
 
 	initStage(win, Txt, windowHeightSize)
+}
+
+func initTownScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+	win.Clear(colornames.Black)
+
+	initTown(win, Txt, windowHeightSize)
+}
+
+func initEquipmentScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+	win.Clear(colornames.Black)
+
+	initEquipment(win, Txt, windowHeightSize)
+}
+
+func initJobSelect(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+	win.Clear(colornames.Black)
+
+	initJob(win, Txt, windowHeightSize)
+}
+
+func initSaveScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+	win.Clear(colornames.Black)
+
+	initSave(win, Txt, windowHeightSize)
 }
 
 func initPlayingScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {

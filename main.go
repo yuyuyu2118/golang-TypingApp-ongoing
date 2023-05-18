@@ -57,7 +57,7 @@ func run() {
 		case StartScreen:
 			initStartScreen(win, startTxt, windowHeightSize)
 			if win.JustPressed(pixelgl.KeyEnter) {
-				currentGameState = JobSelect
+				currentGameState = GoToScreen
 				log.Println("Press:Enter -> GameState:jobSelect")
 				//TODO スタートするところに持っていく
 				startTime = time.Now()
@@ -67,12 +67,12 @@ func run() {
 				currentGameState = TestState
 				log.Println("TestMode")
 			}
-		case JobSelect:
-			initJobSelect(win, basicTxt, windowHeightSize)
+		case GoToScreen:
+			initGoToScreen(win, basicTxt, windowHeightSize)
 			initPlayerGold(win, basicTxt, windowHeightSize, player)
 
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
-				currentGameState = jobClickEvent(win, win.MousePosition(), currentGameState, player)
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
+				currentGameState = goToClickEvent(win, win.MousePosition(), currentGameState)
 			}
 
 		case StageSelect:
@@ -88,6 +88,34 @@ func run() {
 						log.Println(("Attack"))
 					}
 				}()
+			}
+		case TownScreen:
+			initTownScreen(win, basicTxt, windowHeightSize)
+			initPlayerGold(win, basicTxt, windowHeightSize, player)
+
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
+				currentGameState = townClickEvent(win, win.MousePosition(), currentGameState)
+			}
+		case EquipmentScreen:
+			initEquipmentScreen(win, basicTxt, windowHeightSize)
+			initPlayerGold(win, basicTxt, windowHeightSize, player)
+
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
+				currentGameState = equipmentClickEvent(win, win.MousePosition(), currentGameState)
+			}
+		case JobSelect:
+			initJobSelect(win, basicTxt, windowHeightSize)
+			initPlayerGold(win, basicTxt, windowHeightSize, player)
+
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
+				currentGameState = jobClickEvent(win, win.MousePosition(), currentGameState, player)
+			}
+		case SaveScreen:
+			initSaveScreen(win, basicTxt, windowHeightSize)
+			initPlayerGold(win, basicTxt, windowHeightSize, player)
+
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) {
+				currentGameState = saveClickEvent(win, win.MousePosition(), currentGameState, player)
 			}
 
 		case PlayingScreen:
