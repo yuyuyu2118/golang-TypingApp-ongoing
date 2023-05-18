@@ -1,8 +1,6 @@
 package main
 
 import (
-	"log"
-
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
 	"github.com/faiface/pixel/pixelgl"
@@ -46,14 +44,13 @@ func setPlayerSkillBar(win *pixelgl.Window, player *PlayerStatus) {
 }
 
 func setPlayerSkillBarOut(win *pixelgl.Window, player *PlayerStatus) {
-	log.Println("maxsp", player.playerMaxSP, "SP=", player.playerSP, "Base=", player.playerBaseSP)
+	//log.Println("maxsp", player.playerMaxSP, "SP=", player.playerSP, "Base=", player.playerBaseSP)
 	rMinX := win.Bounds().Max.X - win.Bounds().Max.X/15
 	rMinY := win.Bounds().Min.Y + win.Bounds().Max.Y/9
 	rMaxX := win.Bounds().Max.X - win.Bounds().Max.X/36
 	rMaxY := win.Bounds().Max.Y - win.Bounds().Max.Y/9
 	if player.playerMaxSP <= player.playerSP {
 		player.playerSP = 50
-		log.Println("Max")
 		skillRect = pixel.R(
 			rMinX,
 			rMinY+((win.Bounds().Max.Y-win.Bounds().Max.Y/9)-(win.Bounds().Min.Y+win.Bounds().Max.Y/9)),
@@ -82,7 +79,52 @@ func setPlayerSkillBarOut(win *pixelgl.Window, player *PlayerStatus) {
 	imd.Draw(win)
 }
 
+func setPlayerHPBar(win *pixelgl.Window, player *PlayerStatus) {
+	rMinX := win.Bounds().Max.X - win.Bounds().Max.X/9
+	rMinY := win.Bounds().Min.Y + win.Bounds().Max.Y/9
+	rMaxX := win.Bounds().Max.X - win.Bounds().Max.X/15
+	rMaxY := win.Bounds().Max.Y - win.Bounds().Max.Y/9
+
+	hpRect := pixel.R(
+		rMinX,
+		rMinY,
+		rMaxX,
+		rMinY+(rMaxY-rMinY)*(player.playerHP/player.playerMaxHP), //-rMaxY*((player.playerHP)/player.playerMaxHP),
+	)
+
+	if player.playerHP <= 0 {
+		hpRect = pixel.R(
+			rMinX,
+			rMinY,
+			rMinX,
+			rMinY,
+		)
+	}
+
+	imd := imdraw.New(nil)
+	imd.Color = colornames.Green
+	imd.Push(hpRect.Min, hpRect.Max)
+	imd.Rectangle(0)
+	imd.Draw(win)
+}
+
+func setPlayerHPBarOut(win *pixelgl.Window, player *PlayerStatus) {
+	hpRect := pixel.R(
+		win.Bounds().Max.X-win.Bounds().Max.X/9,
+		win.Bounds().Min.Y+win.Bounds().Max.Y/9,
+		win.Bounds().Max.X-win.Bounds().Max.X/15,
+		win.Bounds().Max.Y-win.Bounds().Max.Y/9,
+	)
+	imd := imdraw.New(nil)
+	imd.Color = colornames.Red
+	imd.Push(hpRect.Min, hpRect.Max)
+	imd.Rectangle(0)
+	imd.Draw(win)
+}
+
 func setPlayerInf(win *pixelgl.Window, player *PlayerStatus) {
 	setPlayerSkillBar(win, player)
 	setPlayerSkillBarOut(win, player)
+	setPlayerHPBarOut(win, player)
+	setPlayerHPBar(win, player)
 }

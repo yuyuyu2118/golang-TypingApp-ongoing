@@ -33,7 +33,7 @@ func run() {
 	//playerStatusインスタンスを生成
 	player := newPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "")
 	stage := newStageInf(0)
-	enemyKnight := newEnemyStatus(100, 100, 1, 1, 30, "knight")
+	enemyKnight := newEnemyStatus(100, 100, 1, 1, 30, "knight", false, 3.0)
 
 	words := initializeQuestion()
 
@@ -46,9 +46,12 @@ func run() {
 
 		startTime = time.Now()
 		yourTime  = 0.0
+		gainGold  = 0
+		lostGold  = 0
 	)
 
 	var currentGameState GameState
+	var Ticker *time.Ticker
 	for !win.Closed() {
 		switch currentGameState {
 		case StartScreen:
@@ -78,6 +81,13 @@ func run() {
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) {
 				currentGameState = stageClickEvent(win, win.MousePosition(), currentGameState, stage)
+				Ticker = time.NewTicker(time.Duration(time.Duration(enemyKnight.enemyAttackTick) * time.Second))
+				go func() {
+					for range Ticker.C {
+						player.playerHP -= enemyKnight.enemyOP
+						log.Println(("Attack"))
+					}
+				}()
 			}
 
 		case PlayingScreen:
@@ -146,15 +156,17 @@ func run() {
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++
-					enemyKnight.enemyHP -= 10
+					enemyKnight.enemyHP -= 3
 					player.playerSP += player.playerBaseSP
 					//enemy Down
-					if enemyKnight.enemyHP < 0 {
+					if enemyKnight.enemyHP <= 0 {
+						//GoldRandom
 						min := int(float64(enemyKnight.enemyGold) * 0.7)
 						max := int(float64(enemyKnight.enemyGold) * 1.3)
+						gainGold = rand.Intn(max-min+1) + min
+						player.playerGold += gainGold
 						index = 0
 						score++
-						player.playerGold += rand.Intn(max-min+1) + min
 						currentGameState = EndScreen
 						yourTime = float64(elapsed.Seconds())
 					}
@@ -186,36 +198,66 @@ func run() {
 					//TODO 魔法使いの時止めスキル
 				}
 			}
-
+			if player.playerHP <= 0 {
+				yourTime = float64(elapsed.Seconds())
+				min := int(float64(enemyKnight.enemyGold) * 0.7)
+				max := int(float64(enemyKnight.enemyGold) * 1.3)
+				lostGold = rand.Intn(max-min+1) + min
+				player.playerGold -= lostGold
+				log.Println("GameOver!!")
+				currentGameState = EndScreen
+			}
 		case EndScreen:
 			win.Clear(colornames.Grey)
 			endTxt.Clear()
-			yourTimeString := fmt.Sprintf("%0.3f", yourTime)
-			//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
-			endLines := []string{
-				"YourScore : " + strconv.Itoa(score),
-				"\n",
-				"yourTime =" + yourTimeString,
-				"collectType = " + strconv.Itoa(collectType) + " missType = " + strconv.Itoa(missType),
-				"\n\n",
-				"ReSTART : Press Esc | Title : Press Tab",
+			log.Println(yourTime)
+
+			if player.playerHP > 0 {
+				yourTimeString := fmt.Sprintf("%0.3f", yourTime)
+				//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
+				endLines := []string{
+					"YourScore : " + strconv.Itoa(score),
+					"\n",
+					"yourTime =" + yourTimeString,
+					"collectType = " + strconv.Itoa(collectType) + " missType = " + strconv.Itoa(missType),
+					"\n\n",
+					"ReSTART : Press Esc | Title : Press Tab",
+				}
+				lineCenterAlign(win, windowHeightSize, endLines, endTxt, "center")
+			} else {
+				yourTimeString := fmt.Sprintf("%0.3f", yourTime)
+				//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
+				endLines := []string{
+					"GameOver...",
+					"You have lost " + strconv.Itoa(lostGold) + " gold",
+					"YourScore : " + strconv.Itoa(score),
+					"\n",
+					"yourTime =" + yourTimeString,
+					"collectType = " + strconv.Itoa(collectType) + " missType = " + strconv.Itoa(missType),
+					"\n\n",
+					"ReSTART : Press Esc | Title : Press Tab",
+				}
+				lineCenterAlign(win, windowHeightSize, endLines, endTxt, "center")
 			}
-			lineCenterAlign(win, windowHeightSize, endLines, endTxt, "center")
 
 			//画面遷移,いろいろリセット
 			if win.JustPressed(pixelgl.KeyEscape) {
 				currentGameState = PlayingScreen
 				collectType, missType, index, score = 0, 0, 0, 0
+				player.playerHP = player.playerMaxHP
 				enemyKnight.enemyHP = enemyKnight.enemyMaxHP
 				shuffle(words)
 				log.Println("Press:Enter -> GameState:Playing")
 			} else if win.JustPressed(pixelgl.KeyTab) {
 				currentGameState = StartScreen
 				collectType, missType, index, score = 0, 0, 0, 0
+				player.playerHP = player.playerMaxHP
 				enemyKnight.enemyHP = enemyKnight.enemyMaxHP
 				shuffle(words)
 				log.Println("Press:Enter -> GameState:StartScreen")
 			}
+			Ticker.Stop()
+
 		case TestState:
 			testMode(win, basicTxt, windowHeightSize)
 		}

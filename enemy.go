@@ -8,16 +8,18 @@ import (
 )
 
 type EnemyStatus struct {
-	enemyMaxHP float64
-	enemyHP    float64
-	enemyOP    float64
-	enemyDP    float64
-	enemyGold  int
-	enemyName  string
+	enemyMaxHP      float64
+	enemyHP         float64
+	enemyOP         float64
+	enemyDP         float64
+	enemyGold       int
+	enemyName       string
+	enemyAttack     bool
+	enemyAttackTick float64
 }
 
-func newEnemyStatus(MaxHP float64, HP float64, OP float64, DP float64, Gold int, Name string) *EnemyStatus {
-	return &EnemyStatus{MaxHP, HP, OP, DP, Gold, Name}
+func newEnemyStatus(MaxHP float64, HP float64, OP float64, DP float64, Gold int, Name string, Attack bool, Ticker float64) *EnemyStatus {
+	return &EnemyStatus{MaxHP, HP, OP, DP, Gold, Name, Attack, Ticker}
 }
 
 func setEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP float64, pos pixel.Vec) {
