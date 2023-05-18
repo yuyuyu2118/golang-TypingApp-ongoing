@@ -1,16 +1,14 @@
 # メイン機能
 <!-- - 所持金を追加、画面左上に表示
   - 実装・topLeftPosで位置を指定しテキストを表示、敵を倒すとランダムで増える -->
-- スキルの横に体力バーを表示
-  - 敵の攻撃を受けると減る、
-- 敵の攻撃ゲージの追加
-  - 一定時間経過後(敵のenemy.Speedを参照)に攻撃を行い、初期値に戻す　enemy.goに追加
-- 敵の攻撃による死亡判定の追加、お金をおとす機能はサブ機能とする
-- StartScreenのあとにGoToScreenを設置
-  - 1.dungeon(stage) 2.town 3.equipment 4.Job 5.save 6.exit
+<!-- - スキルの横に体力バーを表示
+  - 敵の攻撃を受けると減る -->
+<!-- - 敵の攻撃による死亡判定の追加、お金をおとす機能はサブ機能とする -->
+<!-- - StartScreenのあとにGoToScreenを設置
+  - 1.dungeon(stage) 2.town 3.equipment 4.Job 5.save 6.exit -->
     -equipmentは所持金、装備内容、所持武器防具アクセサリーを表示
-- TownScreenの実装
-  - 1.WeaponShop 2.ArmorShop 3.AccessoryShop 4.BlackSmith 5.Equipment 6.Exit
+<!-- - TownScreenの実装
+  - 1.WeaponShop 2.ArmorShop 3.AccessoryShop 4.BlackSmith 5.Equipment 6.Exit -->
 - Shopの実装
   - 各お店で、1.Buy 2.Sell 3.Exit
   - 1.Buy
@@ -48,3 +46,5 @@
 - 戦闘画面の長い単語が重なる事象を解決
   -すべて一つの配列で管理,スペース区切りで判定,20文字以内で流れてくるイメージ
 -体力残りわずかなところでスキルを使うとバグる
+- 敵の攻撃ゲージの追加
+  - 一定時間経過後(敵のenemy.Speedを参照)に攻撃を行い、初期値に戻す　enemy.goに追加
