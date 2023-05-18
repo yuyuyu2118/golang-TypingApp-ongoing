@@ -85,7 +85,7 @@ func goToClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState Ga
 		currentGameState = JobSelect
 		log.Println("GoToScreen->JobSelect")
 	} else if goTo5Button.Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
-		currentGameState = JobSelect
+		currentGameState = SaveScreen
 		log.Println("GoToScreen->Save")
 	} else if goTo6Button.Contains(mousePos) || win.JustPressed(pixelgl.Key6) {
 		currentGameState = StartScreen
