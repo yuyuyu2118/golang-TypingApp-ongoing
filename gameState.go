@@ -102,6 +102,4 @@ func initSaveScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 func initPlayingScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	win.Clear(colornames.Black)
 	Txt.Clear()
-
-	initPlaying(win, Txt, windowHeightSize)
 }

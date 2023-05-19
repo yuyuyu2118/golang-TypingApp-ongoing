@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
 	"github.com/faiface/pixel/pixelgl"
+	"github.com/faiface/pixel/text"
 	"golang.org/x/image/colornames"
 )
 
@@ -122,9 +125,32 @@ func setPlayerHPBarOut(win *pixelgl.Window, player *PlayerStatus) {
 	imd.Draw(win)
 }
 
-func setPlayerInf(win *pixelgl.Window, player *PlayerStatus) {
+func setPlayerBattleInf(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
 	setPlayerSkillBar(win, player)
 	setPlayerSkillBarOut(win, player)
 	setPlayerHPBarOut(win, player)
 	setPlayerHPBar(win, player)
+	initPlayerHPSP(win, Txt, windowHeightSize, player)
+}
+
+func initPlayerStatus(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+	Txt.Clear()
+	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, "OP: ", player.playerOP, "DP: ", player.playerDP)
+	xOffSet := 0.0
+	yOffSet := win.Bounds().H()/3 - Txt.LineHeight
+	txtPos := pixel.V(xOffSet, yOffSet)
+	tempPosition := pixel.IM.Moved(txtPos)
+	Txt.Draw(win, tempPosition)
+}
+
+func initPlayerHPSP(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+	Txt.Clear()
+	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, player.playerHP, " ", player.playerSP)
+	xOffSet := -140.0
+	yOffSet := -80.0
+	txtPos := pixel.V(xOffSet, yOffSet)
+	tempPosition := pixel.IM.Moved(bottleRightPos(win, Txt, windowHeightSize).Sub(txtPos))
+	Txt.Draw(win, tempPosition)
 }
