@@ -1,0 +1,25 @@
+冒険者
+#見習い剣士Rookie
+#戦士Warrior　#重戦士HeavyFighter
+#勇者Hero
+
+#遠距離
+#狩人Hunter
+#射手Archer
+#狙撃手Sniper
+
+#格闘家
+#モンクMonk
+#武闘家MartialArtist
+#拳闘王Champion #破壊者Destroyer
+
+#魔術系
+#魔法使いMagicUser
+#魔術師Wizard
+#大司教ArchBishop
+#賢者Sage #召喚術士Summoner
+
+暗黒
+#化け物Monster
+#悪魔Devil
+#魔王DemonKing
