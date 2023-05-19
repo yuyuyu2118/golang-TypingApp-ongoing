@@ -48,7 +48,7 @@ var currentweaponState WeaponState
 var currentarmorState ArmorState
 var currentaccessoryState AccessoryState
 
-func initWeapon(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initWeapon(win *pixelgl.Window, Txt *text.Text) {
 	//初期位置
 	yOffSet := win.Bounds().H() / 4
 	txtPos := pixel.V(0, 0)
@@ -128,7 +128,7 @@ func weaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	return currentGameState
 }
 
-func initArmor(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initArmor(win *pixelgl.Window, Txt *text.Text) {
 	//初期位置
 	yOffSet := win.Bounds().H() / 4
 	txtPos := pixel.V(0, 0)
@@ -208,7 +208,7 @@ func armorClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	return currentGameState
 }
 
-func initAccessory(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initAccessory(win *pixelgl.Window, Txt *text.Text) {
 	//初期位置
 	yOffSet := win.Bounds().H() / 4
 	txtPos := pixel.V(0, 0)

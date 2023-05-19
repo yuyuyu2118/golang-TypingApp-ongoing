@@ -38,75 +38,75 @@ var (
 	}
 )
 
-func initStartScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initStartScreen(win *pixelgl.Window, Txt *text.Text) {
 	//windowのリセットとテキストの描画
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	lineCenterAlign(win, windowHeightSize, startLines, Txt, "center")
+	lineCenterAlign(win, startLines, Txt, "center")
 }
 
-func initGoToScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initGoToScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	initGoTo(win, Txt, windowHeightSize)
+	initGoTo(win, Txt)
 }
 
-func initStageSlect(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initStageSlect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initStage(win, Txt, windowHeightSize)
+	initStage(win, Txt)
 }
 
-func initTownScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initTownScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initTown(win, Txt, windowHeightSize)
+	initTown(win, Txt)
 }
 
-func initWeaponShop(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initWeaponShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initWeapon(win, Txt, windowHeightSize)
+	initWeapon(win, Txt)
 }
 
-func initArmorShop(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initArmorShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initArmor(win, Txt, windowHeightSize)
+	initArmor(win, Txt)
 }
 
-func initAccessoryShop(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initAccessoryShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initAccessory(win, Txt, windowHeightSize)
+	initAccessory(win, Txt)
 }
 
-func initEquipmentScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initEquipmentScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initEquipment(win, Txt, windowHeightSize)
+	initEquipment(win, Txt)
 }
 
-func initJobSelect(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initJobSelect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initJob(win, Txt, windowHeightSize)
+	initJob(win, Txt)
 }
 
-func initSaveScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initSaveScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initSave(win, Txt, windowHeightSize)
+	initSave(win, Txt)
 }
 
-func initPlayingScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initPlayingScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 	Txt.Clear()
 }
 
-func initEndScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initEndScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Grey)
 	Txt.Clear()
 }

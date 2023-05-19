@@ -83,9 +83,9 @@ func setEnemyPic(win *pixelgl.Window, enemyInf *EnemyStatus, path string, scaleF
 	setEnemyHPBar(win, scaledSize, enemyInf.enemyHP, enemyInf.enemyMaxHP, barPosition)
 }
 
-func setEnemyText(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, enemy *EnemyStatus) {
+func setEnemyText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "EnemyHP : ", enemy.enemyHP)
-	drawPos(win, Txt, topCenterPos(win, Txt, windowHeightSize))
+	drawPos(win, Txt, topCenterPos(win, Txt))
 }

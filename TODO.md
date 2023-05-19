@@ -23,7 +23,7 @@
 - 自分の職業を左上のコインの下に表示？スキルの上でもいい
 - initPlayerを作成して、initPlayerGoldやinitPlayerJobをまとめる。それぞれのoffSetから相対位置を算出する、引数にoffSetを追加する
   - Player.goに記述
-- endScreenに素材ドロップ等の情報を表示、終了画面の充実化
+- endScreenに素材ドロップ等の情報を表示、ドロップコインも表示終了画面の充実化
 
 
 # サブ機能

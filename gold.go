@@ -9,7 +9,7 @@ import (
 	"golang.org/x/image/colornames"
 )
 
-func initPlayerGold(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+func initPlayerGold(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "Gold:", player.playerGold)

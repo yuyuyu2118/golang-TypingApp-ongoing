@@ -10,9 +10,12 @@ import (
 	"golang.org/x/image/colornames"
 )
 
+const (
+	winHSize = 1440
+)
+
 func run() {
-	windowHeightSize := 1440
-	win, _ := initializeWindow(windowHeightSize)
+	win, _ := initializeWindow()
 	rand.Seed(time.Now().UnixNano())
 
 	fontPath := "assets\\fonts\\NotoSans-Black.ttf"
@@ -30,7 +33,7 @@ func run() {
 	for !win.Closed() {
 		switch currentGameState {
 		case StartScreen:
-			initStartScreen(win, startTxt, windowHeightSize)
+			initStartScreen(win, startTxt)
 			if win.JustPressed(pixelgl.KeyEnter) {
 				currentGameState = GoToScreen
 				log.Println("Press:Enter -> GameState:jobSelect")
@@ -41,14 +44,14 @@ func run() {
 				log.Println("TestMode")
 			}
 		case GoToScreen:
-			initScreenInformation(win, basicTxt, windowHeightSize, player)
+			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
 				currentGameState = goToClickEvent(win, win.MousePosition())
 			}
 
 		case StageSelect:
-			initScreenInformation(win, basicTxt, windowHeightSize, player)
+			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) {
 				currentGameState = stageClickEvent(win, win.MousePosition(), stage)
@@ -62,65 +65,65 @@ func run() {
 				startTime = time.Now()
 			}
 		case TownScreen:
-			initScreenInformation(win, basicTxt, windowHeightSize, player)
+			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
 				currentGameState = townClickEvent(win, win.MousePosition())
 			}
 		case WeaponShop:
-			initScreenInformation(win, descriptionTxt, windowHeightSize, player)
+			initScreenInformation(win, descriptionTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
 				currentGameState = weaponClickEvent(win, win.MousePosition())
 			}
 		case ArmorShop:
-			initScreenInformation(win, descriptionTxt, windowHeightSize, player)
+			initScreenInformation(win, descriptionTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
 				currentGameState = armorClickEvent(win, win.MousePosition())
 			}
 		case AccessoryShop:
-			initScreenInformation(win, descriptionTxt, windowHeightSize, player)
+			initScreenInformation(win, descriptionTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
 				currentGameState = accessoryClickEvent(win, win.MousePosition())
 			}
 		case EquipmentScreen:
-			initScreenInformation(win, basicTxt, windowHeightSize, player)
+			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
 				currentGameState = equipmentClickEvent(win, win.MousePosition())
 			}
 		case JobSelect:
-			initScreenInformation(win, basicTxt, windowHeightSize, player)
+			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
 				currentGameState = jobClickEvent(win, win.MousePosition(), player)
 			}
 		case SaveScreen:
-			initScreenInformation(win, basicTxt, windowHeightSize, player)
+			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) {
 				currentGameState = saveClickEvent(win, win.MousePosition(), player)
 			}
 
 		case PlayingScreen:
-			initScreenInformation(win, basicTxt, windowHeightSize, player)
+			initScreenInformation(win, basicTxt, player)
 
 			setEnemyPic(win, enemyKnight, "assets\\monster\\monster1.png", 4.0)
-			setEnemyText(win, basicTxt, windowHeightSize, enemyKnight)
+			setEnemyText(win, basicTxt, enemyKnight)
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
-			setPlayerBattleInf(win, basicTxt, windowHeightSize, player)
+			setPlayerBattleInf(win, basicTxt, player)
 
-			elapsed := initBattleText(win, basicTxt, windowHeightSize)
+			elapsed := initBattleText(win, basicTxt)
 			currentGameState = battleTypingV1(win, player, enemyKnight, elapsed)
 
 		case EndScreen:
-			initEndScreen(win, endTxt, windowHeightSize)
-			currentGameState = battleEndScreen(win, endTxt, windowHeightSize, player, enemyKnight)
+			initEndScreen(win, endTxt)
+			currentGameState = battleEndScreen(win, endTxt, player, enemyKnight)
 			Ticker.Stop()
 		case TestState:
-			testMode(win, basicTxt, windowHeightSize)
+			testMode(win, basicTxt)
 		}
 		win.Update()
 	}
