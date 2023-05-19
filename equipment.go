@@ -40,3 +40,14 @@ func equipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameSta
 	}
 	return currentGameState
 }
+
+// func initPlayerEquipment(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+// 	Txt.Clear()
+// 	Txt.Color = colornames.White
+// 	fmt.Fprintln(Txt, "Weapon: ", "\nArmor: ", "\nAccessory: ")
+// 	xOffSet := 0.0
+// 	yOffSet := win.Bounds().H()/3 - Txt.LineHeight*3
+// 	txtPos := pixel.V(xOffSet, yOffSet)
+// 	tempPosition := pixel.IM.Moved(txtPos)
+// 	Txt.Draw(win, tempPosition)
+// }

@@ -66,3 +66,34 @@ func initializeAnyText(fontPath string, size int, color color.Color) *text.Text 
 
 // 	return streamer, func() { _ = f.Close() }
 // }
+
+func initScreenInformation(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus, currentGameState GameState) {
+
+	switch currentGameState {
+	case GoToScreen:
+		initGoToScreen(win, Txt, windowHeightSize)
+	case StageSelect:
+		initStageSlect(win, Txt, windowHeightSize)
+	case TownScreen:
+		initTownScreen(win, Txt, windowHeightSize)
+	case WeaponShop:
+		initWeaponShop(win, Txt, windowHeightSize)
+	case ArmorShop:
+		initArmorShop(win, Txt, windowHeightSize)
+	case AccessoryShop:
+		initAccessoryShop(win, Txt, windowHeightSize)
+	case EquipmentScreen:
+		initEquipmentScreen(win, Txt, windowHeightSize)
+	case JobSelect:
+		initJobSelect(win, Txt, windowHeightSize)
+	case SaveScreen:
+		initSaveScreen(win, Txt, windowHeightSize)
+	case PlayingScreen:
+		initPlayingScreen(win, Txt, windowHeightSize)
+	}
+
+	initPlayerGold(win, Txt, windowHeightSize, player)
+	initPlayerJob(win, Txt, windowHeightSize, player)
+	initPlayerStatus(win, Txt, windowHeightSize, player)
+	//initPlayerEquipment(win, Txt, windowHeightSize, player)
+}

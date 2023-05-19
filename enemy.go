@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
 	"github.com/faiface/pixel/pixelgl"
+	"github.com/faiface/pixel/text"
 	"golang.org/x/image/colornames"
 )
 
@@ -24,12 +27,22 @@ func newEnemyStatus(MaxHP float64, HP float64, OP float64, DP float64, Gold int,
 
 func setEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP float64, pos pixel.Vec) {
 	rectWidth := scaledSize.X * ((MaxHP - (MaxHP - HP)) * 0.01)
-	rect := pixel.R(
-		win.Bounds().Center().X-(rectWidth/2),
-		win.Bounds().Center().Y-50,
-		win.Bounds().Center().X+(rectWidth/2),
-		win.Bounds().Center().Y,
-	)
+	var rect pixel.Rect
+	if HP > 0 {
+		rect = pixel.R(
+			win.Bounds().Center().X-(rectWidth/2),
+			win.Bounds().Center().Y-50,
+			win.Bounds().Center().X+(rectWidth/2),
+			win.Bounds().Center().Y,
+		)
+	} else {
+		rect = pixel.R(
+			win.Bounds().Center().X,
+			win.Bounds().Center().Y-50,
+			win.Bounds().Center().X,
+			win.Bounds().Center().Y,
+		)
+	}
 	imd := imdraw.New(nil)
 	imd.Color = colornames.Green
 	imd.Push(rect.Min, rect.Max)
@@ -68,4 +81,11 @@ func setEnemyPic(win *pixelgl.Window, enemyInf *EnemyStatus, path string, scaleF
 
 	setEnemyHPBarOut(win, scaledSize, barPosition)
 	setEnemyHPBar(win, scaledSize, enemyInf.enemyHP, enemyInf.enemyMaxHP, barPosition)
+}
+
+func setEnemyText(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, enemy *EnemyStatus) {
+	Txt.Clear()
+	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, "EnemyHP : ", enemy.enemyHP)
+	drawPos(win, Txt, topCenterPos(win, Txt, windowHeightSize))
 }
