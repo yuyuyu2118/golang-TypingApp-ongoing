@@ -16,18 +16,18 @@ var (
 	// equip3Button = pixel.Rect{}
 )
 
-func initEquipment(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initEquipment(win *pixelgl.Window, Txt *text.Text) {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "Where are you going?")
-	tempPosition = topCenterPos(win, Txt, windowHeightSize)
+	tempPosition = topCenterPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "1. GoToScreen")
-	tempPosition = centerLeftPos(win, Txt, windowHeightSize)
+	tempPosition = centerLeftPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	equip1Button = Txt.Bounds().Moved(tempPosition)
 }
@@ -41,7 +41,7 @@ func equipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	return currentGameState
 }
 
-// func initPlayerEquipment(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+// func initPlayerEquipment(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 // 	Txt.Clear()
 // 	Txt.Color = colornames.White
 // 	fmt.Fprintln(Txt, "Weapon: ", "\nArmor: ", "\nAccessory: ")

@@ -22,18 +22,18 @@ var (
 	stage1Button = pixel.Rect{}
 )
 
-func initStage(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initStage(win *pixelgl.Window, Txt *text.Text) {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "Select play Stage")
-	tempPosition = topCenterPos(win, Txt, windowHeightSize)
+	tempPosition = topCenterPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "1. VS Knight")
-	tempPosition = centerLeftPos(win, Txt, windowHeightSize)
+	tempPosition = centerLeftPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	stage1Button = Txt.Bounds().Moved(tempPosition)
 }

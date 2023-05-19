@@ -19,53 +19,53 @@ var (
 	town6Button = pixel.Rect{}
 )
 
-func initTown(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initTown(win *pixelgl.Window, Txt *text.Text) {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "Where are you going?")
-	tempPosition = topCenterPos(win, Txt, windowHeightSize)
+	tempPosition = topCenterPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "1. WeaponShop")
-	tempPosition = centerLeftPos(win, Txt, windowHeightSize)
+	tempPosition = centerLeftPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	town1Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "2. ArmorShop")
-	tempPosition = centerPos(win, Txt, windowHeightSize)
+	tempPosition = centerPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	town2Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "3. AccessoryShop")
-	tempPosition = centerRightPos(win, Txt, windowHeightSize)
+	tempPosition = centerRightPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	town3Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "4. BlackSmith")
-	tempPosition = bottleLeftPos(win, Txt, windowHeightSize)
+	tempPosition = bottleLeftPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	town4Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "5. Equipment")
-	tempPosition = bottleCenterPos(win, Txt, windowHeightSize)
+	tempPosition = bottleCenterPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	town5Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "6. Exit")
-	tempPosition = bottleRightPos(win, Txt, windowHeightSize)
+	tempPosition = bottleRightPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	town6Button = Txt.Bounds().Moved(tempPosition)
 }

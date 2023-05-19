@@ -125,15 +125,15 @@ func setPlayerHPBarOut(win *pixelgl.Window, player *PlayerStatus) {
 	imd.Draw(win)
 }
 
-func setPlayerBattleInf(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+func setPlayerBattleInf(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	setPlayerSkillBar(win, player)
 	setPlayerSkillBarOut(win, player)
 	setPlayerHPBarOut(win, player)
 	setPlayerHPBar(win, player)
-	initPlayerHPSP(win, Txt, windowHeightSize, player)
+	initPlayerHPSP(win, Txt, player)
 }
 
-func initPlayerStatus(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+func initPlayerStatus(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "OP: ", player.playerOP, "DP: ", player.playerDP)
@@ -144,13 +144,13 @@ func initPlayerStatus(win *pixelgl.Window, Txt *text.Text, windowHeightSize int,
 	Txt.Draw(win, tempPosition)
 }
 
-func initPlayerHPSP(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+func initPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, player.playerHP, " ", player.playerSP)
 	xOffSet := -140.0
 	yOffSet := -80.0
 	txtPos := pixel.V(xOffSet, yOffSet)
-	tempPosition := pixel.IM.Moved(bottleRightPos(win, Txt, windowHeightSize).Sub(txtPos))
+	tempPosition := pixel.IM.Moved(bottleRightPos(win, Txt).Sub(txtPos))
 	Txt.Draw(win, tempPosition)
 }

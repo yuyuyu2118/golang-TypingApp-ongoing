@@ -19,53 +19,53 @@ var (
 	goTo6Button = pixel.Rect{}
 )
 
-func initGoTo(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initGoTo(win *pixelgl.Window, Txt *text.Text) {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "Where are you going?")
-	tempPosition = topCenterPos(win, Txt, windowHeightSize)
+	tempPosition = topCenterPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "1. dungeon")
-	tempPosition = centerLeftPos(win, Txt, windowHeightSize)
+	tempPosition = centerLeftPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	goTo1Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "2. Town")
-	tempPosition = centerPos(win, Txt, windowHeightSize)
+	tempPosition = centerPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	goTo2Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "3. Equipment")
-	tempPosition = centerRightPos(win, Txt, windowHeightSize)
+	tempPosition = centerRightPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	goTo3Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "4. Job")
-	tempPosition = bottleLeftPos(win, Txt, windowHeightSize)
+	tempPosition = bottleLeftPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	goTo4Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "5. Save")
-	tempPosition = bottleCenterPos(win, Txt, windowHeightSize)
+	tempPosition = bottleCenterPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	goTo5Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "6.Exit")
-	tempPosition = bottleRightPos(win, Txt, windowHeightSize)
+	tempPosition = bottleRightPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	goTo6Button = Txt.Bounds().Moved(tempPosition)
 }

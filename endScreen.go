@@ -9,7 +9,7 @@ import (
 	"github.com/faiface/pixel/text"
 )
 
-func battleEndScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus, enemy *EnemyStatus) GameState {
+func battleEndScreen(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus, enemy *EnemyStatus) GameState {
 	if player.playerHP > 0 {
 		yourTimeString := fmt.Sprintf("%0.3f", yourTime)
 		//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
@@ -21,7 +21,7 @@ func battleEndScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, 
 			"\n\n",
 			"ReSTART : Press Tab | Back : Press BackSpace",
 		}
-		lineCenterAlign(win, windowHeightSize, endLines, Txt, "center")
+		lineCenterAlign(win, endLines, Txt, "center")
 	} else {
 		yourTimeString := fmt.Sprintf("%0.3f", yourTime)
 		//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
@@ -35,7 +35,7 @@ func battleEndScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, 
 			"\n\n",
 			"ReSTART : Press Tab | Back : Press BackSpace",
 		}
-		lineCenterAlign(win, windowHeightSize, endLines, Txt, "center")
+		lineCenterAlign(win, endLines, Txt, "center")
 	}
 
 	//画面遷移,いろいろリセット

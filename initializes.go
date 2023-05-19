@@ -10,11 +10,11 @@ import (
 	"golang.org/x/image/font"
 )
 
-func initializeWindow(windowHeightSize int) (*pixelgl.Window, pixelgl.WindowConfig) {
-	windowWidthSize := (windowHeightSize / 16) * 9
+func initializeWindow() (*pixelgl.Window, pixelgl.WindowConfig) {
+	windowWidthSize := (winHSize / 16) * 9
 
 	cfg := pixelgl.WindowConfig{Title: "MyPlatformer",
-		Bounds:    pixel.R(0, 0, float64(windowHeightSize), float64(windowWidthSize)), //960,720
+		Bounds:    pixel.R(0, 0, float64(winHSize), float64(windowWidthSize)), //960,720
 		VSync:     true,
 		Resizable: true,
 	}
@@ -67,33 +67,33 @@ func initializeAnyText(fontPath string, size int, color color.Color) *text.Text 
 // 	return streamer, func() { _ = f.Close() }
 // }
 
-func initScreenInformation(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 
 	switch currentGameState {
 	case GoToScreen:
-		initGoToScreen(win, Txt, windowHeightSize)
+		initGoToScreen(win, Txt)
 	case StageSelect:
-		initStageSlect(win, Txt, windowHeightSize)
+		initStageSlect(win, Txt)
 	case TownScreen:
-		initTownScreen(win, Txt, windowHeightSize)
+		initTownScreen(win, Txt)
 	case WeaponShop:
-		initWeaponShop(win, Txt, windowHeightSize)
+		initWeaponShop(win, Txt)
 	case ArmorShop:
-		initArmorShop(win, Txt, windowHeightSize)
+		initArmorShop(win, Txt)
 	case AccessoryShop:
-		initAccessoryShop(win, Txt, windowHeightSize)
+		initAccessoryShop(win, Txt)
 	case EquipmentScreen:
-		initEquipmentScreen(win, Txt, windowHeightSize)
+		initEquipmentScreen(win, Txt)
 	case JobSelect:
-		initJobSelect(win, Txt, windowHeightSize)
+		initJobSelect(win, Txt)
 	case SaveScreen:
-		initSaveScreen(win, Txt, windowHeightSize)
+		initSaveScreen(win, Txt)
 	case PlayingScreen:
-		initPlayingScreen(win, Txt, windowHeightSize)
+		initPlayingScreen(win, Txt)
 	}
 
-	initPlayerGold(win, Txt, windowHeightSize, player)
-	initPlayerJob(win, Txt, windowHeightSize, player)
-	initPlayerStatus(win, Txt, windowHeightSize, player)
-	//initPlayerEquipment(win, Txt, windowHeightSize, player)
+	initPlayerGold(win, Txt, player)
+	initPlayerJob(win, Txt, player)
+	initPlayerStatus(win, Txt, player)
+	//initPlayerEquipment(win, Txt, player)
 }

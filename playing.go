@@ -16,12 +16,12 @@ var (
 	startTime   = time.Now()
 )
 
-func initBattleText(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) time.Duration {
+func initBattleText(win *pixelgl.Window, Txt *text.Text) time.Duration {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "> ", words[score])
-	drawPos(win, Txt, bottleRoundCenterPos(win, Txt, windowHeightSize))
+	drawPos(win, Txt, bottleRoundCenterPos(win, Txt))
 
 	offset := Txt.Bounds().W()
 	TxtOrigX := Txt.Dot.X
@@ -31,7 +31,7 @@ func initBattleText(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) t
 		offset := Txt.Bounds().W()
 		Txt.Clear()
 		fmt.Fprintln(Txt, words[score+1])
-		drawPos(win, Txt, bottleRoundCenterPos(win, Txt, windowHeightSize).Add(pixel.V(offset+spacing, 0)))
+		drawPos(win, Txt, bottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 		Txt.Dot.X = TxtOrigX
 	}
 	if !(len(words)-score == 2 || len(words)-score == 1) {
@@ -39,14 +39,14 @@ func initBattleText(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) t
 		offset += Txt.Bounds().W()
 		Txt.Clear()
 		fmt.Fprintln(Txt, words[score+2])
-		drawPos(win, Txt, bottleRoundCenterPos(win, Txt, windowHeightSize).Add(pixel.V(offset+spacing*2, 0)))
+		drawPos(win, Txt, bottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 	}
 	//Txt.Dot.X = TxtOrigX
 
 	Txt.Color = colornames.White
 	Txt.Clear()
 	fmt.Fprintln(Txt, "\n\n", "collectType = ", collectType, " missType = ", missType)
-	drawPos(win, Txt, bottleRoundCenterPos(win, Txt, windowHeightSize))
+	drawPos(win, Txt, bottleRoundCenterPos(win, Txt))
 	Txt.Dot.X = TxtOrigX
 
 	//set Time+rule
@@ -54,6 +54,6 @@ func initBattleText(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) t
 	Txt.Color = colornames.White
 	elapsed := time.Since(startTime)
 	fmt.Fprintln(Txt, "time = ", elapsed.Milliseconds())
-	drawPos(win, Txt, bottleLeftPos(win, Txt, windowHeightSize))
+	drawPos(win, Txt, bottleLeftPos(win, Txt))
 	return elapsed
 }

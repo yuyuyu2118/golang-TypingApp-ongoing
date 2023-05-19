@@ -23,32 +23,32 @@ var (
 	tempPosition = pixel.Vec{}
 )
 
-func initJob(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initJob(win *pixelgl.Window, Txt *text.Text) {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "Select your job")
-	tempPosition = topCenterPos(win, Txt, windowHeightSize)
+	tempPosition = topCenterPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "1. Warrior")
-	tempPosition = centerLeftPos(win, Txt, windowHeightSize)
+	tempPosition = centerLeftPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	job1Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "2. Priest")
-	tempPosition = centerPos(win, Txt, windowHeightSize)
+	tempPosition = centerPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	job2Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "3. Wizard")
-	tempPosition = centerRightPos(win, Txt, windowHeightSize)
+	tempPosition = centerRightPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	job3Button = Txt.Bounds().Moved(tempPosition)
 }
@@ -69,7 +69,7 @@ func jobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *PlayerStatus
 	return currentGameState
 }
 
-func initPlayerJob(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+func initPlayerJob(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, player.playerJob)

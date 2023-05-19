@@ -19,25 +19,25 @@ var (
 	save2Button = pixel.Rect{}
 )
 
-func initSave(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+func initSave(win *pixelgl.Window, Txt *text.Text) {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "Do you want to save?")
-	tempPosition = topCenterPos(win, Txt, windowHeightSize)
+	tempPosition = topCenterPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "1. Yes")
-	tempPosition = centerLeftPos(win, Txt, windowHeightSize)
+	tempPosition = centerLeftPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	save1Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "2. No")
-	tempPosition = centerPos(win, Txt, windowHeightSize)
+	tempPosition = centerPos(win, Txt)
 	drawPos(win, Txt, tempPosition)
 	save2Button = Txt.Bounds().Moved(tempPosition)
 }
