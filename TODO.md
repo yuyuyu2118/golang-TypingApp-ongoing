@@ -21,6 +21,8 @@
 - タイプ箇所を灰色にする
   - 実装・正解描画した幅から計算？
 - 自分の職業を左上のコインの下に表示？スキルの上でもいい
+- initPlayerを作成して、initPlayerGoldやinitPlayerJobをまとめる。それぞれのoffSetから相対位置を算出する、引数にoffSetを追加する
+  - Player.goに記述
 
 
 # サブ機能
