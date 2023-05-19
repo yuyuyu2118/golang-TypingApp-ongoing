@@ -69,6 +69,18 @@ func initWeaponShop(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	initWeapon(win, Txt, windowHeightSize)
 }
 
+func initArmorShop(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+	win.Clear(colornames.Black)
+
+	initArmor(win, Txt, windowHeightSize)
+}
+
+func initAccessoryShop(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+	win.Clear(colornames.Black)
+
+	initAccessory(win, Txt, windowHeightSize)
+}
+
 func initEquipmentScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	win.Clear(colornames.Black)
 
