@@ -67,7 +67,7 @@ func initializeAnyText(fontPath string, size int, color color.Color) *text.Text 
 // 	return streamer, func() { _ = f.Close() }
 // }
 
-func initScreenInformation(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus, currentGameState GameState) {
+func initScreenInformation(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
 
 	switch currentGameState {
 	case GoToScreen:

@@ -109,7 +109,7 @@ func initWeapon(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	}
 }
 
-func weaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState) GameState {
+func weaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
 	if buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		currentweaponState = weapon1
@@ -189,7 +189,7 @@ func initArmor(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	}
 }
 
-func armorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState) GameState {
+func armorClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
 	if buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		currentarmorState = armor1
@@ -251,7 +251,7 @@ func initAccessory(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	}
 }
 
-func accessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState) GameState {
+func accessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
 	if buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		currentaccessoryState = accessory1

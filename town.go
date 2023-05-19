@@ -70,7 +70,7 @@ func initTown(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	town6Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func townClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState) GameState {
+func townClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
 	if town1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		currentGameState = WeaponShop

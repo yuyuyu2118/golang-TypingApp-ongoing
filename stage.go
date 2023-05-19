@@ -38,7 +38,7 @@ func initStage(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	stage1Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func stageClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState, stage *stageInf) GameState {
+func stageClickEvent(win *pixelgl.Window, mousePos pixel.Vec, stage *stageInf) GameState {
 
 	if stage1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		currentGameState = PlayingScreen

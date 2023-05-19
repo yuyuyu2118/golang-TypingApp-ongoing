@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
 	_ "image/png"
 	"log"
 	"math/rand"
-	"strconv"
 	"time"
 
 	"github.com/faiface/pixel/pixelgl"
@@ -28,7 +26,6 @@ func run() {
 	stage := newStageInf(0)
 	enemyKnight := newEnemyStatus(100, 100, 1, 1, 30, "knight", false, 3.0)
 
-	var currentGameState GameState
 	var Ticker *time.Ticker
 	for !win.Closed() {
 		switch currentGameState {
@@ -44,17 +41,17 @@ func run() {
 				log.Println("TestMode")
 			}
 		case GoToScreen:
-			initScreenInformation(win, basicTxt, windowHeightSize, player, currentGameState)
+			initScreenInformation(win, basicTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
-				currentGameState = goToClickEvent(win, win.MousePosition(), currentGameState)
+				currentGameState = goToClickEvent(win, win.MousePosition())
 			}
 
 		case StageSelect:
-			initScreenInformation(win, basicTxt, windowHeightSize, player, currentGameState)
+			initScreenInformation(win, basicTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) {
-				currentGameState = stageClickEvent(win, win.MousePosition(), currentGameState, stage)
+				currentGameState = stageClickEvent(win, win.MousePosition(), stage)
 				Ticker = time.NewTicker(time.Duration(time.Duration(enemyKnight.enemyAttackTick) * time.Second))
 				go func() {
 					for range Ticker.C {
@@ -65,50 +62,50 @@ func run() {
 				startTime = time.Now()
 			}
 		case TownScreen:
-			initScreenInformation(win, basicTxt, windowHeightSize, player, currentGameState)
+			initScreenInformation(win, basicTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
-				currentGameState = townClickEvent(win, win.MousePosition(), currentGameState)
+				currentGameState = townClickEvent(win, win.MousePosition())
 			}
 		case WeaponShop:
-			initScreenInformation(win, descriptionTxt, windowHeightSize, player, currentGameState)
+			initScreenInformation(win, descriptionTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
-				currentGameState = weaponClickEvent(win, win.MousePosition(), currentGameState)
+				currentGameState = weaponClickEvent(win, win.MousePosition())
 			}
 		case ArmorShop:
-			initScreenInformation(win, descriptionTxt, windowHeightSize, player, currentGameState)
+			initScreenInformation(win, descriptionTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
-				currentGameState = armorClickEvent(win, win.MousePosition(), currentGameState)
+				currentGameState = armorClickEvent(win, win.MousePosition())
 			}
 		case AccessoryShop:
-			initScreenInformation(win, descriptionTxt, windowHeightSize, player, currentGameState)
+			initScreenInformation(win, descriptionTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
-				currentGameState = accessoryClickEvent(win, win.MousePosition(), currentGameState)
+				currentGameState = accessoryClickEvent(win, win.MousePosition())
 			}
 		case EquipmentScreen:
-			initScreenInformation(win, basicTxt, windowHeightSize, player, currentGameState)
+			initScreenInformation(win, basicTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
-				currentGameState = equipmentClickEvent(win, win.MousePosition(), currentGameState)
+				currentGameState = equipmentClickEvent(win, win.MousePosition())
 			}
 		case JobSelect:
-			initScreenInformation(win, basicTxt, windowHeightSize, player, currentGameState)
+			initScreenInformation(win, basicTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
-				currentGameState = jobClickEvent(win, win.MousePosition(), currentGameState, player)
+				currentGameState = jobClickEvent(win, win.MousePosition(), player)
 			}
 		case SaveScreen:
-			initScreenInformation(win, basicTxt, windowHeightSize, player, currentGameState)
+			initScreenInformation(win, basicTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) {
-				currentGameState = saveClickEvent(win, win.MousePosition(), currentGameState, player)
+				currentGameState = saveClickEvent(win, win.MousePosition(), player)
 			}
 
 		case PlayingScreen:
-			initScreenInformation(win, basicTxt, windowHeightSize, player, currentGameState)
+			initScreenInformation(win, basicTxt, windowHeightSize, player)
 
 			setEnemyPic(win, enemyKnight, "assets\\monster\\monster1.png", 4.0)
 			setEnemyText(win, basicTxt, windowHeightSize, enemyKnight)
@@ -116,58 +113,12 @@ func run() {
 			setPlayerBattleInf(win, basicTxt, windowHeightSize, player)
 
 			elapsed := initBattleText(win, basicTxt, windowHeightSize)
-			currentGameState = battleTypingV1(win, player, enemyKnight, elapsed, currentGameState)
+			currentGameState = battleTypingV1(win, player, enemyKnight, elapsed)
 
 		case EndScreen:
-			win.Clear(colornames.Grey)
-			endTxt.Clear()
-
-			if player.playerHP > 0 {
-				yourTimeString := fmt.Sprintf("%0.3f", yourTime)
-				//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
-				endLines := []string{
-					"YourScore : " + strconv.Itoa(score),
-					"\n",
-					"yourTime =" + yourTimeString,
-					"collectType = " + strconv.Itoa(collectType) + " missType = " + strconv.Itoa(missType),
-					"\n\n",
-					"ReSTART : Press Esc | Title : Press Tab",
-				}
-				lineCenterAlign(win, windowHeightSize, endLines, endTxt, "center")
-			} else {
-				yourTimeString := fmt.Sprintf("%0.3f", yourTime)
-				//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
-				endLines := []string{
-					"GameOver...",
-					"You have lost " + strconv.Itoa(lostGold) + " gold",
-					"YourScore : " + strconv.Itoa(score),
-					"\n",
-					"yourTime =" + yourTimeString,
-					"collectType = " + strconv.Itoa(collectType) + " missType = " + strconv.Itoa(missType),
-					"\n\n",
-					"ReSTART : Press Esc | Title : Press Tab",
-				}
-				lineCenterAlign(win, windowHeightSize, endLines, endTxt, "center")
-			}
-
-			//画面遷移,いろいろリセット
-			if win.JustPressed(pixelgl.KeyEscape) {
-				currentGameState = PlayingScreen
-				collectType, missType, index, score = 0, 0, 0, 0
-				player.playerHP = player.playerMaxHP
-				enemyKnight.enemyHP = enemyKnight.enemyMaxHP
-				shuffle(words)
-				log.Println("Press:Enter -> GameState:Playing")
-			} else if win.JustPressed(pixelgl.KeyTab) {
-				currentGameState = StartScreen
-				collectType, missType, index, score = 0, 0, 0, 0
-				player.playerHP = player.playerMaxHP
-				enemyKnight.enemyHP = enemyKnight.enemyMaxHP
-				shuffle(words)
-				log.Println("Press:Enter -> GameState:StartScreen")
-			}
+			initEndScreen(win, endTxt, windowHeightSize)
+			currentGameState = battleEndScreen(win, endTxt, windowHeightSize, player, enemyKnight)
 			Ticker.Stop()
-
 		case TestState:
 			testMode(win, basicTxt, windowHeightSize)
 		}

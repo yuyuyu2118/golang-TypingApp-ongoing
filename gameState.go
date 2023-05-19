@@ -6,6 +6,8 @@ import (
 	"golang.org/x/image/colornames"
 )
 
+var currentGameState GameState
+
 type GameState int
 
 const (
@@ -101,5 +103,10 @@ func initSaveScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 
 func initPlayingScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	win.Clear(colornames.Black)
+	Txt.Clear()
+}
+
+func initEndScreen(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
+	win.Clear(colornames.Grey)
 	Txt.Clear()
 }

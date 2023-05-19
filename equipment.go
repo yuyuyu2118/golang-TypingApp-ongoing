@@ -32,7 +32,7 @@ func initEquipment(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	equip1Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func equipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState) GameState {
+func equipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
 	if equip1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		currentGameState = GoToScreen
