@@ -56,15 +56,26 @@ func initJob(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 func jobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState, player *PlayerStatus) GameState {
 
 	if job1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
-		currentGameState = StageSelect
+		currentGameState = GoToScreen
 		player.playerJob = "Warrior"
 	} else if job2Button.Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
-		currentGameState = StageSelect
+		currentGameState = GoToScreen
 		player.playerJob = "Priest"
 	} else if job3Button.Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
-		currentGameState = StageSelect
+		currentGameState = GoToScreen
 		player.playerJob = "Wizard"
 	}
 	log.Println("YourJob is", player.playerJob)
 	return currentGameState
+}
+
+func initPlayerJob(win *pixelgl.Window, Txt *text.Text, windowHeightSize int, player *PlayerStatus) {
+	Txt.Clear()
+	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, player.playerJob)
+	xOffSet := 0.0
+	yOffSet := win.Bounds().H() / 3
+	txtPos := pixel.V(xOffSet, yOffSet)
+	tempPosition := pixel.IM.Moved(txtPos)
+	Txt.Draw(win, tempPosition)
 }

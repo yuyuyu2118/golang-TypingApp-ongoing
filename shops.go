@@ -10,12 +10,18 @@ import (
 	"golang.org/x/image/colornames"
 )
 
-var (
-	woodenKatanaButton = pixel.Rect{}
-	ironKatanaButton   = pixel.Rect{}
-	goldKatanaButton   = pixel.Rect{}
-	buttonSlice        = []pixel.Rect{}
+type WeaponState int
+
+const (
+	weapon1 WeaponState = iota
+	weapon2
+	weapon3
 )
+
+var (
+	buttonSlice = []pixel.Rect{}
+)
+var currentweaponState WeaponState
 
 func initWeapon(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	//初期位置
@@ -23,8 +29,10 @@ func initWeapon(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	txtPos := pixel.V(0, 0)
 	Txt.Color = colornames.White
 	//csv読み込み
-	weaponSlice := []string{"1. WoodenKatana", "2. IronKatana", "3. goldKatanaButton", "4", "5", "6", "7", "8", "9", "10"}
-	descWeapon1 := []string{"WoodenKatana", "OP : 3", "この剣はサンプルの剣です\n説明はサンプルです。", "強化回数", "未強化", "強化上昇値", "特殊能力", "この剣の特殊能力は？です。\nサンプルです。"}
+	weaponSlice := []string{"1. Wooden Stick", "2. Fruit Knife", "3. WoodenSword", "BackSpace. EXIT"}
+	descWeapon1 := []string{"WoodenStick", "Attack Power: 1", "", "Description:", " A simple weapon made from a branch.", " Its attack power is very low.", "", "Unique Abilities: None"}
+	descWeapon2 := []string{"Fruit Knife", "Attack Power: 3", "", "Description:", " A small knife used to cut vegetables", "and fruits.", " It is not very strong as a weapon.", "", "Unique Abilities: None"}
+	descWeapon3 := []string{"Wooden Sword", "Attack Power: 5", "", "Description:", " A wooden sword used for", "practice and training.", "It is not suitable for actual combat,", "but it is light and easy to handle.", "", "Unique Abilities: None"}
 
 	for _, weaponName := range weaponSlice {
 		Txt.Clear()
@@ -37,45 +45,64 @@ func initWeapon(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	}
 
 	xOffSet := win.Bounds().W() / 3
+	yOffSet = win.Bounds().H() / 4
 	var tempPosition pixel.Matrix
 	if win.Pressed(pixelgl.Key1) {
-		Txt.Clear()
-		fmt.Fprintln(Txt, descWeapon1[0])
-		xOffSet = win.Bounds().W() / 3
-		yOffSet = win.Bounds().H() / 4
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition = pixel.IM.Moved(txtPos)
-		Txt.Draw(win, tempPosition)
-
-		Txt.Clear()
-		fmt.Fprintln(Txt, descWeapon1[1])
-		xOffSet = win.Bounds().W() / 3
-		yOffSet -= Txt.TabWidth + 50
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition = pixel.IM.Moved(txtPos)
-		Txt.Draw(win, tempPosition)
-
-		Txt.Clear()
-		fmt.Fprintln(Txt, descWeapon1[2])
-		xOffSet = win.Bounds().W() / 3
-		yOffSet -= Txt.TabWidth + 100
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition = pixel.IM.Moved(txtPos)
-		Txt.Draw(win, tempPosition)
+		currentweaponState = weapon1
+	} else if win.Pressed(pixelgl.Key2) {
+		currentweaponState = weapon2
+	} else if win.Pressed(pixelgl.Key3) {
+		currentweaponState = weapon3
+	}
+	switch currentweaponState {
+	case weapon1:
+		for _, value := range descWeapon1 {
+			Txt.Clear()
+			fmt.Fprintln(Txt, value)
+			xOffSet = win.Bounds().W() / 3
+			yOffSet -= Txt.TabWidth + 20
+			txtPos = pixel.V(xOffSet, yOffSet)
+			tempPosition = pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
+	case weapon2:
+		for _, value := range descWeapon2 {
+			Txt.Clear()
+			fmt.Fprintln(Txt, value)
+			xOffSet = win.Bounds().W() / 3
+			yOffSet -= Txt.TabWidth + 20
+			txtPos = pixel.V(xOffSet, yOffSet)
+			tempPosition = pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
+	case weapon3:
+		for _, value := range descWeapon3 {
+			Txt.Clear()
+			fmt.Fprintln(Txt, value)
+			xOffSet = win.Bounds().W() / 3
+			yOffSet -= Txt.TabWidth + 20
+			txtPos = pixel.V(xOffSet, yOffSet)
+			tempPosition = pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
 	}
 }
 
 func weaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState) GameState {
 	//TODO ページを作成したら追加
 	if buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
-		currentGameState = WeaponShop
-		log.Println("Town->WeaponShop")
+		currentweaponState = weapon1
+		log.Println("WeaponShop->weapon1")
 	} else if buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
-		currentGameState = ArmorShop
-		log.Println("Town->ArmorShop")
+		currentweaponState = weapon2
+		log.Println("WeaponShop->weapon2")
 	} else if buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
-		currentGameState = AccessoryShop
-		log.Println("Town->AccessoryShop")
+		currentweaponState = weapon3
+		log.Println("WeaponShop->weapon3")
+	} else if buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+		currentweaponState = weapon1
+		currentGameState = TownScreen
+		log.Println("WeaponShop->TownScreen")
 	}
 	return currentGameState
 }

@@ -70,6 +70,7 @@ func run() {
 		case GoToScreen:
 			initGoToScreen(win, basicTxt, windowHeightSize)
 			initPlayerGold(win, basicTxt, windowHeightSize, player)
+			initPlayerJob(win, basicTxt, windowHeightSize, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
 				currentGameState = goToClickEvent(win, win.MousePosition(), currentGameState)
@@ -100,7 +101,7 @@ func run() {
 			initWeaponShop(win, basicTxt, windowHeightSize)
 			initPlayerGold(win, basicTxt, windowHeightSize, player)
 
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
 				currentGameState = weaponClickEvent(win, win.MousePosition(), currentGameState)
 			}
 		case EquipmentScreen:
