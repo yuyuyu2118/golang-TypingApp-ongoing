@@ -42,7 +42,7 @@ func initSave(win *pixelgl.Window, Txt *text.Text, windowHeightSize int) {
 	save2Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func saveClickEvent(win *pixelgl.Window, mousePos pixel.Vec, currentGameState GameState, player *PlayerStatus) GameState {
+func saveClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *PlayerStatus) GameState {
 	//TODO ページを作成したら追加
 	if save1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		saveGame(player)

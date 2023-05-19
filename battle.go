@@ -18,7 +18,7 @@ var (
 	lostGold = 0
 )
 
-func battleTypingV1(win *pixelgl.Window, player *PlayerStatus, enemy *EnemyStatus, elapsed time.Duration, currentGameState GameState) GameState {
+func battleTypingV1(win *pixelgl.Window, player *PlayerStatus, enemy *EnemyStatus, elapsed time.Duration) GameState {
 	question := words[score]
 	temp := []byte(question)
 	typed := win.Typed()
