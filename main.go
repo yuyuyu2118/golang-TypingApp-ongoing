@@ -20,6 +20,7 @@ const (
 )
 
 var startTime time.Time
+var Ticker *time.Ticker
 
 func run() {
 	win, _ := initializeWindow()
@@ -33,17 +34,14 @@ func run() {
 
 	myPos.SetCfg(winHSize)
 	//playerStatusインスタンスを生成
-	player := player.NewPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "No Job")
-
 	stage := myGame.NewStageInf(0)
-
+	player := player.NewPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "No Job")
 	enemyInfo := enemy.CreateEnemyInstance()
 	enemyKnight := (*enemyInfo)[0]
 	// for _, enemy := range *enemyInfo {
 	// 	enemyKnight := enemy
 	// }
 
-	var Ticker *time.Ticker
 	for !win.Closed() {
 		switch myGame.CurrentGS {
 		case myGame.StartScreen:
@@ -72,9 +70,7 @@ func run() {
 				Ticker = time.NewTicker(time.Duration(time.Duration(enemyKnight.AttackTick) * time.Second))
 				go func() {
 					for range Ticker.C {
-						log.Println(enemyKnight.OP)
 						player.HP -= enemyKnight.OP
-						log.Println(("Attack"))
 					}
 				}()
 				startTime = time.Now()
@@ -132,7 +128,6 @@ func run() {
 			elapsed := time.Since(startTime)
 			battle.InitBattleText(win, basicTxt, elapsed)
 			myGame.CurrentGS = battle.BattleTypingV1(win, player, &enemyKnight, elapsed)
-
 		case myGame.EndScreen:
 			myGame.InitEndScreen(win, endTxt)
 			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemyKnight)
