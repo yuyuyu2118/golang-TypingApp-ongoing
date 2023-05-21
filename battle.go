@@ -59,13 +59,17 @@ func battleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 func battleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if win.JustPressed(pixelgl.KeySpace) {
 		log.Println("Skill!!!")
-		player.SP = 0
-		if player.Job == "Warrior" {
-			enemy.HP -= 15
-		} else if player.Job == "Priest" {
-			//TODO 僧侶の回復スキル
-		} else if player.Job == "Wizard" {
-			//TODO 魔法使いの時止めスキル
+		if player.SP == 50 {
+			player.SP = 0
+			if player.Job == "Warrior" {
+				enemy.HP -= 15
+			} else if player.Job == "Priest" {
+				//TODO 僧侶の回復スキル
+			} else if player.Job == "Wizard" {
+				//TODO 魔法使いの時止めスキル
+			}
+		} else {
+			log.Println("skillポイントが足りない")
 		}
 	}
 }
