@@ -134,7 +134,7 @@ func run() {
 			myGame.CurrentGS = battleEndScreen(win, endTxt, player, &enemyKnight)
 			Ticker.Stop()
 		case myGame.TestState:
-			testMode(win, basicTxt)
+			myGame.TestMode(win, basicTxt)
 		}
 		win.Update()
 	}
