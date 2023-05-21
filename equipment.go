@@ -7,6 +7,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
@@ -33,13 +34,13 @@ func initEquipment(win *pixelgl.Window, Txt *text.Text) {
 	equip1Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func equipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
+func equipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myGame.GameState {
 	//TODO ページを作成したら追加
 	if equip1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
-		currentGameState = GoToScreen
+		myGame.CurrentGS = myGame.GoToScreen
 		log.Println("equipment->GoToScreen")
 	}
-	return currentGameState
+	return myGame.CurrentGS
 }
 
 // func initPlayerEquipment(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {

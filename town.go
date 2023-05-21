@@ -7,6 +7,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
@@ -71,26 +72,26 @@ func initTown(win *pixelgl.Window, Txt *text.Text) {
 	town6Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func townClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
+func townClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myGame.GameState {
 	//TODO ページを作成したら追加
 	if town1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
-		currentGameState = WeaponShop
+		myGame.CurrentGS = myGame.WeaponShop
 		log.Println("Town->WeaponShop")
 	} else if town2Button.Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
-		currentGameState = ArmorShop
+		myGame.CurrentGS = myGame.ArmorShop
 		log.Println("Town->ArmorShop")
 	} else if town3Button.Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
-		currentGameState = AccessoryShop
+		myGame.CurrentGS = myGame.AccessoryShop
 		log.Println("Town->AccessoryShop")
 	} else if town4Button.Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
-		currentGameState = BlackSmith
+		myGame.CurrentGS = myGame.BlackSmith
 		log.Println("Town->BlackSmith")
 	} else if town5Button.Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
-		currentGameState = EquipmentScreen
+		myGame.CurrentGS = myGame.EquipmentScreen
 		log.Println("Town->EquipmentScreen")
 	} else if town6Button.Contains(mousePos) || win.JustPressed(pixelgl.Key6) {
-		currentGameState = GoToScreen
+		myGame.CurrentGS = myGame.GoToScreen
 		log.Println("Town->GoToScreen")
 	}
-	return currentGameState
+	return myGame.CurrentGS
 }

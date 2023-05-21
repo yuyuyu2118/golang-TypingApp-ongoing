@@ -1,4 +1,4 @@
-package main
+package myGame
 
 import (
 	"github.com/faiface/pixel/pixelgl"
@@ -7,7 +7,7 @@ import (
 	"golang.org/x/image/colornames"
 )
 
-var currentGameState GameState
+var CurrentGS GameState
 
 type GameState int
 
@@ -39,7 +39,7 @@ var (
 	}
 )
 
-func initStartScreen(win *pixelgl.Window, Txt *text.Text) {
+func InitStartScreen(win *pixelgl.Window, Txt *text.Text) {
 	//windowのリセットとテキストの描画
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
@@ -47,67 +47,67 @@ func initStartScreen(win *pixelgl.Window, Txt *text.Text) {
 	myPos.LineCenterAlign(win, startLines, Txt, "center")
 }
 
-func initGoToScreen(win *pixelgl.Window, Txt *text.Text) {
+func InitGoToScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
 	initGoTo(win, Txt)
 }
 
-func initStageSlect(win *pixelgl.Window, Txt *text.Text) {
+func InitStageSlect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
 	initStage(win, Txt)
 }
 
-func initTownScreen(win *pixelgl.Window, Txt *text.Text) {
+func InitTownScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
 	initTown(win, Txt)
 }
 
-func initWeaponShop(win *pixelgl.Window, Txt *text.Text) {
+func InitWeaponShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
 	initWeapon(win, Txt)
 }
 
-func initArmorShop(win *pixelgl.Window, Txt *text.Text) {
+func InitArmorShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
 	initArmor(win, Txt)
 }
 
-func initAccessoryShop(win *pixelgl.Window, Txt *text.Text) {
+func InitAccessoryShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
 	initAccessory(win, Txt)
 }
 
-func initEquipmentScreen(win *pixelgl.Window, Txt *text.Text) {
+func InitEquipmentScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
 	initEquipment(win, Txt)
 }
 
-func initJobSelect(win *pixelgl.Window, Txt *text.Text) {
+func InitJobSelect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
 	initJob(win, Txt)
 }
 
-func initSaveScreen(win *pixelgl.Window, Txt *text.Text) {
+func InitSaveScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
 	initSave(win, Txt)
 }
 
-func initPlayingScreen(win *pixelgl.Window, Txt *text.Text) {
+func InitPlayingScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 	Txt.Clear()
 }
 
-func initEndScreen(win *pixelgl.Window, Txt *text.Text) {
+func InitEndScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Grey)
 	Txt.Clear()
 }
