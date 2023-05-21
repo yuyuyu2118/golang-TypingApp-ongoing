@@ -7,13 +7,15 @@ import (
 
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/battle"
 	"github.com/yuyuyu2118/typingGo/enemy"
+	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/player"
 )
 
-func battleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus, enemy *enemy.EnemyStatus) GameState {
-	if player.PlayerHP > 0 {
+func battleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus, enemy *enemy.EnemyStatus) myGame.GameState {
+	if player.HP > 0 {
 		yourTimeString := fmt.Sprintf("%0.3f", yourTime)
 		//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
 		endLines := []string{
@@ -43,20 +45,20 @@ func battleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 
 	//画面遷移,いろいろリセット
 	if win.JustPressed(pixelgl.KeyTab) {
-		currentGameState = PlayingScreen
+		myGame.CurrentGS = myGame.PlayingScreen
 		collectType, missType, index, score = 0, 0, 0, 0
-		player.PlayerHP = player.PlayerMaxHP
+		player.HP = player.MaxHP
 		enemy.HP = enemy.MaxHP
-		shuffle(words)
+		battle.Shuffle(words)
 		log.Println("Press:Enter -> GameState:Playing")
 	} else if win.JustPressed(pixelgl.KeyBackspace) {
-		currentGameState = GoToScreen
+		myGame.CurrentGS = myGame.GoToScreen
 		collectType, missType, index, score = 0, 0, 0, 0
-		player.PlayerHP = player.PlayerMaxHP
+		player.HP = player.MaxHP
 		enemy.HP = enemy.MaxHP
-		shuffle(words)
+		battle.Shuffle(words)
 		log.Println("Press:Enter -> GameState:GoToScreen")
 	}
 
-	return currentGameState
+	return myGame.CurrentGS
 }

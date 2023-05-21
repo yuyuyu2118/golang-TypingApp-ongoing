@@ -7,6 +7,8 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/font"
 )
@@ -21,7 +23,7 @@ func initializeWindow() (*pixelgl.Window, pixelgl.WindowConfig) {
 	}
 
 	win, err := pixelgl.NewWindow(cfg)
-	checkErrorPanic(err)
+	myUtil.CheckErrorPanic(err)
 	win.SetTitle(fmt.Sprintf("%s | FPS: ", cfg.Title))
 
 	return win, cfg
@@ -48,7 +50,7 @@ func initializeText(face font.Face, color color.Color) *text.Text {
 }
 
 func initializeAnyText(fontPath string, size int, color color.Color) *text.Text {
-	face, _ := loadTTF(fontPath, float64(size))
+	face, _ := myUtil.LoadTTF(fontPath, float64(size))
 	return initializeText(face, color)
 }
 
@@ -70,27 +72,27 @@ func initializeAnyText(fontPath string, size int, color color.Color) *text.Text 
 
 func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
 
-	switch currentGameState {
-	case GoToScreen:
-		initGoToScreen(win, Txt)
-	case StageSelect:
-		initStageSlect(win, Txt)
-	case TownScreen:
-		initTownScreen(win, Txt)
-	case WeaponShop:
-		initWeaponShop(win, Txt)
-	case ArmorShop:
-		initArmorShop(win, Txt)
-	case AccessoryShop:
-		initAccessoryShop(win, Txt)
-	case EquipmentScreen:
-		initEquipmentScreen(win, Txt)
-	case JobSelect:
-		initJobSelect(win, Txt)
-	case SaveScreen:
-		initSaveScreen(win, Txt)
-	case PlayingScreen:
-		initPlayingScreen(win, Txt)
+	switch myGame.CurrentGS {
+	case myGame.GoToScreen:
+		myGame.InitGoToScreen(win, Txt)
+	case myGame.StageSelect:
+		myGame.InitStageSlect(win, Txt)
+	case myGame.TownScreen:
+		myGame.InitTownScreen(win, Txt)
+	case myGame.WeaponShop:
+		myGame.InitWeaponShop(win, Txt)
+	case myGame.ArmorShop:
+		myGame.InitArmorShop(win, Txt)
+	case myGame.AccessoryShop:
+		myGame.InitAccessoryShop(win, Txt)
+	case myGame.EquipmentScreen:
+		myGame.InitEquipmentScreen(win, Txt)
+	case myGame.JobSelect:
+		myGame.InitJobSelect(win, Txt)
+	case myGame.SaveScreen:
+		myGame.InitSaveScreen(win, Txt)
+	case myGame.PlayingScreen:
+		myGame.InitPlayingScreen(win, Txt)
 	}
 
 	initPlayerGold(win, Txt, player)

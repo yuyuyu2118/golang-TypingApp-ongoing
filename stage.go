@@ -7,6 +7,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
@@ -39,13 +40,13 @@ func initStage(win *pixelgl.Window, Txt *text.Text) {
 	stage1Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func stageClickEvent(win *pixelgl.Window, mousePos pixel.Vec, stage *stageInf) GameState {
+func stageClickEvent(win *pixelgl.Window, mousePos pixel.Vec, stage *stageInf) myGame.GameState {
 
 	if stage1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
-		currentGameState = PlayingScreen
+		myGame.CurrentGS = myGame.PlayingScreen
 		log.Println("PlayStage is VS knight")
 		stage.stageNum = 1
 	}
 	log.Println("YourJob is", stage.stageNum)
-	return currentGameState
+	return myGame.CurrentGS
 }

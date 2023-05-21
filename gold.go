@@ -13,7 +13,7 @@ import (
 func initPlayerGold(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "Gold:", player.PlayerGold)
+	fmt.Fprintln(Txt, "Gold:", player.Gold)
 	xOffSet := 200.0
 	yOffSet := win.Bounds().H() / 3
 	txtPos := pixel.V(xOffSet, yOffSet)

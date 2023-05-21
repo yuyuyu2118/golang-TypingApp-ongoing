@@ -1,4 +1,4 @@
-package main
+package battle
 
 import (
 	"encoding/csv"
@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func initializeQuestion() []string {
+func InitializeQuestion() []string {
 	words := []string{}
 	file, _ := os.Open("assets\\question\\question2_4.csv")
 	defer file.Close()
@@ -21,12 +21,12 @@ func initializeQuestion() []string {
 		//wordsMap[record[1]] = record[2]
 		words = append(words, record[2])
 	}
-	shuffle(words)
+	Shuffle(words)
 	//wordsMap = shuffleMap(wordsMap)
 	return words
 }
 
-func shuffle(data []string) {
+func Shuffle(data []string) {
 	n := len(data)
 	rand.Seed(time.Now().Unix())
 	for i := n - 1; i >= 0; i-- {

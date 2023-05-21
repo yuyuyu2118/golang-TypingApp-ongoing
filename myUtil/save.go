@@ -1,4 +1,4 @@
-package main
+package myUtil
 
 import (
 	"fmt"
@@ -9,19 +9,21 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
 var saveContent string
+var tempPosition pixel.Vec
 
 var (
 	save1Button = pixel.Rect{}
 	save2Button = pixel.Rect{}
 )
 
-func initSave(win *pixelgl.Window, Txt *text.Text) {
+func InitSave(win *pixelgl.Window, Txt *text.Text) {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
@@ -44,20 +46,20 @@ func initSave(win *pixelgl.Window, Txt *text.Text) {
 	save2Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func saveClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) GameState {
+func SaveClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myGame.GameState {
 	//TODO ページを作成したら追加
 	if save1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
-		saveGame(player)
-		currentGameState = GoToScreen
+		SaveGame(player)
+		myGame.CurrentGS = myGame.GoToScreen
 		log.Println("Save Done!")
 	} else if save1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
-		currentGameState = GoToScreen
+		myGame.CurrentGS = myGame.GoToScreen
 		log.Println("saveScreen->GoToScreen")
 	}
-	return currentGameState
+	return myGame.CurrentGS
 }
 
-func saveGame(player *player.PlayerStatus) {
+func SaveGame(player *player.PlayerStatus) {
 	filename := "assets\\save\\save.csv"
 	initialText := "- INITIAL TEXT -\nThis file stores game save data.\nGold,job,equipment,\n"
 	file, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
@@ -83,7 +85,7 @@ func saveGame(player *player.PlayerStatus) {
 	}
 
 	//TODO 100行までセーブする100回からは古いデータから消える
-	saveContent = strconv.Itoa(player.PlayerGold) + "," + player.PlayerJob
+	saveContent = strconv.Itoa(player.Gold) + "," + player.Job
 
 	_, err = file.WriteString(saveContent + "\n")
 	if err != nil {
