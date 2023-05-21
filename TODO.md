@@ -25,6 +25,7 @@
   - Player.goに記述
 - endScreenに素材ドロップ等の情報を表示、ドロップコインも表示終了画面の充実化
 - CsvToSliceをcsvioに移動
+- playerStatusのインスタンス化をsaveファイルに記録する、csvファイルに記録
 
 
 # サブ機能

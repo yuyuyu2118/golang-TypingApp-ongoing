@@ -43,17 +43,19 @@ func InitBattleText(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) 
 	}
 	//Txt.Dot.X = TxtOrigX
 
+	/*setType
 	Txt.Color = colornames.White
 	Txt.Clear()
 	fmt.Fprintln(Txt, "\n\n", "collectType = ", collectType, " missType = ", missType)
 	myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt))
 	Txt.Dot.X = TxtOrigX
+	*/
 
-	//set Time+rule
+	/*setTime
 	Txt.Clear()
 	Txt.Color = colornames.White
-
 	fmt.Fprintln(Txt, "time = ", elapsed.Milliseconds())
 	myPos.DrawPos(win, Txt, myPos.BottleLeftPos(win, Txt))
+	*/
 	return elapsed
 }

@@ -47,6 +47,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		myGame.CurrentGS = myGame.PlayingScreen
 		collectType, missType, index, score = 0, 0, 0, 0
 		player.HP = player.MaxHP
+		player.SP = 0
 		enemy.HP = enemy.MaxHP
 		Shuffle(words)
 		log.Println("Press:Enter -> GameState:Playing")
@@ -54,6 +55,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		myGame.CurrentGS = myGame.GoToScreen
 		collectType, missType, index, score = 0, 0, 0, 0
 		player.HP = player.MaxHP
+		player.SP = 0
 		enemy.HP = enemy.MaxHP
 		Shuffle(words)
 		log.Println("Press:Enter -> GameState:GoToScreen")
