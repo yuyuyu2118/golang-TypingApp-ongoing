@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/faiface/pixel/pixelgl"
+	"github.com/yuyuyu2118/typingGo/battle"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
@@ -17,6 +18,8 @@ import (
 const (
 	winHSize = 1440
 )
+
+var startTime time.Time
 
 func run() {
 	win, _ := initializeWindow()
@@ -126,12 +129,13 @@ func run() {
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, basicTxt)
 
-			elapsed := initBattleText(win, basicTxt)
-			myGame.CurrentGS = battleTypingV1(win, player, &enemyKnight, elapsed)
+			elapsed := time.Since(startTime)
+			battle.InitBattleText(win, basicTxt, elapsed)
+			myGame.CurrentGS = battle.BattleTypingV1(win, player, &enemyKnight, elapsed)
 
 		case myGame.EndScreen:
 			myGame.InitEndScreen(win, endTxt)
-			myGame.CurrentGS = battleEndScreen(win, endTxt, player, &enemyKnight)
+			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemyKnight)
 			Ticker.Stop()
 		case myGame.TestState:
 			myGame.TestMode(win, basicTxt)

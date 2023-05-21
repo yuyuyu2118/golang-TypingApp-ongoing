@@ -1,4 +1,4 @@
-package main
+package battle
 
 import (
 	"fmt"
@@ -14,10 +14,9 @@ import (
 var (
 	collectType = 0
 	missType    = 0
-	startTime   = time.Now()
 )
 
-func initBattleText(win *pixelgl.Window, Txt *text.Text) time.Duration {
+func InitBattleText(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
@@ -53,7 +52,7 @@ func initBattleText(win *pixelgl.Window, Txt *text.Text) time.Duration {
 	//set Time+rule
 	Txt.Clear()
 	Txt.Color = colornames.White
-	elapsed := time.Since(startTime)
+
 	fmt.Fprintln(Txt, "time = ", elapsed.Milliseconds())
 	myPos.DrawPos(win, Txt, myPos.BottleLeftPos(win, Txt))
 	return elapsed

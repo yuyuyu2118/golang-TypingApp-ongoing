@@ -1,4 +1,4 @@
-package main
+package battle
 
 import (
 	"log"
@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/faiface/pixel/pixelgl"
-	"github.com/yuyuyu2118/typingGo/battle"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/player"
@@ -14,7 +13,7 @@ import (
 
 var (
 	score    = 0
-	words    = battle.InitializeQuestion()
+	words    = InitializeQuestion()
 	index    = 0
 	yourTime = 0.0
 
@@ -22,7 +21,7 @@ var (
 	lostGold = 0
 )
 
-func battleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration) myGame.GameState {
+func BattleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration) myGame.GameState {
 	question := words[score]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -51,12 +50,12 @@ func battleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 		}
 	}
 
-	battleTypingSkill(win, player, enemy)
-	myGame.CurrentGS = deathFlug(player, enemy, elapsed, myGame.CurrentGS)
+	BattleTypingSkill(win, player, enemy)
+	myGame.CurrentGS = DeathFlug(player, enemy, elapsed, myGame.CurrentGS)
 	return myGame.CurrentGS
 }
 
-func battleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
+func BattleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if win.JustPressed(pixelgl.KeySpace) {
 		log.Println("Skill!!!")
 		if player.SP == 50 {
@@ -74,7 +73,7 @@ func battleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *
 	}
 }
 
-func deathFlug(player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration, currentGameState myGame.GameState) myGame.GameState {
+func DeathFlug(player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration, currentGameState myGame.GameState) myGame.GameState {
 	if player.HP <= 0 {
 		yourTime = float64(elapsed.Seconds())
 		min := int(float64(enemy.Gold) * 0.7)
