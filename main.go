@@ -10,7 +10,6 @@ import (
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
-	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
@@ -33,7 +32,7 @@ func run() {
 	//playerStatusインスタンスを生成
 	player := player.NewPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "No Job")
 
-	stage := newStageInf(0)
+	stage := myGame.NewStageInf(0)
 
 	enemyInfo := enemy.CreateEnemyInstance()
 	enemyKnight := (*enemyInfo)[0]
@@ -59,14 +58,14 @@ func run() {
 			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
-				myGame.CurrentGS = goToClickEvent(win, win.MousePosition())
+				myGame.CurrentGS = myGame.GoToClickEvent(win, win.MousePosition())
 			}
 
 		case myGame.StageSelect:
 			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) {
-				myGame.CurrentGS = stageClickEvent(win, win.MousePosition(), stage)
+				myGame.CurrentGS = myGame.StageClickEvent(win, win.MousePosition(), stage)
 				Ticker = time.NewTicker(time.Duration(time.Duration(enemyKnight.AttackTick) * time.Second))
 				go func() {
 					for range Ticker.C {
@@ -81,43 +80,43 @@ func run() {
 			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
-				myGame.CurrentGS = townClickEvent(win, win.MousePosition())
+				myGame.CurrentGS = myGame.TownClickEvent(win, win.MousePosition())
 			}
 		case myGame.WeaponShop:
 			initScreenInformation(win, descriptionTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = weaponClickEvent(win, win.MousePosition())
+				myGame.CurrentGS = myGame.WeaponClickEvent(win, win.MousePosition())
 			}
 		case myGame.ArmorShop:
 			initScreenInformation(win, descriptionTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = armorClickEvent(win, win.MousePosition())
+				myGame.CurrentGS = myGame.ArmorClickEvent(win, win.MousePosition())
 			}
 		case myGame.AccessoryShop:
 			initScreenInformation(win, descriptionTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = accessoryClickEvent(win, win.MousePosition())
+				myGame.CurrentGS = myGame.AccessoryClickEvent(win, win.MousePosition())
 			}
 		case myGame.EquipmentScreen:
 			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
-				myGame.CurrentGS = equipmentClickEvent(win, win.MousePosition())
+				myGame.CurrentGS = myGame.EquipmentClickEvent(win, win.MousePosition())
 			}
 		case myGame.JobSelect:
 			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
-				myGame.CurrentGS = jobClickEvent(win, win.MousePosition(), player)
+				myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
 			}
 		case myGame.SaveScreen:
 			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) {
-				myGame.CurrentGS = myUtil.SaveClickEvent(win, win.MousePosition(), player)
+				myGame.CurrentGS = myGame.SaveClickEvent(win, win.MousePosition(), player)
 			}
 
 		case myGame.PlayingScreen:

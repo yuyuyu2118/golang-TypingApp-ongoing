@@ -1,4 +1,4 @@
-package main
+package myGame
 
 import (
 	"fmt"
@@ -7,10 +7,11 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
-	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
+
+var tempPosition pixel.Vec
 
 var (
 	goTo1Button = pixel.Rect{}
@@ -21,7 +22,7 @@ var (
 	goTo6Button = pixel.Rect{}
 )
 
-func initGoTo(win *pixelgl.Window, Txt *text.Text) {
+func InitGoTo(win *pixelgl.Window, Txt *text.Text) {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
@@ -72,26 +73,26 @@ func initGoTo(win *pixelgl.Window, Txt *text.Text) {
 	goTo6Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func goToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myGame.GameState {
+func GoToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
 	if goTo1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
-		myGame.CurrentGS = myGame.StageSelect
+		CurrentGS = StageSelect
 		log.Println("GoToScreen->Dungeon")
 	} else if goTo2Button.Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
-		myGame.CurrentGS = myGame.TownScreen
+		CurrentGS = TownScreen
 		log.Println("GoToScreen->Town")
 	} else if goTo3Button.Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
-		myGame.CurrentGS = myGame.EquipmentScreen
+		CurrentGS = EquipmentScreen
 		log.Println("GoToScreen->Equipment")
 	} else if goTo4Button.Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
-		myGame.CurrentGS = myGame.JobSelect
+		CurrentGS = JobSelect
 		log.Println("GoToScreen->JobSelect")
 	} else if goTo5Button.Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
-		myGame.CurrentGS = myGame.SaveScreen
+		CurrentGS = SaveScreen
 		log.Println("GoToScreen->Save")
 	} else if goTo6Button.Contains(mousePos) || win.JustPressed(pixelgl.Key6) {
-		myGame.CurrentGS = myGame.StartScreen
+		CurrentGS = StartScreen
 		log.Println("GoToScreen->StartScreen")
 	}
-	return myGame.CurrentGS
+	return CurrentGS
 }

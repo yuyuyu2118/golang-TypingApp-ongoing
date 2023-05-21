@@ -51,55 +51,55 @@ func InitGoToScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	initGoTo(win, Txt)
+	InitGoTo(win, Txt)
 }
 
 func InitStageSlect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initStage(win, Txt)
+	InitStage(win, Txt)
 }
 
 func InitTownScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initTown(win, Txt)
+	InitTown(win, Txt)
 }
 
 func InitWeaponShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initWeapon(win, Txt)
+	InitWeapon(win, Txt)
 }
 
 func InitArmorShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initArmor(win, Txt)
+	InitArmor(win, Txt)
 }
 
 func InitAccessoryShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initAccessory(win, Txt)
+	InitAccessory(win, Txt)
 }
 
 func InitEquipmentScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initEquipment(win, Txt)
+	InitEquipment(win, Txt)
 }
 
 func InitJobSelect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initJob(win, Txt)
+	InitJob(win, Txt)
 }
 
 func InitSaveScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 
-	initSave(win, Txt)
+	InitSave(win, Txt)
 }
 
 func InitPlayingScreen(win *pixelgl.Window, Txt *text.Text) {
