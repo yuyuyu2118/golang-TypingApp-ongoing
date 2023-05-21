@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/faiface/pixel/pixelgl"
+	"github.com/yuyuyu2118/typingGo/enemy"
 	"golang.org/x/image/colornames"
 )
 
@@ -27,7 +28,13 @@ func run() {
 	//playerStatusインスタンスを生成
 	player := newPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "No Job")
 	stage := newStageInf(0)
-	enemyKnight := newEnemyStatus(100, 100, 1, 1, 30, "knight", false, 3.0)
+
+	enemy.SetCfg(winHSize)
+	enemyInfo := enemy.CreateEnemyInstance()
+	enemyKnight := (*enemyInfo)[0]
+	// for _, enemy := range *enemyInfo {
+	// 	enemyKnight := enemy
+	// }
 
 	var Ticker *time.Ticker
 	for !win.Closed() {
@@ -55,10 +62,11 @@ func run() {
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) {
 				currentGameState = stageClickEvent(win, win.MousePosition(), stage)
-				Ticker = time.NewTicker(time.Duration(time.Duration(enemyKnight.enemyAttackTick) * time.Second))
+				Ticker = time.NewTicker(time.Duration(time.Duration(enemyKnight.AttackTick) * time.Second))
 				go func() {
 					for range Ticker.C {
-						player.playerHP -= enemyKnight.enemyOP
+						log.Println(enemyKnight.OP)
+						player.playerHP -= enemyKnight.OP
 						log.Println(("Attack"))
 					}
 				}()
@@ -109,18 +117,17 @@ func run() {
 
 		case PlayingScreen:
 			initScreenInformation(win, basicTxt, player)
-
-			setEnemyPic(win, enemyKnight, "assets\\monster\\monster1.png", 4.0)
-			setEnemyText(win, basicTxt, enemyKnight)
+			enemy.SetEnemyPic(win, &enemyKnight, "assets\\monster\\monster1.png", 4.0)
+			enemy.SetEnemyText(win, basicTxt, &enemyKnight)
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			setPlayerBattleInf(win, basicTxt, player)
 
 			elapsed := initBattleText(win, basicTxt)
-			currentGameState = battleTypingV1(win, player, enemyKnight, elapsed)
+			currentGameState = battleTypingV1(win, player, &enemyKnight, elapsed)
 
 		case EndScreen:
 			initEndScreen(win, endTxt)
-			currentGameState = battleEndScreen(win, endTxt, player, enemyKnight)
+			currentGameState = battleEndScreen(win, endTxt, player, &enemyKnight)
 			Ticker.Stop()
 		case TestState:
 			testMode(win, basicTxt)

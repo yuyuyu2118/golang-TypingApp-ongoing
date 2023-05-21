@@ -1,4 +1,4 @@
-package main
+package myIo
 
 import (
 	"image"
@@ -9,7 +9,7 @@ import (
 )
 
 // in:画像パス out:pixelで使えるpictureData
-func openDecodePictureData(sheetPath string) (sheet pixel.Picture, err error) {
+func OpenDecodePictureData(sheetPath string) (sheet pixel.Picture, err error) {
 	sheetFile, err := os.Open(sheetPath)
 	if err != nil {
 		err = errors.Wrap(err, "This error is os.Open error")

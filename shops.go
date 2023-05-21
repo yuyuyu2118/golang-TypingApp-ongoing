@@ -34,11 +34,11 @@ const (
 
 var (
 	weaponPath    = "assets/shop/weapon.csv"
-	descWeapon    = csvToSlice(weaponPath)
+	descWeapon    = CsvToSlice(weaponPath)
 	armorPath     = "assets/shop/armor.csv"
-	descArmor     = csvToSlice(armorPath)
+	descArmor     = CsvToSlice(armorPath)
 	accessoryPath = "assets/shop/accessory.csv"
-	descAccessory = csvToSlice(accessoryPath)
+	descAccessory = CsvToSlice(accessoryPath)
 )
 
 var (
@@ -264,7 +264,7 @@ func accessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	return currentGameState
 }
 
-func csvToSlice(path string) [][]string {
+func CsvToSlice(path string) [][]string {
 	file, err := os.Open(path)
 	if err != nil {
 		log.Fatal(err)
