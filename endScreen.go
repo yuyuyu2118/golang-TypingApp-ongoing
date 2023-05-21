@@ -8,6 +8,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/enemy"
+	"github.com/yuyuyu2118/typingGo/myPos"
 )
 
 func battleEndScreen(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus, enemy *enemy.EnemyStatus) GameState {
@@ -22,7 +23,7 @@ func battleEndScreen(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus, 
 			"\n\n",
 			"ReSTART : Press Tab | Back : Press BackSpace",
 		}
-		lineCenterAlign(win, endLines, Txt, "center")
+		myPos.LineCenterAlign(win, endLines, Txt, "center")
 	} else {
 		yourTimeString := fmt.Sprintf("%0.3f", yourTime)
 		//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
@@ -36,7 +37,7 @@ func battleEndScreen(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus, 
 			"\n\n",
 			"ReSTART : Press Tab | Back : Press BackSpace",
 		}
-		lineCenterAlign(win, endLines, Txt, "center")
+		myPos.LineCenterAlign(win, endLines, Txt, "center")
 	}
 
 	//画面遷移,いろいろリセット

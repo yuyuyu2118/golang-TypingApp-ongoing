@@ -8,6 +8,7 @@ import (
 
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
+	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
 
@@ -25,11 +26,11 @@ func run() {
 	startTxt := initializeAnyText(fontPath, 80, colornames.White)
 	endTxt := initializeAnyText(fontPath, 60, colornames.White)
 
+	myPos.SetCfg(winHSize)
 	//playerStatusインスタンスを生成
 	player := newPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "No Job")
 	stage := newStageInf(0)
 
-	enemy.SetCfg(winHSize)
 	enemyInfo := enemy.CreateEnemyInstance()
 	enemyKnight := (*enemyInfo)[0]
 	// for _, enemy := range *enemyInfo {

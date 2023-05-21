@@ -7,6 +7,7 @@ import (
 	"github.com/faiface/pixel/imdraw"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
 
@@ -151,6 +152,6 @@ func initPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	xOffSet := -140.0
 	yOffSet := -80.0
 	txtPos := pixel.V(xOffSet, yOffSet)
-	tempPosition := pixel.IM.Moved(bottleRightPos(win, Txt).Sub(txtPos))
+	tempPosition := pixel.IM.Moved(myPos.BottleRightPos(win, Txt).Sub(txtPos))
 	Txt.Draw(win, tempPosition)
 }

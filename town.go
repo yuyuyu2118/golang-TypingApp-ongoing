@@ -7,6 +7,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
 
@@ -24,49 +25,49 @@ func initTown(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "Where are you going?")
-	tempPosition = topCenterPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.TopCenterPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "1. WeaponShop")
-	tempPosition = centerLeftPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.CenterLeftPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	town1Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "2. ArmorShop")
-	tempPosition = centerPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.CenterPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	town2Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "3. AccessoryShop")
-	tempPosition = centerRightPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.CenterRightPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	town3Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "4. BlackSmith")
-	tempPosition = bottleLeftPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.BottleLeftPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	town4Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "5. Equipment")
-	tempPosition = bottleCenterPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.BottleCenterPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	town5Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "6. Exit")
-	tempPosition = bottleRightPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.BottleRightPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	town6Button = Txt.Bounds().Moved(tempPosition)
 }
 
