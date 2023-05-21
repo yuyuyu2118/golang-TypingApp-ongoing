@@ -23,6 +23,7 @@ type EnemyStatus struct {
 	Gold       int
 	Attack     bool
 	AttackTick float64
+	EnemySize  float64
 }
 
 func CreateEnemyInstance() *[]EnemyStatus {
@@ -49,6 +50,7 @@ func CreateEnemyInstance() *[]EnemyStatus {
 			Gold:       Gold,
 			Attack:     Attack,
 			AttackTick: AttackTick,
+			EnemySize:  4.0,
 		}
 		instance = append(instance, tempInstance)
 	}

@@ -93,6 +93,8 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 		myGame.InitSaveScreen(win, Txt)
 	case myGame.PlayingScreen:
 		myGame.InitPlayingScreen(win, Txt)
+	case myGame.BattleEnemyScreen:
+		myGame.InitBattleEnemyScreen(win, Txt)
 	}
 
 	player.InitPlayerGold(win, Txt)

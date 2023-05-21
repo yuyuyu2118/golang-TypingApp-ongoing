@@ -256,11 +256,11 @@ func (player *PlayerStatus) InitPlayerStatus(win *pixelgl.Window, Txt *text.Text
 func InitPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, player.HP, " ", player.SP)
-	xOffSet := -140.0
-	yOffSet := -80.0
+	fmt.Fprintln(Txt, player.HP, "\n", player.SP)
+	xOffSet := 30.0
+	yOffSet := 50.0
 	txtPos := pixel.V(xOffSet, yOffSet)
-	tempPosition := pixel.IM.Moved(myPos.BottleRightPos(win, Txt).Sub(txtPos))
+	tempPosition := pixel.IM.Moved(myPos.BottleLeftPos(win, Txt).Add(txtPos))
 	Txt.Draw(win, tempPosition)
 }
 

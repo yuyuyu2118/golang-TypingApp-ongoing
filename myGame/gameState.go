@@ -22,6 +22,7 @@ const (
 	SaveScreen
 
 	PlayingScreen
+	BattleEnemyScreen
 	EndScreen
 	TestState
 
@@ -103,6 +104,11 @@ func InitSaveScreen(win *pixelgl.Window, Txt *text.Text) {
 }
 
 func InitPlayingScreen(win *pixelgl.Window, Txt *text.Text) {
+	win.Clear(colornames.Black)
+	Txt.Clear()
+}
+
+func InitBattleEnemyScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 	Txt.Clear()
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/player"
+	"golang.org/x/image/colornames"
 )
 
 var (
@@ -19,6 +20,12 @@ var (
 
 	gainGold = 0
 	lostGold = 0
+
+	AttackCount = 3.0
+	tempCount   = 0.0
+	lock        = false
+	lock2       = false
+	pressEnter  = false
 )
 
 func BattleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration) myGame.GameState {
@@ -30,15 +37,14 @@ func BattleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 		if typed[0] == temp[index] && index < len(question) {
 			index++
 			collectType++
-			enemy.HP -= 3
+
+			enemy.HP -= player.OP
 			player.SP += player.BaseSP
-			//enemy Down
-			log.Println("collectType = ", collectType)
-			//1 word end type
+
 			if index == len(question) {
 				index = 0
 				score++
-				//全部打ち切っちゃった場合
+
 				if score == len(words) {
 					myGame.CurrentGS = myGame.EndScreen
 					yourTime = float64(elapsed.Seconds())
@@ -46,7 +52,6 @@ func BattleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 			}
 		} else {
 			missType++
-			log.Println("missType = ", missType)
 		}
 	}
 
@@ -95,4 +100,65 @@ func DeathFlug(player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed ti
 		yourTime = float64(elapsed.Seconds())
 	}
 	return currentGameState
+}
+
+func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration) myGame.GameState {
+	question := words[score]
+	temp := []byte(question)
+	typed := win.Typed()
+
+	tempCount = AttackCount - elapsed.Seconds()
+
+	if myGame.CurrentGS == myGame.PlayingScreen {
+		if tempCount > 0 {
+			if typed != "" {
+				if typed[0] == temp[index] && index < len(question) {
+					index++
+					collectType++
+					enemy.HP -= player.OP
+					player.SP += player.BaseSP
+					if index == len(question) {
+						index = 0
+						score++
+					}
+				} else {
+					missType++
+				}
+			}
+		} else {
+			myGame.CurrentGS = myGame.BattleEnemyScreen
+		}
+	} else if myGame.CurrentGS == myGame.BattleEnemyScreen {
+		//攻撃判定
+		//PressEnter
+		if win.JustPressed(pixelgl.KeyEnter) {
+			pressEnter = true
+		}
+		if pressEnter == true {
+			if enemy.EnemySize >= 4.0 && enemy.EnemySize < 4.5 && lock == false && lock2 == false {
+				enemy.EnemySize = enemy.EnemySize * 1.05
+				if enemy.EnemySize > 4.5 {
+					lock = true
+					win.Canvas().Clear(colornames.Red)
+				}
+			} else if enemy.EnemySize >= 4 && lock == true && lock2 == false {
+				enemy.EnemySize = enemy.EnemySize * 0.95
+				if enemy.EnemySize < 4 {
+					lock2 = true
+				}
+			} else if lock == true && lock2 == true {
+				enemy.EnemySize = 4.0
+				lock = false
+				lock2 = false
+				player.HP -= enemy.OP
+				myGame.CurrentGS = myGame.PlayingScreen
+				pressEnter = false
+				index = 0
+			}
+		}
+	}
+
+	BattleTypingSkill(win, player, enemy)
+	myGame.CurrentGS = DeathFlug(player, enemy, elapsed, myGame.CurrentGS)
+	return myGame.CurrentGS
 }
