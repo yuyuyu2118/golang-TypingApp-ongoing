@@ -7,6 +7,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/font"
 )
 
@@ -67,7 +68,7 @@ func initializeAnyText(fontPath string, size int, color color.Color) *text.Text 
 // 	return streamer, func() { _ = f.Close() }
 // }
 
-func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
+func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
 
 	switch currentGameState {
 	case GoToScreen:
@@ -94,6 +95,7 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *PlayerSt
 
 	initPlayerGold(win, Txt, player)
 	initPlayerJob(win, Txt, player)
-	initPlayerStatus(win, Txt, player)
+
+	player.InitPlayerStatus(win, Txt)
 	//initPlayerEquipment(win, Txt, player)
 }

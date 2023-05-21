@@ -1,7 +1,8 @@
-package main
+package player
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
@@ -12,26 +13,26 @@ import (
 )
 
 type PlayerStatus struct {
-	playerMaxHP  float64
-	playerHP     float64
-	playerOP     float64
-	playerDP     float64
-	playerMaxSP  float64
-	playerSP     float64
-	playerBaseSP float64
-	playerGold   int
-	playerJob    string
+	PlayerMaxHP  float64
+	PlayerHP     float64
+	PlayerOP     float64
+	PlayerDP     float64
+	PlayerMaxSP  float64
+	PlayerSP     float64
+	PlayerBaseSP float64
+	PlayerGold   int
+	PlayerJob    string
 }
 
 var (
 	skillRect = pixel.R(0, 0, 0, 0)
 )
 
-func newPlayerStatus(MaxHP float64, HP float64, OP float64, DP float64, MaxSP float64, SP float64, BaseSP float64, Gold int, Job string) *PlayerStatus {
+func NewPlayerStatus(MaxHP float64, HP float64, OP float64, DP float64, MaxSP float64, SP float64, BaseSP float64, Gold int, Job string) *PlayerStatus {
 	return &PlayerStatus{MaxHP, HP, OP, DP, MaxSP, SP, BaseSP, Gold, Job}
 }
 
-func setPlayerSkillBar(win *pixelgl.Window, player *PlayerStatus) {
+func SetPlayerSkillBar(win *pixelgl.Window, player *PlayerStatus) {
 	// log.Println("win.Bounds().Max.X=", win.Bounds().Max.X)
 	// log.Println("win.Bounds().Max.Y=", win.Bounds().Max.Y)
 	rect := pixel.R(
@@ -47,31 +48,31 @@ func setPlayerSkillBar(win *pixelgl.Window, player *PlayerStatus) {
 	imd.Draw(win)
 }
 
-func setPlayerSkillBarOut(win *pixelgl.Window, player *PlayerStatus) {
-	//log.Println("maxsp", player.playerMaxSP, "SP=", player.playerSP, "Base=", player.playerBaseSP)
+func SetPlayerSkillBarOut(win *pixelgl.Window, player *PlayerStatus) {
+	//log.Println("maxsp", player.PlayerMaxSP, "SP=", player.PlayerSP, "Base=", player.PlayerBaseSP)
 	rMinX := win.Bounds().Max.X - win.Bounds().Max.X/15
 	rMinY := win.Bounds().Min.Y + win.Bounds().Max.Y/9
 	rMaxX := win.Bounds().Max.X - win.Bounds().Max.X/36
 	rMaxY := win.Bounds().Max.Y - win.Bounds().Max.Y/9
-	if player.playerMaxSP <= player.playerSP {
-		player.playerSP = 50
+	if player.PlayerMaxSP <= player.PlayerSP {
+		player.PlayerSP = 50
 		skillRect = pixel.R(
 			rMinX,
 			rMinY+((win.Bounds().Max.Y-win.Bounds().Max.Y/9)-(win.Bounds().Min.Y+win.Bounds().Max.Y/9)),
 			rMaxX,
 			rMaxY,
 		)
-	} else if player.playerSP == 0 {
+	} else if player.PlayerSP == 0 {
 		skillRect = pixel.R(
 			rMinX,
 			rMinY,
 			rMaxX,
 			rMaxY,
 		)
-	} else if player.playerSP < player.playerMaxSP {
+	} else if player.PlayerSP < player.PlayerMaxSP {
 		skillRect = pixel.R(
 			rMinX,
-			rMinY+((win.Bounds().Max.Y-win.Bounds().Max.Y/9)-(win.Bounds().Min.Y+win.Bounds().Max.Y/9))*((player.playerMaxSP-(player.playerMaxSP-player.playerSP))/player.playerMaxSP),
+			rMinY+((win.Bounds().Max.Y-win.Bounds().Max.Y/9)-(win.Bounds().Min.Y+win.Bounds().Max.Y/9))*((player.PlayerMaxSP-(player.PlayerMaxSP-player.PlayerSP))/player.PlayerMaxSP),
 			rMaxX,
 			rMaxY,
 		)
@@ -83,7 +84,7 @@ func setPlayerSkillBarOut(win *pixelgl.Window, player *PlayerStatus) {
 	imd.Draw(win)
 }
 
-func setPlayerHPBar(win *pixelgl.Window, player *PlayerStatus) {
+func SetPlayerHPBar(win *pixelgl.Window, player *PlayerStatus) {
 	rMinX := win.Bounds().Max.X - win.Bounds().Max.X/9
 	rMinY := win.Bounds().Min.Y + win.Bounds().Max.Y/9
 	rMaxX := win.Bounds().Max.X - win.Bounds().Max.X/15
@@ -93,10 +94,10 @@ func setPlayerHPBar(win *pixelgl.Window, player *PlayerStatus) {
 		rMinX,
 		rMinY,
 		rMaxX,
-		rMinY+(rMaxY-rMinY)*(player.playerHP/player.playerMaxHP), //-rMaxY*((player.playerHP)/player.playerMaxHP),
+		rMinY+(rMaxY-rMinY)*(player.PlayerHP/player.PlayerMaxHP), //-rMaxY*((player.PlayerHP)/player.PlayerMaxHP),
 	)
 
-	if player.playerHP <= 0 {
+	if player.PlayerHP <= 0 {
 		hpRect = pixel.R(
 			rMinX,
 			rMinY,
@@ -112,7 +113,7 @@ func setPlayerHPBar(win *pixelgl.Window, player *PlayerStatus) {
 	imd.Draw(win)
 }
 
-func setPlayerHPBarOut(win *pixelgl.Window, player *PlayerStatus) {
+func SetPlayerHPBarOut(win *pixelgl.Window, player *PlayerStatus) {
 	hpRect := pixel.R(
 		win.Bounds().Max.X-win.Bounds().Max.X/9,
 		win.Bounds().Min.Y+win.Bounds().Max.Y/9,
@@ -126,18 +127,18 @@ func setPlayerHPBarOut(win *pixelgl.Window, player *PlayerStatus) {
 	imd.Draw(win)
 }
 
-func setPlayerBattleInf(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
-	setPlayerSkillBar(win, player)
-	setPlayerSkillBarOut(win, player)
-	setPlayerHPBarOut(win, player)
-	setPlayerHPBar(win, player)
-	initPlayerHPSP(win, Txt, player)
+func (player *PlayerStatus) SetPlayerBattleInf(win *pixelgl.Window, Txt *text.Text) {
+	SetPlayerSkillBar(win, player)
+	SetPlayerSkillBarOut(win, player)
+	SetPlayerHPBarOut(win, player)
+	SetPlayerHPBar(win, player)
+	InitPlayerHPSP(win, Txt, player)
 }
 
-func initPlayerStatus(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
+func (player *PlayerStatus) InitPlayerStatus(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "OP: ", player.playerOP, "DP: ", player.playerDP)
+	fmt.Fprintln(Txt, "OP: ", player.PlayerOP, "DP: ", player.PlayerDP)
 	xOffSet := 0.0
 	yOffSet := win.Bounds().H()/3 - Txt.LineHeight
 	txtPos := pixel.V(xOffSet, yOffSet)
@@ -145,13 +146,17 @@ func initPlayerStatus(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus)
 	Txt.Draw(win, tempPosition)
 }
 
-func initPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
+func InitPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, player.playerHP, " ", player.playerSP)
+	fmt.Fprintln(Txt, player.PlayerHP, " ", player.PlayerSP)
 	xOffSet := -140.0
 	yOffSet := -80.0
 	txtPos := pixel.V(xOffSet, yOffSet)
 	tempPosition := pixel.IM.Moved(myPos.BottleRightPos(win, Txt).Sub(txtPos))
 	Txt.Draw(win, tempPosition)
+}
+
+func TempFunc() {
+	log.Println("temp")
 }

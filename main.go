@@ -9,6 +9,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -28,7 +29,8 @@ func run() {
 
 	myPos.SetCfg(winHSize)
 	//playerStatusインスタンスを生成
-	player := newPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "No Job")
+	player := player.NewPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "No Job")
+
 	stage := newStageInf(0)
 
 	enemyInfo := enemy.CreateEnemyInstance()
@@ -67,7 +69,7 @@ func run() {
 				go func() {
 					for range Ticker.C {
 						log.Println(enemyKnight.OP)
-						player.playerHP -= enemyKnight.OP
+						player.PlayerHP -= enemyKnight.OP
 						log.Println(("Attack"))
 					}
 				}()
@@ -121,7 +123,7 @@ func run() {
 			enemy.SetEnemyPic(win, &enemyKnight, "assets\\monster\\monster1.png", 4.0)
 			enemy.SetEnemyText(win, basicTxt, &enemyKnight)
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
-			setPlayerBattleInf(win, basicTxt, player)
+			player.SetPlayerBattleInf(win, basicTxt)
 
 			elapsed := initBattleText(win, basicTxt)
 			currentGameState = battleTypingV1(win, player, &enemyKnight, elapsed)

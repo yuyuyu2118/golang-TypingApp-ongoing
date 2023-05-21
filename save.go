@@ -10,6 +10,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -43,7 +44,7 @@ func initSave(win *pixelgl.Window, Txt *text.Text) {
 	save2Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func saveClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *PlayerStatus) GameState {
+func saveClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) GameState {
 	//TODO ページを作成したら追加
 	if save1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		saveGame(player)
@@ -56,7 +57,7 @@ func saveClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *PlayerStatu
 	return currentGameState
 }
 
-func saveGame(player *PlayerStatus) {
+func saveGame(player *player.PlayerStatus) {
 	filename := "assets\\save\\save.csv"
 	initialText := "- INITIAL TEXT -\nThis file stores game save data.\nGold,job,equipment,\n"
 	file, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
@@ -82,7 +83,7 @@ func saveGame(player *PlayerStatus) {
 	}
 
 	//TODO 100行までセーブする100回からは古いデータから消える
-	saveContent = strconv.Itoa(player.playerGold) + "," + player.playerJob
+	saveContent = strconv.Itoa(player.PlayerGold) + "," + player.PlayerJob
 
 	_, err = file.WriteString(saveContent + "\n")
 	if err != nil {
