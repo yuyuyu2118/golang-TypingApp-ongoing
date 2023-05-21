@@ -24,6 +24,7 @@
 - initPlayerを作成して、initPlayerGoldやinitPlayerJobをまとめる。それぞれのoffSetから相対位置を算出する、引数にoffSetを追加する
   - Player.goに記述
 - endScreenに素材ドロップ等の情報を表示、ドロップコインも表示終了画面の充実化
+- CsvToSliceをcsvioに移動
 
 
 # サブ機能

@@ -1,4 +1,4 @@
-package myUtil
+package myGame
 
 import (
 	"fmt"
@@ -9,14 +9,12 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
-	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
 var saveContent string
-var tempPosition pixel.Vec
 
 var (
 	save1Button = pixel.Rect{}
@@ -46,17 +44,17 @@ func InitSave(win *pixelgl.Window, Txt *text.Text) {
 	save2Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func SaveClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myGame.GameState {
+func SaveClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) GameState {
 	//TODO ページを作成したら追加
 	if save1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		SaveGame(player)
-		myGame.CurrentGS = myGame.GoToScreen
+		CurrentGS = GoToScreen
 		log.Println("Save Done!")
 	} else if save1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
-		myGame.CurrentGS = myGame.GoToScreen
+		CurrentGS = GoToScreen
 		log.Println("saveScreen->GoToScreen")
 	}
-	return myGame.CurrentGS
+	return CurrentGS
 }
 
 func SaveGame(player *player.PlayerStatus) {

@@ -96,7 +96,7 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 	}
 
 	initPlayerGold(win, Txt, player)
-	initPlayerJob(win, Txt, player)
+	myGame.InitPlayerJob(win, Txt, player)
 
 	player.InitPlayerStatus(win, Txt)
 	//initPlayerEquipment(win, Txt, player)
