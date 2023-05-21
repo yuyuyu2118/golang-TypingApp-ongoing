@@ -67,13 +67,6 @@ func run() {
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) {
 				myGame.CurrentGS = myGame.StageClickEvent(win, win.MousePosition(), stage)
-				Ticker = time.NewTicker(time.Duration(time.Duration(enemyKnight.AttackTick) * time.Second))
-				go func() {
-					for range Ticker.C {
-						player.HP -= enemyKnight.OP
-					}
-				}()
-				startTime = time.Now()
 			}
 		case myGame.TownScreen:
 			initScreenInformation(win, basicTxt, player)
@@ -147,7 +140,6 @@ func run() {
 		case myGame.EndScreen:
 			myGame.InitEndScreen(win, endTxt)
 			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemyKnight)
-			Ticker.Stop()
 		case myGame.TestState:
 			myGame.TestMode(win, basicTxt)
 		}
