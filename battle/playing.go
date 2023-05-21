@@ -7,6 +7,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
@@ -16,7 +17,7 @@ var (
 	missType    = 0
 )
 
-func InitBattleText(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
+func InitBattleTextV1(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
@@ -25,7 +26,7 @@ func InitBattleText(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) 
 
 	offset := Txt.Bounds().W()
 	TxtOrigX := Txt.Dot.X
-	spacing := 60.0
+	spacing := 100.0
 	if len(words)-score != 1 {
 		Txt.Color = colornames.Darkgray
 		offset := Txt.Bounds().W()
@@ -57,5 +58,46 @@ func InitBattleText(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) 
 	fmt.Fprintln(Txt, "time = ", elapsed.Milliseconds())
 	myPos.DrawPos(win, Txt, myPos.BottleLeftPos(win, Txt))
 	*/
+	return elapsed
+}
+
+func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
+
+	if myGame.CurrentGS == myGame.PlayingScreen {
+		Txt.Clear()
+		Txt.Color = colornames.White
+		fmt.Fprintln(Txt, "> ", words[score])
+		myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt))
+
+		offset := Txt.Bounds().W()
+		TxtOrigX := Txt.Dot.X
+		spacing := 100.0
+		if len(words)-score != 1 {
+			Txt.Color = colornames.Darkgray
+			offset := Txt.Bounds().W()
+			Txt.Clear()
+			fmt.Fprintln(Txt, words[score+1])
+			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
+			Txt.Dot.X = TxtOrigX
+		}
+		if !(len(words)-score == 2 || len(words)-score == 1) {
+			Txt.Color = colornames.Gray
+			offset += Txt.Bounds().W()
+			Txt.Clear()
+			fmt.Fprintln(Txt, words[score+2])
+			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
+		}
+	} else if myGame.CurrentGS == myGame.BattleEnemyScreen {
+		Txt.Clear()
+		Txt.Color = colornames.White
+		fmt.Fprintln(Txt, "EnemyAttack!!")
+		myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt))
+	}
+
+	Txt.Clear()
+	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, "time = ", elapsed.Milliseconds())
+	myPos.DrawPos(win, Txt, myPos.BottleLeftPos(win, Txt))
+
 	return elapsed
 }

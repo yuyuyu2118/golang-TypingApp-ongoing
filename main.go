@@ -35,7 +35,7 @@ func run() {
 	myPos.SetCfg(winHSize)
 	//playerStatusインスタンスを生成
 	stage := myGame.NewStageInf(0)
-	player := player.NewPlayerStatus(30, 30, 1, 1, 50, 0, 2, 0, "No Job")
+	player := player.NewPlayerStatus(30, 30, 3, 1, 50, 0, 2, 0, "No Job")
 	enemyInfo := enemy.CreateEnemyInstance()
 	enemyKnight := (*enemyInfo)[0]
 	// for _, enemy := range *enemyInfo {
@@ -120,14 +120,30 @@ func run() {
 
 		case myGame.PlayingScreen:
 			initScreenInformation(win, basicTxt, player)
-			enemy.SetEnemyPic(win, &enemyKnight, "assets\\monster\\monster1.png", 4.0)
+			enemy.SetEnemyPic(win, &enemyKnight, "assets\\monster\\monster1.png", enemyKnight.EnemySize)
 			enemy.SetEnemyText(win, basicTxt, &enemyKnight)
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, basicTxt)
 
 			elapsed := time.Since(startTime)
-			battle.InitBattleText(win, basicTxt, elapsed)
-			myGame.CurrentGS = battle.BattleTypingV1(win, player, &enemyKnight, elapsed)
+			battle.InitBattleTextV2(win, basicTxt, elapsed)
+			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemyKnight, elapsed)
+			if myGame.CurrentGS == myGame.BattleEnemyScreen {
+				startTime = time.Now()
+			}
+		case myGame.BattleEnemyScreen:
+			initScreenInformation(win, basicTxt, player)
+			enemy.SetEnemyPic(win, &enemyKnight, "assets\\monster\\monster1.png", enemyKnight.EnemySize)
+			enemy.SetEnemyText(win, basicTxt, &enemyKnight)
+			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
+			player.SetPlayerBattleInf(win, basicTxt)
+
+			elapsed := time.Since(startTime)
+			battle.InitBattleTextV2(win, basicTxt, elapsed)
+			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemyKnight, elapsed)
+			if myGame.CurrentGS == myGame.PlayingScreen {
+				startTime = time.Now()
+			}
 		case myGame.EndScreen:
 			myGame.InitEndScreen(win, endTxt)
 			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemyKnight)
