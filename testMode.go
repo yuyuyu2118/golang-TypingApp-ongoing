@@ -5,6 +5,7 @@ import (
 
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
 
@@ -19,25 +20,25 @@ func testMode(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 	tempString = "RightPosition"
 	fmt.Fprintln(Txt, tempString)
-	drawPos(win, Txt, topRightPos(win, Txt))
+	myPos.DrawPos(win, Txt, myPos.TopRightPos(win, Txt))
 
 	Txt.Clear()
 	tempString = "LeftPosition"
 	fmt.Fprintln(Txt, tempString)
-	drawPos(win, Txt, topLeftPos(win, Txt))
+	myPos.DrawPos(win, Txt, myPos.TopLeftPos(win, Txt))
 
 	Txt.Clear()
 	tempString = "bottleCenterPosition"
 	fmt.Fprintln(Txt, tempString)
-	drawPos(win, Txt, bottleCenterPos(win, Txt))
+	myPos.DrawPos(win, Txt, myPos.BottleCenterPos(win, Txt))
 
 	Txt.Clear()
 	tempString = "bottleRightPosition"
 	fmt.Fprintln(Txt, tempString)
-	drawPos(win, Txt, bottleRightPos(win, Txt))
+	myPos.DrawPos(win, Txt, myPos.BottleRightPos(win, Txt))
 
 	Txt.Clear()
 	tempString = "bottleLeftPosition"
 	fmt.Fprintln(Txt, tempString)
-	drawPos(win, Txt, bottleLeftPos(win, Txt))
+	myPos.DrawPos(win, Txt, myPos.BottleLeftPos(win, Txt))
 }

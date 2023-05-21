@@ -9,6 +9,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
 
@@ -24,21 +25,21 @@ func initSave(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "Do you want to save?")
-	tempPosition = topCenterPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.TopCenterPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "1. Yes")
-	tempPosition = centerLeftPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.CenterLeftPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	save1Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "2. No")
-	tempPosition = centerPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.CenterPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	save2Button = Txt.Bounds().Moved(tempPosition)
 }
 

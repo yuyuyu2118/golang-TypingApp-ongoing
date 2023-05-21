@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
 
@@ -43,7 +44,7 @@ func initStartScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	lineCenterAlign(win, startLines, Txt, "center")
+	myPos.LineCenterAlign(win, startLines, Txt, "center")
 }
 
 func initGoToScreen(win *pixelgl.Window, Txt *text.Text) {

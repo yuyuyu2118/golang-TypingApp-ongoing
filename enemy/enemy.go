@@ -14,18 +14,6 @@ import (
 	"golang.org/x/image/colornames"
 )
 
-var WinHSize int
-
-// type constantProvider struct{}
-
-// func (cp constantProvider) GetConstant() int {
-// 	return WinHSize
-// }
-
-func SetCfg(size int) {
-	WinHSize = size
-}
-
 type EnemyStatus struct {
 	Name       string
 	MaxHP      float64
@@ -131,5 +119,5 @@ func SetEnemyText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "EnemyHP : ", enemy.HP)
-	myPos.DrawPos(win, Txt, myPos.TopCenterPos(win, Txt, WinHSize))
+	myPos.DrawPos(win, Txt, myPos.TopCenterPos(win, Txt))
 }

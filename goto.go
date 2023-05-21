@@ -7,6 +7,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
 
@@ -24,49 +25,49 @@ func initGoTo(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "Where are you going?")
-	tempPosition = topCenterPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.TopCenterPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "1. dungeon")
-	tempPosition = centerLeftPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.CenterLeftPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	goTo1Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "2. Town")
-	tempPosition = centerPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.CenterPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	goTo2Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "3. Equipment")
-	tempPosition = centerRightPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.CenterRightPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	goTo3Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "4. Job")
-	tempPosition = bottleLeftPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.BottleLeftPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	goTo4Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "5. Save")
-	tempPosition = bottleCenterPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.BottleCenterPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	goTo5Button = Txt.Bounds().Moved(tempPosition)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "6.Exit")
-	tempPosition = bottleRightPos(win, Txt)
-	drawPos(win, Txt, tempPosition)
+	tempPosition = myPos.BottleRightPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 	goTo6Button = Txt.Bounds().Moved(tempPosition)
 }
 
