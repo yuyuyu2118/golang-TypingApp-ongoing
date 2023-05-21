@@ -1,4 +1,4 @@
-module github.com/yuyuyu211/typingGo
+module github.com/yuyuyu2118/typingGo
 
 go 1.20
 
