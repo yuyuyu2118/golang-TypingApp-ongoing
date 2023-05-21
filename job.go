@@ -8,6 +8,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -54,26 +55,26 @@ func initJob(win *pixelgl.Window, Txt *text.Text) {
 	job3Button = Txt.Bounds().Moved(tempPosition)
 }
 
-func jobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *PlayerStatus) GameState {
+func jobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) GameState {
 
 	if job1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		currentGameState = GoToScreen
-		player.playerJob = "Warrior"
+		player.PlayerJob = "Warrior"
 	} else if job2Button.Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
 		currentGameState = GoToScreen
-		player.playerJob = "Priest"
+		player.PlayerJob = "Priest"
 	} else if job3Button.Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
 		currentGameState = GoToScreen
-		player.playerJob = "Wizard"
+		player.PlayerJob = "Wizard"
 	}
-	log.Println("YourJob is", player.playerJob)
+	log.Println("YourJob is", player.PlayerJob)
 	return currentGameState
 }
 
-func initPlayerJob(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
+func initPlayerJob(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, player.playerJob)
+	fmt.Fprintln(Txt, player.PlayerJob)
 	xOffSet := 0.0
 	yOffSet := win.Bounds().H() / 3
 	txtPos := pixel.V(xOffSet, yOffSet)

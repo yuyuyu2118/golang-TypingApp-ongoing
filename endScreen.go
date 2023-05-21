@@ -9,10 +9,11 @@ import (
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/player"
 )
 
-func battleEndScreen(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus, enemy *enemy.EnemyStatus) GameState {
-	if player.playerHP > 0 {
+func battleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus, enemy *enemy.EnemyStatus) GameState {
+	if player.PlayerHP > 0 {
 		yourTimeString := fmt.Sprintf("%0.3f", yourTime)
 		//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
 		endLines := []string{
@@ -44,14 +45,14 @@ func battleEndScreen(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus, 
 	if win.JustPressed(pixelgl.KeyTab) {
 		currentGameState = PlayingScreen
 		collectType, missType, index, score = 0, 0, 0, 0
-		player.playerHP = player.playerMaxHP
+		player.PlayerHP = player.PlayerMaxHP
 		enemy.HP = enemy.MaxHP
 		shuffle(words)
 		log.Println("Press:Enter -> GameState:Playing")
 	} else if win.JustPressed(pixelgl.KeyBackspace) {
 		currentGameState = GoToScreen
 		collectType, missType, index, score = 0, 0, 0, 0
-		player.playerHP = player.playerMaxHP
+		player.PlayerHP = player.PlayerMaxHP
 		enemy.HP = enemy.MaxHP
 		shuffle(words)
 		log.Println("Press:Enter -> GameState:GoToScreen")

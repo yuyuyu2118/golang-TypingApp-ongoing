@@ -7,6 +7,7 @@ import (
 
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
+	"github.com/yuyuyu2118/typingGo/player"
 )
 
 var (
@@ -19,7 +20,7 @@ var (
 	lostGold = 0
 )
 
-func battleTypingV1(win *pixelgl.Window, player *PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration) GameState {
+func battleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration) GameState {
 	question := words[score]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -29,7 +30,7 @@ func battleTypingV1(win *pixelgl.Window, player *PlayerStatus, enemy *enemy.Enem
 			index++
 			collectType++
 			enemy.HP -= 3
-			player.playerSP += player.playerBaseSP
+			player.PlayerSP += player.PlayerBaseSP
 			//enemy Down
 			log.Println("collectType = ", collectType)
 			//1 word end type
@@ -53,27 +54,27 @@ func battleTypingV1(win *pixelgl.Window, player *PlayerStatus, enemy *enemy.Enem
 	return currentGameState
 }
 
-func battleTypingSkill(win *pixelgl.Window, player *PlayerStatus, enemy *enemy.EnemyStatus) {
+func battleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if win.JustPressed(pixelgl.KeySpace) {
 		log.Println("Skill!!!")
-		player.playerSP = 0
-		if player.playerJob == "Warrior" {
+		player.PlayerSP = 0
+		if player.PlayerJob == "Warrior" {
 			enemy.HP -= 15
-		} else if player.playerJob == "Priest" {
+		} else if player.PlayerJob == "Priest" {
 			//TODO 僧侶の回復スキル
-		} else if player.playerJob == "Wizard" {
+		} else if player.PlayerJob == "Wizard" {
 			//TODO 魔法使いの時止めスキル
 		}
 	}
 }
 
-func deathFlug(player *PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration, currentGameState GameState) GameState {
-	if player.playerHP <= 0 {
+func deathFlug(player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration, currentGameState GameState) GameState {
+	if player.PlayerHP <= 0 {
 		yourTime = float64(elapsed.Seconds())
 		min := int(float64(enemy.Gold) * 0.7)
 		max := int(float64(enemy.Gold) * 1.3)
 		lostGold = rand.Intn(max-min+1) + min
-		player.playerGold -= lostGold
+		player.PlayerGold -= lostGold
 		log.Println("GameOver!!")
 		currentGameState = EndScreen
 	}
@@ -82,7 +83,7 @@ func deathFlug(player *PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Dura
 		min := int(float64(enemy.Gold) * 0.7)
 		max := int(float64(enemy.Gold) * 1.3)
 		gainGold = rand.Intn(max-min+1) + min
-		player.playerGold += gainGold
+		player.PlayerGold += gainGold
 		index = 0
 		score++
 		currentGameState = EndScreen
