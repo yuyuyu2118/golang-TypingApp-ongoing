@@ -14,17 +14,18 @@ import (
 )
 
 type PlayerStatus struct {
-	Name   string
-	MaxHP  float64
-	HP     float64
-	OP     float64
-	DP     float64
-	MaxSP  float64
-	SP     float64
-	BaseSP float64
-	Gold   int
-	Job    string
-	AP     int
+	Name     string
+	MaxHP    float64
+	HP       float64
+	OP       float64
+	DP       float64
+	MaxSP    float64
+	SP       float64
+	BaseSP   float64
+	Gold     int
+	Job      string
+	AP       int
+	Language string
 }
 
 var (
@@ -43,19 +44,21 @@ func NewPlayerStatus(value []string) *PlayerStatus {
 	Gold, _ := strconv.Atoi((value[8]))
 	Job := value[9]
 	AP, _ := strconv.Atoi((value[10]))
+	Language := value[11]
 
 	tempInstance := PlayerStatus{
-		Name:   Name,
-		MaxHP:  MaxHP,
-		HP:     HP,
-		OP:     OP,
-		DP:     DP,
-		MaxSP:  MaxSP,
-		SP:     SP,
-		BaseSP: BaseSP,
-		Gold:   Gold,
-		Job:    Job,
-		AP:     AP,
+		Name:     Name,
+		MaxHP:    MaxHP,
+		HP:       HP,
+		OP:       OP,
+		DP:       DP,
+		MaxSP:    MaxSP,
+		SP:       SP,
+		BaseSP:   BaseSP,
+		Gold:     Gold,
+		Job:      Job,
+		AP:       AP,
+		Language: Language,
 	}
 	return &tempInstance
 }

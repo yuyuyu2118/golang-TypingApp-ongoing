@@ -25,6 +25,9 @@ var startTime time.Time
 var Ticker *time.Ticker
 var saveContent string
 
+// TODO: Utilに入れる
+var language bool
+
 func run() {
 	win, _ := initializeWindow()
 	rand.Seed(time.Now().UnixNano())
@@ -33,8 +36,9 @@ func run() {
 	log.Println(loadContent[1])
 
 	fontPath := "assets\\fonts\\NotoSans-Black.ttf"
+	japanFontPath := "assets/fonts/PixelMplus12-Regular.ttf"
 	basicTxt := initializeAnyText(fontPath, 40, colornames.White)
-	screenTxt := initAnyText(fontPath, 40, colornames.White)
+	screenTxt := initAnyJapanText(japanFontPath, 60, colornames.White)
 	descriptionTxt := initializeAnyText(fontPath, 30, colornames.White)
 	startTxt := initializeAnyText(fontPath, 80, colornames.White)
 	endTxt := initializeAnyText(fontPath, 60, colornames.White)
@@ -111,7 +115,7 @@ func run() {
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
 				myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
-				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ","
+				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
 				myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)
 			}
 		// case myGame.SaveScreen:
@@ -152,7 +156,7 @@ func run() {
 			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemyKnight)
 			//TODO
 			if !myUtil.GetSaveReset() {
-				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ","
+				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
 				myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)
 				myUtil.SetSaveReset(true)
 			}

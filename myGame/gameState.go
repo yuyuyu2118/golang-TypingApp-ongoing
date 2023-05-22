@@ -52,7 +52,8 @@ func InitGoToScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	topText := "Where are you going?"
+	//TODO: languageの設定
+	topText := "どこにいく?"
 	InitGoTo(win, Txt, topText)
 }
 
@@ -60,7 +61,7 @@ func InitStageSlect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 	Txt.Clear()
 
-	topText := "Select play Stage"
+	topText := "だれと戦う?"
 	InitGoTo(win, Txt, topText)
 	InitStage(win, Txt)
 }

@@ -37,7 +37,8 @@ func InitGoTo(win *pixelgl.Window, Txt *text.Text, topText string) {
 	tempPosition = myPos.TopCenPos(win, Txt)
 	myPos.DrawPos(win, Txt, tempPosition)
 
-	gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
+	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
+	gotoSlice := []string{"1. ダンジョン", "2. 町", "3. 装備", "4. ジョブ", "5. セーブ", "6. 戻る"}
 
 	for _, gotoName := range gotoSlice {
 		Txt.Clear()

@@ -64,3 +64,78 @@
 
 # バグ修正
 - 戦闘画面で最初にEnemyAttackが表示される
+
+
+package main
+
+import (
+	"github.com/faiface/pixel"
+	"github.com/faiface/pixel/pixelgl"
+	"github.com/faiface/pixel/text"
+	"github.com/golang/freetype/truetype"
+	"golang.org/x/image/font"
+	"image/color"
+	"io/ioutil"
+	"unicode"
+)
+
+func customRangeTable(runes []rune) *unicode.RangeTable {
+	ranges := make([]unicode.Range16, len(runes))
+	for i, r := range runes {
+		ranges[i] = unicode.Range16{
+			Lo: uint16(r),
+			Hi: uint16(r),
+			Stride: 1,
+		}
+	}
+	return &unicode.RangeTable{R16: ranges, BMP: true}
+}
+
+func run() {
+	cfg := pixelgl.WindowConfig{
+		Title:  "Japanese Text",
+		Bounds: pixel.R(0, 0, 800, 600),
+	}
+	win, err := pixelgl.NewWindow(cfg)
+	if err != nil {
+		panic(err)
+	}
+
+	fontPath := "PixelMplus12-Regular.ttf"
+	fontBytes, err := ioutil.ReadFile(fontPath)
+	if err != nil {
+		panic(err)
+	}
+	tt, err := truetype.Parse(fontBytes)
+	if err != nil {
+		panic(err)
+	}
+
+	face := truetype.NewFace(tt, &truetype.Options{
+		Size:    24,
+		DPI:     72,
+		Hinting: font.HintingFull,
+	})
+
+	customKanjiRunes := []rune{'山', '水'}
+	customKanji := customRangeTable(customKanjiRunes)
+
+	atlas := text.NewAtlas(face, text.RangeTable(unicode.P), text.RangeTable(unicode.Hiragana), text.RangeTable(unicode.Katakana), customKanji)
+
+	txt := text.New(pixel.V(0, 0), atlas)
+	txt.Color = color.RGBA{R: 255, G: 0, B: 0, A: 255}
+
+	for !win.Closed() {
+		win.Clear(color.RGBA{R: 255, G: 255, B: 255, A: 255})
+
+		txt.Clear()
+		txt.WriteString("あア水山")
+		txt.Draw(win, pixel.IM.Moved(win.Bounds().Center()))
+
+		win.Update()
+	}
+}
+
+func main() {
+	pixelgl.Run(run)
+}
