@@ -273,12 +273,10 @@ func (player *PlayerStatus) SetPlayerBattleInf(win *pixelgl.Window, Txt *text.Te
 func (player *PlayerStatus) InitPlayerStatus(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, player.Job, " Gold:", player.Gold)
 	fmt.Fprintln(Txt, "OP: ", player.OP, "DP: ", player.DP)
-	xOffSet := 0.0
-	yOffSet := win.Bounds().H()/3 - Txt.LineHeight
-	txtPos := pixel.V(xOffSet, yOffSet)
-	tempPosition := pixel.IM.Moved(txtPos)
-	Txt.Draw(win, tempPosition)
+	tempPosition := myPos.TopLefPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
 }
 
 func InitPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {

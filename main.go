@@ -67,14 +67,12 @@ func run() {
 		case myGame.GoToScreen:
 			//TODO: Saveの削除
 			initScreenInformation(win, screenTxt, player)
-
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
 				myGame.CurrentGS = myGame.GoToClickEvent(win, win.MousePosition())
 			}
-
 		case myGame.StageSelect:
-			initScreenInformation(win, basicTxt, player)
-
+			initScreenInformation(win, screenTxt, player)
+			//TODO: Key入力受付
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) {
 				myGame.CurrentGS = myGame.StageClickEvent(win, win.MousePosition(), stage)
 			}

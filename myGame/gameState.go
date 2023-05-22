@@ -52,12 +52,16 @@ func InitGoToScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	InitGoTo(win, Txt)
+	topText := "Where are you going?"
+	InitGoTo(win, Txt, topText)
 }
 
 func InitStageSlect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
+	Txt.Clear()
 
+	topText := "Select play Stage"
+	InitGoTo(win, Txt, topText)
 	InitStage(win, Txt)
 }
 

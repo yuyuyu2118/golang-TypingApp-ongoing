@@ -23,20 +23,27 @@ var (
 	stage1Button = pixel.Rect{}
 )
 
+var (
+	stageButtonSlice = []pixel.Rect{}
+)
+
 func InitStage(win *pixelgl.Window, Txt *text.Text) {
+	xOffSet := myPos.TopLefPos(win, Txt).X + 200
+	yOffSet := myPos.TopLefPos(win, Txt).Y
+	txtPos := pixel.V(0, 0)
 
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "Select play Stage")
-	tempPosition = myPos.TopCenterPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
+	stageSlice := []string{"1. Slime", "2. Bird", "3. Plant", "4. Goblin", "5. Zombie", "6. Fairy", "7. Skull", "8. Wizard", "9. Solidier", "10. Dragon", "BackSpace. EXIT"}
 
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "1. VS Knight")
-	tempPosition = myPos.CenterLeftPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	stage1Button = Txt.Bounds().Moved(tempPosition)
+	for _, stageName := range stageSlice {
+		Txt.Clear()
+		Txt.Color = colornames.White
+		fmt.Fprintln(Txt, stageName)
+		yOffSet -= Txt.LineHeight + 25
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition := pixel.IM.Moved(txtPos)
+		Txt.Draw(win, tempPosition)
+		gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
+	}
 }
 
 func StageClickEvent(win *pixelgl.Window, mousePos pixel.Vec, stage *stageInf) GameState {
