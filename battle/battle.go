@@ -95,6 +95,8 @@ func DeathFlug(player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed ti
 		max := int(float64(enemy.Gold) * 1.3)
 		gainGold = rand.Intn(max-min+1) + min
 		player.Gold += gainGold
+		//AbilityPointの付与
+		player.AP += enemy.DropAP
 		index = 0
 		score++
 		currentGameState = myGame.EndScreen

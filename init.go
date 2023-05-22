@@ -54,6 +54,18 @@ func initializeAnyText(fontPath string, size int, color color.Color) *text.Text 
 	return initializeText(face, color)
 }
 
+func initText(face font.Face, color color.Color) *text.Text {
+	Atlas := text.NewAtlas(face, text.ASCII)
+	Txt := text.New(pixel.V(0, 0), Atlas)
+	Txt.Color = color
+	return Txt
+}
+
+func initAnyText(fontPath string, size int, color color.Color) *text.Text {
+	face, _ := myUtil.LoadTTF(fontPath, float64(size))
+	return initText(face, color)
+}
+
 // func initializeSound(filePath string) (beep.StreamSeekCloser, func()) {
 // 	soundFile := filePath
 // 	f, err := os.Open(soundFile)

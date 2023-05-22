@@ -24,6 +24,7 @@ type PlayerStatus struct {
 	BaseSP float64
 	Gold   int
 	Job    string
+	AP     int
 }
 
 var (
@@ -41,6 +42,7 @@ func NewPlayerStatus(value []string) *PlayerStatus {
 	BaseSP, _ := strconv.ParseFloat(value[7], 64)
 	Gold, _ := strconv.Atoi((value[8]))
 	Job := value[9]
+	AP, _ := strconv.Atoi((value[10]))
 
 	tempInstance := PlayerStatus{
 		Name:   Name,
@@ -53,6 +55,7 @@ func NewPlayerStatus(value []string) *PlayerStatus {
 		BaseSP: BaseSP,
 		Gold:   Gold,
 		Job:    Job,
+		AP:     AP,
 	}
 	return &tempInstance
 }

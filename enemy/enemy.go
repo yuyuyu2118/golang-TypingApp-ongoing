@@ -24,6 +24,7 @@ type EnemyStatus struct {
 	Attack     bool
 	AttackTick float64
 	EnemySize  float64
+	DropAP     int
 }
 
 func CreateEnemyInstance() *[]EnemyStatus {
@@ -40,6 +41,7 @@ func CreateEnemyInstance() *[]EnemyStatus {
 		Gold, _ := strconv.Atoi((value[5]))
 		Attack := false
 		AttackTick, _ := strconv.ParseFloat(value[7], 64)
+		DropAP, _ := strconv.Atoi((value[8]))
 
 		tempInstance := EnemyStatus{
 			Name:       Name,
@@ -51,6 +53,7 @@ func CreateEnemyInstance() *[]EnemyStatus {
 			Attack:     Attack,
 			AttackTick: AttackTick,
 			EnemySize:  4.0,
+			DropAP:     DropAP,
 		}
 		instance = append(instance, tempInstance)
 	}

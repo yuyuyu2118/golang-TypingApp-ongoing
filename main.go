@@ -34,6 +34,7 @@ func run() {
 
 	fontPath := "assets\\fonts\\NotoSans-Black.ttf"
 	basicTxt := initializeAnyText(fontPath, 40, colornames.White)
+	screenTxt := initAnyText(fontPath, 40, colornames.White)
 	descriptionTxt := initializeAnyText(fontPath, 30, colornames.White)
 	startTxt := initializeAnyText(fontPath, 80, colornames.White)
 	endTxt := initializeAnyText(fontPath, 60, colornames.White)
@@ -65,7 +66,7 @@ func run() {
 			}
 		case myGame.GoToScreen:
 			//TODO: Saveの削除
-			initScreenInformation(win, basicTxt, player)
+			initScreenInformation(win, screenTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
 				myGame.CurrentGS = myGame.GoToClickEvent(win, win.MousePosition())
@@ -112,7 +113,7 @@ func run() {
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
 				myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
-				saveContent = "NoName,30,30,3,1,50,0,2,0," + player.Job + ","
+				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ","
 				myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)
 			}
 		// case myGame.SaveScreen:
@@ -153,7 +154,7 @@ func run() {
 			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemyKnight)
 			//TODO
 			if !myUtil.GetSaveReset() {
-				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + ","
+				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ","
 				myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)
 				myUtil.SetSaveReset(true)
 			}
