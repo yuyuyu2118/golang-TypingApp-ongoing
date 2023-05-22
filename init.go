@@ -89,8 +89,8 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 		myGame.InitEquipmentScreen(win, Txt)
 	case myGame.JobSelect:
 		myGame.InitJobSelect(win, Txt)
-	case myGame.SaveScreen:
-		myGame.InitSaveScreen(win, Txt)
+	// case myGame.SaveScreen:
+	// 	myGame.InitSaveScreen(win, Txt)
 	case myGame.PlayingScreen:
 		myGame.InitPlayingScreen(win, Txt)
 	case myGame.BattleEnemyScreen:
@@ -103,3 +103,7 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 	player.InitPlayerStatus(win, Txt)
 	//initPlayerEquipment(win, Txt, player)
 }
+
+// func initializePlayerData(path) {
+// 	myGame.CsvToSlice(path)
+// }

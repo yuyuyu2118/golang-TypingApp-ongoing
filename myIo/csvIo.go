@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"log"
 	"os"
+	"strings"
 )
 
 // CsvToSliceはcsvファイルのPathを受け取り、読み込みます。
@@ -22,4 +23,12 @@ func CsvToSliceAll(path string) [][]string {
 	}
 
 	return records
+}
+
+func GenerateCSVString(values []string) string {
+	quotedValues := make([]string, len(values))
+	for i, v := range values {
+		quotedValues[i] = `"` + v + `"`
+	}
+	return strings.Join(quotedValues, ",")
 }
