@@ -10,6 +10,7 @@ import (
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 )
 
@@ -50,6 +51,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		player.SP = 0
 		enemy.HP = enemy.MaxHP
 		Shuffle(words)
+		myUtil.SetSaveReset(false)
 		log.Println("Press:Enter -> GameState:Playing")
 	} else if win.JustPressed(pixelgl.KeyBackspace) {
 		myGame.CurrentGS = myGame.GoToScreen
@@ -58,6 +60,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		player.SP = 0
 		enemy.HP = enemy.MaxHP
 		Shuffle(words)
+		myUtil.SetSaveReset(false)
 		log.Println("Press:Enter -> GameState:GoToScreen")
 	}
 

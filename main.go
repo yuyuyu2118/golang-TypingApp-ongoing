@@ -12,6 +12,7 @@ import (
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
@@ -151,8 +152,11 @@ func run() {
 			myGame.InitEndScreen(win, endTxt)
 			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemyKnight)
 			//TODO
-			saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + ","
-			myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)
+			if !myUtil.GetSaveReset() {
+				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + ","
+				myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)
+				myUtil.SetSaveReset(true)
+			}
 		case myGame.TestState:
 			myGame.TestMode(win, basicTxt)
 		}
