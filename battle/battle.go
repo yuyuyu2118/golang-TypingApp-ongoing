@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
@@ -109,7 +110,7 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 
 	tempCount = enemy.AttackTick - elapsed.Seconds()
 	//log.Println(tempCount)
-	log.Println(elapsed.Seconds())
+	//log.Println(elapsed.Seconds())
 
 	if myGame.CurrentGS == myGame.PlayingScreen {
 		if tempCount > 0 {
@@ -118,6 +119,8 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 					index++
 					collectType++
 					enemy.HP -= player.OP
+					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
+					PlayerAttack(win, int(player.OP), win.Bounds().Center().Sub(pixel.V(50, 150)))
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0
