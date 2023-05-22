@@ -3,6 +3,7 @@ package player
 import (
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
@@ -13,6 +14,7 @@ import (
 )
 
 type PlayerStatus struct {
+	Name   string
 	MaxHP  float64
 	HP     float64
 	OP     float64
@@ -28,8 +30,31 @@ var (
 	skillRect = pixel.R(0, 0, 0, 0)
 )
 
-func NewPlayerStatus(MaxHP float64, HP float64, OP float64, DP float64, MaxSP float64, SP float64, BaseSP float64, Gold int, Job string) *PlayerStatus {
-	return &PlayerStatus{MaxHP, HP, OP, DP, MaxSP, SP, BaseSP, Gold, Job}
+func NewPlayerStatus(value []string) *PlayerStatus {
+	Name := value[0]
+	MaxHP, _ := strconv.ParseFloat(value[1], 64)
+	HP, _ := strconv.ParseFloat(value[2], 64)
+	OP, _ := strconv.ParseFloat(value[3], 64)
+	DP, _ := strconv.ParseFloat(value[4], 64)
+	MaxSP, _ := strconv.ParseFloat(value[5], 64)
+	SP, _ := strconv.ParseFloat(value[6], 64)
+	BaseSP, _ := strconv.ParseFloat(value[7], 64)
+	Gold, _ := strconv.Atoi((value[8]))
+	Job := value[9]
+
+	tempInstance := PlayerStatus{
+		Name:   Name,
+		MaxHP:  MaxHP,
+		HP:     HP,
+		OP:     OP,
+		DP:     DP,
+		MaxSP:  MaxSP,
+		SP:     SP,
+		BaseSP: BaseSP,
+		Gold:   Gold,
+		Job:    Job,
+	}
+	return &tempInstance
 }
 
 func SetPlayerSkillBarVertical(win *pixelgl.Window, player *PlayerStatus) {

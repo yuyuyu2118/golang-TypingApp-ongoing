@@ -4,6 +4,7 @@ import (
 	_ "image/png"
 	"log"
 	"math/rand"
+	"strconv"
 	"time"
 
 	"github.com/faiface/pixel/pixelgl"
@@ -21,10 +22,14 @@ const (
 
 var startTime time.Time
 var Ticker *time.Ticker
+var saveContent string
 
 func run() {
 	win, _ := initializeWindow()
 	rand.Seed(time.Now().UnixNano())
+	myGame.SaveFileCheck("assets\\save\\save.csv")
+	loadContent := myGame.SaveFileLoad("assets\\save\\save.csv")
+	log.Println(loadContent[1])
 
 	fontPath := "assets\\fonts\\NotoSans-Black.ttf"
 	basicTxt := initializeAnyText(fontPath, 40, colornames.White)
@@ -35,7 +40,9 @@ func run() {
 	myPos.SetCfg(winHSize)
 	//playerStatusインスタンスを生成
 	stage := myGame.NewStageInf(0)
-	player := player.NewPlayerStatus(30, 30, 3, 1, 50, 0, 2, 0, "No Job")
+	playerLoadInfo := loadContent[1]
+	player := player.NewPlayerStatus(playerLoadInfo)
+	log.Println(player)
 	enemyInfo := enemy.CreateEnemyInstance()
 	enemyKnight := (*enemyInfo)[0]
 	// for _, enemy := range *enemyInfo {
@@ -56,6 +63,7 @@ func run() {
 				log.Println("TestMode")
 			}
 		case myGame.GoToScreen:
+			//TODO: Saveの削除
 			initScreenInformation(win, basicTxt, player)
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
@@ -103,13 +111,15 @@ func run() {
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
 				myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
+				saveContent = "NoName,30,30,3,1,50,0,2,0," + player.Job + ","
+				myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)
 			}
-		case myGame.SaveScreen:
-			initScreenInformation(win, basicTxt, player)
+		// case myGame.SaveScreen:
+		// 	initScreenInformation(win, basicTxt, player)
 
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) {
-				myGame.CurrentGS = myGame.SaveClickEvent(win, win.MousePosition(), player)
-			}
+		// 	if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) {
+		// 		myGame.CurrentGS = myGame.SaveClickEvent(win, win.MousePosition(), player)
+		// 	}
 
 		case myGame.PlayingScreen:
 			initScreenInformation(win, basicTxt, player)
@@ -140,6 +150,9 @@ func run() {
 		case myGame.EndScreen:
 			myGame.InitEndScreen(win, endTxt)
 			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemyKnight)
+			//TODO
+			saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + ","
+			myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)
 		case myGame.TestState:
 			myGame.TestMode(win, basicTxt)
 		}

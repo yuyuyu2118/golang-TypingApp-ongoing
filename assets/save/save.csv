@@ -1,3 +1,5 @@
-- INITIAL TEXT -
-This file stores game save data.
-Gold,job,equipment,
+Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,
+NoName,30,30,3,1,50,0,2,57,Warrior,
+WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,
+ArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,
+AccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,
