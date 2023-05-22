@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"image/color"
+	"unicode"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
@@ -64,6 +65,23 @@ func initText(face font.Face, color color.Color) *text.Text {
 func initAnyText(fontPath string, size int, color color.Color) *text.Text {
 	face, _ := myUtil.LoadTTF(fontPath, float64(size))
 	return initText(face, color)
+}
+
+func initJapanText(face font.Face, color color.Color) *text.Text {
+	//TODO: ここが重い
+	customKanjiRunes := []rune{'戦', '戻', '町', '装', '備'}
+	customKanji := myUtil.CustomRangeTable(customKanjiRunes)
+
+	Atlas := text.NewAtlas(face, text.ASCII, text.RangeTable(unicode.P),
+		text.RangeTable(unicode.Hiragana), text.RangeTable(unicode.Katakana),
+		text.RangeTable(customKanji), text.RangeTable(myUtil.CustomRangeTable([]rune{'ー'})))
+	Txt := text.New(pixel.V(0, 0), Atlas)
+	return Txt
+}
+
+func initAnyJapanText(fontPath string, size int, color color.Color) *text.Text {
+	face := myUtil.LoadJapanFont(fontPath, float64(size))
+	return initJapanText(face, color)
 }
 
 // func initializeSound(filePath string) (beep.StreamSeekCloser, func()) {
