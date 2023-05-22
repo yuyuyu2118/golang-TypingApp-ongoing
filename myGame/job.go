@@ -67,6 +67,7 @@ func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Playe
 	return CurrentGS
 }
 
+// TODO: 不要
 func InitPlayerJob(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White

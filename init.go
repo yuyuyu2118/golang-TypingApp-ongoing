@@ -109,8 +109,9 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 		myGame.InitBattleEnemyScreen(win, Txt)
 	}
 
-	player.InitPlayerGold(win, Txt)
-	myGame.InitPlayerJob(win, Txt, player)
+	//TODO: 不要
+	//player.InitPlayerGold(win, Txt)
+	//myGame.InitPlayerJob(win, Txt, player)
 
 	player.InitPlayerStatus(win, Txt)
 	//initPlayerEquipment(win, Txt, player)
