@@ -3,6 +3,7 @@ package enemy
 import (
 	"fmt"
 	"log"
+	"path/filepath"
 	"strconv"
 
 	"github.com/faiface/pixel"
@@ -127,11 +128,25 @@ func SetEnemyText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus) {
 	myPos.DrawPos(win, Txt, myPos.TopCenterPos(win, Txt))
 }
 
-func SetEnemyAnimation() []*pixel.Sprite {
-	imagePaths := []string{"assets/monster/Slime/スライムA_待機000.png", "assets/monster/Slime/スライムA_待機001.png", "assets/monster/Slime/スライムA_待機002.png"}
-	sprites, err := myIo.LoadSpriteSheet(imagePaths)
+func SetEnemyAnimation(directory string, fileName string) []*pixel.Sprite {
+	// ディレクトリ内にある画像ファイルを検索する
+	matches, err := filepath.Glob(filepath.Join(directory, fileName+"*.png"))
 	if err != nil {
 		panic(err)
+	}
+
+	// 読み込んだ画像ファイルのパスをログに出力する
+	log.Println(matches)
+
+	// 画像ファイルを読み込んでspritesに追加する
+	var sprites []*pixel.Sprite
+	for _, path := range matches {
+		picture, err := myIo.LoadPicture(path)
+		if err != nil {
+			panic(err)
+		}
+		sprite := pixel.NewSprite(picture, picture.Bounds())
+		sprites = append(sprites, sprite)
 	}
 	return sprites
 }
