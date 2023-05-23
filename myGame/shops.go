@@ -9,6 +9,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
 
@@ -20,6 +21,13 @@ const (
 	weapon1 WeaponState = iota
 	weapon2
 	weapon3
+	weapon4
+	weapon5
+	weapon6
+	weapon7
+	weapon8
+	weapon9
+	weapon0
 )
 const (
 	armor1 ArmorState = iota
@@ -48,62 +56,154 @@ var currentweaponState WeaponState
 var currentarmorState ArmorState
 var currentaccessoryState AccessoryState
 
-func InitWeapon(win *pixelgl.Window, Txt *text.Text) {
-	//初期位置
-	yOffSet := win.Bounds().H() / 4
+func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
+	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
 	Txt.Color = colornames.White
 	//csv読み込み
 
-	weaponSlice := []string{"1. Wooden Stick", "2. Fruit Knife", "3. WoodenSword", "BackSpace. EXIT"}
+	Txt.Clear()
+	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, topText)
+	tempPosition = myPos.TopCenPos(win, Txt)
+	myPos.DrawPos(win, Txt, tempPosition)
+
+	weaponSlice := []string{"1. 木の棒", "2. 果物ナイフ", "3. 木刀", "4. ドレインソード", "5. スタンハンマー", "6. 鉄の剣", "7. 隼の剣", "8. 勇者の剣", "9. 名刀村正", "0. 死神の大鎌", "BackSpace. EXIT"}
 
 	for _, weaponName := range weaponSlice {
 		Txt.Clear()
+		Txt.Color = colornames.White
 		fmt.Fprintln(Txt, weaponName)
-		yOffSet -= Txt.LineHeight + 20
+		yOffSet -= Txt.LineHeight + 40
 		txtPos = pixel.V(0, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
 		Txt.Draw(win, tempPosition)
 		buttonSlice = append(buttonSlice, Txt.Bounds().Moved(txtPos))
 	}
 
-	xOffSet := win.Bounds().W()/3 - 200
-	yOffSet = win.Bounds().H() / 4
-	var tempPosition pixel.Matrix
 	if win.Pressed(pixelgl.Key1) {
 		currentweaponState = weapon1
 	} else if win.Pressed(pixelgl.Key2) {
 		currentweaponState = weapon2
 	} else if win.Pressed(pixelgl.Key3) {
 		currentweaponState = weapon3
+	} else if win.Pressed(pixelgl.Key4) {
+		currentweaponState = weapon4
+	} else if win.Pressed(pixelgl.Key5) {
+		currentweaponState = weapon5
+	} else if win.Pressed(pixelgl.Key6) {
+		currentweaponState = weapon6
+	} else if win.Pressed(pixelgl.Key7) {
+		currentweaponState = weapon7
+	} else if win.Pressed(pixelgl.Key8) {
+		currentweaponState = weapon8
+	} else if win.Pressed(pixelgl.Key9) {
+		currentweaponState = weapon9
+	} else if win.Pressed(pixelgl.Key0) {
+		currentweaponState = weapon0
 	}
 
+	xOffSet := myPos.TopLefPos(win, Txt).X + 300
+	yOffSet = myPos.TopLefPos(win, Txt).Y - 50
 	switch currentweaponState {
 	case weapon1:
 		for _, value := range descWeapon[0] {
 			Txt.Clear()
+			Txt.Color = colornames.White
 			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.TabWidth + 20
+			yOffSet -= Txt.LineHeight + 20
 			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition = pixel.IM.Moved(txtPos)
+			tempPosition := pixel.IM.Moved(txtPos)
 			Txt.Draw(win, tempPosition)
 		}
 	case weapon2:
 		for _, value := range descWeapon[1] {
 			Txt.Clear()
+			Txt.Color = colornames.White
 			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.TabWidth + 20
+			yOffSet -= Txt.LineHeight + 20
 			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition = pixel.IM.Moved(txtPos)
+			tempPosition := pixel.IM.Moved(txtPos)
 			Txt.Draw(win, tempPosition)
 		}
 	case weapon3:
 		for _, value := range descWeapon[2] {
 			Txt.Clear()
+			Txt.Color = colornames.White
 			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.TabWidth + 20
+			yOffSet -= Txt.LineHeight + 20
 			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition = pixel.IM.Moved(txtPos)
+			tempPosition := pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
+	case weapon4:
+		for _, value := range descWeapon[3] {
+			Txt.Clear()
+			Txt.Color = colornames.White
+			fmt.Fprintln(Txt, value)
+			yOffSet -= Txt.LineHeight + 20
+			txtPos = pixel.V(xOffSet, yOffSet)
+			tempPosition := pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
+	case weapon5:
+		for _, value := range descWeapon[4] {
+			Txt.Clear()
+			Txt.Color = colornames.White
+			fmt.Fprintln(Txt, value)
+			yOffSet -= Txt.LineHeight + 20
+			txtPos = pixel.V(xOffSet, yOffSet)
+			tempPosition := pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
+	case weapon6:
+		for _, value := range descWeapon[5] {
+			Txt.Clear()
+			Txt.Color = colornames.White
+			fmt.Fprintln(Txt, value)
+			yOffSet -= Txt.LineHeight + 20
+			txtPos = pixel.V(xOffSet, yOffSet)
+			tempPosition := pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
+	case weapon7:
+		for _, value := range descWeapon[6] {
+			Txt.Clear()
+			Txt.Color = colornames.White
+			fmt.Fprintln(Txt, value)
+			yOffSet -= Txt.LineHeight + 20
+			txtPos = pixel.V(xOffSet, yOffSet)
+			tempPosition := pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
+	case weapon8:
+		for _, value := range descWeapon[7] {
+			Txt.Clear()
+			Txt.Color = colornames.White
+			fmt.Fprintln(Txt, value)
+			yOffSet -= Txt.LineHeight + 20
+			txtPos = pixel.V(xOffSet, yOffSet)
+			tempPosition := pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
+	case weapon9:
+		for _, value := range descWeapon[8] {
+			Txt.Clear()
+			Txt.Color = colornames.White
+			fmt.Fprintln(Txt, value)
+			yOffSet -= Txt.LineHeight + 20
+			txtPos = pixel.V(xOffSet, yOffSet)
+			tempPosition := pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
+	case weapon0:
+		for _, value := range descWeapon[9] {
+			Txt.Clear()
+			Txt.Color = colornames.White
+			fmt.Fprintln(Txt, value)
+			yOffSet -= Txt.LineHeight + 20
+			txtPos = pixel.V(xOffSet, yOffSet)
+			tempPosition := pixel.IM.Moved(txtPos)
 			Txt.Draw(win, tempPosition)
 		}
 	}

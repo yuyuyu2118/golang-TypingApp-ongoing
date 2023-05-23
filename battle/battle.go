@@ -66,12 +66,12 @@ func BattleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *
 		log.Println("Skill!!!")
 		if player.SP == 50 {
 			player.SP = 0
-			if player.Job == "Warrior" {
-				enemy.HP -= 15
-			} else if player.Job == "Priest" {
-				//TODO 僧侶の回復スキル
-			} else if player.Job == "Wizard" {
-				//TODO 魔法使いの時止めスキル
+			if player.Job == "Rookie" {
+				enemy.HP -= 10
+			} else if player.Job == "Hunter" {
+
+			} else if player.Job == "Monk" {
+
 			}
 		} else {
 			log.Println("skillポイントが足りない")

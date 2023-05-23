@@ -278,7 +278,7 @@ func (player *PlayerStatus) InitPlayerStatus(win *pixelgl.Window, Txt *text.Text
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, player.Job, " Gold:", player.Gold)
 	fmt.Fprintln(Txt, "OP: ", player.OP, "DP: ", player.DP)
-	tempPosition := myPos.TopLefPos(win, Txt)
+	tempPosition := myPos.TopLefPos(win, Txt).Add(pixel.V(-30, 30))
 	myPos.DrawPos(win, Txt, tempPosition)
 }
 

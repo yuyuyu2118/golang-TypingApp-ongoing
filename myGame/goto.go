@@ -38,7 +38,7 @@ func InitGoTo(win *pixelgl.Window, Txt *text.Text, topText string) {
 	myPos.DrawPos(win, Txt, tempPosition)
 
 	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
-	gotoSlice := []string{"1. ダンジョン", "2. 町", "3. 装備", "4. ジョブ", "5. セーブ", "6. 戻る"}
+	gotoSlice := []string{"1. ダンジョン", "2. 町", "3. 装備", "4. ジョブ", "BackSpace. 戻る"}
 
 	for _, gotoName := range gotoSlice {
 		Txt.Clear()
@@ -66,10 +66,7 @@ func GoToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	} else if gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
 		CurrentGS = JobSelect
 		log.Println("GoToScreen->JobSelect")
-	} else if gotoButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
-		CurrentGS = SaveScreen
-		log.Println("GoToScreen->Save")
-	} else if gotoButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6) {
+	} else if gotoButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
 		CurrentGS = StartScreen
 		log.Println("GoToScreen->StartScreen")
 	}

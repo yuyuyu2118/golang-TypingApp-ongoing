@@ -9,6 +9,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myIo"
 	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/font"
@@ -69,7 +70,11 @@ func initAnyText(fontPath string, size int, color color.Color) *text.Text {
 
 func initJapanText(face font.Face, color color.Color) *text.Text {
 	//TODO: ここが重い
-	customKanjiRunes := []rune{'戦', '戻', '町', '装', '備'}
+	var customKanjiRunes []rune
+	runes := myIo.CsvToSlice1Line("assets/fonts/kanji.csv")
+	for _, r := range runes {
+		customKanjiRunes = append(customKanjiRunes, rune(r))
+	}
 	customKanji := myUtil.CustomRangeTable(customKanjiRunes)
 
 	Atlas := text.NewAtlas(face, text.ASCII, text.RangeTable(unicode.P),
