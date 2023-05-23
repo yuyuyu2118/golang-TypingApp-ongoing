@@ -64,9 +64,14 @@ func InitBattleTextV1(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
 	if myGame.CurrentGS == myGame.PlayingScreen {
+		tempWords := words[score]
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, "> ", words[score])
+		fmt.Fprint(Txt, "> ")
+		Txt.Color = colornames.Darkslategray
+		fmt.Fprint(Txt, tempWords[:index])
+		Txt.Color = colornames.White
+		fmt.Fprint(Txt, tempWords[index:])
 		myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt))
 
 		offset := Txt.Bounds().W()
