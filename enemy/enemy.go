@@ -126,3 +126,12 @@ func SetEnemyText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus) {
 	fmt.Fprintln(Txt, "EnemyHP : ", enemy.HP)
 	myPos.DrawPos(win, Txt, myPos.TopCenterPos(win, Txt))
 }
+
+func SetEnemyAnimation() []*pixel.Sprite {
+	imagePaths := []string{"assets/monster/Slime/スライムA_待機000.png", "assets/monster/Slime/スライムA_待機001.png", "assets/monster/Slime/スライムA_待機002.png"}
+	sprites, err := myIo.LoadSpriteSheet(imagePaths)
+	if err != nil {
+		panic(err)
+	}
+	return sprites
+}
