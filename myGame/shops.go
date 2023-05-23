@@ -57,6 +57,7 @@ var currentarmorState ArmorState
 var currentaccessoryState AccessoryState
 
 func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
+	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
 	Txt.Color = colornames.White
@@ -74,8 +75,8 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 		Txt.Clear()
 		Txt.Color = colornames.White
 		fmt.Fprintln(Txt, weaponName)
-		yOffSet -= Txt.LineHeight + 40
-		txtPos = pixel.V(0, yOffSet)
+		yOffSet -= Txt.LineHeight + 30
+		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
 		Txt.Draw(win, tempPosition)
 		buttonSlice = append(buttonSlice, Txt.Bounds().Moved(txtPos))
@@ -103,7 +104,7 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 		currentweaponState = weapon0
 	}
 
-	xOffSet := myPos.TopLefPos(win, Txt).X + 300
+	xOffSet = myPos.TopLefPos(win, Txt).X + 300
 	yOffSet = myPos.TopLefPos(win, Txt).Y - 50
 	switch currentweaponState {
 	case weapon1:
@@ -220,7 +221,28 @@ func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	} else if buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
 		currentweaponState = weapon3
 		log.Println("WeaponShop->weapon3")
-	} else if buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+	} else if buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
+		currentweaponState = weapon4
+		log.Println("WeaponShop->weapon4")
+	} else if buttonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
+		currentweaponState = weapon5
+		log.Println("WeaponShop->weapon5")
+	} else if buttonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6) {
+		currentweaponState = weapon6
+		log.Println("WeaponShop->weapon6")
+	} else if buttonSlice[6].Contains(mousePos) || win.JustPressed(pixelgl.Key7) {
+		currentweaponState = weapon7
+		log.Println("WeaponShop->weapon7")
+	} else if buttonSlice[7].Contains(mousePos) || win.JustPressed(pixelgl.Key8) {
+		currentweaponState = weapon8
+		log.Println("WeaponShop->weapon8")
+	} else if buttonSlice[8].Contains(mousePos) || win.JustPressed(pixelgl.Key9) {
+		currentweaponState = weapon9
+		log.Println("WeaponShop->weapon9")
+	} else if buttonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.Key0) {
+		currentweaponState = weapon0
+		log.Println("WeaponShop->weapon0")
+	} else if buttonSlice[10].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
 		currentweaponState = weapon1
 		CurrentGS = TownScreen
 		log.Println("WeaponShop->TownScreen")

@@ -27,7 +27,7 @@ var (
 )
 
 func InitGoTo(win *pixelgl.Window, Txt *text.Text, topText string) {
-	//xOffSet := myPos.TopLefPos(win, Txt).X
+	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
 
@@ -45,7 +45,7 @@ func InitGoTo(win *pixelgl.Window, Txt *text.Text, topText string) {
 		Txt.Color = colornames.White
 		fmt.Fprintln(Txt, gotoName)
 		yOffSet -= Txt.LineHeight + 40
-		txtPos = pixel.V(0, yOffSet)
+		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
 		Txt.Draw(win, tempPosition)
 		gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
