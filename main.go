@@ -55,7 +55,8 @@ func run() {
 	// for _, enemy := range *enemyInfo {
 	// 	enemyKnight := enemy
 	// }
-	sprites := enemy.SetEnemyAnimation()
+
+	sprites := enemy.SetEnemyAnimation("assets/monster/Slime", "SlimeA_Wait")
 	frame := 0
 	last := time.Now()
 
@@ -132,8 +133,15 @@ func run() {
 		case myGame.PlayingScreen:
 			initScreenInformation(win, basicTxt, player)
 
-			enemy.SetEnemyPic(win, &enemyKnight, "assets\\monster\\monster1.png", enemyKnight.EnemySize)
-			enemy.SetEnemyText(win, basicTxt, &enemyKnight)
+			dt := time.Since(last).Seconds()
+			if dt >= 0.2 { // アニメーション速度を調整 (ここでは0.2秒ごとに更新)
+				frame = (frame + 1) % len(sprites)
+				last = time.Now()
+			}
+			sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 35))).Scaled(win.Bounds().Center(), 5.0))
+
+			// enemy.SetEnemyPic(win, &enemyKnight, "assets\\monster\\monster1.png", enemyKnight.EnemySize)
+			// enemy.SetEnemyText(win, basicTxt, &enemyKnight)
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, basicTxt)
 
