@@ -1,16 +1,12 @@
 package main
 
 import (
-	"image"
-	"image/gif"
 	_ "image/png"
 	"log"
 	"math/rand"
-	"os"
 	"strconv"
 	"time"
 
-	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/battle"
 	"github.com/yuyuyu2118/typingGo/enemy"
@@ -39,25 +35,6 @@ func run() {
 	loadContent := myGame.SaveFileLoad("assets\\save\\save.csv")
 	log.Println(loadContent[1])
 
-	f, err := os.Open("assets/monster/Slime/スライム_アニメーション.gif")
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-	g, err := gif.DecodeAll(f)
-	if err != nil {
-		panic(err)
-	}
-
-	// Create a palette for each image.
-	palettes := make([]*image.Paletted, len(g.Image))
-	for i, img := range g.Image {
-		palettes[i] = img
-	}
-
-	frame := 0
-	dt := float64(g.Delay[frame]) / 100.0
-
 	fontPath := "assets\\fonts\\NotoSans-Black.ttf"
 	japanFontPath := "assets/fonts/PixelMplus12-Regular.ttf"
 	basicTxt := initializeAnyText(fontPath, 40, colornames.White)
@@ -78,7 +55,6 @@ func run() {
 	// 	enemyKnight := enemy
 	// }
 
-	last := time.Now()
 	for !win.Closed() {
 		switch myGame.CurrentGS {
 		case myGame.StartScreen:
@@ -93,22 +69,6 @@ func run() {
 				log.Println("TestMode")
 			}
 		case myGame.GoToScreen:
-			// Update the current frame.
-			dt -= time.Since(last).Seconds()
-			last = time.Now()
-			if dt <= 0 {
-				frame = (frame + 1) % len(g.Image)
-				dt = float64(g.Delay[frame]) / 100.0
-			}
-
-			// Draw the current frame.
-			win.Clear(pixel.RGB(1, 1, 1))
-			img := g.Image[frame]
-			sprite := pixel.NewSprite(pixel.PictureDataFromImage(img), pixel.Rect{
-				Min: pixel.Vec{X: float64(img.Bounds().Min.X), Y: float64(img.Bounds().Min.Y)},
-				Max: pixel.Vec{X: float64(img.Bounds().Max.X), Y: float64(img.Bounds().Max.Y)},
-			})
-			sprite.Draw(win, pixel.IM.Moved(win.Bounds().Center()))
 			//TODO: Saveの削除
 			initScreenInformation(win, screenTxt, player)
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
