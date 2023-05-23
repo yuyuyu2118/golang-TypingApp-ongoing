@@ -17,25 +17,33 @@ var (
 	// equip3Button = pixel.Rect{}
 )
 
+var (
+	equipmentButtonSlice = []pixel.Rect{}
+)
+
 func InitEquipment(win *pixelgl.Window, Txt *text.Text) {
+	xOffSet := myPos.TopLefPos(win, Txt).X + 300
+	yOffSet := myPos.TopLefPos(win, Txt).Y - 50
+	txtPos := pixel.V(0, 0)
 
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "Where are you going?")
-	tempPosition = myPos.TopCenterPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
+	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
+	equipmentSlice := []string{"BackSpace. 戻る"}
 
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "1. GoToScreen")
-	tempPosition = myPos.CenterLeftPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	equip1Button = Txt.Bounds().Moved(tempPosition)
+	for _, equipmentName := range equipmentSlice {
+		Txt.Clear()
+		Txt.Color = colornames.White
+		fmt.Fprintln(Txt, equipmentName)
+		yOffSet -= Txt.LineHeight + 25
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition := pixel.IM.Moved(txtPos)
+		Txt.Draw(win, tempPosition)
+		equipmentButtonSlice = append(equipmentButtonSlice, Txt.Bounds().Moved(txtPos))
+	}
 }
 
 func EquipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
-	if equip1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+	if equipmentButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
 		CurrentGS = GoToScreen
 		log.Println("equipment->GoToScreen")
 	}

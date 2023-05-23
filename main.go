@@ -38,8 +38,8 @@ func run() {
 	fontPath := "assets\\fonts\\NotoSans-Black.ttf"
 	japanFontPath := "assets/fonts/PixelMplus12-Regular.ttf"
 	basicTxt := initializeAnyText(fontPath, 40, colornames.White)
-	screenTxt := initAnyJapanText(japanFontPath, 60, colornames.White)
-	descriptionTxt := initializeAnyText(fontPath, 30, colornames.White)
+	screenTxt := initAnyJapanText(japanFontPath, 40, colornames.White)
+	descriptionTxt := initializeAnyText(japanFontPath, 30, colornames.White)
 	startTxt := initializeAnyText(fontPath, 80, colornames.White)
 	endTxt := initializeAnyText(fontPath, 60, colornames.White)
 
@@ -71,19 +71,19 @@ func run() {
 		case myGame.GoToScreen:
 			//TODO: Saveの削除
 			initScreenInformation(win, screenTxt, player)
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.GoToClickEvent(win, win.MousePosition())
 			}
 		case myGame.StageSelect:
 			initScreenInformation(win, screenTxt, player)
 			//TODO: Key入力受付
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) {
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.StageClickEvent(win, win.MousePosition(), stage)
 			}
 		case myGame.TownScreen:
-			initScreenInformation(win, basicTxt, player)
+			initScreenInformation(win, screenTxt, player)
 
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.TownClickEvent(win, win.MousePosition())
 			}
 		case myGame.WeaponShop:
@@ -105,15 +105,15 @@ func run() {
 				myGame.CurrentGS = myGame.AccessoryClickEvent(win, win.MousePosition())
 			}
 		case myGame.EquipmentScreen:
-			initScreenInformation(win, basicTxt, player)
+			initScreenInformation(win, screenTxt, player)
 
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) {
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.EquipmentClickEvent(win, win.MousePosition())
 			}
 		case myGame.JobSelect:
-			initScreenInformation(win, basicTxt, player)
+			initScreenInformation(win, screenTxt, player)
 
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) {
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
 				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
 				myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)

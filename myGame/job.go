@@ -21,47 +21,50 @@ var (
 	// job6Button = pixel.Rect{}
 )
 
+var (
+	jobButtonSlice = []pixel.Rect{}
+)
+
 func InitJob(win *pixelgl.Window, Txt *text.Text) {
+	xOffSet := myPos.TopLefPos(win, Txt).X + 300
+	yOffSet := myPos.TopLefPos(win, Txt).Y - 50
+	txtPos := pixel.V(0, 0)
 
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "Select your job")
-	tempPosition = myPos.TopCenterPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
+	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
+	jobSlice := []string{"1. 見習い剣士", "2. 狩人", "3. モンク", "4. 魔法使い", "5. 化け物", "BackSpace. 戻る"}
 
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "1. Warrior")
-	tempPosition = myPos.CenterLeftPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	job1Button = Txt.Bounds().Moved(tempPosition)
-
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "2. Priest")
-	tempPosition = myPos.CenterPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	job2Button = Txt.Bounds().Moved(tempPosition)
-
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "3. Wizard")
-	tempPosition = myPos.CenterRightPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	job3Button = Txt.Bounds().Moved(tempPosition)
+	for _, jobName := range jobSlice {
+		Txt.Clear()
+		Txt.Color = colornames.White
+		fmt.Fprintln(Txt, jobName)
+		yOffSet -= Txt.LineHeight + 25
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition := pixel.IM.Moved(txtPos)
+		Txt.Draw(win, tempPosition)
+		jobButtonSlice = append(jobButtonSlice, Txt.Bounds().Moved(txtPos))
+	}
 }
 
 func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) GameState {
 
-	if job1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+	if jobButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		CurrentGS = GoToScreen
-		player.Job = "Warrior"
-	} else if job2Button.Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
+		player.Job = "Rookie"
+	} else if jobButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
 		CurrentGS = GoToScreen
-		player.Job = "Priest"
-	} else if job3Button.Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
+		player.Job = "Hunter"
+	} else if jobButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
 		CurrentGS = GoToScreen
-		player.Job = "Wizard"
+		player.Job = "Monk"
+	} else if jobButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
+		CurrentGS = GoToScreen
+		player.Job = "MagicUser"
+	} else if jobButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
+		CurrentGS = GoToScreen
+		player.Job = "Monster"
+	} else if jobButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+		CurrentGS = GoToScreen
+		log.Println("jobScreen -> GoToScreen")
 	}
 	log.Println("YourJob is", player.Job)
 	return CurrentGS

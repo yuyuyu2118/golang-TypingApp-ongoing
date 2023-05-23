@@ -32,3 +32,23 @@ func GenerateCSVString(values []string) string {
 	}
 	return strings.Join(quotedValues, ",")
 }
+
+func CsvToSlice1Line(path string) string {
+	file, err := os.Open(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	records, err := reader.Read()
+	if err != nil {
+		log.Fatal(err)
+	}
+	var tempRecords string
+	for _, value := range records {
+		tempRecords += value
+	}
+
+	return tempRecords
+}

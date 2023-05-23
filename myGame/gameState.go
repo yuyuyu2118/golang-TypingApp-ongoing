@@ -53,7 +53,7 @@ func InitGoToScreen(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 
 	//TODO: languageの設定
-	topText := "どこにいく?"
+	topText := "どこに行く?"
 	InitGoTo(win, Txt, topText)
 }
 
@@ -68,14 +68,19 @@ func InitStageSlect(win *pixelgl.Window, Txt *text.Text) {
 
 func InitTownScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
+	Txt.Clear()
 
+	topText := "どこに行く？"
+	InitGoTo(win, Txt, topText)
 	InitTown(win, Txt)
 }
 
 func InitWeaponShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
+	Txt.Clear()
 
-	InitWeapon(win, Txt)
+	topText := "なにを買う?"
+	InitWeapon(win, Txt, topText)
 }
 
 func InitArmorShop(win *pixelgl.Window, Txt *text.Text) {
@@ -92,13 +97,19 @@ func InitAccessoryShop(win *pixelgl.Window, Txt *text.Text) {
 
 func InitEquipmentScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
+	Txt.Clear()
 
+	topText := "装備画面"
+	InitGoTo(win, Txt, topText)
 	InitEquipment(win, Txt)
 }
 
 func InitJobSelect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
+	Txt.Clear()
 
+	topText := "どれに転職する?"
+	InitGoTo(win, Txt, topText)
 	InitJob(win, Txt)
 }
 

@@ -20,75 +20,48 @@ var (
 	town6Button = pixel.Rect{}
 )
 
+var (
+	townButtonSlice = []pixel.Rect{}
+)
+
 func InitTown(win *pixelgl.Window, Txt *text.Text) {
+	xOffSet := myPos.TopLefPos(win, Txt).X + 300
+	yOffSet := myPos.TopLefPos(win, Txt).Y - 50
+	txtPos := pixel.V(0, 0)
 
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "Where are you going?")
-	tempPosition = myPos.TopCenterPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
+	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
+	townSlice := []string{"1. 武器店", "2. 防具店", "3. アクセサリー店", "4. 鍛冶屋", "5. 装備", "BackSpace. 戻る"}
 
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "1. WeaponShop")
-	tempPosition = myPos.CenterLeftPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	town1Button = Txt.Bounds().Moved(tempPosition)
-
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "2. ArmorShop")
-	tempPosition = myPos.CenterPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	town2Button = Txt.Bounds().Moved(tempPosition)
-
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "3. AccessoryShop")
-	tempPosition = myPos.CenterRightPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	town3Button = Txt.Bounds().Moved(tempPosition)
-
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "4. BlackSmith")
-	tempPosition = myPos.BottleLeftPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	town4Button = Txt.Bounds().Moved(tempPosition)
-
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "5. Equipment")
-	tempPosition = myPos.BottleCenterPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	town5Button = Txt.Bounds().Moved(tempPosition)
-
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "6. Exit")
-	tempPosition = myPos.BottleRightPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-	town6Button = Txt.Bounds().Moved(tempPosition)
+	for _, townName := range townSlice {
+		Txt.Clear()
+		Txt.Color = colornames.White
+		fmt.Fprintln(Txt, townName)
+		yOffSet -= Txt.LineHeight + 25
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition := pixel.IM.Moved(txtPos)
+		Txt.Draw(win, tempPosition)
+		townButtonSlice = append(townButtonSlice, Txt.Bounds().Moved(txtPos))
+	}
 }
 
 func TownClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
-	if town1Button.Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+	if townButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		CurrentGS = WeaponShop
 		log.Println("Town->WeaponShop")
-	} else if town2Button.Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
+	} else if townButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
 		CurrentGS = ArmorShop
 		log.Println("Town->ArmorShop")
-	} else if town3Button.Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
+	} else if townButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
 		CurrentGS = AccessoryShop
 		log.Println("Town->AccessoryShop")
-	} else if town4Button.Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
+	} else if townButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
 		CurrentGS = BlackSmith
 		log.Println("Town->BlackSmith")
-	} else if town5Button.Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
+	} else if townButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
 		CurrentGS = EquipmentScreen
 		log.Println("Town->EquipmentScreen")
-	} else if town6Button.Contains(mousePos) || win.JustPressed(pixelgl.Key6) {
+	} else if townButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
 		CurrentGS = GoToScreen
 		log.Println("Town->GoToScreen")
 	}
