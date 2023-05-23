@@ -39,7 +39,7 @@ func run() {
 	japanFontPath := "assets/fonts/PixelMplus12-Regular.ttf"
 	basicTxt := initializeAnyText(fontPath, 40, colornames.White)
 	screenTxt := initAnyJapanText(japanFontPath, 40, colornames.White)
-	descriptionTxt := initializeAnyText(japanFontPath, 30, colornames.White)
+	descriptionTxt := initAnyJapanText(japanFontPath, 30, colornames.White)
 	startTxt := initializeAnyText(fontPath, 80, colornames.White)
 	endTxt := initializeAnyText(fontPath, 60, colornames.White)
 

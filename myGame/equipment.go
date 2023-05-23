@@ -22,7 +22,7 @@ var (
 )
 
 func InitEquipment(win *pixelgl.Window, Txt *text.Text) {
-	xOffSet := myPos.TopLefPos(win, Txt).X + 300
+	xOffSet := myPos.TopLefPos(win, Txt).X + 400
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 50
 	txtPos := pixel.V(0, 0)
 
