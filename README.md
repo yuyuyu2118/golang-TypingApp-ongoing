@@ -132,3 +132,49 @@
 10. 木の棒
     - 必要素材: 木の枝3, 針金1, 糸1
 
+
+
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+)
+
+func groupSlimeImages(directory string) [][]string {
+	var (
+		waitImages   []string
+		attackImages []string
+		slimeImages  [][]string
+	)
+
+	// ディレクトリ内のファイル一覧を取得
+	files, err := ioutil.ReadDir(directory)
+	if err != nil {
+		fmt.Println("Error reading directory:", err)
+		return slimeImages
+	}
+
+	// ファイル名をスライスに分類
+	for _, file := range files {
+		fileName := file.Name()
+		if strings.HasPrefix(fileName, "スライム待機") {
+			waitImages = append(waitImages, fileName)
+		} else if strings.HasPrefix(fileName, "スライム攻撃") {
+			attackImages = append(attackImages, fileName)
+		}
+	}
+
+	slimeImages = append(slimeImages, waitImages)
+	slimeImages = append(slimeImages, attackImages)
+
+	return slimeImages
+}
+
+func main() {
+	directory := "assets" // 画像ファイルが格納されているディレクトリのパス
+	slimeImages := groupSlimeImages(directory)
+	fmt.Println("Slime Wait Images:", slimeImages[0])
+	fmt.Println("Slime Attack Images:", slimeImages[1])
+}
