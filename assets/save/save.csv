@@ -1,5 +1,5 @@
 Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,
-NoName,30,30,3,1,50,0,2,657,Rookie,8,Japanese,
+NoName,30,30,5,1,50,0,2,1042,Rookie,25,Japanese,
 WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,
 ArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,
 AccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,

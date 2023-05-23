@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/battle"
 	"github.com/yuyuyu2118/typingGo/enemy"
@@ -51,11 +50,13 @@ func run() {
 	player := player.NewPlayerStatus(playerLoadInfo)
 	log.Println(player)
 	enemyInfo := enemy.CreateEnemyInstance()
-	enemyKnight := (*enemyInfo)[0]
-	// for _, enemy := range *enemyInfo {
-	// 	enemyKnight := enemy
-	// }
+	var enemySettings []enemy.EnemyStatus
+	//enemyKnight := (*enemyInfo)[0]
+	for _, enemy := range *enemyInfo {
+		enemySettings = append(enemySettings, enemy)
+	}
 
+	//MonsterAnimation
 	sprites := enemy.SetEnemyAnimation("assets/monster/Slime", "SlimeA_Wait")
 	frame := 0
 	last := time.Now()
@@ -121,14 +122,8 @@ func run() {
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
 				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
-				myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)
+				myGame.SaveGame("assets\\save\\save.csv", 1, player)
 			}
-		// case myGame.SaveScreen:
-		// 	initScreenInformation(win, basicTxt, player)
-
-		// 	if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) {
-		// 		myGame.CurrentGS = myGame.SaveClickEvent(win, win.MousePosition(), player)
-		// 	}
 
 		case myGame.PlayingScreen:
 			initScreenInformation(win, basicTxt, player)
@@ -138,16 +133,14 @@ func run() {
 				frame = (frame + 1) % len(sprites)
 				last = time.Now()
 			}
-			sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 35))).Scaled(win.Bounds().Center(), 5.0))
-
-			// enemy.SetEnemyPic(win, &enemyKnight, "assets\\monster\\monster1.png", enemyKnight.EnemySize)
-			// enemy.SetEnemyText(win, basicTxt, &enemyKnight)
+			enemy.SetEnemySprite(win, &enemySettings[0], "assets\\monster\\Slime\\SlimeA_Attack0.png", enemySettings[0].EnemySize, sprites, frame)
+			enemy.SetEnemySpriteText(win, screenTxt, &enemySettings[0])
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, basicTxt)
 
 			elapsed := time.Since(startTime)
 			battle.InitBattleTextV2(win, basicTxt, elapsed)
-			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemyKnight, elapsed)
+			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[0], elapsed)
 			if myGame.CurrentGS == myGame.BattleEnemyScreen {
 				startTime = time.Now()
 			}
@@ -159,26 +152,24 @@ func run() {
 				frame = (frame + 1) % len(sprites)
 				last = time.Now()
 			}
-			sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 35))).Scaled(win.Bounds().Center(), 5.0))
-
-			//enemy.SetEnemyPic(win, &enemyKnight, "assets\\monster\\monster1.png", enemyKnight.EnemySize)
-			//enemy.SetEnemyText(win, basicTxt, &enemyKnight)
+			enemy.SetEnemySprite(win, &enemySettings[0], "assets\\monster\\Slime\\SlimeA_Attack0.png", enemySettings[0].EnemySize, sprites, frame)
+			enemy.SetEnemySpriteText(win, screenTxt, &enemySettings[0])
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, basicTxt)
 
 			elapsed := time.Since(startTime)
 			battle.InitBattleTextV2(win, basicTxt, elapsed)
-			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemyKnight, elapsed)
+			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[0], elapsed)
 			if myGame.CurrentGS == myGame.PlayingScreen {
 				startTime = time.Now()
 			}
 		case myGame.EndScreen:
 			myGame.InitEndScreen(win, endTxt)
-			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemyKnight)
+			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemySettings[0])
 			//TODO
 			if !myUtil.GetSaveReset() {
-				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
-				myGame.SaveGame("assets\\save\\save.csv", 1, saveContent)
+				//saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
+				myGame.SaveGame("assets\\save\\save.csv", 1, player)
 				myUtil.SetSaveReset(true)
 			}
 		case myGame.TestState:

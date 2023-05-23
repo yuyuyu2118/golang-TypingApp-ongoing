@@ -24,8 +24,8 @@ type EnemyStatus struct {
 	Gold       int
 	Attack     bool
 	AttackTick float64
-	EnemySize  float64
 	DropAP     int
+	EnemySize  float64
 }
 
 func CreateEnemyInstance() *[]EnemyStatus {
@@ -43,6 +43,8 @@ func CreateEnemyInstance() *[]EnemyStatus {
 		Attack := false
 		AttackTick, _ := strconv.ParseFloat(value[7], 64)
 		DropAP, _ := strconv.Atoi((value[8]))
+		EnemySize, _ := strconv.ParseFloat(value[9], 64)
+		log.Println(DropAP)
 
 		tempInstance := EnemyStatus{
 			Name:       Name,
@@ -53,8 +55,8 @@ func CreateEnemyInstance() *[]EnemyStatus {
 			Gold:       Gold,
 			Attack:     Attack,
 			AttackTick: AttackTick,
-			EnemySize:  4.0,
 			DropAP:     DropAP,
+			EnemySize:  EnemySize,
 		}
 		instance = append(instance, tempInstance)
 	}
@@ -62,7 +64,7 @@ func CreateEnemyInstance() *[]EnemyStatus {
 }
 
 func SetEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP float64, pos pixel.Vec) {
-	rectWidth := scaledSize.X * ((MaxHP - (MaxHP - HP)) * 0.01)
+	rectWidth := scaledSize.X * (HP / MaxHP)
 	var rect pixel.Rect
 	if HP > 0 {
 		rect = pixel.R(
@@ -149,4 +151,26 @@ func SetEnemyAnimation(directory string, fileName string) []*pixel.Sprite {
 		sprites = append(sprites, sprite)
 	}
 	return sprites
+}
+
+func SetEnemySprite(win *pixelgl.Window, enemyInf *EnemyStatus, path string, scaleFactor float64, sprites []*pixel.Sprite, frame int) {
+	sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 25))).Scaled(win.Bounds().Center(), scaleFactor))
+	pic, _ := myIo.OpenDecodePictureData(path)
+	scaledSize := pic.Bounds().Size().Scaled(scaleFactor)
+	barPosition := pixel.V(
+		sprites[0].Picture().Bounds().W()*scaleFactor,
+		sprites[0].Picture().Bounds().H()*scaleFactor,
+	)
+
+	SetEnemyHPBarOut(win, scaledSize, barPosition)
+	SetEnemyHPBar(win, scaledSize, enemyInf.HP, enemyInf.MaxHP, barPosition)
+}
+
+func SetEnemySpriteText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus) {
+	// cp := constantProvider{}
+	// WinHSize := cp.GetConstant()
+	Txt.Clear()
+	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, "EnemyHP : ", enemy.HP)
+	myPos.DrawPos(win, Txt, myPos.TopCenPos(win, Txt))
 }

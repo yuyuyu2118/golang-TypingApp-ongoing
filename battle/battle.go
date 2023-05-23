@@ -27,6 +27,9 @@ var (
 	lock        = false
 	lock2       = false
 	pressEnter  = false
+
+	tempWordDamage = 0.0
+	tempEnemySize  = 0.0
 )
 
 func BattleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration) myGame.GameState {
@@ -68,6 +71,7 @@ func BattleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *
 			player.SP = 0
 			if player.Job == "Rookie" {
 				enemy.HP -= 10
+				PlayerAttack(win, int(-10), win.Bounds().Center().Sub(pixel.V(50, 150)))
 			} else if player.Job == "Hunter" {
 
 			} else if player.Job == "Monk" {
@@ -110,8 +114,8 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = enemy.AttackTick - elapsed.Seconds()
-	//log.Println(tempCount)
+	tempCount = player.OP - elapsed.Seconds()
+	log.Println(tempCount)
 	//log.Println(elapsed.Seconds())
 
 	if myGame.CurrentGS == myGame.PlayingScreen {
@@ -120,13 +124,15 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++
-					enemy.HP -= player.OP
+					tempWordDamage -= 3
 					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
-					PlayerAttack(win, int(player.OP), win.Bounds().Center().Sub(pixel.V(50, 150)))
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0
 						score++
+						enemy.HP += tempWordDamage
+						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
+						tempWordDamage = 0.0
 					}
 				} else {
 					missType++
@@ -140,21 +146,22 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 		//PressEnter
 		if win.JustPressed(pixelgl.KeyEnter) {
 			pressEnter = true
+			tempEnemySize = enemy.EnemySize
 		}
 		if pressEnter == true {
-			if enemy.EnemySize >= 4.0 && enemy.EnemySize < 4.5 && lock == false && lock2 == false {
+			if enemy.EnemySize >= tempEnemySize && enemy.EnemySize < tempEnemySize*1.2 && lock == false && lock2 == false {
 				enemy.EnemySize = enemy.EnemySize * 1.05
-				if enemy.EnemySize > 4.5 {
+				if enemy.EnemySize > tempEnemySize*1.2 {
 					lock = true
 					win.Canvas().Clear(colornames.Red)
 				}
-			} else if enemy.EnemySize >= 4 && lock == true && lock2 == false {
+			} else if enemy.EnemySize >= tempEnemySize && lock == true && lock2 == false {
 				enemy.EnemySize = enemy.EnemySize * 0.95
-				if enemy.EnemySize < 4 {
+				if enemy.EnemySize < tempEnemySize {
 					lock2 = true
 				}
 			} else if lock == true && lock2 == true {
-				enemy.EnemySize = 4.0
+				enemy.EnemySize = tempEnemySize
 				lock = false
 				lock2 = false
 				player.HP -= enemy.OP

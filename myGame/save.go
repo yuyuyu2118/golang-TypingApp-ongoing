@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/faiface/pixel"
+	"github.com/yuyuyu2118/typingGo/player"
 )
 
 var (
@@ -50,8 +52,22 @@ var (
 // 	return CurrentGS
 // }
 
-func SaveGame(saveFilePath string, saveNum int, saveContent string) {
+func SaveGame(saveFilePath string, saveNum int, player *player.PlayerStatus) {
 	SaveFileCheck(saveFilePath)
+	//saveContent := "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
+	Name := player.Name
+	MaxHP := strconv.FormatFloat(player.MaxHP, 'f', -1, 64)
+	HP := strconv.FormatFloat(player.HP, 'f', -1, 64)
+	OP := strconv.FormatFloat(player.OP, 'f', -1, 64)
+	DP := strconv.FormatFloat(player.DP, 'f', -1, 64)
+	MaxSP := strconv.FormatFloat(player.MaxSP, 'f', -1, 64)
+	SP := strconv.FormatFloat(player.SP, 'f', -1, 64)
+	BaseSP := strconv.FormatFloat(player.BaseSP, 'f', -1, 64)
+	Gold := strconv.Itoa(player.Gold)
+	Job := player.Job
+	AP := strconv.Itoa(player.AP)
+	Language := player.Language
+	saveContent := Name + "," + MaxHP + "," + HP + "," + OP + "," + DP + "," + MaxSP + "," + SP + "," + BaseSP + "," + Gold + "," + Job + "," + AP + "," + Language + ","
 
 	content, err := ioutil.ReadFile(saveFilePath)
 	if err != nil {
