@@ -4,7 +4,6 @@ import (
 	_ "image/png"
 	"log"
 	"math/rand"
-	"os"
 	"time"
 
 	"github.com/faiface/pixel/pixelgl"
@@ -38,30 +37,15 @@ func run() {
 
 	for !win.Closed() {
 		switch myGame.CurrentGS {
-		case myGame.StartScreen:
+		case myGame.StartScreen: //スタート画面
 			myGame.InitStartScreen(win, myUtil.ScreenTxt)
-			if win.JustPressed(pixelgl.KeyEnter) {
-				myGame.CurrentGS = myGame.GoToScreen
-				log.Println("Press:Enter -> GameState:jobSelect")
-			}
-			//testMode
-			if win.JustPressed(pixelgl.KeyT) {
-				myGame.CurrentGS = myGame.TestState
-				log.Println("TestMode")
-			}
-			if win.JustPressed(pixelgl.KeyEscape) {
-				win.Destroy()
-				os.Exit(0)
-			}
-		case myGame.GoToScreen:
-			//TODO: Saveの削除
+		case myGame.GoToScreen: //GoTo画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
+			if myGame.CurrentGS == myGame.GoToScreen && (win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace)) {
 				myGame.CurrentGS = myGame.GoToClickEvent(win, win.MousePosition())
 			}
-		case myGame.StageSelect:
+		case myGame.StageSelect: //ダンジョンセレクト画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-			//TODO: Key入力受付
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.Key7) || win.JustPressed(pixelgl.Key8) || win.JustPressed(pixelgl.Key9) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.StageClickEvent(win, win.MousePosition())
 			}

@@ -54,7 +54,8 @@ func InitGoTo(win *pixelgl.Window, Txt *text.Text, topText string) {
 
 func GoToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
-	if gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+	//TODO: 全部この形式にする　やばいバグ
+	if CurrentGS == GoToScreen && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		CurrentGS = StageSelect
 		log.Println("GoToScreen->Dungeon")
 	} else if gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
