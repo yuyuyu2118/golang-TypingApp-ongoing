@@ -20,7 +20,7 @@ type WeaponPurchaseEvent struct {
 var WeaponPurchaseEventInstance *WeaponPurchaseEvent
 
 func CreateWeaponPurchaseEvent(value []string) {
-	//temp := myIo.CsvToSliceAll("player\\save\\save.csv")
+	//temp := myIo.CsvToSliceAll(myGame.SaveFilePath)
 
 	var weaponPurchaseBool []bool
 	for _, b := range value {
@@ -61,7 +61,7 @@ func CreateWeaponPurchaseEvent(value []string) {
 // var DefeatedEnemyEventInstance defeatedEnemyEvent
 
 // func CreateDefeatedEnemyEvent(value []string) {
-// 	//temp := myIo.CsvToSliceAll("player\\save\\save.csv")
+// 	//temp := myIo.CsvToSliceAll(myGame.SaveFilePath)
 
 // 	var defeatedEnemyBool []bool
 // 	for _, b := range value {

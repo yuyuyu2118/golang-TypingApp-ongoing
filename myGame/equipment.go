@@ -30,7 +30,7 @@ func InitEquipment(win *pixelgl.Window, Txt *text.Text) {
 	txtPos := pixel.V(0, 0)
 
 	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
-	loadContent := SaveFileLoad("player\\save\\save.csv")
+	loadContent := SaveFileLoad(SaveFilePath)
 	counts := make(map[string]int)
 	elements := loadContent[3]
 
