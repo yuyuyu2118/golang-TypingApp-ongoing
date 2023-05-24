@@ -7,6 +7,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myIo"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
@@ -31,17 +32,18 @@ func SetEnemyAnimation(directory string, fileName string) []*pixel.Sprite {
 	return sprites
 }
 
-func SetEnemySprite(win *pixelgl.Window, enemyInf *EnemyStatus, path string, sprites []*pixel.Sprite, frame int) {
-	sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 25))).Scaled(win.Bounds().Center(), enemyInf.EnemySize))
-	pic, _ := myIo.OpenDecodePictureData(path)
-	scaledSize := pic.Bounds().Size().Scaled(enemyInf.EnemySize)
+func SetEnemySprite(win *pixelgl.Window, frame int) {
+	sprites := EnemySprites[myGame.StageNum]
+	sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 25))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
+	pic, _ := myIo.OpenDecodePictureData(EnemyPathBar[myGame.StageNum])
+	scaledSize := pic.Bounds().Size().Scaled(EnemySettings[myGame.StageNum].EnemySize)
 	barPosition := pixel.V(
-		sprites[0].Picture().Bounds().W()*enemyInf.EnemySize,
-		sprites[0].Picture().Bounds().H()*enemyInf.EnemySize,
+		sprites[0].Picture().Bounds().W()*EnemySettings[myGame.StageNum].EnemySize,
+		sprites[0].Picture().Bounds().H()*EnemySettings[myGame.StageNum].EnemySize,
 	)
 
 	SetEnemyHPBarOut(win, scaledSize, barPosition)
-	SetEnemyHPBar(win, scaledSize, enemyInf.HP, enemyInf.MaxHP, barPosition)
+	SetEnemyHPBar(win, scaledSize, EnemySettings[myGame.StageNum].HP, EnemySettings[myGame.StageNum].MaxHP, barPosition)
 }
 
 func SetEnemySpriteText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus) {

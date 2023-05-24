@@ -62,22 +62,23 @@ func CreateEnemyInstance() *[]EnemyStatus {
 	return &instance
 }
 
-func CreateEnemySettings() ([]EnemyStatus, []string, [][]*pixel.Sprite) {
+var EnemySettings []EnemyStatus
+var EnemyPathBar []string
+var EnemySprites [][]*pixel.Sprite
+
+func CreateEnemySettings() {
 	//csvファイルからEnemyの情報を1行ずつ取り出して、enemySettingsスライスに格納
 	enemyInfo := CreateEnemyInstance()
-	var enemySettings []EnemyStatus
 	for _, enemy := range *enemyInfo {
-		enemySettings = append(enemySettings, enemy)
+		EnemySettings = append(EnemySettings, enemy)
 	}
 
 	//Animationに使うスプライトをスライスのスライスに格納、enemyPathBarには体力表示用のスライスを格納
-	var enemyPathBar []string
-	var enemySprites [][]*pixel.Sprite
+
 	for _, eNameSlice := range EnemyNameSlice {
-		enemyPathBar = append(enemyPathBar, EnemyPath+eNameSlice+"\\"+eNameSlice+"A_Wait0.png")
-		enemySprites = append(enemySprites, SetEnemyAnimation(EnemyPath+eNameSlice, eNameSlice+"A_Wait"))
+		EnemyPathBar = append(EnemyPathBar, EnemyPath+eNameSlice+"\\"+eNameSlice+"A_Wait0.png")
+		EnemySprites = append(EnemySprites, SetEnemyAnimation(EnemyPath+eNameSlice, eNameSlice+"A_Wait"))
 	}
-	return enemySettings, enemyPathBar, enemySprites
 }
 
 func SetEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP float64, pos pixel.Vec) {

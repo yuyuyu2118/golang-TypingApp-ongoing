@@ -23,10 +23,6 @@ const (
 
 var startTime time.Time
 var Ticker *time.Ticker
-var saveContent string
-
-// TODO: Utilに入れる
-var language bool
 
 func run() {
 	rand.Seed(time.Now().UnixNano())
@@ -36,9 +32,7 @@ func run() {
 	loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
 	player := player.NewPlayerStatus(loadContent[1], loadContent[3])
 	event.CreateWeaponPurchaseEvent(loadContent[2])
-
-	enemySettings, enemyPathBar, enemySprites := enemy.CreateEnemySettings()
-
+	enemy.CreateEnemySettings()
 	frame := 0
 	last := time.Now()
 
@@ -115,17 +109,17 @@ func run() {
 
 			dt := time.Since(last).Seconds()
 			if dt >= 0.2 { // アニメーション速度を調整 (ここでは0.2秒ごとに更新)
-				frame = (frame + 1) % len(enemySprites[myGame.StageNum])
+				frame = (frame + 1) % len(enemy.EnemySprites[myGame.StageNum])
 				last = time.Now()
 			}
-			enemy.SetEnemySprite(win, &enemySettings[myGame.StageNum], enemyPathBar[myGame.StageNum], enemySprites[myGame.StageNum], frame)
-			enemy.SetEnemySpriteText(win, myUtil.ScreenTxt, &enemySettings[myGame.StageNum])
+			enemy.SetEnemySprite(win, frame)
+			enemy.SetEnemySpriteText(win, myUtil.ScreenTxt, &enemy.EnemySettings[myGame.StageNum])
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, myUtil.BasicTxt)
 
 			elapsed := time.Since(startTime)
 			battle.InitBattleTextV2(win, myUtil.BasicTxt, elapsed)
-			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[myGame.StageNum], elapsed)
+			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemy.EnemySettings[myGame.StageNum], elapsed)
 			if myGame.CurrentGS == myGame.BattleEnemyScreen {
 				startTime = time.Now()
 			}
@@ -134,17 +128,17 @@ func run() {
 
 			dt := time.Since(last).Seconds()
 			if dt >= 0.2 { // アニメーション速度を調整 (ここでは0.2秒ごとに更新)
-				frame = (frame + 1) % len(enemySprites[myGame.StageNum])
+				frame = (frame + 1) % len(enemy.EnemySprites[myGame.StageNum])
 				last = time.Now()
 			}
-			enemy.SetEnemySprite(win, &enemySettings[myGame.StageNum], enemyPathBar[myGame.StageNum], enemySprites[myGame.StageNum], frame)
-			enemy.SetEnemySpriteText(win, myUtil.ScreenTxt, &enemySettings[myGame.StageNum])
+			enemy.SetEnemySprite(win, frame)
+			enemy.SetEnemySpriteText(win, myUtil.ScreenTxt, &enemy.EnemySettings[myGame.StageNum])
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, myUtil.BasicTxt)
 
 			elapsed := time.Since(startTime)
 			battle.InitBattleTextV2(win, myUtil.BasicTxt, elapsed)
-			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[myGame.StageNum], elapsed)
+			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemy.EnemySettings[myGame.StageNum], elapsed)
 			if myGame.CurrentGS == myGame.PlayingScreen {
 				startTime = time.Now()
 			}
@@ -153,7 +147,7 @@ func run() {
 			event.CreateWeaponPurchaseEvent(loadContent[2])
 
 			myGame.InitEndScreen(win, myUtil.ScreenTxt)
-			myGame.CurrentGS = battle.BattleEndScreen(win, myUtil.ScreenTxt, player, &enemySettings[myGame.StageNum])
+			myGame.CurrentGS = battle.BattleEndScreen(win, myUtil.ScreenTxt, player, &enemy.EnemySettings[myGame.StageNum])
 
 			if !myUtil.GetSaveReset() {
 				myGame.SaveGame(myGame.SaveFilePath, 1, player)
