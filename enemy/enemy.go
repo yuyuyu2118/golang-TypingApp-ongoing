@@ -2,7 +2,6 @@ package enemy
 
 import (
 	"fmt"
-	"log"
 	"path/filepath"
 	"strconv"
 
@@ -33,7 +32,6 @@ func CreateEnemyInstance() *[]EnemyStatus {
 	var instance []EnemyStatus
 
 	for _, value := range temp {
-		log.Println(value[0], value[1])
 		Name := value[0]
 		MaxHP, _ := strconv.ParseFloat(value[1], 64)
 		HP, _ := strconv.ParseFloat(value[2], 64)
@@ -44,7 +42,6 @@ func CreateEnemyInstance() *[]EnemyStatus {
 		AttackTick, _ := strconv.ParseFloat(value[7], 64)
 		DropAP, _ := strconv.Atoi((value[8]))
 		EnemySize, _ := strconv.ParseFloat(value[9], 64)
-		log.Println(DropAP)
 
 		tempInstance := EnemyStatus{
 			Name:       Name,
@@ -138,7 +135,7 @@ func SetEnemyAnimation(directory string, fileName string) []*pixel.Sprite {
 	}
 
 	// 読み込んだ画像ファイルのパスをログに出力する
-	log.Println(matches)
+	//log.Println(matches)
 
 	// 画像ファイルを読み込んでspritesに追加する
 	var sprites []*pixel.Sprite
@@ -153,13 +150,13 @@ func SetEnemyAnimation(directory string, fileName string) []*pixel.Sprite {
 	return sprites
 }
 
-func SetEnemySprite(win *pixelgl.Window, enemyInf *EnemyStatus, path string, scaleFactor float64, sprites []*pixel.Sprite, frame int) {
-	sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 25))).Scaled(win.Bounds().Center(), scaleFactor))
+func SetEnemySprite(win *pixelgl.Window, enemyInf *EnemyStatus, path string, sprites []*pixel.Sprite, frame int) {
+	sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 25))).Scaled(win.Bounds().Center(), enemyInf.EnemySize))
 	pic, _ := myIo.OpenDecodePictureData(path)
-	scaledSize := pic.Bounds().Size().Scaled(scaleFactor)
+	scaledSize := pic.Bounds().Size().Scaled(enemyInf.EnemySize)
 	barPosition := pixel.V(
-		sprites[0].Picture().Bounds().W()*scaleFactor,
-		sprites[0].Picture().Bounds().H()*scaleFactor,
+		sprites[0].Picture().Bounds().W()*enemyInf.EnemySize,
+		sprites[0].Picture().Bounds().H()*enemyInf.EnemySize,
 	)
 
 	SetEnemyHPBarOut(win, scaledSize, barPosition)
