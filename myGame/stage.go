@@ -11,13 +11,7 @@ import (
 	"golang.org/x/image/colornames"
 )
 
-type StageInf struct {
-	StageNum int
-}
-
-func NewStageInf(StageNum int) *StageInf {
-	return &StageInf{StageNum}
-}
+var StageNum int
 
 var (
 	stage1Button = pixel.Rect{}
@@ -47,48 +41,48 @@ func InitStage(win *pixelgl.Window, Txt *text.Text) {
 	}
 }
 
-func StageClickEvent(win *pixelgl.Window, mousePos pixel.Vec, stage *StageInf) GameState {
+func StageClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 
 	if stageButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Slime")
-		stage.StageNum = 0
+		StageNum = 0
 	} else if stageButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Bird")
-		stage.StageNum = 1
+		StageNum = 1
 	} else if stageButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Plant")
-		stage.StageNum = 2
+		StageNum = 2
 	} else if stageButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Goblin")
-		stage.StageNum = 3
+		StageNum = 3
 	} else if stageButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Zombie")
-		stage.StageNum = 4
+		StageNum = 4
 	} else if stageButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Fairy")
-		stage.StageNum = 5
+		StageNum = 5
 	} else if stageButtonSlice[6].Contains(mousePos) || win.JustPressed(pixelgl.Key7) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Skull")
-		stage.StageNum = 6
+		StageNum = 6
 	} else if stageButtonSlice[7].Contains(mousePos) || win.JustPressed(pixelgl.Key8) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Wizard")
-		stage.StageNum = 7
+		StageNum = 7
 	} else if stageButtonSlice[8].Contains(mousePos) || win.JustPressed(pixelgl.Key9) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Solidier")
-		stage.StageNum = 8
+		StageNum = 8
 	} else if stageButtonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
 		CurrentGS = GoToScreen
 		log.Println("StageScreen -> GoToScreen")
 	}
-	log.Println("PlayStage is", stage.StageNum)
+	log.Println("PlayStage is", StageNum)
 	return CurrentGS
 }
