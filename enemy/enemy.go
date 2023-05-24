@@ -2,7 +2,6 @@ package enemy
 
 import (
 	"fmt"
-	"path/filepath"
 	"strconv"
 
 	"github.com/faiface/pixel"
@@ -26,6 +25,9 @@ type EnemyStatus struct {
 	DropAP     int
 	EnemySize  float64
 }
+
+var EnemyPath = "assets\\monster\\"
+var EnemyNameSlice = []string{"Slime", "Bird", "Plant", "Goblin", "Zombie", "Fairy", "Skull", "Wizard", "Solidier"}
 
 func CreateEnemyInstance() *[]EnemyStatus {
 	temp := myIo.CsvToSliceAll("enemy/enemySettings/enemy.csv")
@@ -58,6 +60,24 @@ func CreateEnemyInstance() *[]EnemyStatus {
 		instance = append(instance, tempInstance)
 	}
 	return &instance
+}
+
+func CreateEnemySettings() ([]EnemyStatus, []string, [][]*pixel.Sprite) {
+	//csvファイルからEnemyの情報を1行ずつ取り出して、enemySettingsスライスに格納
+	enemyInfo := CreateEnemyInstance()
+	var enemySettings []EnemyStatus
+	for _, enemy := range *enemyInfo {
+		enemySettings = append(enemySettings, enemy)
+	}
+
+	//Animationに使うスプライトをスライスのスライスに格納、enemyPathBarには体力表示用のスライスを格納
+	var enemyPathBar []string
+	var enemySprites [][]*pixel.Sprite
+	for _, eNameSlice := range EnemyNameSlice {
+		enemyPathBar = append(enemyPathBar, EnemyPath+eNameSlice+"\\"+eNameSlice+"A_Wait0.png")
+		enemySprites = append(enemySprites, SetEnemyAnimation(EnemyPath+eNameSlice, eNameSlice+"A_Wait"))
+	}
+	return enemySettings, enemyPathBar, enemySprites
 }
 
 func SetEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP float64, pos pixel.Vec) {
@@ -125,49 +145,4 @@ func SetEnemyText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus) {
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "EnemyHP : ", enemy.HP)
 	myPos.DrawPos(win, Txt, myPos.TopCenterPos(win, Txt))
-}
-
-func SetEnemyAnimation(directory string, fileName string) []*pixel.Sprite {
-	// ディレクトリ内にある画像ファイルを検索する
-	matches, err := filepath.Glob(filepath.Join(directory, fileName+"*.png"))
-	if err != nil {
-		panic(err)
-	}
-
-	// 読み込んだ画像ファイルのパスをログに出力する
-	//log.Println(matches)
-
-	// 画像ファイルを読み込んでspritesに追加する
-	var sprites []*pixel.Sprite
-	for _, path := range matches {
-		picture, err := myIo.LoadPicture(path)
-		if err != nil {
-			panic(err)
-		}
-		sprite := pixel.NewSprite(picture, picture.Bounds())
-		sprites = append(sprites, sprite)
-	}
-	return sprites
-}
-
-func SetEnemySprite(win *pixelgl.Window, enemyInf *EnemyStatus, path string, sprites []*pixel.Sprite, frame int) {
-	sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 25))).Scaled(win.Bounds().Center(), enemyInf.EnemySize))
-	pic, _ := myIo.OpenDecodePictureData(path)
-	scaledSize := pic.Bounds().Size().Scaled(enemyInf.EnemySize)
-	barPosition := pixel.V(
-		sprites[0].Picture().Bounds().W()*enemyInf.EnemySize,
-		sprites[0].Picture().Bounds().H()*enemyInf.EnemySize,
-	)
-
-	SetEnemyHPBarOut(win, scaledSize, barPosition)
-	SetEnemyHPBar(win, scaledSize, enemyInf.HP, enemyInf.MaxHP, barPosition)
-}
-
-func SetEnemySpriteText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus) {
-	// cp := constantProvider{}
-	// WinHSize := cp.GetConstant()
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "EnemyHP : ", enemy.HP)
-	myPos.DrawPos(win, Txt, myPos.TopCenPos(win, Txt))
 }

@@ -42,8 +42,6 @@ func InitEquipment(win *pixelgl.Window, Txt *text.Text) {
 		}
 	}
 
-	log.Println(counts["weapon0"])
-
 	if counts["weapon0"] != 0 {
 		tempInt := counts["weapon0"]
 		equipmentSlice = append(equipmentSlice, "木の棒: "+strconv.Itoa(tempInt))
