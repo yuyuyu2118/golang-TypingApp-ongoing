@@ -19,6 +19,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		yourTimeString := fmt.Sprintf("%0.3f", yourTime)
 		//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
 		endLines := []string{
+			"You gain " + strconv.Itoa(gainGold) + " gold",
 			"YourScore : " + strconv.Itoa(score),
 			"\n",
 			"yourTime =" + yourTimeString,
@@ -32,7 +33,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
 		endLines := []string{
 			"GameOver...",
-			"You have lost " + strconv.Itoa(lostGold) + " gold",
+			"You lost " + strconv.Itoa(lostGold) + " gold",
 			"YourScore : " + strconv.Itoa(score),
 			"\n",
 			"yourTime =" + yourTimeString,
