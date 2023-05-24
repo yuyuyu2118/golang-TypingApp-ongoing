@@ -33,10 +33,7 @@ func run() {
 	win, _ := initializeWindow()
 	myPos.SetCfg(winHSize)
 	myUtil.InitTxtFontLoading()
-
-	myGame.SaveFileCheck("player\\save\\save.csv")
-	loadContent := myGame.SaveFileLoad("player\\save\\save.csv")
-	//playerStatusインスタンスを生成
+	loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
 	player := player.NewPlayerStatus(loadContent[1], loadContent[3])
 	event.CreateWeaponPurchaseEvent(loadContent[2])
 
@@ -111,7 +108,7 @@ func run() {
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
-				myGame.SaveGame("player\\save\\save.csv", 1, player)
+				myGame.SaveGame(myGame.SaveFilePath, 1, player)
 			}
 
 		case myGame.PlayingScreen:
@@ -154,14 +151,14 @@ func run() {
 				startTime = time.Now()
 			}
 		case myGame.EndScreen:
-			loadContent := myGame.SaveFileLoad("player\\save\\save.csv")
+			loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
 			event.CreateWeaponPurchaseEvent(loadContent[2])
 
 			myGame.InitEndScreen(win, myUtil.ScreenTxt)
 			myGame.CurrentGS = battle.BattleEndScreen(win, myUtil.ScreenTxt, player, &enemySettings[stage.StageNum])
 
 			if !myUtil.GetSaveReset() {
-				myGame.SaveGame("player\\save\\save.csv", 1, player)
+				myGame.SaveGame(myGame.SaveFilePath, 1, player)
 				myUtil.SetSaveReset(true)
 			}
 		case myGame.TestState:

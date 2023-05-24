@@ -335,8 +335,8 @@ func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pl
 			player.Gold -= 10000
 			tempWeapon = "weapon0"
 		}
-		SaveWeaponPurchaseEvent("player\\save\\save.csv", 3, tempWeapon, player)
-		SaveGame("player\\save\\save.csv", 1, player)
+		SaveWeaponPurchaseEvent(SaveFilePath, 3, tempWeapon, player)
+		SaveGame(SaveFilePath, 1, player)
 	} else if buySellSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.KeyS) {
 		log.Println("Sell")
 		for _, value := range player.PossessedWeapon {
@@ -375,8 +375,8 @@ func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pl
 			player.Gold += 5000
 			tempWeapon = "weapon0"
 		}
-		SaveWeaponSellEvent("player\\save\\save.csv", 3, tempWeapon, player)
-		SaveGame("player\\save\\save.csv", 1, player)
+		SaveWeaponSellEvent(SaveFilePath, 3, tempWeapon, player)
+		SaveGame(SaveFilePath, 1, player)
 		tempInt = tempInt[:0]
 	}
 	return CurrentGS
