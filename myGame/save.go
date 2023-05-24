@@ -140,3 +140,38 @@ func LoadSliceToString(content []string) string {
 	}
 	return strings.Join(quotedValues, ",")
 }
+
+// weaponが買えるようになったら有効化
+func SaveWeaponPurchaseEvent(saveFilePath string, saveNum int, saveContent string) {
+
+	saveContent = "1,0,0,0,0,0,0,0,0,0,,"
+	//instanceから文字列生成
+
+	content, err := ioutil.ReadFile(saveFilePath)
+	if err != nil {
+		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
+		return
+	}
+
+	// 改行文字で分割して行ごとのスライスに変換
+	lines := strings.Split(string(content), "\n")
+
+	// 行番号が有効な範囲かチェック
+	if saveNum < 0 || saveNum >= len(lines) {
+		fmt.Println("指定された行番号が範囲外です。")
+		return
+	}
+
+	// 指定された行を上書き
+	lines[saveNum] = saveContent
+
+	// 更新後の内容を保存ファイルに書き込む
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile(saveFilePath, []byte(output), 0644)
+	if err != nil {
+		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
+		return
+	}
+
+	fmt.Println("保存ファイルを更新しました。")
+}

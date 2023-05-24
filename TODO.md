@@ -65,5 +65,6 @@
 
 # バグ修正
 - 戦闘画面で最初にEnemyAttackが表示される
+- 戦闘終了画面で、ダメージの表示が残る
 
 text.RangeTable(unicode.P)とは

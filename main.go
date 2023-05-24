@@ -9,6 +9,7 @@ import (
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
+	event "github.com/yuyuyu2118/typingGo/Event"
 	"github.com/yuyuyu2118/typingGo/battle"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
@@ -30,11 +31,9 @@ var saveContent string
 var language bool
 
 func run() {
-	win, _ := initializeWindow()
 	rand.Seed(time.Now().UnixNano())
-	myGame.SaveFileCheck("assets\\save\\save.csv")
-	loadContent := myGame.SaveFileLoad("assets\\save\\save.csv")
-	log.Println(loadContent[1])
+	win, _ := initializeWindow()
+	myPos.SetCfg(winHSize)
 
 	fontPath := "assets\\fonts\\NotoSans-Black.ttf"
 	japanFontPath := "assets/fonts/PixelMplus12-Regular.ttf"
@@ -44,19 +43,17 @@ func run() {
 	startTxt := initializeAnyText(fontPath, 80, colornames.White)
 	endTxt := initializeAnyText(fontPath, 60, colornames.White)
 
-	myPos.SetCfg(winHSize)
+	myGame.SaveFileCheck("player\\save\\save.csv")
+	loadContent := myGame.SaveFileLoad("player\\save\\save.csv")
 	//playerStatusインスタンスを生成
-	stage := myGame.NewStageInf(0)
-	playerLoadInfo := loadContent[1]
-	player := player.NewPlayerStatus(playerLoadInfo)
-	log.Println(player)
+	player := player.NewPlayerStatus(loadContent[1])
+	event.CreateWeaponPurchaseEvent(loadContent[2])
+
 	enemyInfo := enemy.CreateEnemyInstance()
 	var enemySettings []enemy.EnemyStatus
-	//enemyKnight := (*enemyInfo)[0]
 	for _, enemy := range *enemyInfo {
 		enemySettings = append(enemySettings, enemy)
 	}
-
 	//loadMonsterAnimation
 	var enemySprites [][]*pixel.Sprite
 	var enemyWaitSprites []*pixel.Sprite
@@ -74,6 +71,8 @@ func run() {
 
 	frame := 0
 	last := time.Now()
+
+	stage := myGame.NewStageInf(0)
 
 	for !win.Closed() {
 		switch myGame.CurrentGS {
@@ -139,7 +138,7 @@ func run() {
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
-				myGame.SaveGame("assets\\save\\save.csv", 1, player)
+				myGame.SaveGame("player\\save\\save.csv", 1, player)
 			}
 
 		case myGame.PlayingScreen:
@@ -183,11 +182,11 @@ func run() {
 			}
 		case myGame.EndScreen:
 			myGame.InitEndScreen(win, endTxt)
-			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemySettings[6])
+			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemySettings[stage.StageNum])
 			//TODO
 			if !myUtil.GetSaveReset() {
 				//saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
-				myGame.SaveGame("assets\\save\\save.csv", 1, player)
+				myGame.SaveGame("player\\save\\save.csv", 1, player)
 				myUtil.SetSaveReset(true)
 			}
 		case myGame.TestState:
