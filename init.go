@@ -2,17 +2,13 @@ package main
 
 import (
 	"fmt"
-	"image/color"
-	"unicode"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myGame"
-	"github.com/yuyuyu2118/typingGo/myIo"
 	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
-	"golang.org/x/image/font"
 )
 
 func initializeWindow() (*pixelgl.Window, pixelgl.WindowConfig) {
@@ -43,51 +39,6 @@ func initializeWindow() (*pixelgl.Window, pixelgl.WindowConfig) {
 
 // 	return canvas, imd
 // }
-
-func initializeText(face font.Face, color color.Color) *text.Text {
-	basicAtlas := text.NewAtlas(face, text.ASCII)
-	basicTxt := text.New(pixel.V(50, 500), basicAtlas)
-	basicTxt.Color = color
-	return basicTxt
-}
-
-func initializeAnyText(fontPath string, size int, color color.Color) *text.Text {
-	face, _ := myUtil.LoadTTF(fontPath, float64(size))
-	return initializeText(face, color)
-}
-
-func initText(face font.Face, color color.Color) *text.Text {
-	Atlas := text.NewAtlas(face, text.ASCII)
-	Txt := text.New(pixel.V(0, 0), Atlas)
-	Txt.Color = color
-	return Txt
-}
-
-func initAnyText(fontPath string, size int, color color.Color) *text.Text {
-	face, _ := myUtil.LoadTTF(fontPath, float64(size))
-	return initText(face, color)
-}
-
-func initJapanText(face font.Face, color color.Color) *text.Text {
-	//TODO: ここが重い
-	var customKanjiRunes []rune
-	runes := myIo.CsvToSlice1Line("assets/fonts/kanji.csv")
-	for _, r := range runes {
-		customKanjiRunes = append(customKanjiRunes, rune(r))
-	}
-	customKanji := myUtil.CustomRangeTable(customKanjiRunes)
-
-	Atlas := text.NewAtlas(face, text.ASCII, text.RangeTable(unicode.P),
-		text.RangeTable(unicode.Hiragana), text.RangeTable(unicode.Katakana),
-		text.RangeTable(customKanji), text.RangeTable(myUtil.CustomRangeTable([]rune{'ー'})))
-	Txt := text.New(pixel.V(0, 0), Atlas)
-	return Txt
-}
-
-func initAnyJapanText(fontPath string, size int, color color.Color) *text.Text {
-	face := myUtil.LoadJapanFont(fontPath, float64(size))
-	return initJapanText(face, color)
-}
 
 // func initializeSound(filePath string) (beep.StreamSeekCloser, func()) {
 // 	soundFile := filePath
