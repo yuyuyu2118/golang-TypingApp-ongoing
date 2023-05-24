@@ -142,30 +142,190 @@ func LoadSliceToString(content []string) string {
 }
 
 // weaponが買えるようになったら有効化
-func SaveWeaponPurchaseEvent(saveFilePath string, saveNum int, saveContent string) {
-
-	saveContent = "1,0,0,0,0,0,0,0,0,0,,"
-	//instanceから文字列生成
+func SaveDefeatedEnemyEvent(saveFilePath string, saveNum int, defeatEnemy string) {
+	var tempInt int
+	loadContent := SaveFileLoad(saveFilePath)
+	if defeatEnemy == "Slime" {
+		tempInt, _ = strconv.Atoi(loadContent[2][0])
+		loadContent[2][0] = strconv.Itoa(tempInt + 1)
+	} else if defeatEnemy == "Bird" {
+		tempInt, _ = strconv.Atoi(loadContent[2][1])
+		loadContent[2][1] = strconv.Itoa(tempInt + 1)
+	} else if defeatEnemy == "Plant" {
+		tempInt, _ = strconv.Atoi(loadContent[2][2])
+		loadContent[2][2] = strconv.Itoa(tempInt + 1)
+	} else if defeatEnemy == "Goblin" {
+		tempInt, _ = strconv.Atoi(loadContent[2][3])
+		loadContent[2][3] = strconv.Itoa(tempInt + 1)
+	} else if defeatEnemy == "Zombie" {
+		tempInt, _ = strconv.Atoi(loadContent[2][4])
+		loadContent[2][4] = strconv.Itoa(tempInt + 1)
+	} else if defeatEnemy == "Fairy" {
+		tempInt, _ = strconv.Atoi(loadContent[2][5])
+		loadContent[2][5] = strconv.Itoa(tempInt + 1)
+	} else if defeatEnemy == "Skull" {
+		tempInt, _ = strconv.Atoi(loadContent[2][6])
+		loadContent[2][6] = strconv.Itoa(tempInt + 1)
+	} else if defeatEnemy == "Wizard" {
+		tempInt, _ = strconv.Atoi(loadContent[2][7])
+		loadContent[2][7] = strconv.Itoa(tempInt + 1)
+	} else if defeatEnemy == "Solidier" {
+		tempInt, _ = strconv.Atoi(loadContent[2][8])
+		loadContent[2][8] = strconv.Itoa(tempInt + 1)
+	} else if defeatEnemy == "Dragon" {
+		tempInt, _ = strconv.Atoi(loadContent[2][9])
+		loadContent[2][9] = strconv.Itoa(tempInt + 1)
+	}
+	saveContent := strings.Join(loadContent[saveNum], ",")
 
 	content, err := ioutil.ReadFile(saveFilePath)
 	if err != nil {
 		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
 		return
 	}
-
-	// 改行文字で分割して行ごとのスライスに変換
 	lines := strings.Split(string(content), "\n")
-
-	// 行番号が有効な範囲かチェック
 	if saveNum < 0 || saveNum >= len(lines) {
 		fmt.Println("指定された行番号が範囲外です。")
 		return
 	}
-
-	// 指定された行を上書き
 	lines[saveNum] = saveContent
 
-	// 更新後の内容を保存ファイルに書き込む
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile(saveFilePath, []byte(output), 0644)
+	if err != nil {
+		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
+		return
+	}
+
+	fmt.Println("保存ファイルを更新しました。")
+}
+
+func SaveWeaponPurchaseEvent(saveFilePath string, saveNum int, purchaseWeapon string, player *player.PlayerStatus) {
+	var tempInt int
+	loadContent := SaveFileLoad(saveFilePath)
+	if purchaseWeapon == "weapon1" {
+		tempInt, _ = strconv.Atoi(loadContent[3][0])
+		loadContent[3][0] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[0] = loadContent[3][0]
+	} else if purchaseWeapon == "weapon2" {
+		tempInt, _ = strconv.Atoi(loadContent[3][1])
+		loadContent[3][1] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[1] = loadContent[3][1]
+	} else if purchaseWeapon == "weapon3" {
+		tempInt, _ = strconv.Atoi(loadContent[3][2])
+		loadContent[3][2] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[2] = loadContent[3][2]
+	} else if purchaseWeapon == "weapon4" {
+		tempInt, _ = strconv.Atoi(loadContent[3][3])
+		loadContent[3][3] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[3] = loadContent[3][3]
+	} else if purchaseWeapon == "weapon5" {
+		tempInt, _ = strconv.Atoi(loadContent[3][4])
+		loadContent[3][4] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[4] = loadContent[3][4]
+	} else if purchaseWeapon == "weapon6" {
+		tempInt, _ = strconv.Atoi(loadContent[3][5])
+		loadContent[3][5] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[5] = loadContent[3][5]
+	} else if purchaseWeapon == "weapon7" {
+		tempInt, _ = strconv.Atoi(loadContent[3][6])
+		loadContent[3][6] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[6] = loadContent[3][6]
+	} else if purchaseWeapon == "weapon8" {
+		tempInt, _ = strconv.Atoi(loadContent[3][7])
+		loadContent[3][7] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[7] = loadContent[3][7]
+	} else if purchaseWeapon == "weapon9" {
+		tempInt, _ = strconv.Atoi(loadContent[3][8])
+		loadContent[3][8] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[8] = loadContent[3][8]
+	} else if purchaseWeapon == "weapon0" {
+		tempInt, _ = strconv.Atoi(loadContent[3][9])
+		loadContent[3][9] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[9] = loadContent[3][9]
+	}
+	saveContent := strings.Join(loadContent[saveNum], ",")
+
+	content, err := ioutil.ReadFile(saveFilePath)
+	if err != nil {
+		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
+		return
+	}
+	lines := strings.Split(string(content), "\n")
+	if saveNum < 0 || saveNum >= len(lines) {
+		fmt.Println("指定された行番号が範囲外です。")
+		return
+	}
+	lines[saveNum] = saveContent
+
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile(saveFilePath, []byte(output), 0644)
+	if err != nil {
+		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
+		return
+	}
+
+	fmt.Println("保存ファイルを更新しました。")
+}
+
+func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, player *player.PlayerStatus) {
+	var tempInt int
+	loadContent := SaveFileLoad(saveFilePath)
+	if sellWeapon == "weapon1" {
+		tempInt, _ = strconv.Atoi(loadContent[3][0])
+		loadContent[3][0] = strconv.Itoa(tempInt - 1)
+		player.PossessedWeapon[0] = loadContent[3][0]
+	} else if sellWeapon == "weapon2" {
+		tempInt, _ = strconv.Atoi(loadContent[3][1])
+		loadContent[3][1] = strconv.Itoa(tempInt - 1)
+		player.PossessedWeapon[1] = loadContent[3][1]
+	} else if sellWeapon == "weapon3" {
+		tempInt, _ = strconv.Atoi(loadContent[3][2])
+		loadContent[3][2] = strconv.Itoa(tempInt - 1)
+		player.PossessedWeapon[2] = loadContent[3][2]
+	} else if sellWeapon == "weapon4" {
+		tempInt, _ = strconv.Atoi(loadContent[3][3])
+		loadContent[3][3] = strconv.Itoa(tempInt - 1)
+		player.PossessedWeapon[3] = loadContent[3][3]
+	} else if sellWeapon == "weapon5" {
+		tempInt, _ = strconv.Atoi(loadContent[3][4])
+		loadContent[3][4] = strconv.Itoa(tempInt - 1)
+		player.PossessedWeapon[4] = loadContent[3][4]
+	} else if sellWeapon == "weapon6" {
+		tempInt, _ = strconv.Atoi(loadContent[3][5])
+		loadContent[3][5] = strconv.Itoa(tempInt - 1)
+		player.PossessedWeapon[5] = loadContent[3][5]
+	} else if sellWeapon == "weapon7" {
+		tempInt, _ = strconv.Atoi(loadContent[3][6])
+		loadContent[3][6] = strconv.Itoa(tempInt - 1)
+		player.PossessedWeapon[6] = loadContent[3][6]
+	} else if sellWeapon == "weapon8" {
+		tempInt, _ = strconv.Atoi(loadContent[3][7])
+		loadContent[3][7] = strconv.Itoa(tempInt - 1)
+		player.PossessedWeapon[7] = loadContent[3][7]
+	} else if sellWeapon == "weapon9" {
+		tempInt, _ = strconv.Atoi(loadContent[3][8])
+		loadContent[3][8] = strconv.Itoa(tempInt - 1)
+		player.PossessedWeapon[8] = loadContent[3][8]
+	} else if sellWeapon == "weapon0" {
+		tempInt, _ = strconv.Atoi(loadContent[3][9])
+		loadContent[3][9] = strconv.Itoa(tempInt - 1)
+		player.PossessedWeapon[9] = loadContent[3][9]
+	}
+	saveContent := strings.Join(loadContent[saveNum], ",")
+
+	content, err := ioutil.ReadFile(saveFilePath)
+	if err != nil {
+		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
+		return
+	}
+	lines := strings.Split(string(content), "\n")
+	if saveNum < 0 || saveNum >= len(lines) {
+		fmt.Println("指定された行番号が範囲外です。")
+		return
+	}
+	lines[saveNum] = saveContent
+
 	output := strings.Join(lines, "\n")
 	err = ioutil.WriteFile(saveFilePath, []byte(output), 0644)
 	if err != nil {

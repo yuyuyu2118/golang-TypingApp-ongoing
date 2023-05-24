@@ -105,6 +105,27 @@ func DeathFlug(player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed ti
 		score++
 		currentGameState = myGame.EndScreen
 		yourTime = float64(elapsed.Seconds())
+		if enemy.Name == "Slime" {
+			myGame.SaveDefeatedEnemyEvent("player\\save\\save.csv", 2, "Slime")
+		} else if enemy.Name == "Bird" {
+			myGame.SaveDefeatedEnemyEvent("player\\save\\save.csv", 2, "Bird")
+		} else if enemy.Name == "Plant" {
+			myGame.SaveDefeatedEnemyEvent("player\\save\\save.csv", 2, "Plant")
+		} else if enemy.Name == "Goblin" {
+			myGame.SaveDefeatedEnemyEvent("player\\save\\save.csv", 2, "Goblin")
+		} else if enemy.Name == "Zombie" {
+			myGame.SaveDefeatedEnemyEvent("player\\save\\save.csv", 2, "Zombie")
+		} else if enemy.Name == "Fairy" {
+			myGame.SaveDefeatedEnemyEvent("player\\save\\save.csv", 2, "Fairy")
+		} else if enemy.Name == "Skull" {
+			myGame.SaveDefeatedEnemyEvent("player\\save\\save.csv", 2, "Skull")
+		} else if enemy.Name == "Wizard" {
+			myGame.SaveDefeatedEnemyEvent("player\\save\\save.csv", 2, "Wizard")
+		} else if enemy.Name == "Solidier" {
+			myGame.SaveDefeatedEnemyEvent("player\\save\\save.csv", 2, "Solidier")
+		} else if enemy.Name == "Dragon" {
+			myGame.SaveDefeatedEnemyEvent("player\\save\\save.csv", 2, "Dragon")
+		}
 	}
 	return currentGameState
 }
@@ -128,7 +149,7 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 					if index == len(question) {
 						index = 0
 						score++
-						enemy.HP += tempWordDamage
+						enemy.HP += tempWordDamage - 100 //TODO: debug用
 						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
 						tempWordDamage = 0.0
 					}
