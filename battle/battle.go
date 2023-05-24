@@ -145,6 +145,7 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 		if win.JustPressed(pixelgl.KeyEnter) {
 			pressEnter = true
 			tempEnemySize = enemy.EnemySize
+			tempWordDamage = 0
 		}
 		if pressEnter == true {
 			if enemy.EnemySize >= tempEnemySize && enemy.EnemySize < tempEnemySize*1.2 && lock == false && lock2 == false {

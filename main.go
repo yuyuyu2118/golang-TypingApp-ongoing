@@ -101,7 +101,7 @@ func run() {
 		case myGame.StageSelect:
 			initScreenInformation(win, screenTxt, player)
 			//TODO: Key入力受付
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.KeyBackspace) {
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.Key7) || win.JustPressed(pixelgl.Key8) || win.JustPressed(pixelgl.Key9) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.StageClickEvent(win, win.MousePosition(), stage)
 			}
 		case myGame.TownScreen:
