@@ -115,8 +115,6 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 	typed := win.Typed()
 
 	tempCount = player.OP - elapsed.Seconds()
-	log.Println(tempCount)
-	//log.Println(elapsed.Seconds())
 
 	if myGame.CurrentGS == myGame.PlayingScreen {
 		if tempCount > 0 {

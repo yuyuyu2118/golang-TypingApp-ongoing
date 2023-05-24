@@ -4,9 +4,10 @@ import (
 	_ "image/png"
 	"log"
 	"math/rand"
-	"strconv"
+	"os"
 	"time"
 
+	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/battle"
 	"github.com/yuyuyu2118/typingGo/enemy"
@@ -56,8 +57,21 @@ func run() {
 		enemySettings = append(enemySettings, enemy)
 	}
 
-	//MonsterAnimation
-	sprites := enemy.SetEnemyAnimation("assets/monster/Slime", "SlimeA_Wait")
+	//loadMonsterAnimation
+	var enemySprites [][]*pixel.Sprite
+	var enemyWaitSprites []*pixel.Sprite
+	enemyNameSlice := []string{"Slime", "Bird", "Plant", "Goblin", "Zombie", "Fairy", "Skull", "Wizard", "Solidier"}
+	enemyPath := "assets\\monster\\"
+	var enemyPathBar []string
+	// enemyPathBar := "assets\\monster\\Skull\\SkullA_Attack0.png"
+	var enemyPaths []string
+	for i, eNameSlice := range enemyNameSlice {
+		enemyPaths = append(enemyPaths, enemyPath+eNameSlice)
+		enemyPathBar = append(enemyPathBar, enemyPath+eNameSlice+"\\"+eNameSlice+"A_Wait0.png")
+		enemyWaitSprites = enemy.SetEnemyAnimation(enemyPaths[i], eNameSlice+"A_Wait")
+		enemySprites = append(enemySprites, enemyWaitSprites)
+	}
+
 	frame := 0
 	last := time.Now()
 
@@ -73,6 +87,10 @@ func run() {
 			if win.JustPressed(pixelgl.KeyT) {
 				myGame.CurrentGS = myGame.TestState
 				log.Println("TestMode")
+			}
+			if win.JustPressed(pixelgl.KeyEscape) {
+				win.Destroy()
+				os.Exit(0)
 			}
 		case myGame.GoToScreen:
 			//TODO: Saveの削除
@@ -121,26 +139,26 @@ func run() {
 
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
 				myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
-				saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
 				myGame.SaveGame("assets\\save\\save.csv", 1, player)
 			}
 
 		case myGame.PlayingScreen:
 			initScreenInformation(win, basicTxt, player)
+			log.Println(stage.StageNum)
 
 			dt := time.Since(last).Seconds()
 			if dt >= 0.2 { // アニメーション速度を調整 (ここでは0.2秒ごとに更新)
-				frame = (frame + 1) % len(sprites)
+				frame = (frame + 1) % len(enemySprites[stage.StageNum])
 				last = time.Now()
 			}
-			enemy.SetEnemySprite(win, &enemySettings[0], "assets\\monster\\Slime\\SlimeA_Attack0.png", enemySettings[0].EnemySize, sprites, frame)
-			enemy.SetEnemySpriteText(win, screenTxt, &enemySettings[0])
+			enemy.SetEnemySprite(win, &enemySettings[stage.StageNum], enemyPathBar[stage.StageNum], enemySprites[stage.StageNum], frame)
+			enemy.SetEnemySpriteText(win, screenTxt, &enemySettings[stage.StageNum])
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, basicTxt)
 
 			elapsed := time.Since(startTime)
 			battle.InitBattleTextV2(win, basicTxt, elapsed)
-			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[0], elapsed)
+			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[stage.StageNum], elapsed)
 			if myGame.CurrentGS == myGame.BattleEnemyScreen {
 				startTime = time.Now()
 			}
@@ -149,23 +167,23 @@ func run() {
 
 			dt := time.Since(last).Seconds()
 			if dt >= 0.2 { // アニメーション速度を調整 (ここでは0.2秒ごとに更新)
-				frame = (frame + 1) % len(sprites)
+				frame = (frame + 1) % len(enemySprites[stage.StageNum])
 				last = time.Now()
 			}
-			enemy.SetEnemySprite(win, &enemySettings[0], "assets\\monster\\Slime\\SlimeA_Attack0.png", enemySettings[0].EnemySize, sprites, frame)
-			enemy.SetEnemySpriteText(win, screenTxt, &enemySettings[0])
+			enemy.SetEnemySprite(win, &enemySettings[stage.StageNum], enemyPathBar[stage.StageNum], enemySprites[stage.StageNum], frame)
+			enemy.SetEnemySpriteText(win, screenTxt, &enemySettings[stage.StageNum])
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, basicTxt)
 
 			elapsed := time.Since(startTime)
 			battle.InitBattleTextV2(win, basicTxt, elapsed)
-			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[0], elapsed)
+			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[stage.StageNum], elapsed)
 			if myGame.CurrentGS == myGame.PlayingScreen {
 				startTime = time.Now()
 			}
 		case myGame.EndScreen:
 			myGame.InitEndScreen(win, endTxt)
-			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemySettings[0])
+			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemySettings[6])
 			//TODO
 			if !myUtil.GetSaveReset() {
 				//saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
