@@ -9,6 +9,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	event "github.com/yuyuyu2118/typingGo/Event"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"golang.org/x/image/colornames"
 )
@@ -29,6 +30,9 @@ const (
 	weapon9
 	weapon0
 )
+
+var weaponSlice = []string{"1. ???", "2. ???", "3. ???", "4. ???", "5. ???", "6. ???", "7. ???", "8. ???", "9. ???", "0. ???", "BackSpace. EXIT"}
+
 const (
 	armor1 ArmorState = iota
 	armor2
@@ -61,7 +65,6 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
 	Txt.Color = colornames.White
-	//csv読み込み
 
 	Txt.Clear()
 	Txt.Color = colornames.White
@@ -69,7 +72,37 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 	tempPosition = myPos.TopCenPos(win, Txt)
 	myPos.DrawPos(win, Txt, tempPosition)
 
-	weaponSlice := []string{"1. 木の棒", "2. 果物ナイフ", "3. 木刀", "4. ドレインソード", "5. スタンハンマー", "6. 鉄の剣", "7. 隼の剣", "8. 勇者の剣", "9. 名刀村正", "0. 死神の大鎌", "BackSpace. EXIT"}
+	if event.WeaponPurchaseEventInstance.Weapon1 {
+		weaponSlice[0] = "1. 木の棒"
+	}
+	if event.WeaponPurchaseEventInstance.Weapon2 {
+		weaponSlice[1] = "2. 果物ナイフ"
+	}
+	if event.WeaponPurchaseEventInstance.Weapon3 {
+		weaponSlice[2] = "3. 木刀"
+	}
+	if event.WeaponPurchaseEventInstance.Weapon4 {
+		weaponSlice[3] = "4. ドレインソード"
+	}
+	if event.WeaponPurchaseEventInstance.Weapon5 {
+		weaponSlice[4] = "5. スタンハンマー"
+	}
+	if event.WeaponPurchaseEventInstance.Weapon6 {
+		weaponSlice[5] = "6. 鉄の剣"
+	}
+	if event.WeaponPurchaseEventInstance.Weapon7 {
+		weaponSlice[6] = "7. 隼の剣"
+	}
+	if event.WeaponPurchaseEventInstance.Weapon8 {
+		weaponSlice[7] = "8. 勇者の剣"
+	}
+	if event.WeaponPurchaseEventInstance.Weapon9 {
+		weaponSlice[8] = "9. 名刀村正"
+	}
+	if event.WeaponPurchaseEventInstance.Weapon0 {
+		weaponSlice[9] = "0. 死神の大鎌"
+	}
+	//weaponSlice := []string{"1. 木の棒", "2. 果物ナイフ", "3. 木刀", "4. ドレインソード", "5. スタンハンマー", "6. 鉄の剣", "7. 隼の剣", "8. 勇者の剣", "9. 名刀村正", "0. 死神の大鎌", "BackSpace. EXIT"}
 
 	for _, weaponName := range weaponSlice {
 		Txt.Clear()
@@ -82,25 +115,25 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 		buttonSlice = append(buttonSlice, Txt.Bounds().Moved(txtPos))
 	}
 
-	if win.Pressed(pixelgl.Key1) {
+	if win.Pressed(pixelgl.Key1) && event.WeaponPurchaseEventInstance.Weapon1 {
 		currentweaponState = weapon1
-	} else if win.Pressed(pixelgl.Key2) {
+	} else if win.Pressed(pixelgl.Key2) && event.WeaponPurchaseEventInstance.Weapon2 {
 		currentweaponState = weapon2
-	} else if win.Pressed(pixelgl.Key3) {
+	} else if win.Pressed(pixelgl.Key3) && event.WeaponPurchaseEventInstance.Weapon3 {
 		currentweaponState = weapon3
-	} else if win.Pressed(pixelgl.Key4) {
+	} else if win.Pressed(pixelgl.Key4) && event.WeaponPurchaseEventInstance.Weapon4 {
 		currentweaponState = weapon4
-	} else if win.Pressed(pixelgl.Key5) {
+	} else if win.Pressed(pixelgl.Key5) && event.WeaponPurchaseEventInstance.Weapon5 {
 		currentweaponState = weapon5
-	} else if win.Pressed(pixelgl.Key6) {
+	} else if win.Pressed(pixelgl.Key6) && event.WeaponPurchaseEventInstance.Weapon6 {
 		currentweaponState = weapon6
-	} else if win.Pressed(pixelgl.Key7) {
+	} else if win.Pressed(pixelgl.Key7) && event.WeaponPurchaseEventInstance.Weapon7 {
 		currentweaponState = weapon7
-	} else if win.Pressed(pixelgl.Key8) {
+	} else if win.Pressed(pixelgl.Key8) && event.WeaponPurchaseEventInstance.Weapon8 {
 		currentweaponState = weapon8
-	} else if win.Pressed(pixelgl.Key9) {
+	} else if win.Pressed(pixelgl.Key9) && event.WeaponPurchaseEventInstance.Weapon9 {
 		currentweaponState = weapon9
-	} else if win.Pressed(pixelgl.Key0) {
+	} else if win.Pressed(pixelgl.Key0) && event.WeaponPurchaseEventInstance.Weapon0 {
 		currentweaponState = weapon0
 	}
 
@@ -212,34 +245,34 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 
 func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
-	if buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+	if (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) && event.WeaponPurchaseEventInstance.Weapon1 {
 		currentweaponState = weapon1
 		log.Println("WeaponShop->weapon1")
-	} else if buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
+	} else if (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) && event.WeaponPurchaseEventInstance.Weapon2 {
 		currentweaponState = weapon2
 		log.Println("WeaponShop->weapon2")
-	} else if buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
+	} else if (buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) && event.WeaponPurchaseEventInstance.Weapon3 {
 		currentweaponState = weapon3
 		log.Println("WeaponShop->weapon3")
-	} else if buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
+	} else if (buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) && event.WeaponPurchaseEventInstance.Weapon4 {
 		currentweaponState = weapon4
 		log.Println("WeaponShop->weapon4")
-	} else if buttonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
+	} else if (buttonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) && event.WeaponPurchaseEventInstance.Weapon5 {
 		currentweaponState = weapon5
 		log.Println("WeaponShop->weapon5")
-	} else if buttonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6) {
+	} else if (buttonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6)) && event.WeaponPurchaseEventInstance.Weapon6 {
 		currentweaponState = weapon6
 		log.Println("WeaponShop->weapon6")
-	} else if buttonSlice[6].Contains(mousePos) || win.JustPressed(pixelgl.Key7) {
+	} else if (buttonSlice[6].Contains(mousePos) || win.JustPressed(pixelgl.Key7)) && event.WeaponPurchaseEventInstance.Weapon7 {
 		currentweaponState = weapon7
 		log.Println("WeaponShop->weapon7")
-	} else if buttonSlice[7].Contains(mousePos) || win.JustPressed(pixelgl.Key8) {
+	} else if (buttonSlice[7].Contains(mousePos) || win.JustPressed(pixelgl.Key8)) && event.WeaponPurchaseEventInstance.Weapon8 {
 		currentweaponState = weapon8
 		log.Println("WeaponShop->weapon8")
-	} else if buttonSlice[8].Contains(mousePos) || win.JustPressed(pixelgl.Key9) {
+	} else if (buttonSlice[8].Contains(mousePos) || win.JustPressed(pixelgl.Key9)) && event.WeaponPurchaseEventInstance.Weapon9 {
 		currentweaponState = weapon9
 		log.Println("WeaponShop->weapon9")
-	} else if buttonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.Key0) {
+	} else if (buttonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.Key0)) && event.WeaponPurchaseEventInstance.Weapon0 {
 		currentweaponState = weapon0
 		log.Println("WeaponShop->weapon0")
 	} else if buttonSlice[10].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
