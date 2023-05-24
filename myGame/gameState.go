@@ -1,6 +1,9 @@
 package myGame
 
 import (
+	"log"
+	"os"
+
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
@@ -32,20 +35,34 @@ const (
 	BlackSmith
 )
 
-var (
-	startLines = []string{
-		"This is a TypingBattleGame",
-		"\n",
-		"START : Press Enter",
-	}
-)
-
 func InitStartScreen(win *pixelgl.Window, Txt *text.Text) {
 	//windowのリセットとテキストの描画
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
+	startLines := []string{
+		"This is a TypingBattleGame",
+		"\n",
+		"START : Press Enter",
+	}
+
 	myPos.LineCenterAlign(win, startLines, Txt, "center")
+
+	//GoToScreenに行く
+	if win.JustPressed(pixelgl.KeyEnter) {
+		CurrentGS = GoToScreen
+		log.Println("Press:Enter -> GameState:GoToScreen")
+	}
+	//testModeを開く
+	if win.JustPressed(pixelgl.KeyT) {
+		CurrentGS = TestState
+		log.Println("TestMode")
+	}
+	//TODO: ゲーム終了、あとで削除?
+	if win.JustPressed(pixelgl.KeyEscape) {
+		win.Destroy()
+		os.Exit(0)
+	}
 }
 
 func InitGoToScreen(win *pixelgl.Window, Txt *text.Text) {
