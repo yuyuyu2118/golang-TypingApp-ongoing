@@ -13,12 +13,6 @@ import (
 )
 
 var (
-	equip1Button = pixel.Rect{}
-	// equip2Button = pixel.Rect{}
-	// equip3Button = pixel.Rect{}
-)
-
-var (
 	equipmentButtonSlice = []pixel.Rect{}
 )
 

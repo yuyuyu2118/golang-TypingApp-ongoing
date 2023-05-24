@@ -42,8 +42,6 @@ func run() {
 	frame := 0
 	last := time.Now()
 
-	stage := myGame.NewStageInf(0)
-
 	for !win.Closed() {
 		switch myGame.CurrentGS {
 		case myGame.StartScreen:
@@ -71,7 +69,7 @@ func run() {
 			initScreenInformation(win, myUtil.ScreenTxt, player)
 			//TODO: Key入力受付
 			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.Key7) || win.JustPressed(pixelgl.Key8) || win.JustPressed(pixelgl.Key9) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = myGame.StageClickEvent(win, win.MousePosition(), stage)
+				myGame.CurrentGS = myGame.StageClickEvent(win, win.MousePosition())
 			}
 		case myGame.TownScreen:
 			initScreenInformation(win, myUtil.ScreenTxt, player)
@@ -113,21 +111,21 @@ func run() {
 
 		case myGame.PlayingScreen:
 			initScreenInformation(win, myUtil.BasicTxt, player)
-			log.Println(stage.StageNum)
+			log.Println(myGame.StageNum)
 
 			dt := time.Since(last).Seconds()
 			if dt >= 0.2 { // アニメーション速度を調整 (ここでは0.2秒ごとに更新)
-				frame = (frame + 1) % len(enemySprites[stage.StageNum])
+				frame = (frame + 1) % len(enemySprites[myGame.StageNum])
 				last = time.Now()
 			}
-			enemy.SetEnemySprite(win, &enemySettings[stage.StageNum], enemyPathBar[stage.StageNum], enemySprites[stage.StageNum], frame)
-			enemy.SetEnemySpriteText(win, myUtil.ScreenTxt, &enemySettings[stage.StageNum])
+			enemy.SetEnemySprite(win, &enemySettings[myGame.StageNum], enemyPathBar[myGame.StageNum], enemySprites[myGame.StageNum], frame)
+			enemy.SetEnemySpriteText(win, myUtil.ScreenTxt, &enemySettings[myGame.StageNum])
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, myUtil.BasicTxt)
 
 			elapsed := time.Since(startTime)
 			battle.InitBattleTextV2(win, myUtil.BasicTxt, elapsed)
-			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[stage.StageNum], elapsed)
+			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[myGame.StageNum], elapsed)
 			if myGame.CurrentGS == myGame.BattleEnemyScreen {
 				startTime = time.Now()
 			}
@@ -136,17 +134,17 @@ func run() {
 
 			dt := time.Since(last).Seconds()
 			if dt >= 0.2 { // アニメーション速度を調整 (ここでは0.2秒ごとに更新)
-				frame = (frame + 1) % len(enemySprites[stage.StageNum])
+				frame = (frame + 1) % len(enemySprites[myGame.StageNum])
 				last = time.Now()
 			}
-			enemy.SetEnemySprite(win, &enemySettings[stage.StageNum], enemyPathBar[stage.StageNum], enemySprites[stage.StageNum], frame)
-			enemy.SetEnemySpriteText(win, myUtil.ScreenTxt, &enemySettings[stage.StageNum])
+			enemy.SetEnemySprite(win, &enemySettings[myGame.StageNum], enemyPathBar[myGame.StageNum], enemySprites[myGame.StageNum], frame)
+			enemy.SetEnemySpriteText(win, myUtil.ScreenTxt, &enemySettings[myGame.StageNum])
 			//TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			player.SetPlayerBattleInf(win, myUtil.BasicTxt)
 
 			elapsed := time.Since(startTime)
 			battle.InitBattleTextV2(win, myUtil.BasicTxt, elapsed)
-			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[stage.StageNum], elapsed)
+			myGame.CurrentGS = battle.BattleTypingV2(win, player, &enemySettings[myGame.StageNum], elapsed)
 			if myGame.CurrentGS == myGame.PlayingScreen {
 				startTime = time.Now()
 			}
@@ -155,7 +153,7 @@ func run() {
 			event.CreateWeaponPurchaseEvent(loadContent[2])
 
 			myGame.InitEndScreen(win, myUtil.ScreenTxt)
-			myGame.CurrentGS = battle.BattleEndScreen(win, myUtil.ScreenTxt, player, &enemySettings[stage.StageNum])
+			myGame.CurrentGS = battle.BattleEndScreen(win, myUtil.ScreenTxt, player, &enemySettings[myGame.StageNum])
 
 			if !myUtil.GetSaveReset() {
 				myGame.SaveGame(myGame.SaveFilePath, 1, player)
