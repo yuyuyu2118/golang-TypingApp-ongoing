@@ -27,6 +27,12 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 			"\n\n",
 			"ReSTART : Press Tab | Back : Press BackSpace",
 		}
+		//TODO: 最初の討伐時だけ武器の追加を教える.
+		// tempInt, _ := strconv.Atoi(player.PossessedWeapon[0])
+		// if tempInt >= 1 {
+		// 	endLines = append(endLines, "武器屋に新しい武器が追加された<-New!!")
+		// }
+		// log.Println(endLines)
 		myPos.LineCenterAlign(win, endLines, Txt, "center")
 	} else {
 		yourTimeString := fmt.Sprintf("%0.3f", yourTime)

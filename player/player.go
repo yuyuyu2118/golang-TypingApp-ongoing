@@ -14,25 +14,28 @@ import (
 )
 
 type PlayerStatus struct {
-	Name     string
-	MaxHP    float64
-	HP       float64
-	OP       float64
-	DP       float64
-	MaxSP    float64
-	SP       float64
-	BaseSP   float64
-	Gold     int
-	Job      string
-	AP       int
-	Language string
+	Name            string
+	MaxHP           float64
+	HP              float64
+	OP              float64
+	DP              float64
+	MaxSP           float64
+	SP              float64
+	BaseSP          float64
+	Gold            int
+	Job             string
+	AP              int
+	Language        string
+	PossessedWeapon []string
 }
 
 var (
 	skillRect = pixel.R(0, 0, 0, 0)
 )
 
-func NewPlayerStatus(value []string) *PlayerStatus {
+var PlayerStatusInstance *PlayerStatus
+
+func NewPlayerStatus(value []string, possess []string) *PlayerStatus {
 	Name := value[0]
 	MaxHP, _ := strconv.ParseFloat(value[1], 64)
 	HP, _ := strconv.ParseFloat(value[2], 64)
@@ -45,22 +48,24 @@ func NewPlayerStatus(value []string) *PlayerStatus {
 	Job := value[9]
 	AP, _ := strconv.Atoi((value[10]))
 	Language := value[11]
+	PossessedWeapon := possess
 
-	tempInstance := PlayerStatus{
-		Name:     Name,
-		MaxHP:    MaxHP,
-		HP:       HP,
-		OP:       OP,
-		DP:       DP,
-		MaxSP:    MaxSP,
-		SP:       SP,
-		BaseSP:   BaseSP,
-		Gold:     Gold,
-		Job:      Job,
-		AP:       AP,
-		Language: Language,
+	PlayerStatusInstance := &PlayerStatus{
+		Name:            Name,
+		MaxHP:           MaxHP,
+		HP:              HP,
+		OP:              OP,
+		DP:              DP,
+		MaxSP:           MaxSP,
+		SP:              SP,
+		BaseSP:          BaseSP,
+		Gold:            Gold,
+		Job:             Job,
+		AP:              AP,
+		Language:        Language,
+		PossessedWeapon: PossessedWeapon,
 	}
-	return &tempInstance
+	return PlayerStatusInstance
 }
 
 func SetPlayerSkillBarVertical(win *pixelgl.Window, player *PlayerStatus) {

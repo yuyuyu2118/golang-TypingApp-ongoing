@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	event "github.com/yuyuyu2118/typingGo/Event"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -19,7 +21,8 @@ type ArmorState int
 type AccessoryState int
 
 const (
-	weapon1 WeaponState = iota
+	weaponNil WeaponState = iota
+	weapon1
 	weapon2
 	weapon3
 	weapon4
@@ -54,11 +57,14 @@ var (
 )
 
 var (
-	buttonSlice = []pixel.Rect{}
+	buttonSlice  = []pixel.Rect{}
+	buySellSlice = []pixel.Rect{}
 )
 var currentweaponState WeaponState
 var currentarmorState ArmorState
 var currentaccessoryState AccessoryState
+
+var tempInt []int
 
 func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 	xOffSet := 100.0
@@ -241,9 +247,26 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 			Txt.Draw(win, tempPosition)
 		}
 	}
+	Txt.Clear()
+	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, "B. 買う")
+	yOffSet -= Txt.LineHeight + 20
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition := pixel.IM.Moved(txtPos)
+	Txt.Draw(win, tempPosition)
+	buySellSlice = append(buySellSlice, Txt.Bounds().Moved(txtPos))
+	Txt.Clear()
+	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, "S. 売る")
+	xOffSet += Txt.TabWidth + 100
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	Txt.Draw(win, tempPosition)
+	buySellSlice = append(buySellSlice, Txt.Bounds().Moved(txtPos))
 }
 
-func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
+func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) GameState {
+	var tempWeapon string
 	//TODO ページを作成したら追加
 	if (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) && event.WeaponPurchaseEventInstance.Weapon1 {
 		currentweaponState = weapon1
@@ -276,9 +299,85 @@ func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 		currentweaponState = weapon0
 		log.Println("WeaponShop->weapon0")
 	} else if buttonSlice[10].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
-		currentweaponState = weapon1
 		CurrentGS = TownScreen
 		log.Println("WeaponShop->TownScreen")
+	}
+	if (buySellSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.KeyB)) && player.Gold >= 100 {
+		if currentweaponState == weapon1 {
+			//TODO: ファイルからweaponのインスタンス作成、weaponインスタンスからGoldを参照
+			player.Gold -= 100
+			tempWeapon = "weapon1"
+		} else if currentweaponState == weapon2 {
+			player.Gold -= 300
+			tempWeapon = "weapon2"
+		} else if currentweaponState == weapon3 {
+			player.Gold -= 500
+			tempWeapon = "weapon3"
+		} else if currentweaponState == weapon4 {
+			player.Gold -= 1500
+			tempWeapon = "weapon4"
+		} else if currentweaponState == weapon5 {
+			player.Gold -= 3000
+			tempWeapon = "weapon5"
+		} else if currentweaponState == weapon6 {
+			player.Gold -= 2000
+			tempWeapon = "weapon6"
+		} else if currentweaponState == weapon7 {
+			player.Gold -= 4000
+			tempWeapon = "weapon7"
+		} else if currentweaponState == weapon8 {
+			player.Gold -= 6000
+			tempWeapon = "weapon8"
+		} else if currentweaponState == weapon9 {
+			player.Gold -= 8000
+			tempWeapon = "weapon9"
+		} else if currentweaponState == weapon0 {
+			player.Gold -= 10000
+			tempWeapon = "weapon0"
+		}
+		SaveWeaponPurchaseEvent("player\\save\\save.csv", 3, tempWeapon, player)
+		SaveGame("player\\save\\save.csv", 1, player)
+	} else if buySellSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.KeyS) {
+		log.Println("Sell")
+		for _, value := range player.PossessedWeapon {
+			tempPossessedWeapon, _ := strconv.Atoi(value)
+			tempInt = append(tempInt, tempPossessedWeapon)
+		}
+		if currentweaponState == weapon1 && tempInt[0] >= 1 {
+			//TODO: ファイルからweaponのインスタンス作成、weaponインスタンスからGoldを参照
+			player.Gold += 50
+			tempWeapon = "weapon1"
+		} else if currentweaponState == weapon2 && tempInt[1] >= 1 {
+			player.Gold += 150
+			tempWeapon = "weapon2"
+		} else if currentweaponState == weapon3 && tempInt[2] >= 1 {
+			player.Gold += 250
+			tempWeapon = "weapon3"
+		} else if currentweaponState == weapon4 && tempInt[3] >= 1 {
+			player.Gold += 750
+			tempWeapon = "weapon4"
+		} else if currentweaponState == weapon5 && tempInt[4] >= 1 {
+			player.Gold += 1500
+			tempWeapon = "weapon5"
+		} else if currentweaponState == weapon6 && tempInt[5] >= 1 {
+			player.Gold += 1000
+			tempWeapon = "weapon6"
+		} else if currentweaponState == weapon7 && tempInt[6] >= 1 {
+			player.Gold += 2000
+			tempWeapon = "weapon7"
+		} else if currentweaponState == weapon8 && tempInt[7] >= 1 {
+			player.Gold += 3000
+			tempWeapon = "weapon8"
+		} else if currentweaponState == weapon9 && tempInt[8] >= 1 {
+			player.Gold += 4000
+			tempWeapon = "weapon9"
+		} else if currentweaponState == weapon0 && tempInt[9] >= 1 {
+			player.Gold += 5000
+			tempWeapon = "weapon0"
+		}
+		SaveWeaponSellEvent("player\\save\\save.csv", 3, tempWeapon, player)
+		SaveGame("player\\save\\save.csv", 1, player)
+		tempInt = tempInt[:0]
 	}
 	return CurrentGS
 }

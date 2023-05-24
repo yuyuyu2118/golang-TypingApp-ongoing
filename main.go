@@ -46,7 +46,7 @@ func run() {
 	myGame.SaveFileCheck("player\\save\\save.csv")
 	loadContent := myGame.SaveFileLoad("player\\save\\save.csv")
 	//playerStatusインスタンスを生成
-	player := player.NewPlayerStatus(loadContent[1])
+	player := player.NewPlayerStatus(loadContent[1], loadContent[3])
 	event.CreateWeaponPurchaseEvent(loadContent[2])
 
 	enemyInfo := enemy.CreateEnemyInstance()
@@ -57,6 +57,7 @@ func run() {
 	//loadMonsterAnimation
 	var enemySprites [][]*pixel.Sprite
 	var enemyWaitSprites []*pixel.Sprite
+	//TODO: これを使って冗長な部分を修正 Enemyパッケージに配置する??
 	enemyNameSlice := []string{"Slime", "Bird", "Plant", "Goblin", "Zombie", "Fairy", "Skull", "Wizard", "Solidier"}
 	enemyPath := "assets\\monster\\"
 	var enemyPathBar []string
@@ -112,8 +113,8 @@ func run() {
 		case myGame.WeaponShop:
 			initScreenInformation(win, descriptionTxt, player)
 
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = myGame.WeaponClickEvent(win, win.MousePosition())
+			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.Key7) || win.JustPressed(pixelgl.Key8) || win.JustPressed(pixelgl.Key9) || win.JustPressed(pixelgl.Key0) || win.JustPressed(pixelgl.KeyB) || win.JustPressed(pixelgl.KeyS) || win.JustPressed(pixelgl.KeyBackspace) {
+				myGame.CurrentGS = myGame.WeaponClickEvent(win, win.MousePosition(), player)
 			}
 		case myGame.ArmorShop:
 			initScreenInformation(win, descriptionTxt, player)
@@ -181,11 +182,13 @@ func run() {
 				startTime = time.Now()
 			}
 		case myGame.EndScreen:
+			loadContent := myGame.SaveFileLoad("player\\save\\save.csv")
+			event.CreateWeaponPurchaseEvent(loadContent[2])
+
 			myGame.InitEndScreen(win, endTxt)
 			myGame.CurrentGS = battle.BattleEndScreen(win, endTxt, player, &enemySettings[stage.StageNum])
-			//TODO
+
 			if !myUtil.GetSaveReset() {
-				//saveContent = "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
 				myGame.SaveGame("player\\save\\save.csv", 1, player)
 				myUtil.SetSaveReset(true)
 			}
