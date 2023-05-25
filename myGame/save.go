@@ -1,6 +1,7 @@
 package myGame
 
 import (
+	"encoding/csv"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -66,7 +67,17 @@ func SaveFileLoad(saveFilePath string) [][]string {
 }
 
 func SaveFileCheck(saveFilePath string) {
-	initializeText := "Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,\nNoName,30,30,3,1,50,0,2,0,No Job,0,\nWeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nAccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,"
+	tempInitText := []string{"Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,",
+		"NoName,30,30,5,1,50,0,2,0,No Job,0,Japanese,",
+		"0,0,0,0,0,0,0,0,0,0,,,",
+		"0,0,0,0,0,0,0,0,0,0,,,",
+		"WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,",
+		"ArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,",
+		"AccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,",
+	}
+	initializeText := strings.Join(tempInitText, "\n")
+	log.Println(initializeText)
+	//initializeText := "Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,\nNoName,30,30,3,1,50,0,2,0,No Job,0,\nWeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nAccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,"
 	fileInfo, err := os.Stat(saveFilePath)
 	if err != nil {
 		// ファイルが存在しない場合、初回呼び出しとして初期化テキストを出力
@@ -300,45 +311,32 @@ func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, pl
 }
 
 // TODO: アイテムのセーブ実装中
-func SaveGameItems(SaveFilePathItems string, saveNum int, player *player.PlayerStatus, gainItem string) {
+func SaveGameItems(SaveFilePathItems string, player *player.PlayerStatus, gainItem string) {
 	SaveFileItemsCheck(SaveFilePathItems)
 	tempContent := SaveFileItemsLoad(SaveFilePathItems)
-	//saveContent := "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
-	log.Println(tempContent[0])
+
 	tempContent[0] = append(tempContent[0], gainItem)
 	saveContent := tempContent[0]
+	log.Println(saveContent)
+	//空の文字列回避
+	newSaveContents := saveFileItemCount(saveContent[1:])
 
-	content, err := ioutil.ReadFile(SaveFilePathItems)
+	// 新しいCSVファイルを作成して、データを書き込む
+	file, err := os.Create("player\\save\\saveItems.csv")
 	if err != nil {
-		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
-		return
+		panic(err)
 	}
+	defer file.Close()
 
-	// 改行文字で分割して行ごとのスライスに変換
-	lines := strings.Split(string(content), "\n")
-
-	// 行番号が有効な範囲かチェック
-	if saveNum < 0 || saveNum >= len(lines) {
-		fmt.Println("指定された行番号が範囲外です。")
-		return
-	}
-
-	// 指定された行を上書き
-	lines[saveNum] = saveContent[0]
-
-	// 更新後の内容を保存ファイルに書き込む
-	output := strings.Join(lines, "\n")
-	err = ioutil.WriteFile(SaveFilePathItems, []byte(output), 0644)
-	if err != nil {
-		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
-		return
-	}
+	writer := csv.NewWriter(file)
+	writer.WriteAll(newSaveContents)
+	writer.Flush()
 
 	fmt.Println("保存ファイルを更新しました。")
 }
 
 func SaveFileItemsCheck(saveFilePathItems string) {
-	initializeText := ""
+	initializeText := " "
 	fileInfo, err := os.Stat(saveFilePathItems)
 	if err != nil {
 		// ファイルが存在しない場合、初回呼び出しとして初期化テキストを出力
@@ -371,4 +369,19 @@ func SaveFileItemsCheck(saveFilePathItems string) {
 func SaveFileItemsLoad(saveFilePathItems string) [][]string {
 	SaveFileItemsCheck(saveFilePathItems)
 	return CsvToSlice(saveFilePathItems)
+}
+
+func saveFileItemCount(records []string) [][]string {
+	// アイテムをカウントするマップを作成する
+	itemCountMap := make(map[string]int)
+	for _, item := range records {
+		itemCountMap[item]++
+	}
+	var newRecords [][]string
+	for item, count := range itemCountMap {
+		newRecord := []string{item, fmt.Sprintf("%d", count)}
+		newRecords = append(newRecords, newRecord)
+	}
+	log.Println(newRecords)
+	return newRecords
 }

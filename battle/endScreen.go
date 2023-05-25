@@ -32,7 +32,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 	if dropRandomItem == "" {
 		dropRandomItem = enemy.DropItems[rand.Intn(3)]
 		myGame.SaveFileItemsLoad(myGame.SaveFilePathItems)
-		myGame.SaveGameItems(myGame.SaveFilePathItems, 0, player, dropRandomItem)
+		myGame.SaveGameItems(myGame.SaveFilePathItems, player, dropRandomItem)
 	}
 	ClearTxt := []string{"獲得ゴールド:" + strconv.Itoa(gainGold) + "S", "入力単語数:" + strconv.Itoa(score), "正解タイプ数:" + strconv.Itoa(collectType),
 		"正解タイプ数:" + strconv.Itoa(collectType), "ミスタイプ数:" + strconv.Itoa(missType), "ドロップ素材:" + dropRandomItem, "獲得AP:" + strconv.Itoa(enemy.DropAP),
