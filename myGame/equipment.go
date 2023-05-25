@@ -93,7 +93,7 @@ func InitEquipment(win *pixelgl.Window, Txt *text.Text) {
 
 func EquipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
-	if equipmentButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+	if CurrentGS == EquipmentScreen && (equipmentButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		CurrentGS = GoToScreen
 		log.Println("equipment->GoToScreen")
 	}

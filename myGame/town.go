@@ -46,22 +46,22 @@ func InitTown(win *pixelgl.Window, Txt *text.Text) {
 
 func TownClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
-	if townButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+	if CurrentGS == TownScreen && (townButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		CurrentGS = WeaponShop
 		log.Println("Town->WeaponShop")
-	} else if townButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
+	} else if CurrentGS == TownScreen && (townButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
 		CurrentGS = ArmorShop
 		log.Println("Town->ArmorShop")
-	} else if townButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
+	} else if CurrentGS == TownScreen && (townButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
 		CurrentGS = AccessoryShop
 		log.Println("Town->AccessoryShop")
-	} else if townButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
+	} else if CurrentGS == TownScreen && (townButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
 		CurrentGS = BlackSmith
 		log.Println("Town->BlackSmith")
-	} else if townButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
+	} else if CurrentGS == TownScreen && (townButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
 		CurrentGS = EquipmentScreen
 		log.Println("Town->EquipmentScreen")
-	} else if townButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+	} else if CurrentGS == TownScreen && (townButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		CurrentGS = GoToScreen
 		log.Println("Town->GoToScreen")
 	}

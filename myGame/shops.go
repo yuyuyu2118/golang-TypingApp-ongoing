@@ -268,37 +268,37 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) GameState {
 	var tempWeapon string
 	//TODO ページを作成したら追加
-	if (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) && event.WeaponPurchaseEventInstance.Weapon1 {
+	if (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) && event.WeaponPurchaseEventInstance.Weapon1 && CurrentGS == WeaponShop {
 		currentweaponState = weapon1
 		log.Println("WeaponShop->weapon1")
-	} else if (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) && event.WeaponPurchaseEventInstance.Weapon2 {
+	} else if (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) && event.WeaponPurchaseEventInstance.Weapon2 && CurrentGS == WeaponShop {
 		currentweaponState = weapon2
 		log.Println("WeaponShop->weapon2")
-	} else if (buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) && event.WeaponPurchaseEventInstance.Weapon3 {
+	} else if (buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) && event.WeaponPurchaseEventInstance.Weapon3 && CurrentGS == WeaponShop {
 		currentweaponState = weapon3
 		log.Println("WeaponShop->weapon3")
-	} else if (buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) && event.WeaponPurchaseEventInstance.Weapon4 {
+	} else if (buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) && event.WeaponPurchaseEventInstance.Weapon4 && CurrentGS == WeaponShop {
 		currentweaponState = weapon4
 		log.Println("WeaponShop->weapon4")
-	} else if (buttonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) && event.WeaponPurchaseEventInstance.Weapon5 {
+	} else if (buttonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) && event.WeaponPurchaseEventInstance.Weapon5 && CurrentGS == WeaponShop {
 		currentweaponState = weapon5
 		log.Println("WeaponShop->weapon5")
-	} else if (buttonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6)) && event.WeaponPurchaseEventInstance.Weapon6 {
+	} else if (buttonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6)) && event.WeaponPurchaseEventInstance.Weapon6 && CurrentGS == WeaponShop {
 		currentweaponState = weapon6
 		log.Println("WeaponShop->weapon6")
-	} else if (buttonSlice[6].Contains(mousePos) || win.JustPressed(pixelgl.Key7)) && event.WeaponPurchaseEventInstance.Weapon7 {
+	} else if (buttonSlice[6].Contains(mousePos) || win.JustPressed(pixelgl.Key7)) && event.WeaponPurchaseEventInstance.Weapon7 && CurrentGS == WeaponShop {
 		currentweaponState = weapon7
 		log.Println("WeaponShop->weapon7")
-	} else if (buttonSlice[7].Contains(mousePos) || win.JustPressed(pixelgl.Key8)) && event.WeaponPurchaseEventInstance.Weapon8 {
+	} else if (buttonSlice[7].Contains(mousePos) || win.JustPressed(pixelgl.Key8)) && event.WeaponPurchaseEventInstance.Weapon8 && CurrentGS == WeaponShop {
 		currentweaponState = weapon8
 		log.Println("WeaponShop->weapon8")
-	} else if (buttonSlice[8].Contains(mousePos) || win.JustPressed(pixelgl.Key9)) && event.WeaponPurchaseEventInstance.Weapon9 {
+	} else if (buttonSlice[8].Contains(mousePos) || win.JustPressed(pixelgl.Key9)) && event.WeaponPurchaseEventInstance.Weapon9 && CurrentGS == WeaponShop {
 		currentweaponState = weapon9
 		log.Println("WeaponShop->weapon9")
-	} else if (buttonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.Key0)) && event.WeaponPurchaseEventInstance.Weapon0 {
+	} else if (buttonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.Key0)) && event.WeaponPurchaseEventInstance.Weapon0 && CurrentGS == WeaponShop {
 		currentweaponState = weapon0
 		log.Println("WeaponShop->weapon0")
-	} else if buttonSlice[10].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+	} else if buttonSlice[10].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) && CurrentGS == WeaponShop {
 		CurrentGS = TownScreen
 		log.Println("WeaponShop->TownScreen")
 	}
@@ -445,16 +445,16 @@ func InitArmor(win *pixelgl.Window, Txt *text.Text) {
 
 func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
-	if buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+	if CurrentGS == ArmorShop && (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		currentarmorState = armor1
 		log.Println("ArmorShop->armor1")
-	} else if buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
+	} else if CurrentGS == ArmorShop && (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
 		currentarmorState = armor2
 		log.Println("ArmorShop->armor2")
-	} else if buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
+	} else if CurrentGS == ArmorShop && (buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
 		currentarmorState = armor3
 		log.Println("ArmorShop->armor3")
-	} else if buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+	} else if CurrentGS == ArmorShop && (buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		currentarmorState = armor1
 		CurrentGS = TownScreen
 		log.Println("ArmorShop->TownScreen")
@@ -507,10 +507,10 @@ func InitAccessory(win *pixelgl.Window, Txt *text.Text) {
 
 func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	//TODO ページを作成したら追加
-	if buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+	if CurrentGS == AccessoryShop && (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		currentaccessoryState = accessory1
 		log.Println("AccessoryShop->accessory1")
-	} else if buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+	} else if CurrentGS == AccessoryShop && (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		currentaccessoryState = accessory1
 		CurrentGS = TownScreen
 		log.Println("AccessoryShop->TownScreen")
