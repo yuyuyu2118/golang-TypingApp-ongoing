@@ -58,16 +58,16 @@ func GoToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 	if CurrentGS == GoToScreen && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		CurrentGS = StageSelect
 		log.Println("GoToScreen->Dungeon")
-	} else if gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
+	} else if CurrentGS == GoToScreen && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
 		CurrentGS = TownScreen
 		log.Println("GoToScreen->Town")
-	} else if gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
+	} else if CurrentGS == GoToScreen && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
 		CurrentGS = EquipmentScreen
 		log.Println("GoToScreen->Equipment")
-	} else if gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
+	} else if CurrentGS == GoToScreen && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
 		CurrentGS = JobSelect
 		log.Println("GoToScreen->JobSelect")
-	} else if gotoButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+	} else if CurrentGS == GoToScreen && (gotoButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		CurrentGS = StartScreen
 		log.Println("GoToScreen->StartScreen")
 	}

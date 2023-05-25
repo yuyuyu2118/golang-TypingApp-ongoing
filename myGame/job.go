@@ -47,22 +47,22 @@ func InitJob(win *pixelgl.Window, Txt *text.Text) {
 
 func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) GameState {
 
-	if jobButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+	if CurrentGS == JobSelect && (jobButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		CurrentGS = GoToScreen
 		player.Job = "Rookie"
-	} else if jobButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
+	} else if CurrentGS == JobSelect && (jobButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
 		CurrentGS = GoToScreen
 		player.Job = "Hunter"
-	} else if jobButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
+	} else if CurrentGS == JobSelect && (jobButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
 		CurrentGS = GoToScreen
 		player.Job = "Monk"
-	} else if jobButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
+	} else if CurrentGS == JobSelect && (jobButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
 		CurrentGS = GoToScreen
 		player.Job = "MagicUser"
-	} else if jobButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
+	} else if CurrentGS == JobSelect && (jobButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
 		CurrentGS = GoToScreen
 		player.Job = "Monster"
-	} else if jobButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+	} else if CurrentGS == JobSelect && (jobButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		CurrentGS = GoToScreen
 		log.Println("jobScreen -> GoToScreen")
 	}

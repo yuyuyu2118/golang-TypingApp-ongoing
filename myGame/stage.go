@@ -43,43 +43,43 @@ func InitStage(win *pixelgl.Window, Txt *text.Text) {
 
 func StageClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
 
-	if stageButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1) {
+	if CurrentGS == StageSelect && (stageButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Slime")
 		StageNum = 0
-	} else if stageButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2) {
+	} else if CurrentGS == StageSelect && (stageButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Bird")
 		StageNum = 1
-	} else if stageButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3) {
+	} else if CurrentGS == StageSelect && (stageButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Plant")
 		StageNum = 2
-	} else if stageButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4) {
+	} else if CurrentGS == StageSelect && (stageButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Goblin")
 		StageNum = 3
-	} else if stageButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5) {
+	} else if CurrentGS == StageSelect && (stageButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Zombie")
 		StageNum = 4
-	} else if stageButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6) {
+	} else if CurrentGS == StageSelect && (stageButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6)) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Fairy")
 		StageNum = 5
-	} else if stageButtonSlice[6].Contains(mousePos) || win.JustPressed(pixelgl.Key7) {
+	} else if CurrentGS == StageSelect && (stageButtonSlice[6].Contains(mousePos) || win.JustPressed(pixelgl.Key7)) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Skull")
 		StageNum = 6
-	} else if stageButtonSlice[7].Contains(mousePos) || win.JustPressed(pixelgl.Key8) {
+	} else if CurrentGS == StageSelect && (stageButtonSlice[7].Contains(mousePos) || win.JustPressed(pixelgl.Key8)) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Wizard")
 		StageNum = 7
-	} else if stageButtonSlice[8].Contains(mousePos) || win.JustPressed(pixelgl.Key9) {
+	} else if CurrentGS == StageSelect && (stageButtonSlice[8].Contains(mousePos) || win.JustPressed(pixelgl.Key9)) {
 		CurrentGS = PlayingScreen
 		log.Println("PlayStage is VS Solidier")
 		StageNum = 8
-	} else if stageButtonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) {
+	} else if CurrentGS == StageSelect && (stageButtonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		CurrentGS = GoToScreen
 		log.Println("StageScreen -> GoToScreen")
 	}

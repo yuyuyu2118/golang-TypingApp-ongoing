@@ -2,7 +2,6 @@ package main
 
 import (
 	_ "image/png"
-	"log"
 	"math/rand"
 	"time"
 
@@ -41,55 +40,22 @@ func run() {
 			myGame.InitStartScreen(win, myUtil.ScreenTxt)
 		case myGame.GoToScreen: //GoTo画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-			if myGame.CurrentGS == myGame.GoToScreen && (win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace)) {
-				myGame.CurrentGS = myGame.GoToClickEvent(win, win.MousePosition())
-			}
 		case myGame.StageSelect: //ダンジョンセレクト画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.Key7) || win.JustPressed(pixelgl.Key8) || win.JustPressed(pixelgl.Key9) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = myGame.StageClickEvent(win, win.MousePosition())
-			}
-		case myGame.TownScreen:
+		case myGame.TownScreen: //ショップ選択画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = myGame.TownClickEvent(win, win.MousePosition())
-			}
-		case myGame.WeaponShop:
+		case myGame.WeaponShop: //武器店
 			initScreenInformation(win, myUtil.DescriptionTxt, player)
-
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.Key7) || win.JustPressed(pixelgl.Key8) || win.JustPressed(pixelgl.Key9) || win.JustPressed(pixelgl.Key0) || win.JustPressed(pixelgl.KeyB) || win.JustPressed(pixelgl.KeyS) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = myGame.WeaponClickEvent(win, win.MousePosition(), player)
-			}
-		case myGame.ArmorShop:
+		case myGame.ArmorShop: //防具店
 			initScreenInformation(win, myUtil.DescriptionTxt, player)
-
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = myGame.ArmorClickEvent(win, win.MousePosition())
-			}
-		case myGame.AccessoryShop:
+		case myGame.AccessoryShop: //アクセサリー店
 			initScreenInformation(win, myUtil.DescriptionTxt, player)
-
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.Key6) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = myGame.AccessoryClickEvent(win, win.MousePosition())
-			}
-		case myGame.EquipmentScreen:
+		case myGame.EquipmentScreen: //装備画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = myGame.EquipmentClickEvent(win, win.MousePosition())
-			}
-		case myGame.JobSelect:
+		case myGame.JobSelect: //職業選択画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-
-			if win.JustPressed(pixelgl.MouseButtonLeft) || win.JustPressed(pixelgl.Key1) || win.JustPressed(pixelgl.Key2) || win.JustPressed(pixelgl.Key3) || win.JustPressed(pixelgl.Key4) || win.JustPressed(pixelgl.Key5) || win.JustPressed(pixelgl.KeyBackspace) {
-				myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
-				myGame.SaveGame(myGame.SaveFilePath, 1, player)
-			}
-
-		case myGame.PlayingScreen:
+		case myGame.PlayingScreen: //戦闘画面
 			initScreenInformation(win, myUtil.BasicTxt, player)
-			log.Println(myGame.StageNum)
 
 			dt := time.Since(last).Seconds()
 			if dt >= 0.2 { // アニメーション速度を調整 (ここでは0.2秒ごとに更新)
@@ -107,7 +73,7 @@ func run() {
 			if myGame.CurrentGS == myGame.BattleEnemyScreen {
 				startTime = time.Now()
 			}
-		case myGame.BattleEnemyScreen:
+		case myGame.BattleEnemyScreen: //敵行動画面
 			initScreenInformation(win, myUtil.BasicTxt, player)
 
 			dt := time.Since(last).Seconds()
@@ -126,7 +92,7 @@ func run() {
 			if myGame.CurrentGS == myGame.PlayingScreen {
 				startTime = time.Now()
 			}
-		case myGame.EndScreen:
+		case myGame.EndScreen: //リザルト画面
 			loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
 			event.CreateWeaponPurchaseEvent(loadContent[2])
 
