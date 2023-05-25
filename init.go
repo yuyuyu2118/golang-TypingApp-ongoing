@@ -105,6 +105,8 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 		myGame.InitPlayingScreen(win, Txt)
 	case myGame.BattleEnemyScreen:
 		myGame.InitBattleEnemyScreen(win, Txt)
+	case myGame.SkillScreen:
+		myGame.InitSkillScreen(win, Txt)
 	}
 	player.InitPlayerStatus(win, Txt)
 

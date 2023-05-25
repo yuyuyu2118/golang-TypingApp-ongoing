@@ -61,7 +61,6 @@ func run() {
 			player.SetPlayerBattleInf(win, myUtil.BasicTxt) //TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			battle.InitPlayingBattle(win, player, time.Since(startTime))
 			myUtil.UpdatePlayingTimer(myGame.CurrentGS, &startTime)
-
 		case myGame.BattleEnemyScreen: //敵行動画面
 			initScreenInformation(win, myUtil.BasicTxt, player)
 
@@ -69,7 +68,13 @@ func run() {
 			player.SetPlayerBattleInf(win, myUtil.BasicTxt) //TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			battle.InitPlayingBattle(win, player, time.Since(startTime))
 			myUtil.UpdateEnemyTimer(myGame.CurrentGS, &startTime)
+		case myGame.SkillScreen:
+			initScreenInformation(win, myUtil.BasicTxt, player)
 
+			enemy.StartEnemyAnimation(win, &Last, &Frame)
+			player.SetPlayerBattleInf(win, myUtil.BasicTxt) //TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
+			battle.InitSkillBattle(win, player, time.Since(startTime))
+			myUtil.UpdateEnemyTimer(myGame.CurrentGS, &startTime)
 		case myGame.EndScreen: //リザルト画面
 			loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
 			event.CreateWeaponPurchaseEvent(loadContent[2])
