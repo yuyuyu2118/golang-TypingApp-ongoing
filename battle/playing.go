@@ -106,3 +106,44 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 
 	return elapsed
 }
+
+func InitBattleTextV2Skill(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
+
+	if myGame.CurrentGS == myGame.SkillScreen {
+		tempWords := RookieSkillWords[RookieSkillCount]
+		Txt.Clear()
+		Txt.Color = colornames.White
+		fmt.Fprint(Txt, "> ")
+		Txt.Color = colornames.Darkslategray
+		fmt.Fprint(Txt, tempWords[:index])
+		Txt.Color = colornames.Orange
+		fmt.Fprint(Txt, tempWords[index:])
+		myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt))
+
+		offset := Txt.Bounds().W()
+		TxtOrigX := Txt.Dot.X
+		spacing := 100.0
+		if len(RookieSkillWords)-RookieSkillCount != 1 {
+			Txt.Color = colornames.Orange
+			offset := Txt.Bounds().W()
+			Txt.Clear()
+			fmt.Fprintln(Txt, RookieSkillWords[RookieSkillCount+1])
+			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
+			Txt.Dot.X = TxtOrigX
+		}
+		if !(len(RookieSkillWords)-RookieSkillCount == 2 || len(RookieSkillWords)-RookieSkillCount == 1) {
+			Txt.Color = colornames.Orange
+			offset += Txt.Bounds().W()
+			Txt.Clear()
+			fmt.Fprintln(Txt, RookieSkillWords[RookieSkillCount+2])
+			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
+		}
+	}
+
+	Txt.Clear()
+	Txt.Color = colornames.White
+	fmt.Fprintln(Txt, "time = ", elapsed.Milliseconds())
+	myPos.DrawPos(win, Txt, myPos.BottleLeftPos(win, Txt))
+
+	return elapsed
+}

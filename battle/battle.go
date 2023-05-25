@@ -30,6 +30,9 @@ var (
 
 	tempWordDamage = 0.0
 	tempEnemySize  = 0.0
+
+	RookieSkillCount = 0
+	RookieSkillWords = []string{"sword", "attack", "cut"}
 )
 
 func BattleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration) myGame.GameState {
@@ -68,6 +71,7 @@ func BattleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *
 	if win.JustPressed(pixelgl.KeySpace) {
 		log.Println("Skill!!!")
 		if player.SP == 50 {
+			myGame.CurrentGS = myGame.SkillScreen
 			player.SP = 0
 			if player.Job == "Rookie" {
 				enemy.HP -= 10
@@ -149,7 +153,7 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, elapsed ti
 					if index == len(question) {
 						index = 0
 						score++
-						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage - 100 //TODO: debug用
+						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage - 1 //TODO: debug用
 						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
 						tempWordDamage = 0.0
 					}
@@ -193,6 +197,43 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, elapsed ti
 	}
 
 	BattleTypingSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
+	return myGame.CurrentGS
+}
+
+func BattleTypingRookieSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
+	question := RookieSkillWords[RookieSkillCount]
+	temp := []byte(question)
+	typed := win.Typed()
+
+	tempCount = player.OP // - elapsed.Seconds()
+
+	if myGame.CurrentGS == myGame.SkillScreen {
+		if tempCount > 0 {
+			if typed != "" {
+				if typed[0] == temp[index] && index < len(question) {
+					index++
+					collectType++
+					tempWordDamage -= 5
+					if index == len(question) {
+						index = 0
+						RookieSkillCount++
+						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage - 1 //TODO: debug用
+						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
+						tempWordDamage = 0.0
+						if RookieSkillCount == 3 {
+							myGame.CurrentGS = myGame.PlayingScreen
+						}
+					}
+				} else {
+					missType++
+				}
+			}
+		} else {
+			myGame.CurrentGS = myGame.SkillScreen
+		}
+	}
+
 	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
 	return myGame.CurrentGS
 }

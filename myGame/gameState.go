@@ -26,6 +26,7 @@ const (
 
 	PlayingScreen
 	BattleEnemyScreen
+	SkillScreen
 	EndScreen
 	TestState
 
@@ -142,6 +143,11 @@ func InitPlayingScreen(win *pixelgl.Window, Txt *text.Text) {
 }
 
 func InitBattleEnemyScreen(win *pixelgl.Window, Txt *text.Text) {
+	win.Clear(colornames.Black)
+	Txt.Clear()
+}
+
+func InitSkillScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 	Txt.Clear()
 }
