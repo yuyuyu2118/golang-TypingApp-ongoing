@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -76,7 +77,6 @@ func SaveFileCheck(saveFilePath string) {
 		"AccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,",
 	}
 	initializeText := strings.Join(tempInitText, "\n")
-	log.Println(initializeText)
 	//initializeText := "Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,\nNoName,30,30,3,1,50,0,2,0,No Job,0,\nWeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nAccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,"
 	fileInfo, err := os.Stat(saveFilePath)
 	if err != nil {
@@ -311,28 +311,76 @@ func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, pl
 }
 
 // TODO: アイテムのセーブ実装中
-func SaveGameItems(SaveFilePathItems string, player *player.PlayerStatus, gainItem string) {
-	SaveFileItemsCheck(SaveFilePathItems)
-	tempContent := SaveFileItemsLoad(SaveFilePathItems)
+func SaveGameItems(SaveFilePathItems string, gainItem []string) error {
+	// CSVファイルからデータを読み込む
+	var records [][]string
 
-	tempContent[0] = append(tempContent[0], gainItem)
-	saveContent := tempContent[0]
-	log.Println(saveContent)
-	//空の文字列回避
-	newSaveContents := saveFileItemCount(saveContent[1:])
+	file, err := os.Open(SaveFilePathItems)
+	if err != nil && os.IsNotExist(err) {
+		// ファイルが存在しない場合は、新しいファイルを作成する
+		file, err = os.Create(SaveFilePathItems)
+		if err != nil {
+			return err
+		}
+	} else if err != nil {
+		return err
+	} else {
+		// ファイルが存在する場合は、データを読み込む
+		defer file.Close()
 
-	// 新しいCSVファイルを作成して、データを書き込む
-	file, err := os.Create("player\\save\\saveItems.csv")
-	if err != nil {
-		panic(err)
+		reader := csv.NewReader(file)
+		records, err = reader.ReadAll()
+		if err != nil {
+			return err
+		}
 	}
-	defer file.Close()
 
-	writer := csv.NewWriter(file)
-	writer.WriteAll(newSaveContents)
+	// アイテムをカウントするマップを作成する
+	itemCountMap := make(map[string]int)
+	for _, record := range records {
+		if len(record) == 2 {
+			count, err := strconv.Atoi(record[1])
+			if err == nil {
+				itemCountMap[record[0]] = count
+			}
+		}
+	}
+
+	// アイテムを追加または更新する
+	for _, item := range gainItem {
+		itemCountMap[item]++
+	}
+
+	// カウント数でアイテムを降順にソートする
+	sortedItems := make([][2]string, 0, len(itemCountMap))
+	for item, count := range itemCountMap {
+		sortedItems = append(sortedItems, [2]string{item, strconv.Itoa(count)})
+	}
+	sort.Slice(sortedItems, func(i, j int) bool {
+		countI, _ := strconv.Atoi(sortedItems[i][1])
+		countJ, _ := strconv.Atoi(sortedItems[j][1])
+		return countI > countJ
+	})
+
+	// 新しいCSVフォーマットに変換する
+	var newRecords [][]string
+	for _, record := range sortedItems {
+		newRecord := []string{record[0], record[1]}
+		newRecords = append(newRecords, newRecord)
+	}
+
+	// 新しいCSVファイルを書き出す
+	newFile, err := os.Create(SaveFilePathItems)
+	if err != nil {
+		return err
+	}
+	defer newFile.Close()
+
+	writer := csv.NewWriter(newFile)
+	writer.WriteAll(newRecords)
 	writer.Flush()
 
-	fmt.Println("保存ファイルを更新しました。")
+	return nil
 }
 
 func SaveFileItemsCheck(saveFilePathItems string) {

@@ -50,6 +50,7 @@ func CreateEnemyInstance() *[]EnemyStatus {
 		DropItems = append(DropItems, value[10])
 		DropItems = append(DropItems, value[11])
 		DropItems = append(DropItems, value[12])
+		DropItems = append(DropItems, value[13])
 
 		tempInstance := EnemyStatus{
 			Name:       Name,
