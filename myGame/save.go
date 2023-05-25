@@ -3,6 +3,7 @@ package myGame
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -11,6 +12,7 @@ import (
 )
 
 var SaveFilePath = "player\\save\\save.csv"
+var SaveFilePathItems = "player\\save\\saveItems.csv"
 
 func SaveGame(saveFilePath string, saveNum int, player *player.PlayerStatus) {
 	SaveFileCheck(saveFilePath)
@@ -295,4 +297,78 @@ func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, pl
 	}
 
 	fmt.Println("保存ファイルを更新しました。")
+}
+
+// TODO: アイテムのセーブ実装中
+func SaveGameItems(SaveFilePathItems string, saveNum int, player *player.PlayerStatus, gainItem string) {
+	SaveFileItemsCheck(SaveFilePathItems)
+	tempContent := SaveFileItemsLoad(SaveFilePathItems)
+	//saveContent := "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
+	log.Println(tempContent[0])
+	tempContent[0] = append(tempContent[0], gainItem)
+	saveContent := tempContent[0]
+
+	content, err := ioutil.ReadFile(SaveFilePathItems)
+	if err != nil {
+		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
+		return
+	}
+
+	// 改行文字で分割して行ごとのスライスに変換
+	lines := strings.Split(string(content), "\n")
+
+	// 行番号が有効な範囲かチェック
+	if saveNum < 0 || saveNum >= len(lines) {
+		fmt.Println("指定された行番号が範囲外です。")
+		return
+	}
+
+	// 指定された行を上書き
+	lines[saveNum] = saveContent[0]
+
+	// 更新後の内容を保存ファイルに書き込む
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile(SaveFilePathItems, []byte(output), 0644)
+	if err != nil {
+		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
+		return
+	}
+
+	fmt.Println("保存ファイルを更新しました。")
+}
+
+func SaveFileItemsCheck(saveFilePathItems string) {
+	initializeText := ""
+	fileInfo, err := os.Stat(saveFilePathItems)
+	if err != nil {
+		// ファイルが存在しない場合、初回呼び出しとして初期化テキストを出力
+		if os.IsNotExist(err) {
+			err := ioutil.WriteFile(saveFilePathItems, []byte(initializeText), 0644)
+			if err != nil {
+				fmt.Println("保存ファイルの作成に失敗しました:", err)
+				return
+			}
+			fmt.Println("保存ファイルを作成しました。初期化テキストを出力しました。")
+			return
+		}
+
+		fmt.Println("保存ファイルの情報取得に失敗しました:", err)
+		return
+	}
+
+	// 保存ファイルが空であるかをチェック
+	if fileInfo.Size() == 0 {
+		err := ioutil.WriteFile(saveFilePathItems, []byte(initializeText), 0644)
+		if err != nil {
+			fmt.Println("保存ファイルの初期化に失敗しました:", err)
+			return
+		}
+		fmt.Println("保存ファイルを初期化しました。初期化テキストを出力しました。")
+		return
+	}
+}
+
+func SaveFileItemsLoad(saveFilePathItems string) [][]string {
+	SaveFileItemsCheck(saveFilePathItems)
+	return CsvToSlice(saveFilePathItems)
 }

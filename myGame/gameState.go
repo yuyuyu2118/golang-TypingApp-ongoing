@@ -133,12 +133,6 @@ func InitJobSelect(win *pixelgl.Window, Txt *text.Text) {
 	InitJob(win, Txt)
 }
 
-// func InitSaveScreen(win *pixelgl.Window, Txt *text.Text) {
-// 	win.Clear(colornames.Black)
-
-// 	InitSave(win, Txt)
-// }
-
 func InitPlayingScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 	Txt.Clear()
