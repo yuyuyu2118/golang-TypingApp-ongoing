@@ -49,19 +49,19 @@ func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Playe
 
 	if CurrentGS == JobSelect && (jobButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		CurrentGS = GoToScreen
-		player.Job = "Rookie"
+		player.Job = "見習い剣士"
 	} else if CurrentGS == JobSelect && (jobButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
 		CurrentGS = GoToScreen
-		player.Job = "Hunter"
+		player.Job = "狩人"
 	} else if CurrentGS == JobSelect && (jobButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
 		CurrentGS = GoToScreen
-		player.Job = "Monk"
+		player.Job = "モンク"
 	} else if CurrentGS == JobSelect && (jobButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
 		CurrentGS = GoToScreen
-		player.Job = "MagicUser"
+		player.Job = "魔法使い"
 	} else if CurrentGS == JobSelect && (jobButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
 		CurrentGS = GoToScreen
-		player.Job = "Monster"
+		player.Job = "化け物"
 	} else if CurrentGS == JobSelect && (jobButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		CurrentGS = GoToScreen
 		log.Println("jobScreen -> GoToScreen")
