@@ -3,6 +3,7 @@ package enemy
 import (
 	"fmt"
 	"path/filepath"
+	"time"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
@@ -10,6 +11,7 @@ import (
 	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myIo"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"golang.org/x/image/colornames"
 )
 
@@ -53,4 +55,14 @@ func SetEnemySpriteText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus)
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "EnemyHP : ", enemy.HP)
 	myPos.DrawPos(win, Txt, myPos.TopCenPos(win, Txt))
+}
+
+func StartEnemyAnimation(win *pixelgl.Window, last *time.Time, frame *int) {
+	dt := time.Since(*last).Seconds()
+	if dt >= 0.2 { // アニメーション速度を調整 (ここでは0.2秒ごとに更新)
+		*frame = (*frame + 1) % len(EnemySprites[myGame.StageNum])
+		(*last) = time.Now()
+	}
+	SetEnemySprite(win, *frame)
+	SetEnemySpriteText(win, myUtil.ScreenTxt, &EnemySettings[myGame.StageNum])
 }

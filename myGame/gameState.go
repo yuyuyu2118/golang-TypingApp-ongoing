@@ -87,7 +87,7 @@ func InitTownScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Black)
 	Txt.Clear()
 
-	topText := "どこに行く？"
+	topText := "どこに行く?"
 	InitGoTo(win, Txt, topText)
 	InitTown(win, Txt)
 }

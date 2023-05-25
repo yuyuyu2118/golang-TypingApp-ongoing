@@ -130,7 +130,7 @@ func DeathFlug(player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed ti
 	return currentGameState
 }
 
-func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration) myGame.GameState {
+func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
 	question := words[score]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -149,7 +149,7 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 					if index == len(question) {
 						index = 0
 						score++
-						enemy.HP += tempWordDamage - 100 //TODO: debug用
+						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage - 100 //TODO: debug用
 						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
 						tempWordDamage = 0.0
 					}
@@ -165,26 +165,26 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 		//PressEnter
 		if win.JustPressed(pixelgl.KeyEnter) {
 			pressEnter = true
-			tempEnemySize = enemy.EnemySize
+			tempEnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize
 			tempWordDamage = 0
 		}
 		if pressEnter == true {
-			if enemy.EnemySize >= tempEnemySize && enemy.EnemySize < tempEnemySize*1.2 && lock == false && lock2 == false {
-				enemy.EnemySize = enemy.EnemySize * 1.05
-				if enemy.EnemySize > tempEnemySize*1.2 {
+			if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 && lock == false && lock2 == false {
+				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 1.05
+				if enemy.EnemySettings[myGame.StageNum].EnemySize > tempEnemySize*1.2 {
 					lock = true
 					win.Canvas().Clear(colornames.Red)
 				}
-			} else if enemy.EnemySize >= tempEnemySize && lock == true && lock2 == false {
-				enemy.EnemySize = enemy.EnemySize * 0.95
-				if enemy.EnemySize < tempEnemySize {
+			} else if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && lock == true && lock2 == false {
+				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 0.95
+				if enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize {
 					lock2 = true
 				}
 			} else if lock == true && lock2 == true {
-				enemy.EnemySize = tempEnemySize
+				enemy.EnemySettings[myGame.StageNum].EnemySize = tempEnemySize
 				lock = false
 				lock2 = false
-				player.HP -= enemy.OP
+				player.HP -= enemy.EnemySettings[myGame.StageNum].OP
 				myGame.CurrentGS = myGame.PlayingScreen
 				pressEnter = false
 				index = 0
@@ -192,7 +192,7 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, enemy *ene
 		}
 	}
 
-	BattleTypingSkill(win, player, enemy)
-	myGame.CurrentGS = DeathFlug(player, enemy, elapsed, myGame.CurrentGS)
+	BattleTypingSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
 	return myGame.CurrentGS
 }

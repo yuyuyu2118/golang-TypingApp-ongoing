@@ -281,8 +281,8 @@ func (player *PlayerStatus) SetPlayerBattleInf(win *pixelgl.Window, Txt *text.Te
 func (player *PlayerStatus) InitPlayerStatus(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, player.Job, " Gold:", player.Gold)
-	fmt.Fprintln(Txt, "OP: ", player.OP, "DP: ", player.DP)
+	fmt.Fprintln(Txt, player.Job, " Gold:", player.Gold, "S")
+	fmt.Fprintln(Txt, "アタックタイマー: ", player.OP)
 	tempPosition := myPos.TopLefPos(win, Txt).Add(pixel.V(-30, 30))
 	myPos.DrawPos(win, Txt, tempPosition)
 }
