@@ -37,7 +37,7 @@ func run() {
 	for !win.Closed() {
 		switch myGame.CurrentGS {
 		case myGame.StartScreen: //スタート画面
-			myGame.InitStartScreen(win, myUtil.ScreenTxt)
+			myGame.InitStartScreen(win, myUtil.StartTxt)
 		case myGame.GoToScreen: //GoTo画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
 		case myGame.StageSelect: //ダンジョンセレクト画面

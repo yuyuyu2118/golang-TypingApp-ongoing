@@ -42,9 +42,11 @@ func InitStartScreen(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 
 	startLines := []string{
-		"This is a TypingBattleGame",
+		"タイピングバトルRPG",
 		"\n",
-		"START : Press Enter",
+		"Enterキーを押してスタート",
+		"Escapeキーを押して終了",
+		"(※オートセーブです)",
 	}
 
 	myPos.LineCenterAlign(win, startLines, Txt, "center")
