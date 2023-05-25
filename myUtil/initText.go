@@ -15,17 +15,20 @@ import (
 )
 
 var (
-	ScreenTxt      *text.Text
-	DescriptionTxt *text.Text
-	BasicTxt       *text.Text
+	ScreenTxt       *text.Text
+	DescriptionTxt  *text.Text
+	BasicTxt        *text.Text
+	HunterBulletTxt *text.Text
 )
 
 func InitTxtFontLoading() {
 	fontPath := "assets\\fonts\\NotoSans-Black.ttf"
 	japanFontPath := "assets/fonts/PixelMplus12-Regular.ttf"
+	japanFontPathBold := "assets/fonts/PixelMplus12-Bold.ttf"
 	BasicTxt = initializeAnyText(fontPath, 40, colornames.White)
 	ScreenTxt = initAnyJapanText(japanFontPath, 40, colornames.White)
 	DescriptionTxt = initAnyJapanText(japanFontPath, 30, colornames.White)
+	HunterBulletTxt = initAnyJapanText(japanFontPathBold, 60, colornames.White)
 	// startTxt := initializeAnyText(fontPath, 80, colornames.White)
 	// endTxt := initializeAnyText(fontPath, 60, colornames.White)
 }
