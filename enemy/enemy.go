@@ -2,6 +2,7 @@ package enemy
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 
 	"github.com/faiface/pixel"
@@ -24,6 +25,7 @@ type EnemyStatus struct {
 	AttackTick float64
 	DropAP     int
 	EnemySize  float64
+	DropItems  []string
 }
 
 var EnemyPath = "assets\\monster\\"
@@ -34,6 +36,7 @@ func CreateEnemyInstance() *[]EnemyStatus {
 	var instance []EnemyStatus
 
 	for _, value := range temp {
+		var DropItems []string
 		Name := value[0]
 		MaxHP, _ := strconv.ParseFloat(value[1], 64)
 		HP, _ := strconv.ParseFloat(value[2], 64)
@@ -44,6 +47,9 @@ func CreateEnemyInstance() *[]EnemyStatus {
 		AttackTick, _ := strconv.ParseFloat(value[7], 64)
 		DropAP, _ := strconv.Atoi((value[8]))
 		EnemySize, _ := strconv.ParseFloat(value[9], 64)
+		DropItems = append(DropItems, value[10])
+		DropItems = append(DropItems, value[11])
+		DropItems = append(DropItems, value[12])
 
 		tempInstance := EnemyStatus{
 			Name:       Name,
@@ -56,9 +62,11 @@ func CreateEnemyInstance() *[]EnemyStatus {
 			AttackTick: AttackTick,
 			DropAP:     DropAP,
 			EnemySize:  EnemySize,
+			DropItems:  DropItems,
 		}
 		instance = append(instance, tempInstance)
 	}
+	log.Println(instance)
 	return &instance
 }
 
