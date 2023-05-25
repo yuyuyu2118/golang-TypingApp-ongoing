@@ -16,11 +16,26 @@ func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed
 	} else if player.Job == "狩人" {
 		myGame.CurrentGS = BattleTypingHunter(win, player, elapsed)
 	} else if player.Job == "モンク" {
-		myGame.CurrentGS = BattleTypingV2(win, player, elapsed)
+		myGame.CurrentGS = BattleTyping(win, player, elapsed)
 	} else if player.Job == "魔法使い" {
-		myGame.CurrentGS = BattleTypingV2(win, player, elapsed)
+		myGame.CurrentGS = BattleTyping(win, player, elapsed)
 	} else if player.Job == "化け物" {
-		myGame.CurrentGS = BattleTypingV2(win, player, elapsed)
+		myGame.CurrentGS = BattleTyping(win, player, elapsed)
+	}
+}
+
+func InitEnemyBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
+	InitBattleTextV2(win, myUtil.BasicTxt, elapsed)
+	if myGame.StageNum == 0 {
+		myGame.CurrentGS = BattleTypingEnemySlime(win, player, elapsed)
+	} else if myGame.StageNum == 1 {
+		myGame.CurrentGS = BattleTypingEnemySlime(win, player, elapsed)
+	} else if myGame.StageNum == 2 {
+		myGame.CurrentGS = BattleTypingEnemySlime(win, player, elapsed)
+	} else if myGame.StageNum == 3 {
+		myGame.CurrentGS = BattleTypingEnemySlime(win, player, elapsed)
+	} else if myGame.StageNum == 4 {
+		myGame.CurrentGS = BattleTypingEnemySlime(win, player, elapsed)
 	}
 }
 

@@ -1,7 +1,6 @@
 package battle
 
 import (
-	"fmt"
 	"log"
 	"math/rand"
 	"time"
@@ -10,8 +9,6 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
-	"github.com/yuyuyu2118/typingGo/myPos"
-	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
@@ -33,63 +30,7 @@ var (
 
 	tempWordDamage = 0.0
 	tempEnemySize  = 0.0
-
-	RookieSkillCount = 0
-	RookieSkillWords = []string{"oreno", "kenngiwo", "kuraeee"}
 )
-
-func BattleTypingV1(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, elapsed time.Duration) myGame.GameState {
-	question := words[score]
-	temp := []byte(question)
-	typed := win.Typed()
-
-	if typed != "" {
-		if typed[0] == temp[index] && index < len(question) {
-			index++
-			collectType++
-
-			enemy.HP -= player.OP
-			player.SP += player.BaseSP
-
-			if index == len(question) {
-				index = 0
-				score++
-
-				if score == len(words) {
-					myGame.CurrentGS = myGame.EndScreen
-					yourTime = float64(elapsed.Seconds())
-				}
-			}
-		} else {
-			missType++
-		}
-	}
-
-	BattleTypingSkill(win, player, enemy)
-	myGame.CurrentGS = DeathFlug(player, enemy, elapsed, myGame.CurrentGS)
-	return myGame.CurrentGS
-}
-
-func BattleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
-	if win.JustPressed(pixelgl.KeySpace) {
-		log.Println("Skill!!!")
-		if player.SP == 50 {
-			index = 0
-			myGame.CurrentGS = myGame.SkillScreen
-			player.SP = 0
-			if player.Job == "Rookie" {
-				enemy.HP -= 10
-				PlayerAttack(win, int(-10), win.Bounds().Center().Sub(pixel.V(50, 150)))
-			} else if player.Job == "Hunter" {
-
-			} else if player.Job == "Monk" {
-
-			}
-		} else {
-			log.Println("skillポイントが足りない")
-		}
-	}
-}
 
 func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed time.Duration, currentGameState myGame.GameState) myGame.GameState {
 	if player.HP <= 0 {
@@ -143,7 +84,7 @@ func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed
 	return currentGameState
 }
 
-func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
+func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
 	question := words[score]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -206,221 +147,6 @@ func BattleTypingV2(win *pixelgl.Window, player *player.PlayerStatus, elapsed ti
 	}
 
 	BattleTypingSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
-	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
-	return myGame.CurrentGS
-}
-
-func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
-	question := words[score]
-	temp := []byte(question)
-	typed := win.Typed()
-
-	tempCount = player.OP - elapsed.Seconds()
-
-	if myGame.CurrentGS == myGame.PlayingScreen {
-		if tempCount > 0 {
-			if typed != "" {
-				if typed[0] == temp[index] && index < len(question) {
-					index++
-					collectType++
-					tempWordDamage -= 3
-					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
-					player.SP += player.BaseSP
-					if index == len(question) {
-						index = 0
-						score++
-						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage - 1 //TODO: debug用
-						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
-						tempWordDamage = 0.0
-					}
-				} else {
-					missType++
-				}
-			}
-		} else {
-			myGame.CurrentGS = myGame.BattleEnemyScreen
-		}
-	} else if myGame.CurrentGS == myGame.BattleEnemyScreen {
-		//攻撃判定
-		//PressEnter
-		if win.JustPressed(pixelgl.KeyEnter) {
-			pressEnter = true
-			tempEnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize
-			tempWordDamage = 0
-		}
-		if pressEnter == true {
-			if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 && lock == false && lock2 == false {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 1.05
-				if enemy.EnemySettings[myGame.StageNum].EnemySize > tempEnemySize*1.2 {
-					lock = true
-					win.Canvas().Clear(colornames.Red)
-				}
-			} else if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && lock == true && lock2 == false {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 0.95
-				if enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize {
-					lock2 = true
-				}
-			} else if lock == true && lock2 == true {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = tempEnemySize
-				lock = false
-				lock2 = false
-				player.HP -= enemy.EnemySettings[myGame.StageNum].OP
-				myGame.CurrentGS = myGame.PlayingScreen
-				pressEnter = false
-				index = 0
-			}
-		}
-	}
-
-	BattleTypingSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
-	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
-	return myGame.CurrentGS
-}
-
-var bulletLoading = []bool{false, false, false}
-
-func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
-	xOffSet := 100.0
-	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 100
-	txtPos := pixel.V(0, 0)
-	myUtil.ScreenTxt.Color = colornames.White
-
-	question := words[score]
-	temp := []byte(question)
-	typed := win.Typed()
-
-	tempCount = player.OP - elapsed.Seconds()
-
-	if myGame.CurrentGS == myGame.PlayingScreen {
-		if tempCount > 0 {
-			if typed != "" {
-				if typed[0] == temp[index] && index < len(question) {
-					index++
-					collectType++
-					tempWordDamage -= 3
-					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
-					player.SP += player.BaseSP
-					if index == len(question) {
-						index = 0
-						score++
-						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage - 1 //TODO: debug用
-						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
-						tempWordDamage = 0.0
-						if bulletLoading[1] {
-							bulletLoading[2] = true
-						} else if bulletLoading[0] {
-							bulletLoading[1] = true
-						}
-						bulletLoading[0] = true
-						log.Println(bulletLoading)
-					}
-				} else {
-					missType++
-				}
-			}
-		} else {
-			myGame.CurrentGS = myGame.BattleEnemyScreen
-		}
-	} else if myGame.CurrentGS == myGame.BattleEnemyScreen {
-		//攻撃判定
-		//PressEnter
-		if win.JustPressed(pixelgl.KeyEnter) {
-			pressEnter = true
-			tempEnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize
-			tempWordDamage = 0
-		}
-		if pressEnter == true {
-			if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 && lock == false && lock2 == false {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 1.05
-				if enemy.EnemySettings[myGame.StageNum].EnemySize > tempEnemySize*1.2 {
-					lock = true
-					win.Canvas().Clear(colornames.Red)
-				}
-			} else if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && lock == true && lock2 == false {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 0.95
-				if enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize {
-					lock2 = true
-				}
-			} else if lock == true && lock2 == true {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = tempEnemySize
-				lock = false
-				lock2 = false
-				player.HP -= enemy.EnemySettings[myGame.StageNum].OP
-				myGame.CurrentGS = myGame.PlayingScreen
-				pressEnter = false
-				index = 0
-			}
-		}
-	}
-
-	if bulletLoading[0] && !bulletLoading[1] && !bulletLoading[2] {
-		myUtil.HunterBulletTxt.Clear()
-		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1])
-		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		myUtil.HunterBulletTxt.Draw(win, tempPosition)
-	} else if bulletLoading[0] && bulletLoading[1] && !bulletLoading[2] {
-		myUtil.HunterBulletTxt.Clear()
-		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-2])
-		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		myUtil.HunterBulletTxt.Draw(win, tempPosition)
-	} else if bulletLoading[0] && bulletLoading[1] && bulletLoading[2] {
-		myUtil.HunterBulletTxt.Clear()
-		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-2])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-3])
-		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		myUtil.HunterBulletTxt.Draw(win, tempPosition)
-	}
-
-	BattleTypingSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
-	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
-	return myGame.CurrentGS
-}
-
-func BattleTypingRookieSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
-	question := RookieSkillWords[RookieSkillCount]
-	temp := []byte(question)
-	typed := win.Typed()
-
-	tempCount = player.OP // - elapsed.Seconds()
-
-	if myGame.CurrentGS == myGame.SkillScreen {
-		if tempCount > 0 {
-			if typed != "" {
-				if typed[0] == temp[index] && index < len(question) {
-					index++
-					collectType++
-					tempWordDamage -= 5
-					if index == len(question) {
-						index = 0
-						RookieSkillCount++
-						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage - 1 //TODO: debug用
-						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
-						tempWordDamage = 0.0
-						if RookieSkillCount == 3 {
-							RookieSkillCount = 0
-							myGame.CurrentGS = myGame.PlayingScreen
-						}
-					}
-				} else {
-					missType++
-				}
-			}
-		} else {
-			myGame.CurrentGS = myGame.SkillScreen
-		}
-	}
-
 	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
 	return myGame.CurrentGS
 }
