@@ -18,7 +18,8 @@ import (
 )
 
 var tempPosition pixel.Vec
-var dropRandomItem = ""
+var dropRandomItem = []string{}
+var dropEvent bool
 
 func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus, enemy *enemy.EnemyStatus) myGame.GameState {
 	xOffSet := 100.0
@@ -29,14 +30,28 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 	fmt.Fprintln(myUtil.ScreenTxt, "リザルト  再戦 : Press Tab | 町に戻る : Press BackSpace")
 	tempPosition = myPos.TopCenPos(win, myUtil.ScreenTxt)
 	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
-	if dropRandomItem == "" {
-		dropRandomItem = enemy.DropItems[rand.Intn(3)]
+	if !dropEvent {
+		for i := 0; i < 3; i++ {
+			if rand.Float64() <= 0.3 { // 30%の確率でアイテムをドロップ
+				dropRandomItem = append(dropRandomItem, enemy.DropItems[i])
+			}
+		}
+		if rand.Float64() <= 0.15 { // 15%の確率でアイテムをドロップ
+			dropRandomItem = append(dropRandomItem, enemy.DropItems[3])
+		}
 		myGame.SaveFileItemsLoad(myGame.SaveFilePathItems)
-		myGame.SaveGameItems(myGame.SaveFilePathItems, player, dropRandomItem)
+		myGame.SaveGameItems(myGame.SaveFilePathItems, dropRandomItem)
+		dropEvent = true
 	}
+
 	ClearTxt := []string{"獲得ゴールド:" + strconv.Itoa(gainGold) + "S", "入力単語数:" + strconv.Itoa(score), "正解タイプ数:" + strconv.Itoa(collectType),
-		"正解タイプ数:" + strconv.Itoa(collectType), "ミスタイプ数:" + strconv.Itoa(missType), "ドロップ素材:" + dropRandomItem, "獲得AP:" + strconv.Itoa(enemy.DropAP),
+		"正解タイプ数:" + strconv.Itoa(collectType), "ミスタイプ数:" + strconv.Itoa(missType), "獲得AP:" + strconv.Itoa(enemy.DropAP),
 	}
+	var tempName = "ドロップ素材:"
+	for _, item := range dropRandomItem {
+		tempName += " " + item
+	}
+	ClearTxt = append(ClearTxt, tempName)
 
 	if player.HP > 0 {
 		for _, value := range ClearTxt {
@@ -77,7 +92,8 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		player.HP = player.MaxHP
 		player.SP = 0
 		enemy.HP = enemy.MaxHP
-		dropRandomItem = ""
+		dropRandomItem = dropRandomItem[:0]
+		dropEvent = false
 		Shuffle(words)
 		myUtil.SetSaveReset(false)
 		log.Println("Press:Enter -> GameState:Playing")
@@ -87,7 +103,8 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		player.HP = player.MaxHP
 		player.SP = 0
 		enemy.HP = enemy.MaxHP
-		dropRandomItem = ""
+		dropRandomItem = dropRandomItem[:0]
+		dropEvent = false
 		Shuffle(words)
 		myUtil.SetSaveReset(false)
 		log.Println("Press:Enter -> GameState:GoToScreen")
