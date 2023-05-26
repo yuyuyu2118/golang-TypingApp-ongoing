@@ -84,7 +84,6 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 	if event.WeaponPurchaseEventInstance.Weapon0 {
 		weaponSlice[9] = "0. 死神の大鎌"
 	}
-	//weaponSlice := []string{"1. 木の棒", "2. 果物ナイフ", "3. 木刀", "4. ドレインソード", "5. スタンハンマー", "6. 鉄の剣", "7. 隼の剣", "8. 勇者の剣", "9. 名刀村正", "0. 死神の大鎌", "BackSpace. EXIT"}
 
 	for _, weaponName := range weaponSlice {
 		Txt.Clear()
@@ -145,12 +144,12 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 
 func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
 	var tempWeapon string
-	//TODO ページを作成したら追加
 	if (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) && event.WeaponPurchaseEventInstance.Weapon1 && myState.CurrentGS == myState.WeaponShop {
 		currentweaponState = weapon1
 		log.Println("WeaponShop->weapon1")
 	} else if (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) && event.WeaponPurchaseEventInstance.Weapon2 && myState.CurrentGS == myState.WeaponShop {
 		currentweaponState = weapon2
+		CreateWeaponEvent(descWeapon, 0)
 		log.Println("WeaponShop->weapon2")
 	} else if (buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) && event.WeaponPurchaseEventInstance.Weapon3 && myState.CurrentGS == myState.WeaponShop {
 		currentweaponState = weapon3
@@ -181,6 +180,7 @@ func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pl
 		log.Println("WeaponShop->TownScreen")
 	}
 	if (buySellSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.KeyB)) && player.Gold >= 100 {
+		//TODO: お金が足りないときの処理を記述
 		if currentweaponState == weapon1 {
 			//TODO: ファイルからweaponのインスタンス作成、weaponインスタンスからGoldを参照
 			player.Gold -= 100
@@ -334,24 +334,109 @@ func WeaponBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.Gam
 }
 
 func DescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
+	//TODO: Tabを押している間は強化素材等の情報を表示する
+	num++
 	xOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).X + 300
 	yOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).Y - 50
 	txtPos := pixel.V(0, 0)
-	for _, value := range descWeapon[num] {
-		myUtil.DescriptionTxt.Clear()
-		myUtil.DescriptionTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.DescriptionTxt, value)
-		yOffSet -= myUtil.DescriptionTxt.LineHeight + 20
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		myUtil.DescriptionTxt.Draw(win, tempPosition)
-	}
-	myUtil.DescriptionTxt.Clear()
+
 	myUtil.DescriptionTxt.Color = colornames.White
-	fmt.Fprintln(myUtil.DescriptionTxt, "B. 作ってもらう")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 20
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[0][1]+": "+descWeapon[num][1], "   カラー: "+descWeapon[num][17])
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
 	txtPos = pixel.V(xOffSet, yOffSet)
 	tempPosition := pixel.IM.Moved(txtPos)
 	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[0][2]+": "+descWeapon[num][2], descWeapon[0][3]+": "+descWeapon[num][3])
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[0][4]+": "+descWeapon[num][4]+"S ")
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descWeapon[num][5], descWeapon[num][6]+"個, ", descWeapon[num][7], descWeapon[num][8]+"個, ", descWeapon[num][9], descWeapon[num][10]+"個")
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, "説明: "+descWeapon[num][11])
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, " "+descWeapon[num][12])
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, "特殊能力: "+descWeapon[num][14])
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, " "+descWeapon[num][15])
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[num][16])
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	myUtil.DescriptionTxt.Color = colornames.White
+	fmt.Fprintln(myUtil.DescriptionTxt, "B. 作ってもらう")
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
 	buySellSlice = append(buySellSlice, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
+}
+
+func CreateWeaponEvent(descWeapon [][]string, num int) {
+	//TODO: 素材が足りるかどうかの判定実装中
+	num++
+	tempSlice, _ := CountMyItems(SaveFilePathItems)
+	for name, count := range tempSlice {
+		if name == descWeapon[num][5] {
+			tempCount, _ := strconv.Atoi(descWeapon[num][6])
+			if count >= tempCount {
+				log.Println(name, count, tempCount, "足りてます")
+			}
+		}
+		if name == descWeapon[num][7] {
+			tempCount, _ := strconv.Atoi(descWeapon[num][8])
+			if count >= tempCount {
+				log.Println(name, count, tempCount, "足りてます")
+			}
+		}
+		if name == descWeapon[num][9] {
+			tempCount, _ := strconv.Atoi(descWeapon[num][10])
+			if count >= tempCount {
+				log.Println(name, count, tempCount, "足りてます")
+			}
+		}
+	}
 }
