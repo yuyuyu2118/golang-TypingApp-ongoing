@@ -25,3 +25,14 @@ const (
 	AccessoryShop
 	BlackSmith
 )
+
+var CurrentBelong BelongState
+
+type BelongState int
+
+const (
+	WeaponBelong BelongState = iota
+	ArmorBelong
+	AccessoryBelong
+	MaterialsBelong
+)

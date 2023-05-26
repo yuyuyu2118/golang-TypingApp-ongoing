@@ -433,3 +433,50 @@ func saveFileItemCount(records []string) [][]string {
 	log.Println(newRecords)
 	return newRecords
 }
+
+func GetMyItems(SaveFilePathItems string) ([]string, error) {
+	// CSVファイルからデータを読み込む
+	var records [][]string
+
+	file, err := os.Open(SaveFilePathItems)
+	if err != nil && os.IsNotExist(err) {
+		if err != nil {
+			return nil, err
+		}
+	} else if err != nil {
+		return nil, err
+	} else {
+		defer file.Close()
+		reader := csv.NewReader(file)
+		records, err = reader.ReadAll()
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	// アイテムをカウントするマップを作成する
+	itemCountMap := make(map[string]int)
+	for _, record := range records {
+		if len(record) == 2 {
+			count, err := strconv.Atoi(record[1])
+			if err == nil {
+				itemCountMap[record[0]] = count
+			}
+		}
+	}
+	sortedItems := make([][2]string, 0, len(itemCountMap))
+	for item, count := range itemCountMap {
+		sortedItems = append(sortedItems, [2]string{item, strconv.Itoa(count)})
+	}
+	sort.Slice(sortedItems, func(i, j int) bool {
+		countI, _ := strconv.Atoi(sortedItems[i][1])
+		countJ, _ := strconv.Atoi(sortedItems[j][1])
+		return countI > countJ
+	})
+	combinedItems := make([]string, 0, len(sortedItems))
+	for _, value := range sortedItems {
+		combined := fmt.Sprintf("%s: %s個", value[0], value[1])
+		combinedItems = append(combinedItems, combined)
+	}
+	return combinedItems, err
+}

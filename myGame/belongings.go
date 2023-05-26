@@ -11,18 +11,8 @@ import (
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"golang.org/x/image/colornames"
-)
-
-var CurrentBelong BelongState
-
-type BelongState int
-
-const (
-	WeaponBelong BelongState = iota
-	ArmorBelong
-	AccessoryBelong
-	MaterialsBelong
 )
 
 var (
@@ -41,22 +31,24 @@ func InitEquipment(win *pixelgl.Window, Txt *text.Text) {
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 50
 	txtPos := pixel.V(0, 0)
 
-	switch CurrentBelong {
-	case WeaponBelong:
-		if CurrentBelong == WeaponBelong && belongAnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
-			CurrentBelong = BelongClickEvent(win, win.MousePosition())
+	switch myState.CurrentBelong {
+	case myState.WeaponBelong:
+		InitWeaponBelongScreen(win, myUtil.ScreenTxt)
+		if myState.CurrentBelong == myState.WeaponBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
+			myState.CurrentBelong = BelongClickEvent(win, win.MousePosition())
 		}
-	case ArmorBelong:
-		if CurrentBelong == ArmorBelong && belongAnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
-			CurrentBelong = BelongClickEvent(win, win.MousePosition())
+	case myState.ArmorBelong:
+		if myState.CurrentBelong == myState.ArmorBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
+			myState.CurrentBelong = BelongClickEvent(win, win.MousePosition())
 		}
-	case AccessoryBelong:
-		if CurrentBelong == AccessoryBelong && belongAnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
-			CurrentBelong = BelongClickEvent(win, win.MousePosition())
+	case myState.AccessoryBelong:
+		if myState.CurrentBelong == myState.AccessoryBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
+			myState.CurrentBelong = BelongClickEvent(win, win.MousePosition())
 		}
-	case MaterialsBelong:
-		if CurrentBelong == MaterialsBelong && belongAnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
-			CurrentBelong = BelongClickEvent(win, win.MousePosition())
+	case myState.MaterialsBelong:
+		InitMaterialsBelongScreen(win, myUtil.ScreenTxt)
+		if myState.CurrentBelong == myState.MaterialsBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
+			myState.CurrentBelong = BelongClickEvent(win, win.MousePosition())
 		}
 	}
 
@@ -102,29 +94,20 @@ func EquipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameSt
 	return myState.CurrentGS
 }
 
-func BelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) BelongState {
+func BelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.BelongState {
 	//TODO: 循環参照を避けて、マウスpositionを追加
-	if (CurrentBelong == WeaponBelong || CurrentBelong == ArmorBelong || CurrentBelong == AccessoryBelong || CurrentBelong == MaterialsBelong) && (win.JustPressed(pixelgl.Key1)) {
-		CurrentBelong = WeaponBelong
+	if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key1)) {
+		myState.CurrentBelong = myState.WeaponBelong
 		log.Println("WeaponBelong->WeaponBelong")
-	} else if (CurrentBelong == WeaponBelong || CurrentBelong == ArmorBelong || CurrentBelong == AccessoryBelong || CurrentBelong == MaterialsBelong) && (win.JustPressed(pixelgl.Key2)) {
-		CurrentBelong = ArmorBelong
+	} else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key2)) {
+		myState.CurrentBelong = myState.ArmorBelong
 		log.Println("WeaponBelong->ArmorBelong")
-	} else if (CurrentBelong == WeaponBelong || CurrentBelong == ArmorBelong || CurrentBelong == AccessoryBelong || CurrentBelong == MaterialsBelong) && (win.JustPressed(pixelgl.Key3)) {
-		CurrentBelong = AccessoryBelong
+	} else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key3)) {
+		myState.CurrentBelong = myState.AccessoryBelong
 		log.Println("WeaponBelong->AccessoryBelong")
-	} else if (CurrentBelong == WeaponBelong || CurrentBelong == ArmorBelong || CurrentBelong == AccessoryBelong || CurrentBelong == MaterialsBelong) && (win.JustPressed(pixelgl.Key4)) {
-		CurrentBelong = MaterialsBelong
+	} else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key4)) {
+		myState.CurrentBelong = myState.MaterialsBelong
 		log.Println("WeaponBelong->MaterialsBelong")
 	}
-	return CurrentBelong
-}
-
-func belongAnyKeyJustPressed(win *pixelgl.Window, keys ...pixelgl.Button) bool {
-	for _, key := range keys {
-		if win.JustPressed(key) {
-			return true
-		}
-	}
-	return false
+	return myState.CurrentBelong
 }
