@@ -1,6 +1,6 @@
 Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,
-NoName,30,30,5,1,50,0,2,6086,モンク,425,Japanese,
-214,70,7,0,0,0,0,0,0,0,,,
+NoName,30,30,5,1,50,0,2,6108,見習い剣士,427,Japanese,
+216,70,7,0,0,0,0,0,0,0,,,
 3,1,0,0,0,0,0,0,0,0,,,
 WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,
 ArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,
