@@ -480,3 +480,36 @@ func GetMyItems(SaveFilePathItems string) ([]string, error) {
 	}
 	return combinedItems, err
 }
+
+func CountMyItems(SaveFilePathItems string) (map[string]int, error) {
+	// CSVファイルからデータを読み込む
+	var records [][]string
+
+	file, err := os.Open(SaveFilePathItems)
+	if err != nil && os.IsNotExist(err) {
+		if err != nil {
+			return nil, err
+		}
+	} else if err != nil {
+		return nil, err
+	} else {
+		defer file.Close()
+		reader := csv.NewReader(file)
+		records, err = reader.ReadAll()
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	// アイテムをカウントするマップを作成する
+	itemCountMap := make(map[string]int)
+	for _, record := range records {
+		if len(record) == 2 {
+			count, err := strconv.Atoi(record[1])
+			if err == nil {
+				itemCountMap[record[0]] = count
+			}
+		}
+	}
+	return itemCountMap, err
+}
