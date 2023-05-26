@@ -8,6 +8,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
@@ -45,29 +46,29 @@ func InitJob(win *pixelgl.Window, Txt *text.Text) {
 	}
 }
 
-func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) GameState {
+func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
 
-	if CurrentGS == JobSelect && (jobButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
-		CurrentGS = GoToScreen
+	if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
+		myState.CurrentGS = myState.GoToScreen
 		player.Job = "見習い剣士"
-	} else if CurrentGS == JobSelect && (jobButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
-		CurrentGS = GoToScreen
+	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
+		myState.CurrentGS = myState.GoToScreen
 		player.Job = "狩人"
-	} else if CurrentGS == JobSelect && (jobButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
-		CurrentGS = GoToScreen
+	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
+		myState.CurrentGS = myState.GoToScreen
 		player.Job = "モンク"
-	} else if CurrentGS == JobSelect && (jobButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
-		CurrentGS = GoToScreen
+	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
+		myState.CurrentGS = myState.GoToScreen
 		player.Job = "魔法使い"
-	} else if CurrentGS == JobSelect && (jobButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
-		CurrentGS = GoToScreen
+	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
+		myState.CurrentGS = myState.GoToScreen
 		player.Job = "化け物"
-	} else if CurrentGS == JobSelect && (jobButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
-		CurrentGS = GoToScreen
+	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+		myState.CurrentGS = myState.GoToScreen
 		log.Println("jobScreen -> GoToScreen")
 	}
 	log.Println("YourJob is", player.Job)
-	return CurrentGS
+	return myState.CurrentGS
 }
 
 // TODO: 不要

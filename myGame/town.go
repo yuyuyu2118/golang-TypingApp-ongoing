@@ -8,6 +8,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"golang.org/x/image/colornames"
 )
 
@@ -44,26 +45,26 @@ func InitTown(win *pixelgl.Window, Txt *text.Text) {
 	}
 }
 
-func TownClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
+func TownClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 	//TODO ページを作成したら追加
-	if CurrentGS == TownScreen && (townButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
-		CurrentGS = WeaponShop
+	if myState.CurrentGS == myState.TownScreen && (townButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
+		myState.CurrentGS = myState.WeaponShop
 		log.Println("Town->WeaponShop")
-	} else if CurrentGS == TownScreen && (townButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
-		CurrentGS = ArmorShop
+	} else if myState.CurrentGS == myState.TownScreen && (townButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
+		myState.CurrentGS = myState.ArmorShop
 		log.Println("Town->ArmorShop")
-	} else if CurrentGS == TownScreen && (townButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
-		CurrentGS = AccessoryShop
+	} else if myState.CurrentGS == myState.TownScreen && (townButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
+		myState.CurrentGS = myState.AccessoryShop
 		log.Println("Town->AccessoryShop")
-	} else if CurrentGS == TownScreen && (townButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
-		CurrentGS = BlackSmith
+	} else if myState.CurrentGS == myState.TownScreen && (townButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
+		myState.CurrentGS = myState.BlackSmith
 		log.Println("Town->BlackSmith")
-	} else if CurrentGS == TownScreen && (townButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
-		CurrentGS = EquipmentScreen
+	} else if myState.CurrentGS == myState.TownScreen && (townButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
+		myState.CurrentGS = myState.EquipmentScreen
 		log.Println("Town->EquipmentScreen")
-	} else if CurrentGS == TownScreen && (townButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
-		CurrentGS = GoToScreen
+	} else if myState.CurrentGS == myState.TownScreen && (townButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+		myState.CurrentGS = myState.GoToScreen
 		log.Println("Town->GoToScreen")
 	}
-	return CurrentGS
+	return myState.CurrentGS
 }

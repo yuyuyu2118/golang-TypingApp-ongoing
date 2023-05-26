@@ -7,33 +7,8 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"golang.org/x/image/colornames"
-)
-
-var CurrentGS GameState
-
-type GameState int
-
-const (
-	StartScreen GameState = iota
-	GoToScreen
-
-	StageSelect
-	TownScreen
-	EquipmentScreen
-	JobSelect
-	SaveScreen
-
-	PlayingScreen
-	BattleEnemyScreen
-	SkillScreen
-	EndScreen
-	TestState
-
-	WeaponShop
-	ArmorShop
-	AccessoryShop
-	BlackSmith
 )
 
 func InitStartScreen(win *pixelgl.Window, Txt *text.Text) {
@@ -53,12 +28,12 @@ func InitStartScreen(win *pixelgl.Window, Txt *text.Text) {
 
 	//GoToScreenに行く
 	if win.JustPressed(pixelgl.KeyEnter) {
-		CurrentGS = GoToScreen
+		myState.CurrentGS = myState.GoToScreen
 		log.Println("Press:Enter -> GameState:GoToScreen")
 	}
 	//testModeを開く
 	if win.JustPressed(pixelgl.KeyT) {
-		CurrentGS = TestState
+		myState.CurrentGS = myState.TestState
 		log.Println("TestMode")
 	}
 	//TODO: ゲーム終了、あとで削除?

@@ -8,6 +8,7 @@ import (
 	pg "github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 )
@@ -59,53 +60,53 @@ func initializeWindow() (*pixelgl.Window, pixelgl.WindowConfig) {
 
 func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
 
-	switch myGame.CurrentGS {
-	case myGame.GoToScreen:
+	switch myState.CurrentGS {
+	case myState.GoToScreen:
 		myGame.InitGoToScreen(win, Txt)
-		if myGame.CurrentGS == myGame.GoToScreen && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.KeyBackspace) {
-			myGame.CurrentGS = myGame.GoToClickEvent(win, win.MousePosition())
+		if myState.CurrentGS == myState.GoToScreen && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.KeyBackspace) {
+			myState.CurrentGS = myGame.GoToClickEvent(win, win.MousePosition())
 		}
-	case myGame.StageSelect:
+	case myState.StageSelect:
 		myGame.InitStageSlect(win, Txt)
-		if myGame.CurrentGS == myGame.StageSelect && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
-			myGame.CurrentGS = myGame.StageClickEvent(win, win.MousePosition())
+		if myState.CurrentGS == myState.StageSelect && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
+			myState.CurrentGS = myGame.StageClickEvent(win, win.MousePosition())
 		}
-	case myGame.TownScreen:
+	case myState.TownScreen:
 		myGame.InitTownScreen(win, Txt)
-		if myGame.CurrentGS == myGame.TownScreen && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
-			myGame.CurrentGS = myGame.TownClickEvent(win, win.MousePosition())
+		if myState.CurrentGS == myState.TownScreen && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
+			myState.CurrentGS = myGame.TownClickEvent(win, win.MousePosition())
 		}
-	case myGame.WeaponShop:
+	case myState.WeaponShop:
 		myGame.InitWeaponShop(win, Txt)
-		if myGame.CurrentGS == myGame.WeaponShop && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyS, pg.KeyB, pg.KeyBackspace) {
-			myGame.CurrentGS = myGame.WeaponClickEvent(win, win.MousePosition(), player)
+		if myState.CurrentGS == myState.WeaponShop && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyS, pg.KeyB, pg.KeyBackspace) {
+			myState.CurrentGS = myGame.WeaponClickEvent(win, win.MousePosition(), player)
 		}
-	case myGame.ArmorShop:
+	case myState.ArmorShop:
 		myGame.InitArmorShop(win, Txt)
-		if myGame.CurrentGS == myGame.ArmorShop && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
-			myGame.CurrentGS = myGame.ArmorClickEvent(win, win.MousePosition())
+		if myState.CurrentGS == myState.ArmorShop && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
+			myState.CurrentGS = myGame.ArmorClickEvent(win, win.MousePosition())
 		}
-	case myGame.AccessoryShop:
+	case myState.AccessoryShop:
 		myGame.InitAccessoryShop(win, Txt)
-		if myGame.CurrentGS == myGame.AccessoryShop && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
-			myGame.CurrentGS = myGame.AccessoryClickEvent(win, win.MousePosition())
+		if myState.CurrentGS == myState.AccessoryShop && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
+			myState.CurrentGS = myGame.AccessoryClickEvent(win, win.MousePosition())
 		}
-	case myGame.EquipmentScreen:
+	case myState.EquipmentScreen:
 		myGame.InitEquipmentScreen(win, Txt)
-		if myGame.CurrentGS == myGame.EquipmentScreen && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
-			myGame.CurrentGS = myGame.EquipmentClickEvent(win, win.MousePosition())
+		if myState.CurrentGS == myState.EquipmentScreen && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
+			myState.CurrentGS = myGame.EquipmentClickEvent(win, win.MousePosition())
 		}
-	case myGame.JobSelect:
+	case myState.JobSelect:
 		myGame.InitJobSelect(win, Txt)
-		if myGame.CurrentGS == myGame.JobSelect && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
-			myGame.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
+		if myState.CurrentGS == myState.JobSelect && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
+			myState.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
 			myGame.SaveGame(myGame.SaveFilePath, 1, player)
 		}
-	case myGame.PlayingScreen:
+	case myState.PlayingScreen:
 		myGame.InitPlayingScreen(win, Txt)
-	case myGame.BattleEnemyScreen:
+	case myState.BattleEnemyScreen:
 		myGame.InitBattleEnemyScreen(win, Txt)
-	case myGame.SkillScreen:
+	case myState.SkillScreen:
 		myGame.InitSkillScreen(win, Txt)
 	}
 	player.InitPlayerStatus(win, Txt)

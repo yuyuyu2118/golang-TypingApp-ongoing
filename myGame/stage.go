@@ -8,6 +8,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"golang.org/x/image/colornames"
 )
 
@@ -41,48 +42,48 @@ func InitStage(win *pixelgl.Window, Txt *text.Text) {
 	}
 }
 
-func StageClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
+func StageClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 
-	if CurrentGS == StageSelect && (stageButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
-		CurrentGS = PlayingScreen
+	if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
+		myState.CurrentGS = myState.PlayingScreen
 		log.Println("PlayStage is VS Slime")
 		StageNum = 0
-	} else if CurrentGS == StageSelect && (stageButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
-		CurrentGS = PlayingScreen
+	} else if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
+		myState.CurrentGS = myState.PlayingScreen
 		log.Println("PlayStage is VS Bird")
 		StageNum = 1
-	} else if CurrentGS == StageSelect && (stageButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
-		CurrentGS = PlayingScreen
+	} else if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
+		myState.CurrentGS = myState.PlayingScreen
 		log.Println("PlayStage is VS Plant")
 		StageNum = 2
-	} else if CurrentGS == StageSelect && (stageButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
-		CurrentGS = PlayingScreen
+	} else if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
+		myState.CurrentGS = myState.PlayingScreen
 		log.Println("PlayStage is VS Goblin")
 		StageNum = 3
-	} else if CurrentGS == StageSelect && (stageButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
-		CurrentGS = PlayingScreen
+	} else if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
+		myState.CurrentGS = myState.PlayingScreen
 		log.Println("PlayStage is VS Zombie")
 		StageNum = 4
-	} else if CurrentGS == StageSelect && (stageButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6)) {
-		CurrentGS = PlayingScreen
+	} else if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.Key6)) {
+		myState.CurrentGS = myState.PlayingScreen
 		log.Println("PlayStage is VS Fairy")
 		StageNum = 5
-	} else if CurrentGS == StageSelect && (stageButtonSlice[6].Contains(mousePos) || win.JustPressed(pixelgl.Key7)) {
-		CurrentGS = PlayingScreen
+	} else if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[6].Contains(mousePos) || win.JustPressed(pixelgl.Key7)) {
+		myState.CurrentGS = myState.PlayingScreen
 		log.Println("PlayStage is VS Skull")
 		StageNum = 6
-	} else if CurrentGS == StageSelect && (stageButtonSlice[7].Contains(mousePos) || win.JustPressed(pixelgl.Key8)) {
-		CurrentGS = PlayingScreen
+	} else if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[7].Contains(mousePos) || win.JustPressed(pixelgl.Key8)) {
+		myState.CurrentGS = myState.PlayingScreen
 		log.Println("PlayStage is VS Wizard")
 		StageNum = 7
-	} else if CurrentGS == StageSelect && (stageButtonSlice[8].Contains(mousePos) || win.JustPressed(pixelgl.Key9)) {
-		CurrentGS = PlayingScreen
+	} else if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[8].Contains(mousePos) || win.JustPressed(pixelgl.Key9)) {
+		myState.CurrentGS = myState.PlayingScreen
 		log.Println("PlayStage is VS Solidier")
 		StageNum = 8
-	} else if CurrentGS == StageSelect && (stageButtonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
-		CurrentGS = GoToScreen
+	} else if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+		myState.CurrentGS = myState.GoToScreen
 		log.Println("StageScreen -> GoToScreen")
 	}
 	log.Println("PlayStage is", StageNum)
-	return CurrentGS
+	return myState.CurrentGS
 }

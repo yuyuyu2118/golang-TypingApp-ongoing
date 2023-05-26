@@ -11,6 +11,7 @@ import (
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 )
@@ -35,58 +36,58 @@ func run() {
 	enemy.CreateEnemySettings()
 
 	for !win.Closed() {
-		switch myGame.CurrentGS {
-		case myGame.StartScreen: //スタート画面
+		switch myState.CurrentGS {
+		case myState.StartScreen: //スタート画面
 			myGame.InitStartScreen(win, myUtil.StartTxt)
-		case myGame.GoToScreen: //GoTo画面
+		case myState.GoToScreen: //GoTo画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-		case myGame.StageSelect: //ダンジョンセレクト画面
+		case myState.StageSelect: //ダンジョンセレクト画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-		case myGame.TownScreen: //ショップ選択画面
+		case myState.TownScreen: //ショップ選択画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-		case myGame.WeaponShop: //武器店
+		case myState.WeaponShop: //武器店
 			initScreenInformation(win, myUtil.DescriptionTxt, player)
-		case myGame.ArmorShop: //防具店
+		case myState.ArmorShop: //防具店
 			initScreenInformation(win, myUtil.DescriptionTxt, player)
-		case myGame.AccessoryShop: //アクセサリー店
+		case myState.AccessoryShop: //アクセサリー店
 			initScreenInformation(win, myUtil.DescriptionTxt, player)
-		case myGame.EquipmentScreen: //装備画面
+		case myState.EquipmentScreen: //装備画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-		case myGame.JobSelect: //職業選択画面
+		case myState.JobSelect: //職業選択画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
-		case myGame.PlayingScreen: //戦闘画面
+		case myState.PlayingScreen: //戦闘画面
 			initScreenInformation(win, myUtil.BasicTxt, player)
 
 			enemy.StartEnemyAnimation(win, &Last, &Frame)
 			player.SetPlayerBattleInf(win, myUtil.BasicTxt) //TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			battle.InitPlayingBattle(win, player, time.Since(startTime))
-			myUtil.UpdatePlayingTimer(myGame.CurrentGS, &startTime)
-		case myGame.BattleEnemyScreen: //敵行動画面
+			myUtil.UpdatePlayingTimer(myState.CurrentGS, &startTime)
+		case myState.BattleEnemyScreen: //敵行動画面
 			initScreenInformation(win, myUtil.BasicTxt, player)
 
 			enemy.StartEnemyAnimation(win, &Last, &Frame)
 			player.SetPlayerBattleInf(win, myUtil.BasicTxt) //TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			battle.InitEnemyBattle(win, player, time.Since(startTime))
-			myUtil.UpdateEnemyTimer(myGame.CurrentGS, &startTime)
-		case myGame.SkillScreen: //スキル画面
+			myUtil.UpdateEnemyTimer(myState.CurrentGS, &startTime)
+		case myState.SkillScreen: //スキル画面
 			initScreenInformation(win, myUtil.BasicTxt, player)
 
 			enemy.StartEnemyAnimation(win, &Last, &Frame)
 			player.SetPlayerBattleInf(win, myUtil.BasicTxt) //TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
 			battle.InitSkillBattle(win, player, time.Since(startTime))
-			myUtil.UpdateEnemyTimer(myGame.CurrentGS, &startTime)
-		case myGame.EndScreen: //リザルト画面
+			myUtil.UpdateEnemyTimer(myState.CurrentGS, &startTime)
+		case myState.EndScreen: //リザルト画面
 			loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
 			event.CreateWeaponPurchaseEvent(loadContent[2])
 
 			myGame.InitEndScreen(win, myUtil.ScreenTxt)
-			myGame.CurrentGS = battle.BattleEndScreen(win, myUtil.ScreenTxt, player, &enemy.EnemySettings[myGame.StageNum])
+			myState.CurrentGS = battle.BattleEndScreen(win, myUtil.ScreenTxt, player, &enemy.EnemySettings[myGame.StageNum])
 
 			if !myUtil.GetSaveReset() {
 				myGame.SaveGame(myGame.SaveFilePath, 1, player)
 				myUtil.SetSaveReset(true)
 			}
-		case myGame.TestState:
+		case myState.TestState:
 			myGame.TestMode(win, myUtil.ScreenTxt)
 		}
 		win.Update()

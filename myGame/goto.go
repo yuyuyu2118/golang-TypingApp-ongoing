@@ -8,6 +8,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"golang.org/x/image/colornames"
 )
 
@@ -52,24 +53,24 @@ func InitGoTo(win *pixelgl.Window, Txt *text.Text, topText string) {
 	}
 }
 
-func GoToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
+func GoToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 	//TODO ページを作成したら追加
 	//TODO: 全部この形式にする　やばいバグ
-	if CurrentGS == GoToScreen && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
-		CurrentGS = StageSelect
+	if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
+		myState.CurrentGS = myState.StageSelect
 		log.Println("GoToScreen->Dungeon")
-	} else if CurrentGS == GoToScreen && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
-		CurrentGS = TownScreen
+	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
+		myState.CurrentGS = myState.TownScreen
 		log.Println("GoToScreen->Town")
-	} else if CurrentGS == GoToScreen && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
-		CurrentGS = EquipmentScreen
+	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
+		myState.CurrentGS = myState.EquipmentScreen
 		log.Println("GoToScreen->Equipment")
-	} else if CurrentGS == GoToScreen && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
-		CurrentGS = JobSelect
+	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
+		myState.CurrentGS = myState.JobSelect
 		log.Println("GoToScreen->JobSelect")
-	} else if CurrentGS == GoToScreen && (gotoButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
-		CurrentGS = StartScreen
+	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+		myState.CurrentGS = myState.StartScreen
 		log.Println("GoToScreen->StartScreen")
 	}
-	return CurrentGS
+	return myState.CurrentGS
 }
