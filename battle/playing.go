@@ -7,8 +7,8 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
-	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"golang.org/x/image/colornames"
 )
 
@@ -47,7 +47,7 @@ func InitBattleTextV1(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 
 func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
-	if myGame.CurrentGS == myGame.PlayingScreen {
+	if myState.CurrentGS == myState.PlayingScreen {
 		tempWords := words[score]
 		Txt.Clear()
 		Txt.Color = colornames.White
@@ -76,7 +76,7 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 			fmt.Fprintln(Txt, words[score+2])
 			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
-	} else if myGame.CurrentGS == myGame.BattleEnemyScreen {
+	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		Txt.Clear()
 		Txt.Color = colornames.White
 		fmt.Fprintln(Txt, "EnemyAttack!!")
@@ -93,7 +93,7 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 
 func InitBattleTextV2Skill(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
-	if myGame.CurrentGS == myGame.SkillScreen {
+	if myState.CurrentGS == myState.SkillScreen {
 		tempWords := RookieSkillWords[RookieSkillCount]
 		Txt.Clear()
 		Txt.Color = colornames.White

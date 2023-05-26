@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/faiface/pixel/pixelgl"
-	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myState"
 )
 
 func AnyKeyJustPressed(win *pixelgl.Window, keys ...pixelgl.Button) bool {
@@ -16,14 +16,14 @@ func AnyKeyJustPressed(win *pixelgl.Window, keys ...pixelgl.Button) bool {
 	return false
 }
 
-func UpdatePlayingTimer(game myGame.GameState, timer *time.Time) {
-	if game == myGame.BattleEnemyScreen {
+func UpdatePlayingTimer(game myState.GameState, timer *time.Time) {
+	if game == myState.BattleEnemyScreen {
 		*timer = time.Now()
 	}
 }
 
-func UpdateEnemyTimer(game myGame.GameState, timer *time.Time) {
-	if game == myGame.PlayingScreen {
+func UpdateEnemyTimer(game myState.GameState, timer *time.Time) {
+	if game == myState.PlayingScreen {
 		*timer = time.Now()
 	}
 }

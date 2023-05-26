@@ -9,6 +9,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
@@ -32,7 +33,7 @@ var (
 	tempEnemySize  = 0.0
 )
 
-func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed time.Duration, currentGameState myGame.GameState) myGame.GameState {
+func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed time.Duration, currentGameState myState.GameState) myState.GameState {
 	if player.HP <= 0 {
 		yourTime = float64(elapsed.Seconds())
 		min := int(float64(enemyInf.Gold) * 0.7)
@@ -40,7 +41,7 @@ func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed
 		lostGold = rand.Intn(max-min+1) + min
 		player.Gold -= lostGold
 		log.Println("GameOver!!")
-		currentGameState = myGame.EndScreen
+		currentGameState = myState.EndScreen
 	}
 	if enemyInf.HP <= 0 {
 		//GoldRandom
@@ -52,7 +53,7 @@ func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed
 		player.AP += enemyInf.DropAP
 		index = 0
 		score++
-		currentGameState = myGame.EndScreen
+		currentGameState = myState.EndScreen
 		yourTime = float64(elapsed.Seconds())
 		for _, name := range enemy.EnemyNameSlice {
 			if enemyInf.Name == name {
@@ -84,14 +85,14 @@ func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed
 	return currentGameState
 }
 
-func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
+func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
 	question := words[score]
 	temp := []byte(question)
 	typed := win.Typed()
 
 	tempCount = player.OP - elapsed.Seconds()
 
-	if myGame.CurrentGS == myGame.PlayingScreen {
+	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
 			if typed != "" {
 				if typed[0] == temp[index] && index < len(question) {
@@ -112,9 +113,9 @@ func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time
 				}
 			}
 		} else {
-			myGame.CurrentGS = myGame.BattleEnemyScreen
+			myState.CurrentGS = myState.BattleEnemyScreen
 		}
-	} else if myGame.CurrentGS == myGame.BattleEnemyScreen {
+	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		//攻撃判定
 		//PressEnter
 		if win.JustPressed(pixelgl.KeyEnter) {
@@ -139,7 +140,7 @@ func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time
 				lock = false
 				lock2 = false
 				player.HP -= enemy.EnemySettings[myGame.StageNum].OP
-				myGame.CurrentGS = myGame.PlayingScreen
+				myState.CurrentGS = myState.PlayingScreen
 				pressEnter = false
 				index = 0
 			}
@@ -147,6 +148,6 @@ func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time
 	}
 
 	BattleTypingSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
-	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
-	return myGame.CurrentGS
+	myState.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myState.CurrentGS)
+	return myState.CurrentGS
 }

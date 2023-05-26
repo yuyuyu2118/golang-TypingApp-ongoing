@@ -6,14 +6,15 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
-func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
+func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
 	//eSize := enemy.EnemySettings[myGame.StageNum].EnemySize
 
-	if myGame.CurrentGS == myGame.BattleEnemyScreen {
+	if myState.CurrentGS == myState.BattleEnemyScreen {
 		//攻撃判定
 		//PressEnter
 		if win.JustPressed(pixelgl.KeyEnter) {
@@ -38,12 +39,12 @@ func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, el
 				lock = false
 				lock2 = false
 				player.HP -= enemy.EnemySettings[myGame.StageNum].OP
-				myGame.CurrentGS = myGame.PlayingScreen
+				myState.CurrentGS = myState.PlayingScreen
 				pressEnter = false
 				index = 0
 			}
 		}
 	}
-	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
-	return myGame.CurrentGS
+	myState.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myState.CurrentGS)
+	return myState.CurrentGS
 }

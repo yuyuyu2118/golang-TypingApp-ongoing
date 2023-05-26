@@ -9,6 +9,7 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"golang.org/x/image/colornames"
 )
 
@@ -104,23 +105,23 @@ func InitArmor(win *pixelgl.Window, Txt *text.Text) {
 	}
 }
 
-func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
+func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 	//TODO ページを作成したら追加
-	if CurrentGS == ArmorShop && (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
+	if myState.CurrentGS == myState.ArmorShop && (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		currentarmorState = armor1
 		log.Println("ArmorShop->armor1")
-	} else if CurrentGS == ArmorShop && (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
+	} else if myState.CurrentGS == myState.ArmorShop && (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
 		currentarmorState = armor2
 		log.Println("ArmorShop->armor2")
-	} else if CurrentGS == ArmorShop && (buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
+	} else if myState.CurrentGS == myState.ArmorShop && (buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
 		currentarmorState = armor3
 		log.Println("ArmorShop->armor3")
-	} else if CurrentGS == ArmorShop && (buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+	} else if myState.CurrentGS == myState.ArmorShop && (buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		currentarmorState = armor1
-		CurrentGS = TownScreen
+		myState.CurrentGS = myState.TownScreen
 		log.Println("ArmorShop->TownScreen")
 	}
-	return CurrentGS
+	return myState.CurrentGS
 }
 
 func InitAccessory(win *pixelgl.Window, Txt *text.Text) {
@@ -166,17 +167,17 @@ func InitAccessory(win *pixelgl.Window, Txt *text.Text) {
 	}
 }
 
-func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec) GameState {
+func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 	//TODO ページを作成したら追加
-	if CurrentGS == AccessoryShop && (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
+	if myState.CurrentGS == myState.AccessoryShop && (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		currentaccessoryState = accessory1
 		log.Println("AccessoryShop->accessory1")
-	} else if CurrentGS == AccessoryShop && (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+	} else if myState.CurrentGS == myState.AccessoryShop && (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		currentaccessoryState = accessory1
-		CurrentGS = TownScreen
+		myState.CurrentGS = myState.TownScreen
 		log.Println("AccessoryShop->TownScreen")
 	}
-	return CurrentGS
+	return myState.CurrentGS
 }
 
 func CsvToSlice(path string) [][]string {

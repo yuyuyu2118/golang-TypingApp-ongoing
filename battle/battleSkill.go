@@ -12,6 +12,7 @@ import (
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
@@ -23,7 +24,7 @@ func BattleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *
 		if player.SP == 50 {
 			index = 0
 			player.SP = 0
-			myGame.CurrentGS = myGame.SkillScreen
+			myState.CurrentGS = myState.SkillScreen
 		} else {
 			log.Println("skillポイントが足りない")
 		}
@@ -35,14 +36,14 @@ var (
 	RookieSkillWords = []string{"oreno", "kenngiwo", "kuraeee"}
 )
 
-func BattleTypingRookieSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
+func BattleTypingRookieSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
 	question := RookieSkillWords[RookieSkillCount]
 	temp := []byte(question)
 	typed := win.Typed()
 
 	tempCount = player.OP // - elapsed.Seconds()
 
-	if myGame.CurrentGS == myGame.SkillScreen {
+	if myState.CurrentGS == myState.SkillScreen {
 		if tempCount > 0 {
 			if typed != "" {
 				if typed[0] == temp[index] && index < len(question) {
@@ -57,7 +58,7 @@ func BattleTypingRookieSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 						tempWordDamage = 0.0
 						if RookieSkillCount == 3 {
 							RookieSkillCount = 0
-							myGame.CurrentGS = myGame.PlayingScreen
+							myState.CurrentGS = myState.PlayingScreen
 						}
 					}
 				} else {
@@ -65,20 +66,20 @@ func BattleTypingRookieSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 				}
 			}
 		} else {
-			myGame.CurrentGS = myGame.SkillScreen
+			myState.CurrentGS = myState.SkillScreen
 		}
 	}
 
-	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
-	if myGame.CurrentGS == myGame.EndScreen {
+	myState.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myState.CurrentGS)
+	if myState.CurrentGS == myState.EndScreen {
 		RookieSkillCount = 0
 	}
-	return myGame.CurrentGS
+	return myState.CurrentGS
 }
 
 func InitBattleTextRookieSkill(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
-	if myGame.CurrentGS == myGame.SkillScreen {
+	if myState.CurrentGS == myState.SkillScreen {
 		tempWords := RookieSkillWords[RookieSkillCount]
 		Txt.Clear()
 		Txt.Color = colornames.White
@@ -120,7 +121,7 @@ func InitBattleTextRookieSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 var bulletLoadingSkill = []bool{false, false, false, false, false}
 var bulletDamageSkill = []int{0, 0, 0, 0, 0}
 
-func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
+func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
 	xOffSet := 50.0
 	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 100
 	txtPos := pixel.V(xOffSet, yOffSet)
@@ -138,7 +139,7 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 
 	tempCount = player.OP // - elapsed.Seconds()
 
-	if myGame.CurrentGS == myGame.SkillScreen {
+	if myState.CurrentGS == myState.SkillScreen {
 		if tempCount > 0 {
 			if typed != "" {
 				if typed[0] == temp[index] && index < len(question) {
@@ -186,7 +187,7 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 				}
 			}
 		} else {
-			myGame.CurrentGS = myGame.SkillScreen
+			myState.CurrentGS = myState.SkillScreen
 		}
 	}
 
@@ -256,16 +257,16 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 			bulletLoadingSkill[i] = false
 		}
 		log.Println("Bang!!")
-		myGame.CurrentGS = myGame.PlayingScreen
+		myState.CurrentGS = myState.PlayingScreen
 	}
 
-	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
-	return myGame.CurrentGS
+	myState.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myState.CurrentGS)
+	return myState.CurrentGS
 }
 
 func InitBattleTextHunterSkill(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
-	if myGame.CurrentGS == myGame.SkillScreen {
+	if myState.CurrentGS == myState.SkillScreen {
 		tempWords := words[score]
 		Txt.Clear()
 		Txt.Color = colornames.White
@@ -294,7 +295,7 @@ func InitBattleTextHunterSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 			fmt.Fprintln(Txt, words[score+2])
 			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
-	} else if myGame.CurrentGS == myGame.BattleEnemyScreen {
+	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		Txt.Clear()
 		Txt.Color = colornames.White
 		fmt.Fprintln(Txt, "EnemyAttack!!")
@@ -318,7 +319,7 @@ var (
 	MonkSkillWord = ""
 )
 
-func BattleTypingMonkSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myGame.GameState {
+func BattleTypingMonkSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
 	if MonkSkillWord == "" {
 		MonkSkillWord = MonkSkillWords[rand.Intn(3)]
 	}
@@ -328,7 +329,7 @@ func BattleTypingMonkSkill(win *pixelgl.Window, player *player.PlayerStatus, ela
 
 	tempCount = player.OP // - elapsed.Seconds()
 
-	if myGame.CurrentGS == myGame.SkillScreen {
+	if myState.CurrentGS == myState.SkillScreen {
 		if tempCount > 0 {
 			if typed != "" {
 				if typed[0] == temp[index] && index < len(question) {
@@ -341,28 +342,28 @@ func BattleTypingMonkSkill(win *pixelgl.Window, player *player.PlayerStatus, ela
 					if index == len(question) {
 						index = 0
 						MonkSkillWord = ""
-						myGame.CurrentGS = myGame.PlayingScreen
+						myState.CurrentGS = myState.PlayingScreen
 					}
 				} else {
 					missType++
 				}
 			}
 		} else {
-			myGame.CurrentGS = myGame.SkillScreen
+			myState.CurrentGS = myState.SkillScreen
 		}
 	}
 
-	myGame.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myGame.CurrentGS)
-	if myGame.CurrentGS == myGame.EndScreen {
+	myState.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myState.CurrentGS)
+	if myState.CurrentGS == myState.EndScreen {
 		//index?
 		RookieSkillCount = 0
 	}
-	return myGame.CurrentGS
+	return myState.CurrentGS
 }
 
 func InitBattleTextMonkSkill(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
-	if myGame.CurrentGS == myGame.SkillScreen {
+	if myState.CurrentGS == myState.SkillScreen {
 		tempWords := MonkSkillWord
 		Txt.Clear()
 		Txt.Color = colornames.White
