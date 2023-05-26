@@ -27,19 +27,19 @@ var (
 	gotoButtonSlice = []pixel.Rect{}
 )
 
-func InitGoTo(win *pixelgl.Window, Txt *text.Text, topText string) {
+func InitGoTo(win *pixelgl.Window, Txt *text.Text, bottleText string) {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
 
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, topText)
-	tempPosition = myPos.TopCenPos(win, Txt)
+	fmt.Fprintln(Txt, bottleText)
+	tempPosition = myPos.BotCenPos(win, Txt)
 	myPos.DrawPos(win, Txt, tempPosition)
 
 	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
-	gotoSlice := []string{"1. ダンジョン", "2. 町", "3. 装備", "4. ジョブ", "BackSpace. 戻る"}
+	gotoSlice := []string{"1. ダンジョン", "2. 町", "3. 装備", "4. ジョブ"}
 
 	for _, gotoName := range gotoSlice {
 		Txt.Clear()
@@ -68,7 +68,7 @@ func GoToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
 		myState.CurrentGS = myState.JobSelect
 		log.Println("GoToScreen->JobSelect")
-	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+	} else if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentGS = myState.StartScreen
 		log.Println("GoToScreen->StartScreen")
 	}

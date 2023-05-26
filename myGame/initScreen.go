@@ -48,63 +48,61 @@ func InitGoToScreen(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 
 	//TODO: languageの設定
-	topText := "どこに行く?"
-	InitGoTo(win, Txt, topText)
+	botText := "どこに行く? BackSpace.戻る"
+	InitGoTo(win, Txt, botText)
 }
 
 func InitStageSlect(win *pixelgl.Window, Txt *text.Text) {
-	win.Clear(colornames.Black)
+	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	topText := "だれと戦う?"
-	InitGoTo(win, Txt, topText)
+	botText := "だれと戦う? BackSpace.戻る"
+	InitGoTo(win, Txt, botText)
 	InitStage(win, Txt)
 }
 
 func InitTownScreen(win *pixelgl.Window, Txt *text.Text) {
-	win.Clear(colornames.Black)
+	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	topText := "どこに行く?"
-	InitGoTo(win, Txt, topText)
+	botText := "どこに行く? BackSpace.戻る"
+	InitGoTo(win, Txt, botText)
 	InitTown(win, Txt)
 }
 
 func InitWeaponShop(win *pixelgl.Window, Txt *text.Text) {
-	win.Clear(colornames.Black)
+	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	topText := "なにを買う?"
-	InitWeapon(win, Txt, topText)
+	botText := "なにを買う? BackSpace.戻る"
+	InitWeapon(win, Txt, botText)
 }
 
 func InitArmorShop(win *pixelgl.Window, Txt *text.Text) {
-	win.Clear(colornames.Black)
+	win.Clear(colornames.Darkcyan)
 
 	InitArmor(win, Txt)
 }
 
 func InitAccessoryShop(win *pixelgl.Window, Txt *text.Text) {
-	win.Clear(colornames.Black)
+	win.Clear(colornames.Darkcyan)
 
 	InitAccessory(win, Txt)
 }
 
 func InitEquipmentScreen(win *pixelgl.Window, Txt *text.Text) {
-	win.Clear(colornames.Black)
+	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	topText := "装備画面"
-	InitGoTo(win, Txt, topText)
 	InitEquipment(win, Txt)
 }
 
 func InitJobSelect(win *pixelgl.Window, Txt *text.Text) {
-	win.Clear(colornames.Black)
+	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	topText := "どれに転職する?"
-	InitGoTo(win, Txt, topText)
+	botText := "どれに転職する? BackSpace.戻る"
+	InitGoTo(win, Txt, botText)
 	InitJob(win, Txt)
 }
 

@@ -16,7 +16,7 @@ func InitMaterialsBelongScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	topText := "持ち物 / 素材"
+	topText := "持ち物/素材"
 	InitMaterialsBelong(win, Txt, topText)
 }
 
@@ -27,12 +27,12 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, topText string) {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, topText)
-	tempPosition = myPos.TopCenPos(win, Txt)
+	fmt.Fprintln(Txt, topText, "1.武器", "2.防具", "3.アクセサリー", "4.素材", "BackSpace.戻る")
+	tempPosition = myPos.BotCenPos(win, Txt)
 	myPos.DrawPos(win, Txt, tempPosition)
 
 	gotoSlice, _ := GetMyItems(SaveFilePathItems)
-	gotoSlice = append(gotoSlice, "BackSpace. 戻る")
+	gotoSlice = append(gotoSlice)
 
 	for _, gotoName := range gotoSlice {
 		Txt.Clear()

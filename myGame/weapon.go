@@ -11,6 +11,7 @@ import (
 	event "github.com/yuyuyu2118/typingGo/Event"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
@@ -31,7 +32,7 @@ const (
 	weapon0
 )
 
-var weaponSlice = []string{"1. ???", "2. ???", "3. ???", "4. ???", "5. ???", "6. ???", "7. ???", "8. ???", "9. ???", "0. ???", "BackSpace. EXIT"}
+var weaponSlice = []string{"1. ???", "2. ???", "3. ???", "4. ???", "5. ???", "6. ???", "7. ???", "8. ???", "9. ???", "0. ???"}
 var weaponNum = []string{"weapon0", "weapon1", "weapon2", "weapon3", "weapon4", "weapon5", "weapon6", "weapon7", "weapon8", "weapon9"}
 var weaponName = []string{"木の棒", "果物ナイフ", "木刀", "ドレインソード", "スタンハンマー", "鉄の剣", "隼の剣", "勇者の剣", "名刀村正", "死神の大鎌"}
 
@@ -47,11 +48,11 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 	txtPos := pixel.V(0, 0)
 	Txt.Color = colornames.White
 
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, topText)
-	tempPosition = myPos.TopCenPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
+	myUtil.ScreenTxt.Clear()
+	myUtil.ScreenTxt.Color = colornames.White
+	fmt.Fprintln(myUtil.ScreenTxt, topText)
+	tempPosition = myPos.BotCenPos(win, myUtil.ScreenTxt)
+	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
 
 	if event.WeaponPurchaseEventInstance.Weapon1 {
 		weaponSlice[0] = "1. 木の棒"
@@ -273,7 +274,7 @@ func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pl
 	} else if (buttonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.Key0)) && event.WeaponPurchaseEventInstance.Weapon0 && myState.CurrentGS == myState.WeaponShop {
 		currentweaponState = weapon0
 		log.Println("WeaponShop->weapon0")
-	} else if buttonSlice[10].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace) && myState.CurrentGS == myState.WeaponShop {
+	} else if win.JustPressed(pixelgl.KeyBackspace) && myState.CurrentGS == myState.WeaponShop {
 		myState.CurrentGS = myState.TownScreen
 		log.Println("WeaponShop->TownScreen")
 	}
@@ -361,7 +362,7 @@ func InitWeaponBelongScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	topText := "持ち物 / 装備"
+	topText := "持ち物/武器"
 	InitWeaponBelong(win, Txt, topText)
 }
 
@@ -372,28 +373,43 @@ func InitWeaponBelong(win *pixelgl.Window, Txt *text.Text, topText string) {
 
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, topText)
-	tempPosition = myPos.TopCenPos(win, Txt)
+	fmt.Fprintln(Txt, topText, "1.武器", "2.防具", "3.アクセサリー", "4.素材", "BackSpace.戻る")
+	tempPosition = myPos.BotCenPos(win, Txt)
 	myPos.DrawPos(win, Txt, tempPosition)
 
-	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
-	gotoSlice := []string{"1. ダンジョン", "2. 町", "3. 装備", "4. ジョブ", "BackSpace. 戻る"}
+	loadContent := SaveFileLoad(SaveFilePath)
+	counts := make(map[string]int)
+	elements := loadContent[3]
 
-	for _, gotoName := range gotoSlice {
+	for i, val := range elements {
+		num, err := strconv.Atoi(val)
+		if err == nil {
+			weaponKey := fmt.Sprintf("weapon%d", i)
+			counts[weaponKey] = num
+		}
+	}
+
+	for i, value := range weaponName {
+		if counts["weapon"+strconv.Itoa(i)] != 0 {
+			tempInt := counts["weapon"+strconv.Itoa(i)]
+			equipmentSlice = append(equipmentSlice, value+": "+strconv.Itoa(tempInt))
+		}
+	}
+
+	for _, equipmentName := range equipmentSlice {
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, gotoName)
-		yOffSet -= Txt.LineHeight + 40
+		fmt.Fprintln(Txt, equipmentName)
+		yOffSet -= Txt.LineHeight + 25
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
 		Txt.Draw(win, tempPosition)
-		gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
+		equipmentButtonSlice = append(equipmentButtonSlice, Txt.Bounds().Moved(txtPos))
 	}
+	equipmentSlice = equipmentSlice[:0]
 }
 
 func WeaponBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
-	//TODO ページを作成したら追加
-	//TODO: 全部この形式にする　やばいバグ
 	if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		myState.CurrentGS = myState.StageSelect
 		log.Println("GoToScreen->Dungeon")
@@ -406,7 +422,7 @@ func WeaponBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.Gam
 	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
 		myState.CurrentGS = myState.JobSelect
 		log.Println("GoToScreen->JobSelect")
-	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+	} else if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentGS = myState.StartScreen
 		log.Println("GoToScreen->StartScreen")
 	}
