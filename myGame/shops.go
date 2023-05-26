@@ -51,7 +51,7 @@ func InitArmor(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Color = colornames.White
 	//csv読み込み
 
-	armorSlice := []string{"1. Pot Lid", "2. Leather Shield", "3. Silver Shield", "BackSpace. EXIT"}
+	armorSlice := []string{"1. Pot Lid", "2. Leather Shield", "3. Silver Shield"}
 
 	for _, armorName := range armorSlice {
 		Txt.Clear()
@@ -116,7 +116,7 @@ func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState 
 	} else if myState.CurrentGS == myState.ArmorShop && (buttonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
 		currentarmorState = armor3
 		log.Println("ArmorShop->armor3")
-	} else if myState.CurrentGS == myState.ArmorShop && (buttonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+	} else if myState.CurrentGS == myState.ArmorShop && (win.JustPressed(pixelgl.KeyBackspace)) {
 		currentarmorState = armor1
 		myState.CurrentGS = myState.TownScreen
 		log.Println("ArmorShop->TownScreen")
@@ -131,7 +131,7 @@ func InitAccessory(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Color = colornames.White
 	//csv読み込み
 
-	accessorySlice := []string{"1. Copper Bracelet", "BackSpace. EXIT"}
+	accessorySlice := []string{"1. Copper Bracelet"}
 
 	for _, accessoryName := range accessorySlice {
 		Txt.Clear()
@@ -172,7 +172,7 @@ func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameSt
 	if myState.CurrentGS == myState.AccessoryShop && (buttonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		currentaccessoryState = accessory1
 		log.Println("AccessoryShop->accessory1")
-	} else if myState.CurrentGS == myState.AccessoryShop && (buttonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+	} else if myState.CurrentGS == myState.AccessoryShop && (win.JustPressed(pixelgl.KeyBackspace)) {
 		currentaccessoryState = accessory1
 		myState.CurrentGS = myState.TownScreen
 		log.Println("AccessoryShop->TownScreen")

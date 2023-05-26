@@ -32,7 +32,7 @@ func InitJob(win *pixelgl.Window, Txt *text.Text) {
 	txtPos := pixel.V(0, 0)
 
 	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
-	jobSlice := []string{"1. 見習い剣士", "2. 狩人", "3. モンク", "4. 魔法使い", "5. 化け物", "BackSpace. 戻る"}
+	jobSlice := []string{"1. 見習い剣士", "2. 狩人", "3. モンク", "4. 魔法使い", "5. 化け物"}
 
 	for _, jobName := range jobSlice {
 		Txt.Clear()
@@ -63,7 +63,7 @@ func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Playe
 	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
 		myState.CurrentGS = myState.GoToScreen
 		player.Job = "化け物"
-	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[5].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+	} else if myState.CurrentGS == myState.JobSelect && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentGS = myState.GoToScreen
 		log.Println("jobScreen -> GoToScreen")
 	}
