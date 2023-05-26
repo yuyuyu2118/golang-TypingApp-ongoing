@@ -3,6 +3,7 @@ package myGame
 import (
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
@@ -13,15 +14,15 @@ import (
 	"golang.org/x/image/colornames"
 )
 
-func InitMaterialsBelongScreen(win *pixelgl.Window, Txt *text.Text) {
+func InitArmorBelongScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	botText := "持ち物/素材"
-	InitMaterialsBelong(win, Txt, botText)
+	botText := "持ち物/防具"
+	InitArmorBelong(win, Txt, botText)
 }
 
-func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
+func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
@@ -32,22 +33,39 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 	tempPosition = myPos.BotCenPos(win, myUtil.ScreenTxt)
 	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
 
-	gotoSlice, _ := GetMyItems(SaveFilePathItems)
-	gotoSlice = append(gotoSlice)
+	loadContent := SaveFileLoad(SaveFilePath)
+	counts := make(map[string]int)
+	elements := loadContent[3]
 
-	for _, gotoName := range gotoSlice {
+	for i, val := range elements {
+		num, err := strconv.Atoi(val)
+		if err == nil {
+			weaponKey := fmt.Sprintf("weapon%d", i)
+			counts[weaponKey] = num
+		}
+	}
+
+	for i, value := range weaponName {
+		if counts["weapon"+strconv.Itoa(i)] != 0 {
+			tempInt := counts["weapon"+strconv.Itoa(i)]
+			equipmentSlice = append(equipmentSlice, value+": "+strconv.Itoa(tempInt))
+		}
+	}
+
+	for _, equipmentName := range equipmentSlice {
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, gotoName)
-		yOffSet -= Txt.LineHeight + 40
+		fmt.Fprintln(Txt, equipmentName)
+		yOffSet -= Txt.LineHeight + 25
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
 		Txt.Draw(win, tempPosition)
-		gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
+		equipmentButtonSlice = append(equipmentButtonSlice, Txt.Bounds().Moved(txtPos))
 	}
+	equipmentSlice = equipmentSlice[:0]
 }
 
-func MaterialsBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
+func ArmorBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 	if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		myState.CurrentGS = myState.StageSelect
 		log.Println("GoToScreen->Dungeon")
@@ -60,10 +78,10 @@ func MaterialsBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.
 	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
 		myState.CurrentGS = myState.JobSelect
 		log.Println("GoToScreen->JobSelect")
-	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
+	} else if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentBelong = myState.WeaponBelong
 		myState.CurrentGS = myState.StartScreen
-		log.Println("所持品/素材->GoTo")
+		log.Println("所持品/防具->GoTo")
 	}
 	return myState.CurrentGS
 }

@@ -119,126 +119,28 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 		currentweaponState = weapon0
 	}
 
-	xOffSet = myPos.TopLefPos(win, Txt).X + 300
-	yOffSet = myPos.TopLefPos(win, Txt).Y - 50
 	switch currentweaponState {
 	case weapon1:
-		for _, value := range descWeapon[0] {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.LineHeight + 20
-			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
-		}
+		DescriptionWeapon(win, descWeapon, 0)
 	case weapon2:
-		for _, value := range descWeapon[1] {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.LineHeight + 20
-			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
-		}
+		DescriptionWeapon(win, descWeapon, 1)
 	case weapon3:
-		for _, value := range descWeapon[2] {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.LineHeight + 20
-			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
-		}
+		DescriptionWeapon(win, descWeapon, 2)
 	case weapon4:
-		for _, value := range descWeapon[3] {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.LineHeight + 20
-			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
-		}
+		DescriptionWeapon(win, descWeapon, 3)
 	case weapon5:
-		for _, value := range descWeapon[4] {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.LineHeight + 20
-			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
-		}
+		DescriptionWeapon(win, descWeapon, 4)
 	case weapon6:
-		for _, value := range descWeapon[5] {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.LineHeight + 20
-			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
-		}
+		DescriptionWeapon(win, descWeapon, 5)
 	case weapon7:
-		for _, value := range descWeapon[6] {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.LineHeight + 20
-			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
-		}
+		DescriptionWeapon(win, descWeapon, 6)
 	case weapon8:
-		for _, value := range descWeapon[7] {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.LineHeight + 20
-			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
-		}
+		DescriptionWeapon(win, descWeapon, 7)
 	case weapon9:
-		for _, value := range descWeapon[8] {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.LineHeight + 20
-			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
-		}
+		DescriptionWeapon(win, descWeapon, 8)
 	case weapon0:
-		for _, value := range descWeapon[9] {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, value)
-			yOffSet -= Txt.LineHeight + 20
-			txtPos = pixel.V(xOffSet, yOffSet)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
-		}
+		DescriptionWeapon(win, descWeapon, 9)
 	}
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "B. 買う")
-	yOffSet -= Txt.LineHeight + 20
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition := pixel.IM.Moved(txtPos)
-	Txt.Draw(win, tempPosition)
-	buySellSlice = append(buySellSlice, Txt.Bounds().Moved(txtPos))
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "S. 売る")
-	xOffSet += Txt.TabWidth + 100
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	Txt.Draw(win, tempPosition)
-	buySellSlice = append(buySellSlice, Txt.Bounds().Moved(txtPos))
 }
 
 func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
@@ -313,48 +215,49 @@ func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pl
 		}
 		SaveWeaponPurchaseEvent(SaveFilePath, 3, tempWeapon, player)
 		SaveGame(SaveFilePath, 1, player)
-	} else if buySellSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.KeyS) {
-		log.Println("Sell")
-		for _, value := range player.PossessedWeapon {
-			tempPossessedWeapon, _ := strconv.Atoi(value)
-			tempInt = append(tempInt, tempPossessedWeapon)
-		}
-		if currentweaponState == weapon1 && tempInt[0] >= 1 {
-			//TODO: ファイルからweaponのインスタンス作成、weaponインスタンスからGoldを参照
-			player.Gold += 50
-			tempWeapon = "weapon1"
-		} else if currentweaponState == weapon2 && tempInt[1] >= 1 {
-			player.Gold += 150
-			tempWeapon = "weapon2"
-		} else if currentweaponState == weapon3 && tempInt[2] >= 1 {
-			player.Gold += 250
-			tempWeapon = "weapon3"
-		} else if currentweaponState == weapon4 && tempInt[3] >= 1 {
-			player.Gold += 750
-			tempWeapon = "weapon4"
-		} else if currentweaponState == weapon5 && tempInt[4] >= 1 {
-			player.Gold += 1500
-			tempWeapon = "weapon5"
-		} else if currentweaponState == weapon6 && tempInt[5] >= 1 {
-			player.Gold += 1000
-			tempWeapon = "weapon6"
-		} else if currentweaponState == weapon7 && tempInt[6] >= 1 {
-			player.Gold += 2000
-			tempWeapon = "weapon7"
-		} else if currentweaponState == weapon8 && tempInt[7] >= 1 {
-			player.Gold += 3000
-			tempWeapon = "weapon8"
-		} else if currentweaponState == weapon9 && tempInt[8] >= 1 {
-			player.Gold += 4000
-			tempWeapon = "weapon9"
-		} else if currentweaponState == weapon0 && tempInt[9] >= 1 {
-			player.Gold += 5000
-			tempWeapon = "weapon0"
-		}
-		SaveWeaponSellEvent(SaveFilePath, 3, tempWeapon, player)
-		SaveGame(SaveFilePath, 1, player)
-		tempInt = tempInt[:0]
 	}
+	//  else if buySellSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.KeyS) {
+	// 	log.Println("Sell")
+	// 	for _, value := range player.PossessedWeapon {
+	// 		tempPossessedWeapon, _ := strconv.Atoi(value)
+	// 		tempInt = append(tempInt, tempPossessedWeapon)
+	// 	}
+	// 	if currentweaponState == weapon1 && tempInt[0] >= 1 {
+	// 		//TODO: ファイルからweaponのインスタンス作成、weaponインスタンスからGoldを参照
+	// 		player.Gold += 50
+	// 		tempWeapon = "weapon1"
+	// 	} else if currentweaponState == weapon2 && tempInt[1] >= 1 {
+	// 		player.Gold += 150
+	// 		tempWeapon = "weapon2"
+	// 	} else if currentweaponState == weapon3 && tempInt[2] >= 1 {
+	// 		player.Gold += 250
+	// 		tempWeapon = "weapon3"
+	// 	} else if currentweaponState == weapon4 && tempInt[3] >= 1 {
+	// 		player.Gold += 750
+	// 		tempWeapon = "weapon4"
+	// 	} else if currentweaponState == weapon5 && tempInt[4] >= 1 {
+	// 		player.Gold += 1500
+	// 		tempWeapon = "weapon5"
+	// 	} else if currentweaponState == weapon6 && tempInt[5] >= 1 {
+	// 		player.Gold += 1000
+	// 		tempWeapon = "weapon6"
+	// 	} else if currentweaponState == weapon7 && tempInt[6] >= 1 {
+	// 		player.Gold += 2000
+	// 		tempWeapon = "weapon7"
+	// 	} else if currentweaponState == weapon8 && tempInt[7] >= 1 {
+	// 		player.Gold += 3000
+	// 		tempWeapon = "weapon8"
+	// 	} else if currentweaponState == weapon9 && tempInt[8] >= 1 {
+	// 		player.Gold += 4000
+	// 		tempWeapon = "weapon9"
+	// 	} else if currentweaponState == weapon0 && tempInt[9] >= 1 {
+	// 		player.Gold += 5000
+	// 		tempWeapon = "weapon0"
+	// 	}
+	// 	SaveWeaponSellEvent(SaveFilePath, 3, tempWeapon, player)
+	// 	SaveGame(SaveFilePath, 1, player)
+	// 	tempInt = tempInt[:0]
+	// }
 	return myState.CurrentGS
 }
 
@@ -362,20 +265,20 @@ func InitWeaponBelongScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	topText := "持ち物/武器"
-	InitWeaponBelong(win, Txt, topText)
+	botText := "持ち物/武器"
+	InitWeaponBelong(win, Txt, botText)
 }
 
-func InitWeaponBelong(win *pixelgl.Window, Txt *text.Text, topText string) {
+func InitWeaponBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
 
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, topText, "1.武器", "2.防具", "3.アクセサリー", "4.素材", "BackSpace.戻る")
-	tempPosition = myPos.BotCenPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
+	myUtil.ScreenTxt.Clear()
+	myUtil.ScreenTxt.Color = colornames.White
+	fmt.Fprintln(myUtil.ScreenTxt, botText, "1.武器", "2.防具", "3.アクセサリー", "4.素材", "BackSpace.戻る")
+	tempPosition = myPos.BotCenPos(win, myUtil.ScreenTxt)
+	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
 
 	loadContent := SaveFileLoad(SaveFilePath)
 	counts := make(map[string]int)
@@ -412,7 +315,7 @@ func InitWeaponBelong(win *pixelgl.Window, Txt *text.Text, topText string) {
 func WeaponBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 	if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
 		myState.CurrentGS = myState.StageSelect
-		log.Println("GoToScreen->Dungeon")
+		log.Println("所持品/武器->ステージセレクト")
 	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
 		myState.CurrentGS = myState.TownScreen
 		log.Println("GoToScreen->Town")
@@ -423,8 +326,32 @@ func WeaponBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.Gam
 		myState.CurrentGS = myState.JobSelect
 		log.Println("GoToScreen->JobSelect")
 	} else if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
+		myState.CurrentBelong = myState.WeaponBelong
 		myState.CurrentGS = myState.StartScreen
-		log.Println("GoToScreen->StartScreen")
+		log.Println("所持品/武器->GoTo")
 	}
 	return myState.CurrentGS
+}
+
+func DescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
+	xOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).X + 300
+	yOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).Y - 50
+	txtPos := pixel.V(0, 0)
+	for _, value := range descWeapon[num] {
+		myUtil.DescriptionTxt.Clear()
+		myUtil.DescriptionTxt.Color = colornames.White
+		fmt.Fprintln(myUtil.DescriptionTxt, value)
+		yOffSet -= myUtil.DescriptionTxt.LineHeight + 20
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition := pixel.IM.Moved(txtPos)
+		myUtil.DescriptionTxt.Draw(win, tempPosition)
+	}
+	myUtil.DescriptionTxt.Clear()
+	myUtil.DescriptionTxt.Color = colornames.White
+	fmt.Fprintln(myUtil.DescriptionTxt, "B. 作ってもらう")
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 20
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition := pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	buySellSlice = append(buySellSlice, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
 }
