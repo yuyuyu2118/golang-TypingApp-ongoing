@@ -5,7 +5,8 @@ var CurrentGS GameState
 type GameState int
 
 const (
-	StartScreen GameState = iota
+	FadeScreen GameState = iota
+	StartScreen
 	GoToScreen
 
 	StageSelect
