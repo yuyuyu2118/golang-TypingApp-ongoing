@@ -42,6 +42,7 @@ func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, el
 				myState.CurrentGS = myState.PlayingScreen
 				pressEnter = false
 				index = 0
+				indexMonster = 0
 			}
 		}
 	}

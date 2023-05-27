@@ -21,6 +21,9 @@ func InitMaterialsBelongScreen(win *pixelgl.Window, Txt *text.Text) {
 	InitMaterialsBelong(win, Txt, botText)
 }
 
+var getItemBool bool
+var gotoSlice []string
+
 func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
@@ -32,7 +35,10 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 	tempPosition = myPos.BotCenPos(win, myUtil.ScreenTxt)
 	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
 
-	gotoSlice, _ := GetMyItems(SaveFilePathItems)
+	if !getItemBool {
+		gotoSlice, _ = GetMyItems(SaveFilePathItems)
+		getItemBool = true
+	}
 	gotoSlice = append(gotoSlice)
 
 	for _, gotoName := range gotoSlice {
