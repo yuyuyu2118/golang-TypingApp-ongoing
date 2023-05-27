@@ -42,7 +42,7 @@ func BattleTypingRookieSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.OP // - elapsed.Seconds()
+	tempCount = player.AttackTimer // - elapsed.Seconds()
 
 	if myState.CurrentGS == myState.SkillScreen {
 		if tempCount > 0 {
@@ -141,7 +141,7 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.OP // - elapsed.Seconds()
+	tempCount = player.AttackTimer // - elapsed.Seconds()
 
 	if myState.CurrentGS == myState.SkillScreen {
 		if tempCount > 0 {
@@ -334,7 +334,7 @@ func BattleTypingMonkSkill(win *pixelgl.Window, player *player.PlayerStatus, ela
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.OP // - elapsed.Seconds()
+	tempCount = player.AttackTimer // - elapsed.Seconds()
 
 	if myState.CurrentGS == myState.SkillScreen {
 		if tempCount > 0 {
@@ -509,7 +509,7 @@ func BattleTypingMonsterSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.OP // - elapsed.Seconds()
+	tempCount = player.AttackTimer // - elapsed.Seconds()
 
 	if myState.CurrentGS == myState.SkillScreen {
 		if tempCount > 0 {

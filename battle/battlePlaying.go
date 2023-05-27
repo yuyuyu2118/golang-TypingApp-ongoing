@@ -28,7 +28,7 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.OP - elapsed.Seconds()
+	tempCount = player.AttackTimer - elapsed.Seconds()
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
@@ -73,7 +73,7 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.OP - elapsed.Seconds()
+	tempCount = player.AttackTimer - elapsed.Seconds()
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
@@ -171,7 +171,7 @@ func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed 
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.OP - elapsed.Seconds()
+	tempCount = player.AttackTimer - elapsed.Seconds()
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
@@ -211,7 +211,7 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.OP - elapsed.Seconds()
+	tempCount = player.AttackTimer - elapsed.Seconds()
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
@@ -275,7 +275,7 @@ func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elaps
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.OP - elapsed.Seconds()
+	tempCount = player.AttackTimer - elapsed.Seconds()
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {

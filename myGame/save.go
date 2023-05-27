@@ -31,7 +31,8 @@ func SaveGame(saveFilePath string, saveNum int, player *player.PlayerStatus) {
 	Job := player.Job
 	AP := strconv.Itoa(player.AP)
 	Language := player.Language
-	saveContent := Name + "," + MaxHP + "," + HP + "," + OP + "," + DP + "," + MaxSP + "," + SP + "," + BaseSP + "," + Gold + "," + Job + "," + AP + "," + Language + ","
+	AttackTime := strconv.FormatFloat(player.AttackTimer, 'f', -1, 64)
+	saveContent := Name + "," + MaxHP + "," + HP + "," + OP + "," + DP + "," + MaxSP + "," + SP + "," + BaseSP + "," + Gold + "," + Job + "," + AP + "," + Language + "," + AttackTime + ","
 
 	content, err := ioutil.ReadFile(saveFilePath)
 	if err != nil {
@@ -68,13 +69,13 @@ func SaveFileLoad(saveFilePath string) [][]string {
 }
 
 func SaveFileCheck(saveFilePath string) {
-	tempInitText := []string{"Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,",
-		"NoName,30,30,5,1,50,0,2,0,No Job,0,Japanese,",
-		"0,0,0,0,0,0,0,0,0,0,,,",
-		"0,0,0,0,0,0,0,0,0,0,,,",
-		"WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,",
-		"ArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,",
-		"AccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,",
+	tempInitText := []string{"Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,AttackTimer",
+		"NoName,30,30,5,1,50,0,2,0,No Job,0,Japanese,3.0",
+		"0,0,0,0,0,0,0,0,0,0,,,,",
+		"0,0,0,0,0,0,0,0,0,0,,,,",
+		"WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,",
+		"ArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,",
+		"AccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,",
 	}
 	initializeText := strings.Join(tempInitText, "\n")
 	//initializeText := "Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,\nNoName,30,30,3,1,50,0,2,0,No Job,0,\nWeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nAccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,"
