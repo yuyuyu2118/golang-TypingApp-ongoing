@@ -11,22 +11,26 @@ import (
 )
 
 func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
-	InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 	if player.Job == "見習い剣士" {
+		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingRookie(win, player, elapsed)
 	} else if player.Job == "狩人" {
+		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingHunter(win, player, elapsed)
 	} else if player.Job == "モンク" {
+		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingMonk(win, player, elapsed)
 	} else if player.Job == "魔法使い" {
-		myState.CurrentGS = BattleTyping(win, player, elapsed)
+		InitBattleTextMagicUser(win, myUtil.ScreenTxt, elapsed)
+		myState.CurrentGS = BattleTypingMagicUser(win, player, elapsed)
 	} else if player.Job == "化け物" {
-		myState.CurrentGS = BattleTyping(win, player, elapsed)
+		InitBattleTextMonster(win, myUtil.ScreenTxt, elapsed)
+		myState.CurrentGS = BattleTypingMonster(win, player, elapsed)
 	}
 }
 
 func InitEnemyBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
-	InitBattleTextV2(win, myUtil.BasicTxt, elapsed)
+	InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 	if myGame.StageNum == 0 {
 		myState.CurrentGS = BattleTypingEnemySlime(win, player, elapsed)
 	} else if myGame.StageNum == 1 {
@@ -42,20 +46,20 @@ func InitEnemyBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed t
 
 func InitSkillBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
 	if player.Job == "見習い剣士" {
-		InitBattleTextRookieSkill(win, myUtil.BasicTxt, elapsed)
+		InitBattleTextRookieSkill(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingRookieSkill(win, player, elapsed)
 	} else if player.Job == "狩人" {
-		InitBattleTextHunterSkill(win, myUtil.BasicTxt, elapsed)
+		InitBattleTextHunterSkill(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingHunterSkill(win, player, elapsed)
 	} else if player.Job == "モンク" {
-		InitBattleTextMonkSkill(win, myUtil.BasicTxt, elapsed)
+		InitBattleTextMonkSkill(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingMonkSkill(win, player, elapsed)
 	} else if player.Job == "魔法使い" {
-		InitBattleTextV2Skill(win, myUtil.BasicTxt, elapsed)
-		myState.CurrentGS = BattleTypingRookieSkill(win, player, elapsed)
+		InitBattleTextMagicUserSkill(win, myUtil.ScreenTxt, elapsed)
+		myState.CurrentGS = BattleTypingMagicUserSkill(win, player, elapsed)
 	} else if player.Job == "化け物" {
-		InitBattleTextV2Skill(win, myUtil.BasicTxt, elapsed)
-		myState.CurrentGS = BattleTypingRookieSkill(win, player, elapsed)
+		InitBattleTextMonsterSkill(win, myUtil.ScreenTxt, elapsed)
+		myState.CurrentGS = BattleTypingMonsterSkill(win, player, elapsed)
 	}
 
 }

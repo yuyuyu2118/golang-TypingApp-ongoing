@@ -50,6 +50,7 @@ func InitEquipment(win *pixelgl.Window, Txt *text.Text) {
 func EquipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 	if myState.CurrentGS == myState.EquipmentScreen && (equipmentButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentGS = myState.GoToScreen
+		getItemBool = false
 		log.Println("equipment->GoToScreen")
 	}
 	return myState.CurrentGS
@@ -71,6 +72,7 @@ func BelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.BelongSta
 	} else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key4)) {
 		myState.CurrentGS = myState.GoToScreen
 		myState.CurrentBelong = myState.MaterialsBelong
+		getItemBool = false
 		log.Println("WeaponBelong->MaterialsBelong")
 	}
 	return myState.CurrentBelong

@@ -90,6 +90,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 	if win.JustPressed(pixelgl.KeyTab) {
 		myState.CurrentGS = myState.PlayingScreen
 		collectType, missType, index, score = 0, 0, 0, 0
+		magicCollectType, magicMissType = 0, 0
 		player.HP = player.MaxHP
 		player.SP = 0
 		enemy.HP = enemy.MaxHP
@@ -101,6 +102,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 	} else if win.JustPressed(pixelgl.KeyBackspace) {
 		myState.CurrentGS = myState.GoToScreen
 		collectType, missType, index, score = 0, 0, 0, 0
+		magicCollectType, magicMissType = 0, 0
 		player.HP = player.MaxHP
 		player.SP = 0
 		enemy.HP = enemy.MaxHP

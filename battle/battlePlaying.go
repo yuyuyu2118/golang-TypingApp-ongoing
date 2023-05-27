@@ -157,6 +157,7 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 			bulletDamage[i] = 0
 			bulletLoading[i] = false
 		}
+		//TODO: テキスト表示
 		log.Println("Bang!!")
 	}
 
@@ -190,6 +191,118 @@ func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed 
 					}
 				} else {
 					missType++
+				}
+			}
+		} else {
+			myState.CurrentGS = myState.BattleEnemyScreen
+		}
+	}
+
+	BattleTypingSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+	myState.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myState.CurrentGS)
+	return myState.CurrentGS
+}
+
+var magicCollectType = 0
+var magicMissType = 0
+
+func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+	question := words[score]
+	temp := []byte(question)
+	typed := win.Typed()
+
+	tempCount = player.OP - elapsed.Seconds()
+
+	if myState.CurrentGS == myState.PlayingScreen {
+		if tempCount > 0 {
+			if typed != "" {
+				if typed[0] == temp[index] && index < len(question) {
+					index++
+					collectType++
+					if magicCollectType >= 0 && magicCollectType < 25 {
+						magicCollectType += 2
+					} else if magicCollectType >= 25 && magicCollectType < 50 {
+						magicCollectType += 3
+					} else if magicCollectType >= 50 && magicCollectType < 100 {
+						magicCollectType += 4
+					} else if magicCollectType >= 100 {
+						magicCollectType += 5
+					}
+					log.Println(magicCollectType)
+					player.SP += player.BaseSP
+					if index == len(question) {
+						index = 0
+						score++
+						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
+					}
+				} else {
+					missType++
+					magicMissType++
+					if magicCollectType >= 0 && magicCollectType < 25 {
+						magicCollectType -= 10
+					} else if magicCollectType >= 25 && magicCollectType < 50 {
+						magicCollectType -= 20
+					} else if magicCollectType >= 50 && magicCollectType < 100 {
+						magicCollectType -= 30
+					} else if magicCollectType >= 100 {
+						magicCollectType -= 40
+					}
+					if magicCollectType < 0 {
+						magicCollectType = 0
+					}
+				}
+			}
+		} else {
+			myState.CurrentGS = myState.BattleEnemyScreen
+		}
+	}
+
+	if win.JustPressed(pixelgl.KeyEnter) {
+		PlayerAttack(win, -magicCollectType, win.Bounds().Center().Sub(pixel.V(50, -200)))
+		enemy.EnemySettings[myGame.StageNum].HP += float64(-magicCollectType)
+		magicCollectType = 0
+	}
+
+	BattleTypingSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+	myState.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myState.CurrentGS)
+	return myState.CurrentGS
+}
+
+var indexMonster int
+
+func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+	question := words[score]
+	temp := []byte(question)
+	typed := win.Typed()
+
+	tempCount = player.OP - elapsed.Seconds()
+
+	if myState.CurrentGS == myState.PlayingScreen {
+		if tempCount > 0 {
+			if typed != "" {
+				if typed[0] == temp[index] && index < len(question) {
+					index++
+					indexMonster += 2
+					collectType++
+					tempWordDamage -= float64(rand.Intn(4) + 2)
+					player.SP += player.BaseSP
+					if index == len(question) {
+						index = 0
+						indexMonster = 0
+						score++
+						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
+						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
+						tempWordDamage = 0
+						if rand.Float64() <= 0.1 { // 10%の確率で自分に攻撃
+							player.HP--
+							player.SP--
+						}
+					}
+				} else {
+					missType++
+					if rand.Float64() <= 0.3 { // 30%の確率で自分に攻撃
+						player.HP--
+					}
 				}
 			}
 		} else {

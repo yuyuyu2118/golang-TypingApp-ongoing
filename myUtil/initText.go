@@ -24,16 +24,20 @@ var (
 	CompletedText   *text.Text
 )
 
+var (
+	JapanFontPath     = "assets/fonts/mplus-1c-black.ttf"
+	JapanFontPathBold = "assets/fonts/mplus-1c-bold.ttf"
+)
+
 func InitTxtFontLoading() {
 	//fontPath := "assets\\fonts\\NotoSans-Black.ttf"
-	japanFontPath := "assets/fonts/mplus-1c-black.ttf"
-	japanFontPathBold := "assets/fonts/mplus-1c-bold.ttf"
-	BasicTxt = initializeAnyText(japanFontPath, 40, colornames.White)
-	StartTxt = initAnyJapanText(japanFontPathBold, 70, colornames.White)
-	ScreenTxt = initAnyJapanText(japanFontPath, 40, colornames.White)
-	DescriptionTxt = initAnyJapanText(japanFontPath, 30, colornames.White)
-	HunterBulletTxt = initAnyJapanText(japanFontPathBold, 60, colornames.White)
-	CompletedText = initAnyJapanText(japanFontPathBold, 70, colornames.White)
+
+	BasicTxt = initializeAnyText(JapanFontPath, 40, colornames.White)
+	StartTxt = InitAnyJapanText(JapanFontPathBold, 70, colornames.White)
+	ScreenTxt = InitAnyJapanText(JapanFontPath, 40, colornames.White)
+	DescriptionTxt = InitAnyJapanText(JapanFontPath, 30, colornames.White)
+	HunterBulletTxt = InitAnyJapanText(JapanFontPathBold, 60, colornames.White)
+	CompletedText = InitAnyJapanText(JapanFontPathBold, 70, colornames.White)
 	// startTxt := initializeAnyText(fontPath, 80, colornames.White)
 	// endTxt := initializeAnyText(fontPath, 60, colornames.White)
 }
@@ -78,9 +82,21 @@ func initJapanText(face font.Face, color color.Color) *text.Text {
 	return Txt
 }
 
-func initAnyJapanText(fontPath string, size int, color color.Color) *text.Text {
+func InitAnyJapanText(fontPath string, size int, color color.Color) *text.Text {
 	face := LoadJapanFont(fontPath, float64(size))
 	return initJapanText(face, color)
+}
+
+func InitMagicJapanText(fontPath string, size int, color color.Color, customKanjiRunes []rune) *text.Text {
+	face := LoadJapanFont(fontPath, float64(size))
+	return InitMagicText(face, color, customKanjiRunes)
+}
+
+func InitMagicText(face font.Face, color color.Color, customKanjiRunes []rune) *text.Text {
+	customKanji := CustomRangeTable(customKanjiRunes)
+	Atlas := text.NewAtlas(face, text.ASCII, text.RangeTable(customKanji))
+	Txt := text.New(pixel.V(0, 0), Atlas)
+	return Txt
 }
 
 func LoadTTF(path string, size float64) (font.Face, error) {
@@ -138,7 +154,7 @@ func CustomRangeTable(runes []rune) *unicode.RangeTable {
 
 func DrawCenteredText(win *pixelgl.Window, atlas *text.Atlas, line1, line2 string) {
 	japanFontPath := "assets/fonts/mplus-1c-black.ttf"
-	tempTxt := initAnyJapanText(japanFontPath, 40, colornames.White)
+	tempTxt := InitAnyJapanText(japanFontPath, 40, colornames.White)
 	tempTxt.Color = pixel.RGB(1, 1, 1) // テキストの色を設定
 
 	tempTxt.WriteString(line1)

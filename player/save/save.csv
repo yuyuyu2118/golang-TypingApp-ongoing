@@ -1,6 +1,6 @@
 Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,
-NoName,30,30,5,1,50,0,2,6347,魔法使い,448,Japanese,
-236,71,7,1,1,1,1,1,1,1,,,
+NoName,30,27,5,1,50,0,2,6946,化け物,488,Japanese,
+276,71,7,0,0,0,0,0,0,0,,,
 3,1,0,0,0,0,0,0,0,0,,,
 WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,
 ArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,
