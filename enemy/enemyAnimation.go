@@ -36,7 +36,7 @@ func SetEnemyAnimation(directory string, fileName string) []*pixel.Sprite {
 
 func SetEnemySprite(win *pixelgl.Window, frame int) {
 	sprites := EnemySprites[myGame.StageNum]
-	sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 25))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
+	sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 40))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
 	pic, _ := myIo.OpenDecodePictureData(EnemyPathBar[myGame.StageNum])
 	scaledSize := pic.Bounds().Size().Scaled(EnemySettings[myGame.StageNum].EnemySize)
 	barPosition := pixel.V(

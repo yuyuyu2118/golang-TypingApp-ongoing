@@ -18,6 +18,12 @@ import (
 )
 
 func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+	// var tempWords []string
+	// for value := range wordsJapanese {
+	// 	tempWords = append(tempWords, value)
+	// }
+	// tempQuestion := tempWords[score]
+	// log.Println(tempQuestion, wordsJapanese[tempQuestion])
 	question := words[score]
 	temp := []byte(question)
 	typed := win.Typed()

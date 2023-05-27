@@ -11,7 +11,7 @@ import (
 )
 
 func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
-	InitBattleTextV2(win, myUtil.BasicTxt, elapsed)
+	InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 	if player.Job == "見習い剣士" {
 		myState.CurrentGS = BattleTypingRookie(win, player, elapsed)
 	} else if player.Job == "狩人" {

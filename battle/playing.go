@@ -51,12 +51,12 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 		tempWords := words[score]
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprint(Txt, "> ")
+		fmt.Fprintln(Txt, wordsJapanese[words[score]])
 		Txt.Color = colornames.Darkslategray
 		fmt.Fprint(Txt, tempWords[:index])
 		Txt.Color = colornames.White
 		fmt.Fprint(Txt, tempWords[index:])
-		myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt))
+		myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt))
 
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
@@ -65,16 +65,18 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 			Txt.Color = colornames.Darkgray
 			offset := Txt.Bounds().W()
 			Txt.Clear()
+			fmt.Fprintln(Txt, wordsJapanese[words[score+1]])
 			fmt.Fprintln(Txt, words[score+1])
-			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
+			myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 			Txt.Dot.X = TxtOrigX
 		}
 		if !(len(words)-score == 2 || len(words)-score == 1) {
 			Txt.Color = colornames.Gray
 			offset += Txt.Bounds().W()
 			Txt.Clear()
+			fmt.Fprintln(Txt, wordsJapanese[words[score+2]])
 			fmt.Fprintln(Txt, words[score+2])
-			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
+			myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		Txt.Clear()
