@@ -1,30 +1,60 @@
 package myGame
 
 import (
+	"image/color"
 	"log"
 	"os"
+	"time"
 
+	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
-	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"golang.org/x/image/colornames"
 )
 
-func InitStartScreen(win *pixelgl.Window, Txt *text.Text) {
+var (
+	animationStartTime time.Time
+)
+
+func InitStartScreen(win *pixelgl.Window, StartTxt *text.Text, alpha float64, animationDuration float64) {
 	//windowのリセットとテキストの描画
 	win.Clear(colornames.Darkcyan)
-	Txt.Clear()
+	StartTxt.Clear()
+
+	txtColor := color.RGBA{R: 255, G: 255, B: 255, A: uint8(alpha * 255)} // テキストのアルファ値を更新
+	StartTxt.Color = txtColor
+
+	myUtil.CompletedText.Color = txtColor
 
 	startLines := []string{
 		"タイピングバトルRPG",
 		"\n",
 		"Enterキーを押してスタート",
-		"Escapeキーを押して終了",
-		"(※オートセーブです)",
 	}
 
-	myPos.LineCenterAlign(win, startLines, Txt, "center")
+	startPos := pixel.V(win.Bounds().Center().X, win.Bounds().Max.Y-StartTxt.LineHeight*float64(len(startLines)))
+
+	// 各行の終了位置を計算
+	lineEndPositions := make([]pixel.Vec, len(startLines))
+	for idx, line := range startLines {
+		centerX := win.Bounds().Center().Sub(StartTxt.BoundsOf(line).Center()).X
+		lineEndPositions[idx] = pixel.V(centerX, win.Bounds().Center().Y-StartTxt.LineHeight*float64(len(startLines)/2-idx))
+	}
+
+	for idx, line := range startLines {
+		endPos := lineEndPositions[idx]
+
+		if animationStartTime.IsZero() {
+			animationStartTime = time.Now()
+		}
+
+		//animationStartTime.Add(time.Duration(animationDuration*float64(idx))*time.Second)
+		myUtil.AnimateText(win, StartTxt, myUtil.CompletedText, []string{line}, animationStartTime, startPos, endPos, animationDuration)
+	}
+
+	//myPos.LineCenterAlign(win, startLines, Txt, "center")
 
 	//GoToScreenに行く
 	if win.JustPressed(pixelgl.KeyEnter) {

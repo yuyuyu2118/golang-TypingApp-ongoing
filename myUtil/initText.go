@@ -21,6 +21,7 @@ var (
 	DescriptionTxt  *text.Text
 	BasicTxt        *text.Text
 	HunterBulletTxt *text.Text
+	CompletedText   *text.Text
 )
 
 func InitTxtFontLoading() {
@@ -32,6 +33,7 @@ func InitTxtFontLoading() {
 	ScreenTxt = initAnyJapanText(japanFontPath, 40, colornames.White)
 	DescriptionTxt = initAnyJapanText(japanFontPath, 30, colornames.White)
 	HunterBulletTxt = initAnyJapanText(japanFontPathBold, 60, colornames.White)
+	CompletedText = initAnyJapanText(japanFontPathBold, 70, colornames.White)
 	// startTxt := initializeAnyText(fontPath, 80, colornames.White)
 	// endTxt := initializeAnyText(fontPath, 60, colornames.White)
 }
