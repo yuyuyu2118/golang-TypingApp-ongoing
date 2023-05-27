@@ -15,10 +15,11 @@ import (
 )
 
 var (
-	score    = 0
-	words    = InitializeQuestion()
-	index    = 0
-	yourTime = 0.0
+	score = 0
+	//words  = InitializeQuestion()
+	wordsJapanese, words, _ = LoadWordsFromCSV()
+	index                   = 0
+	yourTime                = 0.0
 
 	gainGold = 0
 	lostGold = 0

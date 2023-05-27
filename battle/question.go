@@ -35,21 +35,51 @@ func Shuffle(data []string) {
 	}
 }
 
-// func shuffleMap(data map[string]string) map[string]string {
-// 	pairs := make([]struct{ key, value string }, 0, len(data))
-// 	for k, v := range data {
-// 		pairs = append(pairs, struct{ key, value string }{key: k, value: v})
-// 	}
-// 	//	log.Println(pairs)
+func ShufflePairs(pairs [][2]string) [][2]string {
+	rand.Seed(time.Now().UnixNano())
 
-// 	rand.Seed(time.Now().Unix())
-// 	rand.Shuffle(len(pairs), func(i, j int) { pairs[i], pairs[j] = pairs[j], pairs[i] })
+	pairCount := len(pairs)
+	shuffledPairs := make([][2]string, pairCount)
 
-// 	shuffledData := make(map[string]string)
-// 	for _, pair := range pairs {
-// 		shuffledData[pair.key] = pair.value
-// 		log.Println(pair.key)
-// 	}
+	perm := rand.Perm(pairCount)
+	for i, v := range perm {
+		shuffledPairs[v] = pairs[i]
+	}
 
-// 	return shuffledData
-// }
+	return shuffledPairs
+}
+
+func LoadWordsFromCSV() (map[string]string, []string, error) {
+	file, err := os.Open("assets\\question\\question2_4.csv")
+	if err != nil {
+		return nil, nil, err
+	}
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	pairs := make([][2]string, 0, len(records))
+	for _, record := range records {
+		if len(record) >= 2 {
+			pairs = append(pairs, [2]string{record[1], record[2]})
+		}
+	}
+
+	shuffledPairs := ShufflePairs(pairs)
+
+	shuffledWords := make(map[string]string)
+	for _, pair := range shuffledPairs {
+		shuffledWords[pair[1]] = pair[0]
+	}
+
+	var tempWords []string
+	for value := range shuffledWords {
+		tempWords = append(tempWords, value)
+	}
+
+	return shuffledWords, tempWords, nil
+}

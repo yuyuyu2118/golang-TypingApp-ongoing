@@ -7,6 +7,7 @@ import (
 	"unicode"
 
 	"github.com/faiface/pixel"
+	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/golang/freetype/truetype"
 	"github.com/yuyuyu2118/typingGo/myIo"
@@ -23,10 +24,10 @@ var (
 )
 
 func InitTxtFontLoading() {
-	fontPath := "assets\\fonts\\NotoSans-Black.ttf"
-	japanFontPath := "assets/fonts/PixelMplus12-Regular.ttf"
-	japanFontPathBold := "assets/fonts/PixelMplus12-Bold.ttf"
-	BasicTxt = initializeAnyText(fontPath, 40, colornames.White)
+	//fontPath := "assets\\fonts\\NotoSans-Black.ttf"
+	japanFontPath := "assets/fonts/mplus-1c-black.ttf"
+	japanFontPathBold := "assets/fonts/mplus-1c-bold.ttf"
+	BasicTxt = initializeAnyText(japanFontPath, 40, colornames.White)
 	StartTxt = initAnyJapanText(japanFontPathBold, 70, colornames.White)
 	ScreenTxt = initAnyJapanText(japanFontPath, 40, colornames.White)
 	DescriptionTxt = initAnyJapanText(japanFontPath, 30, colornames.White)
@@ -131,4 +132,30 @@ func CustomRangeTable(runes []rune) *unicode.RangeTable {
 		}
 	}
 	return &unicode.RangeTable{R16: ranges}
+}
+
+func DrawCenteredText(win *pixelgl.Window, atlas *text.Atlas, line1, line2 string) {
+	japanFontPath := "assets/fonts/mplus-1c-black.ttf"
+	tempTxt := initAnyJapanText(japanFontPath, 40, colornames.White)
+	tempTxt.Color = pixel.RGB(1, 1, 1) // テキストの色を設定
+
+	tempTxt.WriteString(line1)
+	line1Width := tempTxt.BoundsOf(line1).W()
+	tempTxt.Dot.X -= line1Width / 2
+
+	winX, winY := win.Bounds().Max.X, win.Bounds().Max.Y
+	tempTxt.Orig.X = (winX - line1Width) / 2
+	tempTxt.Orig.Y = winY/2 + atlas.LineHeight()/2
+
+	tempTxt.Draw(win, pixel.IM.Scaled(tempTxt.Orig, 1))
+
+	tempTxt.Clear()
+	tempTxt.WriteString(line2)
+	line2Width := tempTxt.BoundsOf(line2).W()
+
+	tempTxt.Dot.X -= line2Width / 2
+	tempTxt.Orig.X = (winX - line2Width) / 2
+	tempTxt.Orig.Y = winY/2 - atlas.LineHeight()/2
+
+	tempTxt.Draw(win, pixel.IM.Scaled(tempTxt.Orig, 1))
 }

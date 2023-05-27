@@ -83,6 +83,7 @@ func InitBattleTextRookieSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 		tempWords := RookieSkillWords[RookieSkillCount]
 		Txt.Clear()
 		Txt.Color = colornames.White
+		fmt.Fprintln(Txt, wordsJapanese[words[score]])
 		fmt.Fprint(Txt, "> ")
 		Txt.Color = colornames.Darkslategray
 		fmt.Fprint(Txt, tempWords[:index])
@@ -97,6 +98,7 @@ func InitBattleTextRookieSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 			Txt.Color = colornames.Orange
 			offset := Txt.Bounds().W()
 			Txt.Clear()
+			fmt.Fprintln(Txt, wordsJapanese[words[score]])
 			fmt.Fprintln(Txt, RookieSkillWords[RookieSkillCount+1])
 			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 			Txt.Dot.X = TxtOrigX
@@ -105,6 +107,7 @@ func InitBattleTextRookieSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 			Txt.Color = colornames.Orange
 			offset += Txt.Bounds().W()
 			Txt.Clear()
+			fmt.Fprintln(Txt, wordsJapanese[words[score]])
 			fmt.Fprintln(Txt, RookieSkillWords[RookieSkillCount+2])
 			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
@@ -270,6 +273,7 @@ func InitBattleTextHunterSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 		tempWords := words[score]
 		Txt.Clear()
 		Txt.Color = colornames.White
+		fmt.Fprintln(Txt, wordsJapanese[words[score]])
 		fmt.Fprint(Txt, "> ")
 		Txt.Color = colornames.Darkslategray
 		fmt.Fprint(Txt, tempWords[:index])
@@ -284,6 +288,7 @@ func InitBattleTextHunterSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 			Txt.Color = colornames.Darkgray
 			offset := Txt.Bounds().W()
 			Txt.Clear()
+			fmt.Fprintln(Txt, wordsJapanese[words[score+1]])
 			fmt.Fprintln(Txt, words[score+1])
 			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 			Txt.Dot.X = TxtOrigX
@@ -292,6 +297,7 @@ func InitBattleTextHunterSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 			Txt.Color = colornames.Gray
 			offset += Txt.Bounds().W()
 			Txt.Clear()
+			fmt.Fprintln(Txt, wordsJapanese[words[score+2]])
 			fmt.Fprintln(Txt, words[score+2])
 			myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}

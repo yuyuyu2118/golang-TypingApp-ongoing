@@ -96,16 +96,16 @@ func SetEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP 
 	if HP > 0 {
 		rect = pixel.R(
 			win.Bounds().Center().X-(rectWidth/2),
-			win.Bounds().Center().Y-50,
+			win.Bounds().Center().Y+25,
 			win.Bounds().Center().X+(rectWidth/2),
-			win.Bounds().Center().Y,
+			win.Bounds().Center().Y+75,
 		)
 	} else {
 		rect = pixel.R(
 			win.Bounds().Center().X,
-			win.Bounds().Center().Y-50,
+			win.Bounds().Center().Y*25,
 			win.Bounds().Center().X,
-			win.Bounds().Center().Y,
+			win.Bounds().Center().Y*75,
 		)
 	}
 	imd := imdraw.New(nil)
@@ -118,9 +118,9 @@ func SetEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP 
 func SetEnemyHPBarOut(win *pixelgl.Window, scaledSize pixel.Vec, pos pixel.Vec) {
 	rect := pixel.R(
 		win.Bounds().Center().X-pos.X/2,
-		win.Bounds().Center().Y-50,
+		win.Bounds().Center().Y+25,
 		win.Bounds().Center().X+pos.X/2,
-		win.Bounds().Center().Y,
+		win.Bounds().Center().Y+75,
 	)
 	imd := imdraw.New(nil)
 	imd.Color = colornames.Red
