@@ -26,6 +26,7 @@ type PlayerStatus struct {
 	Job             string
 	AP              int
 	Language        string
+	AttackTimer     float64
 	PossessedWeapon []string
 }
 
@@ -48,6 +49,7 @@ func NewPlayerStatus(value []string, possess []string) *PlayerStatus {
 	Job := value[9]
 	AP, _ := strconv.Atoi((value[10]))
 	Language := value[11]
+	AttackTimer, _ := strconv.ParseFloat(value[12], 64)
 	PossessedWeapon := possess
 
 	PlayerStatusInstance := &PlayerStatus{
@@ -63,6 +65,7 @@ func NewPlayerStatus(value []string, possess []string) *PlayerStatus {
 		Job:             Job,
 		AP:              AP,
 		Language:        Language,
+		AttackTimer:     AttackTimer,
 		PossessedWeapon: PossessedWeapon,
 	}
 	return PlayerStatusInstance
@@ -282,7 +285,7 @@ func (player *PlayerStatus) InitPlayerStatus(win *pixelgl.Window, Txt *text.Text
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, player.Job, " Gold:", player.Gold, "S")
-	fmt.Fprintln(Txt, "アタックタイマー: ", player.OP)
+	fmt.Fprintln(Txt, "アタックタイマー: ", player.AttackTimer)
 	tempPosition := myPos.TopLefPos(win, Txt).Add(pixel.V(0, 30))
 	myPos.DrawPos(win, Txt, tempPosition)
 }
