@@ -313,6 +313,74 @@ func SaveArmorPurchaseEvent(saveFilePath string, saveNum int, purchaseArmor stri
 	fmt.Println("保存ファイルを更新しました。")
 }
 
+func SaveAccessoryPurchaseEvent(saveFilePath string, saveNum int, purchaseAccessory string, player *player.PlayerStatus) {
+	var tempInt int
+	loadContent := SaveFileLoad(saveFilePath)
+	if purchaseAccessory == "accessory1" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][0])
+		loadContent[saveNum][0] = strconv.Itoa(tempInt + 1)
+		player.PossessedAccessory[0] = loadContent[saveNum][0]
+	} else if purchaseAccessory == "accessory2" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][1])
+		loadContent[saveNum][1] = strconv.Itoa(tempInt + 1)
+		player.PossessedAccessory[1] = loadContent[saveNum][1]
+	} else if purchaseAccessory == "accessory3" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][2])
+		loadContent[saveNum][2] = strconv.Itoa(tempInt + 1)
+		player.PossessedAccessory[2] = loadContent[saveNum][2]
+	} else if purchaseAccessory == "accessory4" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][3])
+		loadContent[saveNum][3] = strconv.Itoa(tempInt + 1)
+		player.PossessedAccessory[3] = loadContent[saveNum][3]
+	} else if purchaseAccessory == "accessory5" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][4])
+		loadContent[saveNum][4] = strconv.Itoa(tempInt + 1)
+		player.PossessedAccessory[4] = loadContent[saveNum][4]
+	} else if purchaseAccessory == "accessory6" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][5])
+		loadContent[saveNum][5] = strconv.Itoa(tempInt + 1)
+		player.PossessedAccessory[5] = loadContent[saveNum][5]
+	} else if purchaseAccessory == "accessory7" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][6])
+		loadContent[saveNum][6] = strconv.Itoa(tempInt + 1)
+		player.PossessedAccessory[6] = loadContent[saveNum][6]
+	} else if purchaseAccessory == "accessory8" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][7])
+		loadContent[saveNum][7] = strconv.Itoa(tempInt + 1)
+		player.PossessedAccessory[7] = loadContent[saveNum][7]
+	} else if purchaseAccessory == "accessory9" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][8])
+		loadContent[saveNum][8] = strconv.Itoa(tempInt + 1)
+		player.PossessedAccessory[8] = loadContent[saveNum][8]
+	} else if purchaseAccessory == "accessory0" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][9])
+		loadContent[saveNum][9] = strconv.Itoa(tempInt + 1)
+		player.PossessedAccessory[9] = loadContent[saveNum][9]
+	}
+	saveContent := strings.Join(loadContent[saveNum], ",")
+
+	content, err := ioutil.ReadFile(saveFilePath)
+	if err != nil {
+		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
+		return
+	}
+	lines := strings.Split(string(content), "\n")
+	if saveNum < 0 || saveNum >= len(lines) {
+		fmt.Println("指定された行番号が範囲外です。")
+		return
+	}
+	lines[saveNum] = saveContent
+
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile(saveFilePath, []byte(output), 0644)
+	if err != nil {
+		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
+		return
+	}
+
+	fmt.Println("保存ファイルを更新しました。")
+}
+
 // func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, player *player.PlayerStatus) {
 // 	var tempInt int
 // 	loadContent := SaveFileLoad(saveFilePath)

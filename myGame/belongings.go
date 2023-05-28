@@ -22,7 +22,24 @@ var (
 
 var equipmentSlice = []string{}
 
+var tabCount int
+
 func InitEquipment(win *pixelgl.Window, Txt *text.Text) {
+	if win.JustPressed(pixelgl.KeyTab) {
+		if tabCount == 0 {
+			myState.CurrentBelong = myState.ArmorBelong
+			tabCount++
+		} else if tabCount == 1 {
+			myState.CurrentBelong = myState.AccessoryBelong
+			tabCount++
+		} else if tabCount == 2 {
+			myState.CurrentBelong = myState.MaterialsBelong
+			tabCount++
+		} else if tabCount == 3 {
+			myState.CurrentBelong = myState.WeaponBelong
+			tabCount = 0
+		}
+	}
 	switch myState.CurrentBelong {
 	case myState.WeaponBelong:
 		InitWeaponBelongScreen(win, myUtil.DescriptionTxt)
@@ -57,23 +74,25 @@ func EquipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameSt
 }
 
 func BelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.BelongState {
-	if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key1)) {
-		myState.CurrentBelong = myState.WeaponBelong
-		log.Println("WeaponBelong->WeaponBelong")
-	} else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key2)) {
-		myState.CurrentBelong = myState.ArmorBelong
-		log.Println("WeaponBelong->ArmorBelong")
-	} else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key3)) {
-		myState.CurrentBelong = myState.AccessoryBelong
-		log.Println("WeaponBelong->AccessoryBelong")
-	} else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key4)) {
-		myState.CurrentBelong = myState.MaterialsBelong
-		log.Println("WeaponBelong->MaterialsBelong")
-	} else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key4)) {
+	// if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key1)) {
+	// 	myState.CurrentBelong = myState.WeaponBelong
+	// 	log.Println("WeaponBelong->WeaponBelong")
+	// } else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key2)) {
+	// 	myState.CurrentBelong = myState.ArmorBelong
+	// 	log.Println("WeaponBelong->ArmorBelong")
+	// } else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key3)) {
+	// 	myState.CurrentBelong = myState.AccessoryBelong
+	// 	log.Println("WeaponBelong->AccessoryBelong")
+	// } else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key4)) {
+	// 	myState.CurrentBelong = myState.MaterialsBelong
+	// 	log.Println("WeaponBelong->MaterialsBelong")
+	// }
+	if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentGS = myState.GoToScreen
-		myState.CurrentBelong = myState.MaterialsBelong
+		myState.CurrentBelong = myState.WeaponBelong
 		getItemBool = false
-		log.Println("WeaponBelong->MaterialsBelong")
+		tabCount = 0
+		log.Println("shop->Back")
 	}
 	return myState.CurrentBelong
 }

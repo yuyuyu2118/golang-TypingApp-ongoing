@@ -43,10 +43,13 @@ import (
 // )
 
 var (
-	buttonSlice       = []pixel.Rect{}
-	buttonSliceArmor  = []pixel.Rect{}
-	buySellSlice      = []pixel.Rect{}
-	buySellSliceArmor = []pixel.Rect{}
+	//TODO: buttonSliceの名前変える
+	buttonSlice           = []pixel.Rect{}
+	buttonSliceArmor      = []pixel.Rect{}
+	buttonSliceAccessory  = []pixel.Rect{}
+	buySellSlice          = []pixel.Rect{}
+	buySellSliceArmor     = []pixel.Rect{}
+	buySellSliceAccessory = []pixel.Rect{}
 )
 
 // var currentarmorState ArmorState

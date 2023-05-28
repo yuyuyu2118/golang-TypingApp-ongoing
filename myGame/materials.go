@@ -31,7 +31,7 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 
 	myUtil.ScreenTxt.Clear()
 	myUtil.ScreenTxt.Color = colornames.White
-	fmt.Fprintln(myUtil.ScreenTxt, botText, "1.武器", "2.防具", "3.アクセサリー", "4.素材", "BackSpace.戻る")
+	fmt.Fprintln(myUtil.ScreenTxt, botText, "Tabで切り替え", "BackSpace.戻る")
 	tempPosition = myPos.BotCenPos(win, myUtil.ScreenTxt)
 	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
 

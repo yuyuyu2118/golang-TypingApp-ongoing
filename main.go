@@ -37,6 +37,7 @@ func run() {
 	player := player.NewPlayerStatus(loadContent[1], loadContent[3], loadContent[4], loadContent[5])
 	event.CreateWeaponPurchaseEvent(loadContent[2])
 	event.CreateArmorPurchaseEvent(loadContent[2])
+	event.CreateAccessoryPurchaseEvent(loadContent[2])
 	enemy.CreateEnemySettings()
 
 	imd := imdraw.New(nil)
