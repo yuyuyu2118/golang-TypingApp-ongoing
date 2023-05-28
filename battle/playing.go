@@ -8,6 +8,8 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/enemy"
+	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
@@ -83,7 +85,8 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, "EnemyAttack!!")
+		fmt.Fprintln(Txt, "敵の通常攻撃!!!")
+		fmt.Fprint(Txt, "攻撃力:", enemy.EnemySettings[myGame.StageNum].OP, "防御力:", enemy.EnemySettings[myGame.StageNum].DP)
 		myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt))
 	}
 
@@ -200,7 +203,8 @@ func InitBattleTextMagicUser(win *pixelgl.Window, Txt *text.Text, elapsed time.D
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, "EnemyAttack!!")
+		fmt.Fprintln(Txt, "敵の通常攻撃!!!")
+		fmt.Fprint(Txt, "攻撃力:", enemy.EnemySettings[myGame.StageNum].OP, "防御力:", enemy.EnemySettings[myGame.StageNum].DP)
 		myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt))
 	}
 
@@ -233,7 +237,8 @@ func InitBattleTextMonster(win *pixelgl.Window, Txt *text.Text, elapsed time.Dur
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, "EnemyAttack!!")
+		fmt.Fprintln(Txt, "敵の通常攻撃!!!")
+		fmt.Fprint(Txt, "攻撃力:", enemy.EnemySettings[myGame.StageNum].OP, "防御力:", enemy.EnemySettings[myGame.StageNum].DP)
 		myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt))
 	}
 
