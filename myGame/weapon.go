@@ -46,7 +46,6 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, topText string) {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
-	Txt.Color = colornames.White
 
 	myUtil.ScreenTxt.Clear()
 	myUtil.ScreenTxt.Color = colornames.White
