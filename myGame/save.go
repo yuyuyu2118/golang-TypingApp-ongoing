@@ -70,7 +70,7 @@ func SaveFileLoad(saveFilePath string) [][]string {
 
 func SaveFileCheck(saveFilePath string) {
 	tempInitText := []string{"Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,AttackTimer",
-		"NoName,30,30,5,1,50,0,2,0,No Job,0,Japanese,3.0",
+		"NoName,30,30,3,1,50,0,2,0,No Job,0,Japanese,5.0",
 		"0,0,0,0,0,0,0,0,0,0,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,",
 		"WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,",
