@@ -514,3 +514,66 @@ func CountMyItems(SaveFilePathItems string) (map[string]int, error) {
 	}
 	return itemCountMap, err
 }
+
+func SaveGameLostItems(SaveFilePathItems string, tempSlice map[string]int) error {
+	// CSVファイルからデータを読み込む
+	var records [][]string
+
+	file, err := os.Open(SaveFilePathItems)
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	records, err = reader.ReadAll()
+	if err != nil {
+		return err
+	}
+
+	// アイテムをカウントするマップを作成する
+	itemCountMap := make(map[string]int)
+	for _, record := range records {
+		if len(record) == 2 {
+			count, err := strconv.Atoi(record[1])
+			if err == nil {
+				itemCountMap[record[0]] = count
+			}
+		}
+	}
+
+	// アイテムを追加または更新する
+	for item, count := range tempSlice {
+		for i := 0; i < 3; i++ {
+			itemCountMap[item] = count
+		}
+	}
+
+	// カウント数でアイテムを降順にソートする
+	sortedItems := make([][2]string, 0, len(itemCountMap))
+	for item, count := range itemCountMap {
+		sortedItems = append(sortedItems, [2]string{item, strconv.Itoa(count)})
+	}
+	sort.Slice(sortedItems, func(i, j int) bool {
+		countI, _ := strconv.Atoi(sortedItems[i][1])
+		countJ, _ := strconv.Atoi(sortedItems[j][1])
+		return countI > countJ
+	})
+
+	// 新しいCSVフォーマットに変換する
+	var newRecords [][]string
+	for _, record := range sortedItems {
+		newRecord := []string{record[0], record[1]}
+		newRecords = append(newRecords, newRecord)
+	}
+
+	// 新しいCSVファイルを書き出す
+	newFile, err := os.Create(SaveFilePathItems)
+	if err != nil {
+		return err
+	}
+	defer newFile.Close()
+
+	writer := csv.NewWriter(newFile)
+	writer.WriteAll(newRecords)
+	writer.Flush()
+
+	return nil
+}

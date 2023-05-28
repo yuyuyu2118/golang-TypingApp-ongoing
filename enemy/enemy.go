@@ -2,7 +2,6 @@ package enemy
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 
 	"github.com/faiface/pixel"
@@ -67,7 +66,6 @@ func CreateEnemyInstance() *[]EnemyStatus {
 		}
 		instance = append(instance, tempInstance)
 	}
-	log.Println(instance)
 	return &instance
 }
 
