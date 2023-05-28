@@ -110,14 +110,16 @@ func InitWeaponShop(win *pixelgl.Window, Txt *text.Text) {
 
 func InitArmorShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
+	Txt.Clear()
 
-	InitArmor(win, Txt)
+	botText := "なにを買う? BackSpace.戻る"
+	InitArmor(win, Txt, botText)
 }
 
 func InitAccessoryShop(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 
-	InitAccessory(win, Txt)
+	//InitAccessory(win, Txt)
 }
 
 func InitEquipmentScreen(win *pixelgl.Window, Txt *text.Text) {

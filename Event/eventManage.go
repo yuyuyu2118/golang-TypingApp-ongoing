@@ -27,6 +27,48 @@ func CreateWeaponPurchaseEvent(value []string) {
 	}
 }
 
+type ArmorPurchaseEvent struct {
+	Armors map[int]bool
+}
+
+var ArmorPurchaseEventInstance *ArmorPurchaseEvent
+
+func CreateArmorPurchaseEvent(value []string) {
+	var armorPurchaseBool = make(map[int]bool)
+	for i, b := range value {
+		tempInt, _ := strconv.Atoi(b)
+		if tempInt >= 1 {
+			armorPurchaseBool[i] = true
+		} else {
+			armorPurchaseBool[i] = false
+		}
+	}
+	ArmorPurchaseEventInstance = &ArmorPurchaseEvent{
+		Armors: armorPurchaseBool,
+	}
+}
+
+type AccessoryPurchaseEvent struct {
+	Accessorys map[int]bool
+}
+
+var AccessoryPurchaseEventInstance *AccessoryPurchaseEvent
+
+func CreateAccessoryPurchaseEvent(value []string) {
+	var accessoryPurchaseBool = make(map[int]bool)
+	for i, b := range value {
+		tempInt, _ := strconv.Atoi(b)
+		if tempInt >= 1 {
+			accessoryPurchaseBool[i] = true
+		} else {
+			accessoryPurchaseBool[i] = false
+		}
+	}
+	AccessoryPurchaseEventInstance = &AccessoryPurchaseEvent{
+		Accessorys: accessoryPurchaseBool,
+	}
+}
+
 // type defeatedEnemyEvent struct {
 // 	Slime    bool
 // 	Bird     bool

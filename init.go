@@ -83,13 +83,13 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 		}
 	case myState.ArmorShop:
 		myGame.InitArmorShop(win, Txt)
-		if myState.CurrentGS == myState.ArmorShop && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
-			myState.CurrentGS = myGame.ArmorClickEvent(win, win.MousePosition())
+		if myState.CurrentGS == myState.ArmorShop && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyS, pg.KeyB, pg.KeyBackspace) {
+			myState.CurrentGS = myGame.ArmorClickEvent(win, win.MousePosition(), player)
 		}
 	case myState.AccessoryShop:
 		myGame.InitAccessoryShop(win, Txt)
 		if myState.CurrentGS == myState.AccessoryShop && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
-			myState.CurrentGS = myGame.AccessoryClickEvent(win, win.MousePosition())
+			// myState.CurrentGS = myGame.AccessoryClickEvent(win, win.MousePosition())
 		}
 	case myState.EquipmentScreen:
 		myGame.InitEquipmentScreen(win, Txt)
