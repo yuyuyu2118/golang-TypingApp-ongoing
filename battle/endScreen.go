@@ -31,6 +31,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 	fmt.Fprintln(myUtil.ScreenTxt, "リザルト  再戦 : Press Tab | 町に戻る : Press BackSpace")
 	tempPosition = myPos.TopCenPos(win, myUtil.ScreenTxt)
 	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
+	//DropEvent
 	if !dropEvent {
 		for i := 0; i < 3; i++ {
 			if rand.Float64() <= 0.3 { // 30%の確率でアイテムをドロップ

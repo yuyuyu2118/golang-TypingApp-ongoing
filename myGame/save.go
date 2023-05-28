@@ -73,6 +73,8 @@ func SaveFileCheck(saveFilePath string) {
 		"NoName,30,30,3,1,50,0,2,0,No Job,0,Japanese,5.0",
 		"0,0,0,0,0,0,0,0,0,0,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,",
+		"0,0,0,0,0,0,0,0,0,0,,,,",
+		"0,0,0,0,0,0,0,0,0,0,,,,",
 		"WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,",
 		"ArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,",
 		"AccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,",
@@ -243,49 +245,49 @@ func SaveWeaponPurchaseEvent(saveFilePath string, saveNum int, purchaseWeapon st
 	fmt.Println("保存ファイルを更新しました。")
 }
 
-func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, player *player.PlayerStatus) {
+func SaveArmorPurchaseEvent(saveFilePath string, saveNum int, purchaseArmor string, player *player.PlayerStatus) {
 	var tempInt int
 	loadContent := SaveFileLoad(saveFilePath)
-	if sellWeapon == "weapon1" {
-		tempInt, _ = strconv.Atoi(loadContent[3][0])
-		loadContent[3][0] = strconv.Itoa(tempInt - 1)
-		player.PossessedWeapon[0] = loadContent[3][0]
-	} else if sellWeapon == "weapon2" {
-		tempInt, _ = strconv.Atoi(loadContent[3][1])
-		loadContent[3][1] = strconv.Itoa(tempInt - 1)
-		player.PossessedWeapon[1] = loadContent[3][1]
-	} else if sellWeapon == "weapon3" {
-		tempInt, _ = strconv.Atoi(loadContent[3][2])
-		loadContent[3][2] = strconv.Itoa(tempInt - 1)
-		player.PossessedWeapon[2] = loadContent[3][2]
-	} else if sellWeapon == "weapon4" {
-		tempInt, _ = strconv.Atoi(loadContent[3][3])
-		loadContent[3][3] = strconv.Itoa(tempInt - 1)
-		player.PossessedWeapon[3] = loadContent[3][3]
-	} else if sellWeapon == "weapon5" {
-		tempInt, _ = strconv.Atoi(loadContent[3][4])
-		loadContent[3][4] = strconv.Itoa(tempInt - 1)
-		player.PossessedWeapon[4] = loadContent[3][4]
-	} else if sellWeapon == "weapon6" {
-		tempInt, _ = strconv.Atoi(loadContent[3][5])
-		loadContent[3][5] = strconv.Itoa(tempInt - 1)
-		player.PossessedWeapon[5] = loadContent[3][5]
-	} else if sellWeapon == "weapon7" {
-		tempInt, _ = strconv.Atoi(loadContent[3][6])
-		loadContent[3][6] = strconv.Itoa(tempInt - 1)
-		player.PossessedWeapon[6] = loadContent[3][6]
-	} else if sellWeapon == "weapon8" {
-		tempInt, _ = strconv.Atoi(loadContent[3][7])
-		loadContent[3][7] = strconv.Itoa(tempInt - 1)
-		player.PossessedWeapon[7] = loadContent[3][7]
-	} else if sellWeapon == "weapon9" {
-		tempInt, _ = strconv.Atoi(loadContent[3][8])
-		loadContent[3][8] = strconv.Itoa(tempInt - 1)
-		player.PossessedWeapon[8] = loadContent[3][8]
-	} else if sellWeapon == "weapon0" {
-		tempInt, _ = strconv.Atoi(loadContent[3][9])
-		loadContent[3][9] = strconv.Itoa(tempInt - 1)
-		player.PossessedWeapon[9] = loadContent[3][9]
+	if purchaseArmor == "armor1" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][0])
+		loadContent[saveNum][0] = strconv.Itoa(tempInt + 1)
+		player.PossessedArmor[0] = loadContent[saveNum][0]
+	} else if purchaseArmor == "armor2" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][1])
+		loadContent[saveNum][1] = strconv.Itoa(tempInt + 1)
+		player.PossessedArmor[1] = loadContent[saveNum][1]
+	} else if purchaseArmor == "armor3" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][2])
+		loadContent[saveNum][2] = strconv.Itoa(tempInt + 1)
+		player.PossessedArmor[2] = loadContent[saveNum][2]
+	} else if purchaseArmor == "armor4" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][3])
+		loadContent[saveNum][3] = strconv.Itoa(tempInt + 1)
+		player.PossessedArmor[3] = loadContent[saveNum][3]
+	} else if purchaseArmor == "armor5" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][4])
+		loadContent[saveNum][4] = strconv.Itoa(tempInt + 1)
+		player.PossessedArmor[4] = loadContent[saveNum][4]
+	} else if purchaseArmor == "armor6" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][5])
+		loadContent[saveNum][5] = strconv.Itoa(tempInt + 1)
+		player.PossessedArmor[5] = loadContent[saveNum][5]
+	} else if purchaseArmor == "armor7" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][6])
+		loadContent[saveNum][6] = strconv.Itoa(tempInt + 1)
+		player.PossessedArmor[6] = loadContent[saveNum][6]
+	} else if purchaseArmor == "armor8" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][7])
+		loadContent[saveNum][7] = strconv.Itoa(tempInt + 1)
+		player.PossessedArmor[7] = loadContent[saveNum][7]
+	} else if purchaseArmor == "armor9" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][8])
+		loadContent[saveNum][8] = strconv.Itoa(tempInt + 1)
+		player.PossessedArmor[8] = loadContent[saveNum][8]
+	} else if purchaseArmor == "armor0" {
+		tempInt, _ = strconv.Atoi(loadContent[saveNum][9])
+		loadContent[saveNum][9] = strconv.Itoa(tempInt + 1)
+		player.PossessedArmor[9] = loadContent[saveNum][9]
 	}
 	saveContent := strings.Join(loadContent[saveNum], ",")
 
@@ -310,6 +312,74 @@ func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, pl
 
 	fmt.Println("保存ファイルを更新しました。")
 }
+
+// func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, player *player.PlayerStatus) {
+// 	var tempInt int
+// 	loadContent := SaveFileLoad(saveFilePath)
+// 	if sellWeapon == "weapon1" {
+// 		tempInt, _ = strconv.Atoi(loadContent[3][0])
+// 		loadContent[3][0] = strconv.Itoa(tempInt - 1)
+// 		player.PossessedWeapon[0] = loadContent[3][0]
+// 	} else if sellWeapon == "weapon2" {
+// 		tempInt, _ = strconv.Atoi(loadContent[3][1])
+// 		loadContent[3][1] = strconv.Itoa(tempInt - 1)
+// 		player.PossessedWeapon[1] = loadContent[3][1]
+// 	} else if sellWeapon == "weapon3" {
+// 		tempInt, _ = strconv.Atoi(loadContent[3][2])
+// 		loadContent[3][2] = strconv.Itoa(tempInt - 1)
+// 		player.PossessedWeapon[2] = loadContent[3][2]
+// 	} else if sellWeapon == "weapon4" {
+// 		tempInt, _ = strconv.Atoi(loadContent[3][3])
+// 		loadContent[3][3] = strconv.Itoa(tempInt - 1)
+// 		player.PossessedWeapon[3] = loadContent[3][3]
+// 	} else if sellWeapon == "weapon5" {
+// 		tempInt, _ = strconv.Atoi(loadContent[3][4])
+// 		loadContent[3][4] = strconv.Itoa(tempInt - 1)
+// 		player.PossessedWeapon[4] = loadContent[3][4]
+// 	} else if sellWeapon == "weapon6" {
+// 		tempInt, _ = strconv.Atoi(loadContent[3][5])
+// 		loadContent[3][5] = strconv.Itoa(tempInt - 1)
+// 		player.PossessedWeapon[5] = loadContent[3][5]
+// 	} else if sellWeapon == "weapon7" {
+// 		tempInt, _ = strconv.Atoi(loadContent[3][6])
+// 		loadContent[3][6] = strconv.Itoa(tempInt - 1)
+// 		player.PossessedWeapon[6] = loadContent[3][6]
+// 	} else if sellWeapon == "weapon8" {
+// 		tempInt, _ = strconv.Atoi(loadContent[3][7])
+// 		loadContent[3][7] = strconv.Itoa(tempInt - 1)
+// 		player.PossessedWeapon[7] = loadContent[3][7]
+// 	} else if sellWeapon == "weapon9" {
+// 		tempInt, _ = strconv.Atoi(loadContent[3][8])
+// 		loadContent[3][8] = strconv.Itoa(tempInt - 1)
+// 		player.PossessedWeapon[8] = loadContent[3][8]
+// 	} else if sellWeapon == "weapon0" {
+// 		tempInt, _ = strconv.Atoi(loadContent[3][9])
+// 		loadContent[3][9] = strconv.Itoa(tempInt - 1)
+// 		player.PossessedWeapon[9] = loadContent[3][9]
+// 	}
+// 	saveContent := strings.Join(loadContent[saveNum], ",")
+
+// 	content, err := ioutil.ReadFile(saveFilePath)
+// 	if err != nil {
+// 		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
+// 		return
+// 	}
+// 	lines := strings.Split(string(content), "\n")
+// 	if saveNum < 0 || saveNum >= len(lines) {
+// 		fmt.Println("指定された行番号が範囲外です。")
+// 		return
+// 	}
+// 	lines[saveNum] = saveContent
+
+// 	output := strings.Join(lines, "\n")
+// 	err = ioutil.WriteFile(saveFilePath, []byte(output), 0644)
+// 	if err != nil {
+// 		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
+// 		return
+// 	}
+
+// 	fmt.Println("保存ファイルを更新しました。")
+// }
 
 // TODO: アイテムのセーブ実装中
 func SaveGameItems(SaveFilePathItems string, gainItem []string) error {

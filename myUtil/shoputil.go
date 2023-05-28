@@ -11,9 +11,9 @@ import (
 	"golang.org/x/image/colornames"
 )
 
-func WeaponShopInitAndText(win *pixelgl.Window, Txt *text.Text, botText string) (float64, float64, pixel.Vec) {
-	xOffSet := 100.0
-	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
+func ShopInitAndText(win *pixelgl.Window, Txt *text.Text, botText string) (float64, float64, pixel.Vec) {
+	xOffSet := 30.0
+	yOffSet := myPos.TopLefPos(win, Txt).Y - 50
 	txtPos := pixel.V(0, 0)
 
 	Txt.Clear()

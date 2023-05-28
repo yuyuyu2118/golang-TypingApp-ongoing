@@ -56,7 +56,7 @@ var (
 var currentweaponState WeaponState
 
 func InitWeapon(win *pixelgl.Window, Txt *text.Text, botText string) {
-	xOffSet, yOffSet, txtPos := myUtil.WeaponShopInitAndText(win, myUtil.ScreenTxt, botText)
+	xOffSet, yOffSet, txtPos := myUtil.ShopInitAndText(win, myUtil.ScreenTxt, botText)
 
 	for i, v := range weaponName {
 		if event.WeaponPurchaseEventInstance.Weapons[i] {

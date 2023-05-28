@@ -14,20 +14,22 @@ import (
 )
 
 type PlayerStatus struct {
-	Name            string
-	MaxHP           float64
-	HP              float64
-	OP              float64
-	DP              float64
-	MaxSP           float64
-	SP              float64
-	BaseSP          float64
-	Gold            int
-	Job             string
-	AP              int
-	Language        string
-	AttackTimer     float64
-	PossessedWeapon []string
+	Name               string
+	MaxHP              float64
+	HP                 float64
+	OP                 float64
+	DP                 float64
+	MaxSP              float64
+	SP                 float64
+	BaseSP             float64
+	Gold               int
+	Job                string
+	AP                 int
+	Language           string
+	AttackTimer        float64
+	PossessedWeapon    []string
+	PossessedArmor     []string
+	PossessedAccessory []string
 }
 
 var (
@@ -36,7 +38,7 @@ var (
 
 var PlayerStatusInstance *PlayerStatus
 
-func NewPlayerStatus(value []string, possess []string) *PlayerStatus {
+func NewPlayerStatus(value []string, possessWeapon []string, possessArmor []string, possessAccessory []string) *PlayerStatus {
 	Name := value[0]
 	MaxHP, _ := strconv.ParseFloat(value[1], 64)
 	HP, _ := strconv.ParseFloat(value[2], 64)
@@ -50,23 +52,27 @@ func NewPlayerStatus(value []string, possess []string) *PlayerStatus {
 	AP, _ := strconv.Atoi((value[10]))
 	Language := value[11]
 	AttackTimer, _ := strconv.ParseFloat(value[12], 64)
-	PossessedWeapon := possess
+	PossessedWeapon := possessWeapon
+	PossessedArmor := possessArmor
+	PossessedAccessory := possessAccessory
 
 	PlayerStatusInstance := &PlayerStatus{
-		Name:            Name,
-		MaxHP:           MaxHP,
-		HP:              HP,
-		OP:              OP,
-		DP:              DP,
-		MaxSP:           MaxSP,
-		SP:              SP,
-		BaseSP:          BaseSP,
-		Gold:            Gold,
-		Job:             Job,
-		AP:              AP,
-		Language:        Language,
-		AttackTimer:     AttackTimer,
-		PossessedWeapon: PossessedWeapon,
+		Name:               Name,
+		MaxHP:              MaxHP,
+		HP:                 HP,
+		OP:                 OP,
+		DP:                 DP,
+		MaxSP:              MaxSP,
+		SP:                 SP,
+		BaseSP:             BaseSP,
+		Gold:               Gold,
+		Job:                Job,
+		AP:                 AP,
+		Language:           Language,
+		AttackTimer:        AttackTimer,
+		PossessedWeapon:    PossessedWeapon,
+		PossessedArmor:     PossessedArmor,
+		PossessedAccessory: PossessedAccessory,
 	}
 	return PlayerStatusInstance
 }
