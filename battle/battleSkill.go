@@ -305,7 +305,8 @@ func InitBattleTextHunterSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, "EnemyAttack!!")
+		fmt.Fprintln(Txt, "敵の通常攻撃!!!")
+		fmt.Fprint(Txt, "攻撃力:", enemy.EnemySettings[myGame.StageNum].OP, "防御力:", enemy.EnemySettings[myGame.StageNum].DP)
 		myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt))
 	}
 
