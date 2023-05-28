@@ -46,10 +46,9 @@ func CreateEnemyInstance() *[]EnemyStatus {
 		AttackTick, _ := strconv.ParseFloat(value[7], 64)
 		DropAP, _ := strconv.Atoi((value[8]))
 		EnemySize, _ := strconv.ParseFloat(value[9], 64)
-		DropItems = append(DropItems, value[10])
-		DropItems = append(DropItems, value[11])
-		DropItems = append(DropItems, value[12])
-		DropItems = append(DropItems, value[13])
+		for i := 10; i < 20; i++ {
+			DropItems = append(DropItems, value[i])
+		}
 
 		tempInstance := EnemyStatus{
 			Name:       Name,
