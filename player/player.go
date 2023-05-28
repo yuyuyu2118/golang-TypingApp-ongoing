@@ -286,6 +286,9 @@ func (player *PlayerStatus) InitPlayerStatus(win *pixelgl.Window, Txt *text.Text
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, player.Job, " Gold:", player.Gold, "S")
 	fmt.Fprintln(Txt, "アタックタイマー: ", player.AttackTimer)
+	//TODO: 攻撃力防御力の表示をする
+	// fmt.Fprintln(Txt, "攻撃力: ", player.OP)
+	// fmt.Fprintln(Txt, "防御力: ", player.DP)
 	tempPosition := myPos.TopLefPos(win, Txt).Add(pixel.V(0, 30))
 	myPos.DrawPos(win, Txt, tempPosition)
 }
