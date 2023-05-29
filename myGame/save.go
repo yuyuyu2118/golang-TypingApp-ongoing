@@ -32,7 +32,10 @@ func SaveGame(saveFilePath string, saveNum int, player *player.PlayerStatus) {
 	AP := strconv.Itoa(player.AP)
 	Language := player.Language
 	AttackTime := strconv.FormatFloat(player.AttackTimer, 'f', -1, 64)
-	saveContent := Name + "," + MaxHP + "," + HP + "," + OP + "," + DP + "," + MaxSP + "," + SP + "," + BaseSP + "," + Gold + "," + Job + "," + AP + "," + Language + "," + AttackTime + ","
+	BaseOP := strconv.FormatFloat(3.0, 'f', -1, 64)
+	BaseDP := strconv.FormatFloat(1.0, 'f', -1, 64)
+	BaseAttackTime := strconv.FormatFloat(4.0, 'f', -1, 64)
+	saveContent := Name + "," + MaxHP + "," + HP + "," + OP + "," + DP + "," + MaxSP + "," + SP + "," + BaseSP + "," + Gold + "," + Job + "," + AP + "," + Language + "," + AttackTime + "," + BaseOP + "," + BaseDP + "," + BaseAttackTime
 
 	content, err := ioutil.ReadFile(saveFilePath)
 	if err != nil {
@@ -69,15 +72,15 @@ func SaveFileLoad(saveFilePath string) [][]string {
 }
 
 func SaveFileCheck(saveFilePath string) {
-	tempInitText := []string{"Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,AttackTimer",
-		"NoName,30,30,3,1,50,0,2,0,No Job,0,Japanese,5.0",
-		"0,0,0,0,0,0,0,0,0,0,,,,",
-		"0,0,0,0,0,0,0,0,0,0,,,,",
-		"0,0,0,0,0,0,0,0,0,0,,,,",
-		"0,0,0,0,0,0,0,0,0,0,,,,",
-		"WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,",
-		"ArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,",
-		"AccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,",
+	tempInitText := []string{"Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,AttackTimer,BaseOP,BaseDP,BaseAttackTimer",
+		"NoName,30,30,3,1,50,0,2,0,No Job,0,Japanese,4.0,3.0,1.0,4.0",
+		"0,0,0,0,0,0,0,0,0,0,,,,,,",
+		"0,0,0,0,0,0,0,0,0,0,,,,,,",
+		"0,0,0,0,0,0,0,0,0,0,,,,,,",
+		"0,0,0,0,0,0,0,0,0,0,,,,,,",
+		"WeaponName,,,,,,,,,,,,,,,",
+		"ArmorName,,,,,,,,,,,,,,,",
+		"AccessoryName,,,,,,,,,,,,,,,",
 	}
 	initializeText := strings.Join(tempInitText, "\n")
 	//initializeText := "Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,\nNoName,30,30,3,1,50,0,2,0,No Job,0,\nWeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nAccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,"
@@ -714,4 +717,116 @@ func SaveGameLostItems(SaveFilePathItems string, tempSlice map[string]int) error
 	writer.Flush()
 
 	return nil
+}
+
+func SaveGameWeapon(saveFilePath string, saveNum int, player *player.PlayerStatus) {
+	SaveFileCheck(saveFilePath)
+	//saveContent := "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
+	Name := player.EquipmentWeapon[0]
+	OP := player.EquipmentWeapon[1]
+	DP := player.EquipmentWeapon[2]
+	AttackTimer := player.EquipmentWeapon[3]
+	saveContent := Name + "," + OP + "," + DP + "," + AttackTimer + ",,,,,,,,,,,,"
+
+	content, err := ioutil.ReadFile(saveFilePath)
+	if err != nil {
+		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
+		return
+	}
+
+	// 改行文字で分割して行ごとのスライスに変換
+	lines := strings.Split(string(content), "\n")
+
+	// 行番号が有効な範囲かチェック
+	if saveNum < 0 || saveNum >= len(lines) {
+		fmt.Println("指定された行番号が範囲外です。")
+		return
+	}
+
+	// 指定された行を上書き
+	lines[saveNum] = saveContent
+
+	// 更新後の内容を保存ファイルに書き込む
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile(saveFilePath, []byte(output), 0644)
+	if err != nil {
+		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
+		return
+	}
+
+	fmt.Println("保存ファイルを更新しました。")
+}
+
+func SaveGameArmor(saveFilePath string, saveNum int, player *player.PlayerStatus) {
+	SaveFileCheck(saveFilePath)
+	Name := player.EquipmentArmor[0]
+	OP := player.EquipmentArmor[1]
+	DP := player.EquipmentArmor[2]
+	AttackTimer := player.EquipmentArmor[3]
+	saveContent := Name + "," + OP + "," + DP + "," + AttackTimer + ",,,,,,,,,,,,"
+
+	content, err := ioutil.ReadFile(saveFilePath)
+	if err != nil {
+		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
+		return
+	}
+
+	// 改行文字で分割して行ごとのスライスに変換
+	lines := strings.Split(string(content), "\n")
+
+	// 行番号が有効な範囲かチェック
+	if saveNum < 0 || saveNum >= len(lines) {
+		fmt.Println("指定された行番号が範囲外です。")
+		return
+	}
+
+	// 指定された行を上書き
+	lines[saveNum] = saveContent
+
+	// 更新後の内容を保存ファイルに書き込む
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile(saveFilePath, []byte(output), 0644)
+	if err != nil {
+		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
+		return
+	}
+
+	fmt.Println("保存ファイルを更新しました。")
+}
+
+func SaveGameAccessory(saveFilePath string, saveNum int, player *player.PlayerStatus) {
+	SaveFileCheck(saveFilePath)
+	Name := player.EquipmentAccessory[0]
+	OP := player.EquipmentAccessory[1]
+	DP := player.EquipmentAccessory[2]
+	AttackTimer := player.EquipmentAccessory[3]
+	saveContent := Name + "," + OP + "," + DP + "," + AttackTimer + ",,,,,,,,,,,,"
+
+	content, err := ioutil.ReadFile(saveFilePath)
+	if err != nil {
+		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
+		return
+	}
+
+	// 改行文字で分割して行ごとのスライスに変換
+	lines := strings.Split(string(content), "\n")
+
+	// 行番号が有効な範囲かチェック
+	if saveNum < 0 || saveNum >= len(lines) {
+		fmt.Println("指定された行番号が範囲外です。")
+		return
+	}
+
+	// 指定された行を上書き
+	lines[saveNum] = saveContent
+
+	// 更新後の内容を保存ファイルに書き込む
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile(saveFilePath, []byte(output), 0644)
+	if err != nil {
+		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
+		return
+	}
+
+	fmt.Println("保存ファイルを更新しました。")
 }

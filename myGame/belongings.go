@@ -43,22 +43,22 @@ func InitEquipment(win *pixelgl.Window, Txt *text.Text) {
 	switch myState.CurrentBelong {
 	case myState.WeaponBelong:
 		InitWeaponBelongScreen(win, myUtil.DescriptionTxt)
-		if myState.CurrentBelong == myState.WeaponBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
-			myState.CurrentBelong = BelongClickEvent(win, win.MousePosition())
+		if myState.CurrentBelong == myState.WeaponBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
+			WeaponBelongClickEvent(win, win.MousePosition())
 		}
 	case myState.ArmorBelong:
 		InitArmorBelongScreen(win, myUtil.DescriptionTxt)
-		if myState.CurrentBelong == myState.ArmorBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
-			myState.CurrentBelong = BelongClickEvent(win, win.MousePosition())
+		if myState.CurrentBelong == myState.ArmorBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
+			ArmorBelongClickEvent(win, win.MousePosition())
 		}
 	case myState.AccessoryBelong:
 		InitAccessoryBelongScreen(win, myUtil.DescriptionTxt)
-		if myState.CurrentBelong == myState.AccessoryBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
-			myState.CurrentBelong = BelongClickEvent(win, win.MousePosition())
+		if myState.CurrentBelong == myState.AccessoryBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
+			AccessoryBelongClickEvent(win, win.MousePosition())
 		}
 	case myState.MaterialsBelong:
 		InitMaterialsBelongScreen(win, myUtil.DescriptionTxt)
-		if myState.CurrentBelong == myState.MaterialsBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.KeyBackspace) {
+		if myState.CurrentBelong == myState.MaterialsBelong && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
 			myState.CurrentBelong = BelongClickEvent(win, win.MousePosition())
 		}
 	}

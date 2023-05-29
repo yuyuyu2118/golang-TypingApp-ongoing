@@ -27,9 +27,15 @@ type PlayerStatus struct {
 	AP                 int
 	Language           string
 	AttackTimer        float64
+	BaseOP             float64
+	BaseDP             float64
+	BaseAttackTimer    float64
 	PossessedWeapon    []string
 	PossessedArmor     []string
 	PossessedAccessory []string
+	EquipmentWeapon    []string
+	EquipmentArmor     []string
+	EquipmentAccessory []string
 }
 
 var (
@@ -38,30 +44,49 @@ var (
 
 var PlayerStatusInstance *PlayerStatus
 
-func NewPlayerStatus(value []string, possessWeapon []string, possessArmor []string, possessAccessory []string) *PlayerStatus {
-	Name := value[0]
-	MaxHP, _ := strconv.ParseFloat(value[1], 64)
-	HP, _ := strconv.ParseFloat(value[2], 64)
-	OP, _ := strconv.ParseFloat(value[3], 64)
-	DP, _ := strconv.ParseFloat(value[4], 64)
-	MaxSP, _ := strconv.ParseFloat(value[5], 64)
-	SP, _ := strconv.ParseFloat(value[6], 64)
-	BaseSP, _ := strconv.ParseFloat(value[7], 64)
-	Gold, _ := strconv.Atoi((value[8]))
-	Job := value[9]
-	AP, _ := strconv.Atoi((value[10]))
-	Language := value[11]
-	AttackTimer, _ := strconv.ParseFloat(value[12], 64)
-	PossessedWeapon := possessWeapon
-	PossessedArmor := possessArmor
-	PossessedAccessory := possessAccessory
+func NewPlayerStatus(value [][]string) *PlayerStatus {
+	Name := value[1][0]
+	MaxHP, _ := strconv.ParseFloat(value[1][1], 64)
+	HP, _ := strconv.ParseFloat(value[1][2], 64)
+	//OP, _ := strconv.ParseFloat(value[1][3], 64)
+	//DP, _ := strconv.ParseFloat(value[1][4], 64)
+	MaxSP, _ := strconv.ParseFloat(value[1][5], 64)
+	SP, _ := strconv.ParseFloat(value[1][6], 64)
+	BaseSP, _ := strconv.ParseFloat(value[1][7], 64)
+	Gold, _ := strconv.Atoi((value[1][8]))
+	Job := value[1][9]
+	AP, _ := strconv.Atoi((value[1][10]))
+	Language := value[1][11]
+	//AttackTimer, _ := strconv.ParseFloat(value[1][12], 64)
+	BaseOP, _ := strconv.ParseFloat(value[1][13], 64)
+	BaseDP, _ := strconv.ParseFloat(value[1][14], 64)
+	BaseAttackTimer, _ := strconv.ParseFloat(value[1][15], 64)
+	PossessedWeapon := value[3]
+	PossessedArmor := value[4]
+	PossessedAccessory := value[5]
+	EquipmentWeapon := value[6]
+	EquipmentArmor := value[7]
+	EquipmentAccessory := value[8]
+
+	tempOP1, _ := strconv.ParseFloat(value[1][13], 64)
+	tempOP2, _ := strconv.ParseFloat(value[6][1], 64)
+	tempOP3, _ := strconv.ParseFloat(value[8][1], 64)
+
+	tempDP1, _ := strconv.ParseFloat(value[1][14], 64)
+	tempDP2, _ := strconv.ParseFloat(value[7][2], 64)
+	tempDP3, _ := strconv.ParseFloat(value[8][2], 64)
+
+	tempAttackTimer1, _ := strconv.ParseFloat(value[1][15], 64)
+	tempAttackTimer2, _ := strconv.ParseFloat(value[6][3], 64)
+	tempAttackTimer3, _ := strconv.ParseFloat(value[7][3], 64)
+	tempAttackTimer4, _ := strconv.ParseFloat(value[8][3], 64)
 
 	PlayerStatusInstance := &PlayerStatus{
 		Name:               Name,
 		MaxHP:              MaxHP,
 		HP:                 HP,
-		OP:                 OP,
-		DP:                 DP,
+		OP:                 tempOP1 + tempOP2 + tempOP3,
+		DP:                 tempDP1 + tempDP2 + tempDP3,
 		MaxSP:              MaxSP,
 		SP:                 SP,
 		BaseSP:             BaseSP,
@@ -69,10 +94,16 @@ func NewPlayerStatus(value []string, possessWeapon []string, possessArmor []stri
 		Job:                Job,
 		AP:                 AP,
 		Language:           Language,
-		AttackTimer:        AttackTimer,
+		AttackTimer:        tempAttackTimer1 + tempAttackTimer2 + tempAttackTimer3 + tempAttackTimer4,
+		BaseOP:             BaseOP,
+		BaseDP:             BaseDP,
+		BaseAttackTimer:    BaseAttackTimer,
 		PossessedWeapon:    PossessedWeapon,
 		PossessedArmor:     PossessedArmor,
 		PossessedAccessory: PossessedAccessory,
+		EquipmentWeapon:    EquipmentWeapon,
+		EquipmentArmor:     EquipmentArmor,
+		EquipmentAccessory: EquipmentAccessory,
 	}
 	return PlayerStatusInstance
 }

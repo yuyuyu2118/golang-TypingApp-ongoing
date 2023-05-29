@@ -48,37 +48,37 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 
 	//TODO: 折り返し
 	for _, gotoName := range gotoSlice {
-		if itemCount >= 0 && itemCount <= 8 {
+		if itemCount >= 0 && itemCount <= 15 {
 			Txt.Clear()
 			Txt.Color = colornames.White
 			fmt.Fprintln(Txt, gotoName)
-			yOffSet1Line -= Txt.LineHeight + 40
+			yOffSet1Line -= Txt.LineHeight + 10
 			txtPos = pixel.V(xOffSet, yOffSet1Line)
 			tempPosition := pixel.IM.Moved(txtPos)
 			Txt.Draw(win, tempPosition)
 			gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
 			itemCount++
-			if itemCount == 8 {
+			if itemCount == 15 {
 				xOffSet += 300
 			}
-		} else if itemCount > 8 && itemCount <= 16 {
+		} else if itemCount > 15 && itemCount <= 30 {
 			Txt.Clear()
 			Txt.Color = colornames.White
 			fmt.Fprintln(Txt, gotoName)
-			yOffSet2Line -= Txt.LineHeight + 40
+			yOffSet2Line -= Txt.LineHeight + 10
 			txtPos = pixel.V(xOffSet, yOffSet2Line)
 			tempPosition := pixel.IM.Moved(txtPos)
 			Txt.Draw(win, tempPosition)
 			gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
 			itemCount++
-			if itemCount == 16 {
+			if itemCount == 30 {
 				xOffSet += 300
 			}
-		} else if itemCount > 16 && itemCount <= 24 {
+		} else if itemCount > 30 && itemCount <= 45 {
 			Txt.Clear()
 			Txt.Color = colornames.White
 			fmt.Fprintln(Txt, gotoName)
-			yOffSet3Line -= Txt.LineHeight + 40
+			yOffSet3Line -= Txt.LineHeight + 10
 			txtPos = pixel.V(xOffSet, yOffSet3Line)
 			tempPosition := pixel.IM.Moved(txtPos)
 			Txt.Draw(win, tempPosition)
