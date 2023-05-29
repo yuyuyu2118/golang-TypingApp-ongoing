@@ -89,9 +89,9 @@ func RemoveAnimation(anim *DamageAnimation) {
 	}
 }
 
-func PlayerAttack(win *pixelgl.Window, damage int, position pixel.Vec) {
+func PlayerAttack(win *pixelgl.Window, damage float64, position pixel.Vec) {
 	anim := &DamageAnimation{
-		Text:       strconv.Itoa(damage),
+		Text:       strconv.FormatFloat(damage, 'f', -1, 64),
 		Position:   position,
 		Progress:   0.0,
 		RemoveFlag: false,

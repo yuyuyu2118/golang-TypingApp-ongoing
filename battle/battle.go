@@ -106,7 +106,7 @@ func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time
 						index = 0
 						score++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
-						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
+						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
 						tempWordDamage = 0.0
 					}
 				} else {
