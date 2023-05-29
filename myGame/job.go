@@ -3,10 +3,12 @@ package myGame
 import (
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	event "github.com/yuyuyu2118/typingGo/Event"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/player"
@@ -26,13 +28,41 @@ var (
 	jobButtonSlice = []pixel.Rect{}
 )
 
+type JobState int
+
+const (
+	jobNil JobState = iota
+	job1
+	job2
+	job3
+	job4
+	job5
+)
+
+var keyToJob = map[pixelgl.Button]JobState{
+	pixelgl.Key1: job1,
+	pixelgl.Key2: job2,
+	pixelgl.Key3: job3,
+	pixelgl.Key4: job4,
+	pixelgl.Key5: job5,
+}
+
+var jobSlice = []string{"1. ???", "2. ???", "3. ???", "4. ???", "5. ???"}
+var jobNum = []string{"job0", "job1", "job2", "job3", "job4"}
+var jobName = []string{"見習い剣士", "狩人", "モンク", "魔法使い", "化け物"}
+
+var currentjobState JobState
+
 func InitJob(win *pixelgl.Window, Txt *text.Text) {
 	xOffSet := myPos.TopLefPos(win, Txt).X + 400
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 50
 	txtPos := pixel.V(0, 0)
 
-	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
-	jobSlice := []string{"1. 見習い剣士", "2. 狩人", "3. モンク", "4. 魔法使い", "5. 化け物"}
+	for i, v := range jobName {
+		if event.UnlockNewJobEventInstance.Jobs[i] {
+			jobSlice[i] = strconv.Itoa(i+1) + ". " + v
+		}
+	}
 
 	for _, jobName := range jobSlice {
 		Txt.Clear()
@@ -44,41 +74,37 @@ func InitJob(win *pixelgl.Window, Txt *text.Text) {
 		Txt.Draw(win, tempPosition)
 		jobButtonSlice = append(jobButtonSlice, Txt.Bounds().Moved(txtPos))
 	}
+
+	for i := 0; i < len(keyToJob)-1; i++ {
+		key := pixelgl.Button(i + int(pixelgl.Key1))
+		if win.Pressed(key) && event.UnlockNewJobEventInstance.Jobs[i] {
+			currentjobState = JobState(i + 1)
+			break
+		}
+	}
+	//TODO: ジョブ説明を追加する
+	// if currentdungeonState >= dungeon1 && currentdungeonState <= dungeon10 {
+	// 	DescriptionWeapon(win, descWeapon, int(currentdungeonState)-1)
+	// }
 }
 
 func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
 
-	if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
-		myState.CurrentGS = myState.GoToScreen
-		player.Job = "見習い剣士"
-	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
-		myState.CurrentGS = myState.GoToScreen
-		player.Job = "狩人"
-	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
-		myState.CurrentGS = myState.GoToScreen
-		player.Job = "モンク"
-	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
-		myState.CurrentGS = myState.GoToScreen
-		player.Job = "魔法使い"
-	} else if myState.CurrentGS == myState.JobSelect && (jobButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
-		myState.CurrentGS = myState.GoToScreen
-		player.Job = "化け物"
-	} else if myState.CurrentGS == myState.JobSelect && (win.JustPressed(pixelgl.KeyBackspace)) {
+	for i := 0; i < len(keyToJob)-1; i++ {
+		key := pixelgl.Button(i + int(pixelgl.Key1))
+		if (jobButtonSlice[i].Contains(mousePos) || win.Pressed(key)) && event.UnlockNewJobEventInstance.Jobs[i] && myState.CurrentGS == myState.JobSelect {
+			currentjobState = JobState(i + 1)
+			log.Println("ジョブ選択", i+1, jobName[i])
+			player.Job = jobName[i]
+			myState.CurrentGS = myState.GoToScreen
+			break
+		}
+	}
+
+	if myState.CurrentGS == myState.JobSelect && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentGS = myState.GoToScreen
 		log.Println("jobScreen -> GoToScreen")
 	}
 	log.Println("YourJob is", player.Job)
 	return myState.CurrentGS
-}
-
-// TODO: 不要
-func InitPlayerJob(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, player.Job)
-	xOffSet := 0.0
-	yOffSet := win.Bounds().H() / 3
-	txtPos := pixel.V(xOffSet, yOffSet)
-	tempPosition := pixel.IM.Moved(txtPos)
-	Txt.Draw(win, tempPosition)
 }
