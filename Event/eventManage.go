@@ -69,6 +69,49 @@ func CreateAccessoryPurchaseEvent(value []string) {
 	}
 }
 
+type UnlockNewJobEvent struct {
+	Jobs map[int]bool
+}
+
+var UnlockNewJobEventInstance *UnlockNewJobEvent
+
+func CreateUnlockNewJobEvent(value []string) {
+	var unlockNewJobBool = make(map[int]bool)
+	for i, b := range value {
+		tempInt, _ := strconv.Atoi(b)
+		if tempInt >= 1 {
+			unlockNewJobBool[i] = true
+		} else {
+			unlockNewJobBool[i] = false
+		}
+	}
+	UnlockNewJobEventInstance = &UnlockNewJobEvent{
+		Jobs: unlockNewJobBool,
+	}
+}
+
+type UnlockNewDungeonEvent struct {
+	Dungeons map[int]bool
+}
+
+var UnlockNewDungeonEventInstance *UnlockNewDungeonEvent
+
+func CreateUnlockNewDungeonEvent(value []string) {
+	var unlockNewDungeonBool = make(map[int]bool)
+	unlockNewDungeonBool[0] = true
+	for i, b := range value {
+		tempInt, _ := strconv.Atoi(b)
+		if tempInt >= 1 {
+			unlockNewDungeonBool[i+1] = true
+		} else {
+			unlockNewDungeonBool[i+1] = false
+		}
+	}
+	UnlockNewDungeonEventInstance = &UnlockNewDungeonEvent{
+		Dungeons: unlockNewDungeonBool,
+	}
+}
+
 // type defeatedEnemyEvent struct {
 // 	Slime    bool
 // 	Bird     bool

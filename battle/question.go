@@ -10,7 +10,7 @@ import (
 
 func InitializeQuestion() []string {
 	words := []string{}
-	file, _ := os.Open("assets\\question\\question2_4.csv")
+	file, _ := os.Open("assets\\question\\question2_6.csv")
 	defer file.Close()
 	reader := csv.NewReader(file)
 	for {
@@ -50,7 +50,7 @@ func ShufflePairs(pairs [][2]string) [][2]string {
 }
 
 func LoadWordsFromCSV() (map[string]string, []string, error) {
-	file, err := os.Open("assets\\question\\question2_4.csv")
+	file, err := os.Open("assets\\question\\question2_6.csv")
 	if err != nil {
 		return nil, nil, err
 	}

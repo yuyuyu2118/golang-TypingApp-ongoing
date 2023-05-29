@@ -36,6 +36,8 @@ func run() {
 	event.CreateWeaponPurchaseEvent(loadContent[2])
 	event.CreateArmorPurchaseEvent(loadContent[2])
 	event.CreateAccessoryPurchaseEvent(loadContent[2])
+	event.CreateUnlockNewJobEvent(loadContent[2])
+	event.CreateUnlockNewDungeonEvent(loadContent[2])
 	enemy.CreateEnemySettings()
 
 	imd := imdraw.New(nil)
@@ -95,6 +97,10 @@ func run() {
 		case myState.EndScreen: //リザルト画面
 			loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
 			event.CreateWeaponPurchaseEvent(loadContent[2])
+			event.CreateArmorPurchaseEvent(loadContent[2])
+			event.CreateAccessoryPurchaseEvent(loadContent[2])
+			event.CreateUnlockNewJobEvent(loadContent[2])
+			event.CreateUnlockNewDungeonEvent(loadContent[2])
 
 			myGame.InitEndScreen(win, myUtil.ScreenTxt)
 			myState.CurrentGS = battle.BattleEndScreen(win, myUtil.ScreenTxt, player, &enemy.EnemySettings[myGame.StageNum])

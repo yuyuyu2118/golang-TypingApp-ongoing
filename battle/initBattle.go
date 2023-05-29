@@ -18,7 +18,10 @@ func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed
 		elapsed = time.Since(startTime)
 		battleTimeBool = true
 	}
-	if player.Job == "見習い剣士" {
+	if player.Job == "No Job" {
+		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
+		myState.CurrentGS = BattleTyping(win, player, elapsed)
+	} else if player.Job == "見習い剣士" {
 		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingRookie(win, player, elapsed)
 	} else if player.Job == "狩人" {
@@ -62,7 +65,9 @@ func InitEnemyBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed t
 }
 
 func InitSkillBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
-	if player.Job == "見習い剣士" {
+	if player.Job == "No Job" {
+		myState.CurrentGS = myState.PlayingScreen
+	} else if player.Job == "見習い剣士" {
 		elapsed := InitBattleTextRookieSkill(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingRookieSkill(win, player, elapsed)
 	} else if player.Job == "狩人" {
