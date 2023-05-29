@@ -4,6 +4,14 @@ import (
 	"strconv"
 )
 
+func InitializeEventInstance(loadContent [][]string) {
+	CreateWeaponPurchaseEvent(loadContent[2])
+	CreateArmorPurchaseEvent(loadContent[2])
+	CreateAccessoryPurchaseEvent(loadContent[2])
+	CreateUnlockNewJobEvent(loadContent[2])
+	CreateUnlockNewDungeonEvent(loadContent[2])
+}
+
 type WeaponPurchaseEvent struct {
 	Weapons map[int]bool
 }

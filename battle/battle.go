@@ -15,8 +15,7 @@ import (
 )
 
 var (
-	score = 0
-	//words  = InitializeQuestion()
+	score                   = 0
 	wordsJapanese, words, _ = LoadWordsFromCSV()
 	index                   = 0
 	yourTime                = 0.0

@@ -187,6 +187,7 @@ func DescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
 
 	myUtil.DescriptionTxt.Clear()
 	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descWeapon[num][5], descWeapon[num][6]+"個, ", descWeapon[num][7], descWeapon[num][8]+"個, ", descWeapon[num][9], descWeapon[num][10]+"個")
+	//fmt.Fprintln(myUtil.DescriptionTxt, "所持: "+descWeapon[num][5], tempMaterials[0]+"個, ", descWeapon[num][7], tempMaterials[1]+"個, ", descWeapon[num][9], tempMaterials[2]+"個")
 	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
 	txtPos = pixel.V(xOffSet, yOffSet)
 	tempPosition = pixel.IM.Moved(txtPos)
