@@ -1,6 +1,7 @@
 package battle
 
 import (
+	"log"
 	"time"
 
 	"github.com/faiface/pixel/pixelgl"
@@ -10,7 +11,15 @@ import (
 	"github.com/yuyuyu2118/typingGo/player"
 )
 
+var battleTimeBool bool
+var startTime time.Time
+
 func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
+	if !battleTimeBool {
+		elapsed = time.Since(startTime)
+		battleTimeBool = true
+		log.Println("koko", elapsed)
+	}
 	if player.Job == "見習い剣士" {
 		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingRookie(win, player, elapsed)

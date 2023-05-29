@@ -92,9 +92,9 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 			myState.CurrentGS = myGame.AccessoryClickEvent(win, win.MousePosition(), player)
 		}
 	case myState.EquipmentScreen:
-		myGame.InitEquipmentScreen(win, Txt)
+		myGame.InitEquipmentScreen(win, Txt, player)
 		if myState.CurrentGS == myState.EquipmentScreen && myUtil.AnyKeyJustPressed(win, pg.MouseButtonLeft, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyBackspace) {
-			myState.CurrentGS = myGame.EquipmentClickEvent(win, win.MousePosition())
+			myState.CurrentGS = myGame.EquipmentClickEvent(win, win.MousePosition(), player)
 		}
 	case myState.JobSelect:
 		myGame.InitJobSelect(win, Txt)

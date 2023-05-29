@@ -99,13 +99,13 @@ func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++
-					tempWordDamage -= 3
+					tempWordDamage -= player.OP
 					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0
 						score++
-						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage - 1 //TODO: debug用
+						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
 						PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
 						tempWordDamage = 0.0
 					}

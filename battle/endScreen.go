@@ -97,6 +97,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		enemy.HP = enemy.MaxHP
 		dropRandomItem = dropRandomItem[:0]
 		dropEvent = false
+		battleTimeBool = false
 		Shuffle(words)
 		myUtil.SetSaveReset(false)
 		log.Println("Press:Enter -> GameState:Playing")
@@ -109,6 +110,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		enemy.HP = enemy.MaxHP
 		dropRandomItem = dropRandomItem[:0]
 		dropEvent = false
+		battleTimeBool = false
 		Shuffle(words)
 		myUtil.SetSaveReset(false)
 		log.Println("Press:Enter -> GameState:GoToScreen")
