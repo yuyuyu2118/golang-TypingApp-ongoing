@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
@@ -321,15 +322,19 @@ func InitAccessoryBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 
 	for i, value := range accessoryName {
 		if counts["accessory"+strconv.Itoa(i)] != 0 {
-			tempInt := counts["accessory"+strconv.Itoa(i)]
-			equipmentSlice = append(equipmentSlice, value+": "+strconv.Itoa(tempInt))
+			//tempInt := counts["accessory"+strconv.Itoa(i)]
+			equipmentSlice = append(equipmentSlice, value /*+": "+strconv.Itoa(tempInt)*/)
 		}
 	}
 
-	for _, equipmentName := range equipmentSlice {
+	for i, equipmentName := range equipmentSlice {
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, equipmentName)
+		if loadContent[8][0] == accessoryName[i] {
+			fmt.Fprintln(Txt, "E.", equipmentName)
+		} else {
+			fmt.Fprintln(Txt, equipmentName)
+		}
 		yOffSet -= Txt.LineHeight + 25
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
@@ -339,23 +344,91 @@ func InitAccessoryBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 	equipmentSlice = equipmentSlice[:0]
 }
 
-func AccessoryBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
-	if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
-		myState.CurrentGS = myState.StageSelect
-		log.Println("GoToScreen->Dungeon")
-	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
-		myState.CurrentGS = myState.TownScreen
-		log.Println("GoToScreen->Town")
-	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
-		myState.CurrentGS = myState.EquipmentScreen
-		log.Println("GoToScreen->Equipment")
-	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
-		myState.CurrentGS = myState.JobSelect
-		log.Println("GoToScreen->JobSelect")
-	} else if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
-		myState.CurrentBelong = myState.WeaponBelong
+func AccessoryBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) {
+	loadContent := SaveFileLoad(SaveFilePath)
+	player := player.NewPlayerStatus(loadContent)
+
+	if myState.CurrentBelong == myState.AccessoryBelong && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) && (player.PossessedAccessory[0] == "1") {
+		loadContent[8][0] = strings.NewReplacer("【", "", "】", "").Replace(descAccessory[1][1])
+		loadContent[8][1] = descAccessory[1][2]
+		loadContent[8][2] = descAccessory[1][3]
+		loadContent[8][3] = descAccessory[1][4]
+		log.Println("装備1")
+	} else if myState.CurrentBelong == myState.AccessoryBelong && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) && (player.PossessedAccessory[1] == "1") {
+		loadContent[8][0] = strings.NewReplacer("【", "", "】", "").Replace(descAccessory[2][1])
+		loadContent[8][1] = descAccessory[2][2]
+		loadContent[8][2] = descAccessory[2][3]
+		loadContent[8][3] = descAccessory[2][4]
+		log.Println("装備2")
+	} else if myState.CurrentBelong == myState.AccessoryBelong && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) && (player.PossessedAccessory[2] == "1") {
+		loadContent[8][0] = strings.NewReplacer("【", "", "】", "").Replace(descAccessory[3][1])
+		loadContent[8][1] = descAccessory[3][2]
+		loadContent[8][2] = descAccessory[3][3]
+		loadContent[8][3] = descAccessory[3][4]
+		log.Println("装備3")
+	} else if myState.CurrentBelong == myState.AccessoryBelong && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) && (player.PossessedAccessory[3] == "1") {
+		loadContent[8][0] = strings.NewReplacer("【", "", "】", "").Replace(descAccessory[4][1])
+		loadContent[8][1] = descAccessory[4][2]
+		loadContent[8][2] = descAccessory[4][3]
+		loadContent[8][3] = descAccessory[4][4]
+		log.Println("装備4")
+	} else if myState.CurrentBelong == myState.AccessoryBelong && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) && (player.PossessedAccessory[4] == "1") {
+		loadContent[8][0] = strings.NewReplacer("【", "", "】", "").Replace(descAccessory[5][1])
+		loadContent[8][1] = descAccessory[5][2]
+		loadContent[8][2] = descAccessory[5][3]
+		loadContent[8][3] = descAccessory[5][4]
+		log.Println("装備5")
+	} else if myState.CurrentBelong == myState.AccessoryBelong && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key6)) && (player.PossessedAccessory[5] == "1") {
+		loadContent[8][0] = strings.NewReplacer("【", "", "】", "").Replace(descAccessory[6][1])
+		loadContent[8][1] = descAccessory[6][2]
+		loadContent[8][2] = descAccessory[6][3]
+		loadContent[8][3] = descAccessory[6][4]
+		log.Println("装備6")
+	} else if myState.CurrentBelong == myState.AccessoryBelong && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key7)) && (player.PossessedAccessory[6] == "1") {
+		loadContent[8][0] = strings.NewReplacer("【", "", "】", "").Replace(descAccessory[7][1])
+		loadContent[8][1] = descAccessory[7][2]
+		loadContent[8][2] = descAccessory[7][3]
+		loadContent[8][3] = descAccessory[7][4]
+		log.Println("装備7")
+	} else if myState.CurrentBelong == myState.AccessoryBelong && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key8)) && (player.PossessedAccessory[7] == "1") {
+		loadContent[8][0] = strings.NewReplacer("【", "", "】", "").Replace(descAccessory[8][1])
+		loadContent[8][1] = descAccessory[8][2]
+		loadContent[8][2] = descAccessory[8][3]
+		loadContent[8][3] = descAccessory[8][4]
+		log.Println("装備8")
+	} else if myState.CurrentBelong == myState.AccessoryBelong && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key9)) && (player.PossessedAccessory[8] == "1") {
+		loadContent[8][0] = strings.NewReplacer("【", "", "】", "").Replace(descAccessory[9][1])
+		loadContent[8][1] = descAccessory[9][2]
+		loadContent[8][2] = descAccessory[9][3]
+		loadContent[8][3] = descAccessory[9][4]
+		log.Println("装備9")
+	} else if myState.CurrentBelong == myState.AccessoryBelong && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key0)) && (player.PossessedAccessory[9] == "1") {
+		loadContent[8][0] = strings.NewReplacer("【", "", "】", "").Replace(descAccessory[10][1])
+		loadContent[8][1] = descAccessory[10][2]
+		loadContent[8][2] = descAccessory[10][3]
+		loadContent[8][3] = descAccessory[10][4]
+		log.Println("装備0")
+	} else if myState.CurrentBelong == myState.AccessoryBelong && (win.JustPressed(pixelgl.KeyBackspace)) {
+		myState.CurrentBelong = myState.AccessoryBelong
 		myState.CurrentGS = myState.StartScreen
-		log.Println("所持品/アクセサリー->GoTo")
+		log.Println("所持品/武器->GoTo")
 	}
-	return myState.CurrentGS
+	tempOP1, _ := strconv.ParseFloat(loadContent[1][13], 64)
+	tempOP2, _ := strconv.ParseFloat(loadContent[6][1], 64)
+	tempOP3, _ := strconv.ParseFloat(loadContent[8][1], 64)
+	player.OP = tempOP1 + tempOP2 + tempOP3
+
+	tempDP1, _ := strconv.ParseFloat(loadContent[1][14], 64)
+	tempDP2, _ := strconv.ParseFloat(loadContent[7][2], 64)
+	tempDP3, _ := strconv.ParseFloat(loadContent[8][2], 64)
+	player.DP = tempDP1 + tempDP2 + tempDP3
+
+	tempAttackTimer1, _ := strconv.ParseFloat(loadContent[1][15], 64)
+	tempAttackTimer2, _ := strconv.ParseFloat(loadContent[6][3], 64)
+	tempAttackTimer3, _ := strconv.ParseFloat(loadContent[7][3], 64)
+	tempAttackTimer4, _ := strconv.ParseFloat(loadContent[8][3], 64)
+	player.AttackTimer = tempAttackTimer1 + tempAttackTimer2 + tempAttackTimer3 + tempAttackTimer4
+
+	SaveGame(SaveFilePath, 1, player)
+	SaveGameAccessory(SaveFilePath, 8, player)
 }

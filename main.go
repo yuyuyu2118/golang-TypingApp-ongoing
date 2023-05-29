@@ -32,7 +32,7 @@ func run() {
 	myPos.SetCfg(winHSize)
 	myUtil.InitTxtFontLoading()
 	loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
-	player := player.NewPlayerStatus(loadContent[1], loadContent[3], loadContent[4], loadContent[5])
+	player := player.NewPlayerStatus(loadContent)
 	event.CreateWeaponPurchaseEvent(loadContent[2])
 	event.CreateArmorPurchaseEvent(loadContent[2])
 	event.CreateAccessoryPurchaseEvent(loadContent[2])

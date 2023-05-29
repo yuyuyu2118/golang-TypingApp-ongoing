@@ -1,9 +1,9 @@
-Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,AttackTimer,
-NoName,30,30,3,1,50,0,2,6477,見習い剣士,502,Japanese,5,
-286,73,7,0,0,0,0,0,0,0,,,,
-1,1,0,0,0,0,0,0,0,0,,,,
-0,0,1,1,0,0,0,0,0,0,,,,
-0,1,0,0,0,0,0,0,0,0,,,,
-WeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,
-ArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,
-AccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,,,
+Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,AttackTimer,BaseOP,BaseDP,BaseAttackTimer
+NoName,30,30,4.75,10,50,0,2,6548,魔法使い,507,Japanese,7,3,1,4
+291,73,7,0,0,0,0,0,0,0,,,,,,
+1,1,1,1,1,1,1,1,1,0,,,,,,
+1,1,1,1,0,0,0,0,0,0,,,,,,
+1,1,1,1,0,0,0,0,0,0,,,,,,
+木刀,1.5,,1.5,,,,,,,,,,,,
+ソウルバインドプレート,,7.0,1.0,,,,,,,,,,,,
+平和のバンド,0.25,2.0,0.5,,,,,,,,,,,,
