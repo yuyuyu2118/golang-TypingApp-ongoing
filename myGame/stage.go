@@ -24,11 +24,11 @@ var (
 
 func InitStage(win *pixelgl.Window, Txt *text.Text) {
 	xOffSet := myPos.TopLefPos(win, Txt).X + 400
-	yOffSet := myPos.TopLefPos(win, Txt).Y - 50
+	yOffSet := myPos.TopLefPos(win, Txt).Y
 	txtPos := pixel.V(0, 0)
 
 	//stageSlice := []string{"1. Slime", "2. Bird", "3. Plant", "4. Goblin", "5. Zombie", "6. Fairy", "7. Skull", "8. Wizard", "9. Solidier", "10. Dragon", "BackSpace. EXIT"}
-	stageSlice := []string{"1. スライム", "2. バード", "3. プラント", "4. ゴブリン", "5. ゾンビ", "6. フェアリー", "7. スカル", "8. ウィザード", "9. ソルジャー"}
+	stageSlice := []string{"1. スライム", "2. バード", "3. プラント", "4. ゴブリン", "5. ゾンビ", "6. フェアリー", "7. スカル", "8. ウィザード", "9. ソルジャー", "10. ドラゴン"}
 
 	for _, stageName := range stageSlice {
 		Txt.Clear()
@@ -80,6 +80,10 @@ func StageClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState 
 		myState.CurrentGS = myState.PlayingScreen
 		log.Println("PlayStage is VS Solidier")
 		StageNum = 8
+	} else if myState.CurrentGS == myState.StageSelect && (stageButtonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.Key0)) {
+		myState.CurrentGS = myState.PlayingScreen
+		log.Println("PlayStage is VS Dragon")
+		StageNum = 9
 	} else if myState.CurrentGS == myState.StageSelect && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentGS = myState.GoToScreen
 		log.Println("StageScreen -> GoToScreen")

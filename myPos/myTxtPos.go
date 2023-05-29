@@ -16,6 +16,16 @@ func CenPos(win *pixelgl.Window, txt *text.Text) pixel.Vec {
 	return centerPos
 }
 
+func RoundCenPos(win *pixelgl.Window, txt *text.Text) pixel.Vec {
+	bounds := txt.Bounds()
+	txtPos := pixel.V(bounds.W()/2, bounds.H()/2)
+	centerPos := pixel.V(
+		win.Bounds().Center().X-txtPos.X,
+		win.Bounds().Center().Y-txtPos.Y-50,
+	)
+	return centerPos
+}
+
 // 画面中央の右隅にテキストを描画
 func CenRigPos(win *pixelgl.Window, txt *text.Text) pixel.Vec {
 	bounds := txt.Bounds()

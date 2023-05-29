@@ -60,7 +60,7 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 		fmt.Fprint(Txt, tempWords[:index])
 		Txt.Color = colornames.White
 		fmt.Fprint(Txt, tempWords[index:])
-		myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt))
+		myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt))
 
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
@@ -71,7 +71,7 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 			Txt.Clear()
 			fmt.Fprintln(Txt, wordsJapanese[words[score+1]])
 			fmt.Fprintln(Txt, words[score+1])
-			myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
+			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 			Txt.Dot.X = TxtOrigX
 		}
 		if !(len(words)-score == 2 || len(words)-score == 1) {
@@ -80,14 +80,14 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 			Txt.Clear()
 			fmt.Fprintln(Txt, wordsJapanese[words[score+2]])
 			fmt.Fprintln(Txt, words[score+2])
-			myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
+			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		Txt.Clear()
 		Txt.Color = colornames.White
 		fmt.Fprintln(Txt, "敵の通常攻撃!!!")
 		fmt.Fprint(Txt, "攻撃力:", enemy.EnemySettings[myGame.StageNum].OP, "防御力:", enemy.EnemySettings[myGame.StageNum].DP)
-		myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt))
+		myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt))
 	}
 
 	Txt.Clear()
@@ -178,7 +178,7 @@ func InitBattleTextMagicUser(win *pixelgl.Window, Txt *text.Text, elapsed time.D
 		fmt.Fprint(Txt, tempWords[:index])
 		Txt.Color = colornames.White
 		fmt.Fprint(Txt, tempWords[index:])
-		myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt))
+		myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt))
 
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
@@ -189,7 +189,7 @@ func InitBattleTextMagicUser(win *pixelgl.Window, Txt *text.Text, elapsed time.D
 			Txt.Clear()
 			fmt.Fprintln(Txt, wordsJapanese[words[score+1]])
 			fmt.Fprintln(Txt, words[score+1])
-			myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
+			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 			Txt.Dot.X = TxtOrigX
 		}
 		if !(len(words)-score == 2 || len(words)-score == 1) {
@@ -198,7 +198,7 @@ func InitBattleTextMagicUser(win *pixelgl.Window, Txt *text.Text, elapsed time.D
 			Txt.Clear()
 			fmt.Fprintln(Txt, wordsJapanese[words[score+2]])
 			fmt.Fprintln(Txt, words[score+2])
-			myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
+			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		Txt.Clear()
@@ -232,14 +232,14 @@ func InitBattleTextMonster(win *pixelgl.Window, Txt *text.Text, elapsed time.Dur
 		fmt.Fprint(Txt, tempWords[:indexMonster])
 		Txt.Color = colornames.White
 		fmt.Fprint(Txt, tempWords[indexMonster:])
-		myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt))
+		myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt))
 
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		Txt.Clear()
 		Txt.Color = colornames.White
 		fmt.Fprintln(Txt, "敵の通常攻撃!!!")
 		fmt.Fprint(Txt, "攻撃力:", enemy.EnemySettings[myGame.StageNum].OP, "防御力:", enemy.EnemySettings[myGame.StageNum].DP)
-		myPos.DrawPos(win, Txt, myPos.CenPos(win, Txt))
+		myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt))
 	}
 
 	Txt.Clear()

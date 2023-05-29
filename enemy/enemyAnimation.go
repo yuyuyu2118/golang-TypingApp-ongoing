@@ -36,7 +36,22 @@ func SetEnemyAnimation(directory string, fileName string) []*pixel.Sprite {
 
 func SetEnemySprite(win *pixelgl.Window, frame int) {
 	sprites := EnemySprites[myGame.StageNum]
-	sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 40))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
+	if myGame.StageNum == 0 {
+		sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 20))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
+	} else if myGame.StageNum >= 1 && myGame.StageNum <= 2 {
+		sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 30))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
+	} else if myGame.StageNum >= 3 && myGame.StageNum <= 4 {
+		sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 55))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
+	} else if myGame.StageNum >= 5 && myGame.StageNum <= 6 {
+		sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 35))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
+	} else if myGame.StageNum == 7 {
+		sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 50))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
+	} else if myGame.StageNum == 8 {
+		sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 55))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
+	} else if myGame.StageNum == 9 {
+		sprites[frame].Draw(win, pixel.IM.Moved(win.Bounds().Center().Add(pixel.V(0, 55))).Scaled(win.Bounds().Center(), EnemySettings[myGame.StageNum].EnemySize))
+	}
+
 	pic, _ := myIo.OpenDecodePictureData(EnemyPathBar[myGame.StageNum])
 	scaledSize := pic.Bounds().Size().Scaled(EnemySettings[myGame.StageNum].EnemySize)
 	barPosition := pixel.V(

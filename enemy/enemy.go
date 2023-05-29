@@ -28,7 +28,7 @@ type EnemyStatus struct {
 }
 
 var EnemyPath = "assets\\monster\\"
-var EnemyNameSlice = []string{"Slime", "Bird", "Plant", "Goblin", "Zombie", "Fairy", "Skull", "Wizard", "Solidier"}
+var EnemyNameSlice = []string{"Slime", "Bird", "Plant", "Goblin", "Zombie", "Fairy", "Skull", "Wizard", "Solidier", "Dragon"}
 
 func CreateEnemyInstance() *[]EnemyStatus {
 	temp := myIo.CsvToSliceAll("enemy/enemySettings/enemy.csv")
@@ -93,9 +93,9 @@ func SetEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP 
 	if HP > 0 {
 		rect = pixel.R(
 			win.Bounds().Center().X-(rectWidth/2),
-			win.Bounds().Center().Y+25,
+			win.Bounds().Center().Y-50,
 			win.Bounds().Center().X+(rectWidth/2),
-			win.Bounds().Center().Y+75,
+			win.Bounds().Center().Y,
 		)
 	} else {
 		rect = pixel.R(
@@ -115,9 +115,9 @@ func SetEnemyHPBar(win *pixelgl.Window, scaledSize pixel.Vec, HP float64, MaxHP 
 func SetEnemyHPBarOut(win *pixelgl.Window, scaledSize pixel.Vec, pos pixel.Vec) {
 	rect := pixel.R(
 		win.Bounds().Center().X-pos.X/2,
-		win.Bounds().Center().Y+25,
+		win.Bounds().Center().Y-50,
 		win.Bounds().Center().X+pos.X/2,
-		win.Bounds().Center().Y+75,
+		win.Bounds().Center().Y,
 	)
 	imd := imdraw.New(nil)
 	imd.Color = colornames.Red
