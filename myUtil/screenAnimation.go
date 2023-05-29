@@ -8,17 +8,8 @@ import (
 	"github.com/faiface/pixel/imdraw"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"golang.org/x/image/colornames"
 )
-
-func DrawFadingRectangleInOut(win *pixelgl.Window, imd *imdraw.IMDraw, alpha float64, fadeIn bool) {
-	if fadeIn { // フェードアウトの場合はアルファ値を反転
-		alpha = 1 - alpha
-	}
-
-	imd.Color = pixel.RGBA{R: 0, G: 0, B: 0, A: alpha}
-	imd.Push(win.Bounds().Min, win.Bounds().Max)
-	imd.Rectangle(0)
-}
 
 func AnimateText(win *pixelgl.Window, Txt, completedText *text.Text, lines []string, start time.Time, startPos, endPos pixel.Vec, duration float64) {
 	elapsedTime := time.Since(start).Seconds()
@@ -61,4 +52,22 @@ func AnimateText(win *pixelgl.Window, Txt, completedText *text.Text, lines []str
 
 func lerp(start, end float64, t float64) float64 {
 	return start + (end-start)*t
+}
+
+func FadeScreen(win *pixelgl.Window, imd *imdraw.IMDraw, setTime time.Time, fadeDuration float64) (float64, float64) {
+	win.Clear(colornames.Darkcyan)
+	elapsedTime := time.Since(setTime).Seconds()
+	cycleTime := math.Mod(elapsedTime, fadeDuration) // サイクル内の経過時間を計算
+	imd.Clear()                                      // ここでIMDrawの内容をクリアする
+	return cycleTime / fadeDuration, elapsedTime
+}
+
+func DrawFadingRectangleInOut(win *pixelgl.Window, imd *imdraw.IMDraw, alpha float64, fadeIn bool) {
+	if fadeIn { // フェードアウトの場合はアルファ値を反転
+		alpha = 1 - alpha
+	}
+
+	imd.Color = pixel.RGBA{R: 0, G: 0, B: 0, A: alpha}
+	imd.Push(win.Bounds().Min, win.Bounds().Max)
+	imd.Rectangle(0)
 }

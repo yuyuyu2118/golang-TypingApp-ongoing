@@ -26,7 +26,10 @@ var gotoSlice []string
 
 func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 	xOffSet := 100.0
-	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
+	yOffSet1Line := myPos.TopLefPos(win, Txt).Y - 100
+	yOffSet2Line := myPos.TopCenPos(win, Txt).Y - 100
+	yOffSet3Line := myPos.TopCenPos(win, Txt).Y - 100
+
 	txtPos := pixel.V(0, 0)
 
 	myUtil.ScreenTxt.Clear()
@@ -39,17 +42,49 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 		gotoSlice, _ = GetMyItems(SaveFilePathItems)
 		getItemBool = true
 	}
-	gotoSlice = append(gotoSlice)
 
+	gotoSlice = append(gotoSlice)
+	var itemCount int
+
+	//TODO: 折り返し
 	for _, gotoName := range gotoSlice {
-		Txt.Clear()
-		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, gotoName)
-		yOffSet -= Txt.LineHeight + 40
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		Txt.Draw(win, tempPosition)
-		gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
+		if itemCount >= 0 && itemCount <= 8 {
+			Txt.Clear()
+			Txt.Color = colornames.White
+			fmt.Fprintln(Txt, gotoName)
+			yOffSet1Line -= Txt.LineHeight + 40
+			txtPos = pixel.V(xOffSet, yOffSet1Line)
+			tempPosition := pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+			gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
+			itemCount++
+			if itemCount == 8 {
+				xOffSet += 300
+			}
+		} else if itemCount > 8 && itemCount <= 16 {
+			Txt.Clear()
+			Txt.Color = colornames.White
+			fmt.Fprintln(Txt, gotoName)
+			yOffSet2Line -= Txt.LineHeight + 40
+			txtPos = pixel.V(xOffSet, yOffSet2Line)
+			tempPosition := pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+			gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
+			itemCount++
+			if itemCount == 16 {
+				xOffSet += 300
+			}
+		} else if itemCount > 16 && itemCount <= 24 {
+			Txt.Clear()
+			Txt.Color = colornames.White
+			fmt.Fprintln(Txt, gotoName)
+			yOffSet3Line -= Txt.LineHeight + 40
+			txtPos = pixel.V(xOffSet, yOffSet3Line)
+			tempPosition := pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+			gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
+			itemCount++
+		}
 	}
 }
 

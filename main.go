@@ -2,7 +2,6 @@ package main
 
 import (
 	_ "image/png"
-	"math"
 	"math/rand"
 	"time"
 
@@ -16,7 +15,6 @@ import (
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
-	"golang.org/x/image/colornames"
 )
 
 const (
@@ -42,7 +40,7 @@ func run() {
 
 	imd := imdraw.New(nil)
 	setTime := time.Now()
-	fadeDuration := 0.5
+	fadeDuration := 3.0
 
 	for !win.Closed() {
 
@@ -50,22 +48,13 @@ func run() {
 		case myState.FadeScreen:
 			myState.CurrentGS = myState.StartScreen
 		case myState.StartScreen: //スタート画面
-			//fadeIn
-			win.Clear(colornames.Darkcyan)
-			elapsedTime := time.Since(setTime).Seconds()
-			cycleTime := math.Mod(elapsedTime, fadeDuration) // サイクル内の経過時間を計算
-			imd.Clear()                                      // ここでIMDrawの内容をクリアする
-			alpha := cycleTime / fadeDuration
-
+			alpha, elapsedTime := myUtil.FadeScreen(win, imd, setTime, fadeDuration)
 			myGame.InitStartScreen(win, myUtil.StartTxt, alpha, 1.0)
-
 			if elapsedTime < fadeDuration {
 				myUtil.DrawFadingRectangleInOut(win, imd, alpha, true) // フェードインを追加
 				imd.Draw(win)
 			}
-
 		case myState.GoToScreen: //GoTo画面
-			win.Clear(colornames.Black)
 			initScreenInformation(win, myUtil.ScreenTxt, player)
 		case myState.StageSelect: //ダンジョンセレクト画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
