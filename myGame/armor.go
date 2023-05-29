@@ -289,15 +289,15 @@ func CreateArmorEvent(descArmor [][]string, num int) bool {
 	}
 }
 
-func InitArmorBelongScreen(win *pixelgl.Window, Txt *text.Text) {
+func InitArmorBelongScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
 	botText := "持ち物/防具"
-	InitArmorBelong(win, Txt, botText)
+	InitArmorBelong(win, Txt, botText, player)
 }
 
-func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
+func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string, player *player.PlayerStatus) {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
@@ -330,7 +330,7 @@ func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 	for i, equipmentName := range equipmentSlice {
 		Txt.Clear()
 		Txt.Color = colornames.White
-		if loadContent[7][0] == armorName[i] {
+		if player.EquipmentArmor[0] == armorName[i] {
 			fmt.Fprintln(Txt, "E.", equipmentName)
 		} else {
 			fmt.Fprintln(Txt, equipmentName)
@@ -344,59 +344,58 @@ func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 	equipmentSlice = equipmentSlice[:0]
 }
 
-func ArmorBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) {
+func ArmorBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) {
 	loadContent := SaveFileLoad(SaveFilePath)
-	player := player.NewPlayerStatus(loadContent)
 
 	if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) && (player.PossessedArmor[0] == "1") {
-		loadContent[7][0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[1][1])
-		loadContent[7][2] = descArmor[1][2]
-		loadContent[7][3] = descArmor[1][3]
+		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[1][1])
+		player.EquipmentArmor[2] = descArmor[1][2]
+		player.EquipmentArmor[3] = descArmor[1][3]
 		log.Println("装備1")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) && (player.PossessedArmor[1] == "1") {
-		loadContent[7][0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[2][1])
-		loadContent[7][2] = descArmor[2][2]
-		loadContent[7][3] = descArmor[2][3]
+		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[2][1])
+		player.EquipmentArmor[2] = descArmor[2][2]
+		player.EquipmentArmor[3] = descArmor[2][3]
 		log.Println("装備2")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) && (player.PossessedArmor[2] == "1") {
-		loadContent[7][0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[3][1])
-		loadContent[7][2] = descArmor[3][2]
-		loadContent[7][3] = descArmor[3][3]
+		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[3][1])
+		player.EquipmentArmor[2] = descArmor[3][2]
+		player.EquipmentArmor[3] = descArmor[3][3]
 		log.Println("装備3")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) && (player.PossessedArmor[3] == "1") {
-		loadContent[7][0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[4][1])
-		loadContent[7][2] = descArmor[4][2]
-		loadContent[7][3] = descArmor[4][3]
+		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[4][1])
+		player.EquipmentArmor[2] = descArmor[4][2]
+		player.EquipmentArmor[3] = descArmor[4][3]
 		log.Println("装備4")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) && (player.PossessedArmor[4] == "1") {
-		loadContent[7][0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[5][1])
-		loadContent[7][2] = descArmor[5][2]
-		loadContent[7][3] = descArmor[5][3]
+		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[5][1])
+		player.EquipmentArmor[2] = descArmor[5][2]
+		player.EquipmentArmor[3] = descArmor[5][3]
 		log.Println("装備5")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key6)) && (player.PossessedArmor[5] == "1") {
-		loadContent[7][0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[6][1])
-		loadContent[7][2] = descArmor[6][2]
-		loadContent[7][3] = descArmor[6][3]
+		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[6][1])
+		player.EquipmentArmor[2] = descArmor[6][2]
+		player.EquipmentArmor[3] = descArmor[6][3]
 		log.Println("装備6")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key7)) && (player.PossessedArmor[6] == "1") {
-		loadContent[7][0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[7][1])
-		loadContent[7][2] = descArmor[7][2]
-		loadContent[7][3] = descArmor[7][3]
+		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[7][1])
+		player.EquipmentArmor[2] = descArmor[7][2]
+		player.EquipmentArmor[3] = descArmor[7][3]
 		log.Println("装備7")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key8)) && (player.PossessedArmor[7] == "1") {
-		loadContent[7][0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[8][1])
-		loadContent[7][2] = descArmor[8][2]
-		loadContent[7][3] = descArmor[8][3]
+		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[8][1])
+		player.EquipmentArmor[2] = descArmor[8][2]
+		player.EquipmentArmor[3] = descArmor[8][3]
 		log.Println("装備8")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key9)) && (player.PossessedArmor[8] == "1") {
-		loadContent[7][0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[9][1])
-		loadContent[7][2] = descArmor[9][2]
-		loadContent[7][3] = descArmor[9][3]
+		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[9][1])
+		player.EquipmentArmor[2] = descArmor[9][2]
+		player.EquipmentArmor[3] = descArmor[9][3]
 		log.Println("装備9")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key0)) && (player.PossessedArmor[9] == "1") {
-		loadContent[7][0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[10][1])
-		loadContent[7][2] = descArmor[10][2]
-		loadContent[7][3] = descArmor[10][3]
+		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[10][1])
+		player.EquipmentArmor[2] = descArmor[10][2]
+		player.EquipmentArmor[3] = descArmor[10][3]
 		log.Println("装備0")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentBelong = myState.ArmorBelong
@@ -404,14 +403,14 @@ func ArmorBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) {
 		log.Println("所持品/武器->GoTo")
 	}
 	tempDP1, _ := strconv.ParseFloat(loadContent[1][14], 64)
-	tempDP2, _ := strconv.ParseFloat(loadContent[7][2], 64)
-	tempDP3, _ := strconv.ParseFloat(loadContent[8][2], 64)
+	tempDP2, _ := strconv.ParseFloat(player.EquipmentArmor[2], 64)
+	tempDP3, _ := strconv.ParseFloat(player.EquipmentAccessory[2], 64)
 	player.DP = tempDP1 + tempDP2 + tempDP3
 
 	tempAttackTimer1, _ := strconv.ParseFloat(loadContent[1][15], 64)
-	tempAttackTimer2, _ := strconv.ParseFloat(loadContent[6][3], 64)
-	tempAttackTimer3, _ := strconv.ParseFloat(loadContent[7][3], 64)
-	tempAttackTimer4, _ := strconv.ParseFloat(loadContent[8][3], 64)
+	tempAttackTimer2, _ := strconv.ParseFloat(player.EquipmentWeapon[3], 64)
+	tempAttackTimer3, _ := strconv.ParseFloat(player.EquipmentArmor[3], 64)
+	tempAttackTimer4, _ := strconv.ParseFloat(player.EquipmentAccessory[3], 64)
 	player.AttackTimer = tempAttackTimer1 + tempAttackTimer2 + tempAttackTimer3 + tempAttackTimer4
 
 	SaveGame(SaveFilePath, 1, player)

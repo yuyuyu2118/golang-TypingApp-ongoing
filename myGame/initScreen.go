@@ -11,6 +11,7 @@ import (
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
+	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -124,11 +125,11 @@ func InitAccessoryShop(win *pixelgl.Window, Txt *text.Text) {
 	InitAccessory(win, Txt, botText)
 }
 
-func InitEquipmentScreen(win *pixelgl.Window, Txt *text.Text) {
+func InitEquipmentScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	InitEquipment(win, Txt)
+	InitEquipment(win, Txt, player)
 }
 
 func InitJobSelect(win *pixelgl.Window, Txt *text.Text) {

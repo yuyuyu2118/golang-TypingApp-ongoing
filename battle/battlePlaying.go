@@ -18,6 +18,7 @@ import (
 )
 
 func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+	log.Println(player.OP)
 	// var tempWords []string
 	// for value := range wordsJapanese {
 	// 	tempWords = append(tempWords, value)
@@ -29,6 +30,7 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	typed := win.Typed()
 
 	tempCount = player.AttackTimer - elapsed.Seconds()
+	log.Println(tempCount)
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
@@ -36,7 +38,7 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++
-					tempWordDamage -= 3
+					tempWordDamage -= player.OP
 					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
 					player.SP += player.BaseSP
 					if index == len(question) {

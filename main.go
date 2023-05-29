@@ -42,8 +42,9 @@ func run() {
 	setTime := time.Now()
 	fadeDuration := 3.0
 
-	for !win.Closed() {
+	startTime = time.Now()
 
+	for !win.Closed() {
 		switch myState.CurrentGS {
 		case myState.FadeScreen:
 			myState.CurrentGS = myState.StartScreen
