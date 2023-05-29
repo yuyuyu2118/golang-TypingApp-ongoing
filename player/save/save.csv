@@ -1,9 +1,9 @@
 Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,AttackTimer,BaseOP,BaseDP,BaseAttackTimer
-NoName,30,30,3,1,50,0,2,48,狩人,3,Japanese,4,3,1,4
-1,1,0,0,0,0,0,0,0,0,,,,,,
+NoName,30,30,3.5,1,50,0,2,274,見習い剣士,25,Japanese,4.5,3,1,4
+19,3,0,0,0,0,0,0,0,0,,,,,,
+1,0,0,0,0,0,0,0,0,0,,,,,,
 0,0,0,0,0,0,0,0,0,0,,,,,,
 0,0,0,0,0,0,0,0,0,0,,,,,,
-0,0,0,0,0,0,0,0,0,0,,,,,,
-WeaponName,,,,,,,,,,,,,,,
+木の棒,0.5,,0.5,,,,,,,,,,,,
 ArmorName,,,,,,,,,,,,,,,
 AccessoryName,,,,,,,,,,,,,,,
