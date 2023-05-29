@@ -81,7 +81,11 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, botText string) {
 		currentweaponState = weapon10
 	}
 	if currentweaponState >= weapon1 && currentweaponState <= weapon10 {
-		DescriptionWeapon(win, descWeapon, int(currentweaponState)-1)
+		if win.Pressed(pixelgl.KeyTab) {
+			SubDescriptionWeapon(win, descWeapon, int(currentweaponState)-1)
+		} else {
+			DescriptionWeapon(win, descWeapon, int(currentweaponState)-1)
+		}
 	}
 }
 
@@ -219,6 +223,86 @@ func DescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
 	myUtil.DescriptionTxt.Clear()
 	fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[num][16])
 	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	myUtil.DescriptionTxt.Color = colornames.White
+	fmt.Fprintln(myUtil.DescriptionTxt, "B. 作ってもらう")
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	buySellSlice = append(buySellSlice, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
+}
+
+func SubDescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
+	//TODO: Tabを押している間は強化素材等の情報を表示する
+	num++
+	xOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).X + 300
+	yOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).Y - 50
+	txtPos := pixel.V(0, 0)
+
+	myUtil.DescriptionTxt.Color = colornames.White
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[0][18]+": "+descWeapon[num][18], "攻撃上昇値: ", descWeapon[num][25])
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition := pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, "強化素材: "+descWeapon[num][19], descWeapon[num][20]+"個, ", descWeapon[num][21], descWeapon[num][22]+"個, ", descWeapon[num][23], descWeapon[num][24]+"個, ")
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, "宝石アンロック(1回目):")
+	fmt.Fprintln(myUtil.DescriptionTxt, "攻撃上昇値:", descWeapon[num][34], "アタックタイマー上昇値:", descWeapon[num][35])
+	if descWeapon[num][26] != strconv.Itoa(0) {
+		fmt.Fprint(myUtil.DescriptionTxt, "奇跡の石: "+descWeapon[num][26]+"個 ")
+	}
+	if descWeapon[num][27] != strconv.Itoa(0) {
+		fmt.Fprint(myUtil.DescriptionTxt, "魔法のジェム: "+descWeapon[num][27]+"個 ")
+	}
+	if descWeapon[num][28] != strconv.Itoa(0) {
+		fmt.Fprint(myUtil.DescriptionTxt, "蒼き宝石: "+descWeapon[num][28]+"個 ")
+	}
+	if descWeapon[num][29] != strconv.Itoa(0) {
+		fmt.Fprint(myUtil.DescriptionTxt, "聖なる宝玉: "+descWeapon[num][29]+"個 ")
+	}
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, "宝石アンロック(2回目):")
+	fmt.Fprintln(myUtil.DescriptionTxt, " 攻撃上昇値:", descWeapon[num][36], "アタックタイマー上昇値:", descWeapon[num][37])
+	if descWeapon[num][30] != strconv.Itoa(0) {
+		fmt.Fprint(myUtil.DescriptionTxt, "奇跡の石: "+descWeapon[num][30]+"個 ")
+	}
+	if descWeapon[num][31] != strconv.Itoa(0) {
+		fmt.Fprint(myUtil.DescriptionTxt, "魔法のジェム: "+descWeapon[num][31]+"個 ")
+	}
+	if descWeapon[num][32] != strconv.Itoa(0) {
+		fmt.Fprint(myUtil.DescriptionTxt, "蒼き宝石: "+descWeapon[num][32]+"個 ")
+	}
+	if descWeapon[num][33] != strconv.Itoa(0) {
+		fmt.Fprint(myUtil.DescriptionTxt, "聖なる宝玉: "+descWeapon[num][33]+"個 ")
+	}
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 80
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, "モディファイア抽選費用: "+descWeapon[num][40]+"S")
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 80
 	txtPos = pixel.V(xOffSet, yOffSet)
 	tempPosition = pixel.IM.Moved(txtPos)
 	myUtil.DescriptionTxt.Draw(win, tempPosition)
