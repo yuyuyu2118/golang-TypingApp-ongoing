@@ -2,6 +2,7 @@ package myGame
 
 import (
 	"fmt"
+	_ "image/png"
 	"log"
 
 	"github.com/faiface/pixel"
@@ -28,9 +29,32 @@ var (
 )
 
 func InitGoTo(win *pixelgl.Window, Txt *text.Text, bottleText string) {
+
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
+
+	// imgPath := "assets/Screen.png"
+	// imgFile, err := os.Open(imgPath)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer imgFile.Close()
+
+	// img, _, err := image.Decode(imgFile)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// picData := pixel.PictureDataFromImage(img)
+
+	// // 2. `pixel.NewSprite`を使って `*pixel.Sprite`オブジェクトを作ります。
+	// sprite := pixel.NewSprite(picData, picData.Bounds())
+
+	// // 3. テキストと同様に、`Draw()`メソッドを使って画像をウィンドウに描画します。
+	// imgXCenter := win.Bounds().Center().X
+	// imgYPos := win.Bounds().Center().Y // Adjust this value to change the vertical position of the image
+	// sprite.Draw(win, pixel.IM.Moved(pixel.V(imgXCenter, imgYPos)))
 
 	Txt.Clear()
 	Txt.Color = colornames.White

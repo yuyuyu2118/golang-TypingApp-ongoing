@@ -16,7 +16,7 @@ import (
 func initializeWindow() (*pixelgl.Window, pixelgl.WindowConfig) {
 	windowWidthSize := (winHSize / 16) * 9
 
-	cfg := pixelgl.WindowConfig{Title: "MyPlatformer",
+	cfg := pixelgl.WindowConfig{Title: "TypingRPG",
 		Bounds:    pixel.R(0, 0, float64(winHSize), float64(windowWidthSize)), //960,720
 		VSync:     true,
 		Resizable: true,
