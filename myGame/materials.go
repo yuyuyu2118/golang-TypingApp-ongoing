@@ -48,7 +48,7 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 
 	//TODO: 折り返し
 	for _, gotoName := range gotoSlice {
-		if itemCount >= 0 && itemCount <= 15 {
+		if itemCount >= 0 && itemCount <= 14 {
 			Txt.Clear()
 			Txt.Color = colornames.White
 			fmt.Fprintln(Txt, gotoName)
@@ -58,10 +58,8 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 			Txt.Draw(win, tempPosition)
 			gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
 			itemCount++
-			if itemCount == 15 {
-				xOffSet += 300
-			}
-		} else if itemCount > 15 && itemCount <= 30 {
+		} else if itemCount >= 15 && itemCount <= 29 {
+			xOffSet = 400
 			Txt.Clear()
 			Txt.Color = colornames.White
 			fmt.Fprintln(Txt, gotoName)
@@ -71,10 +69,8 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 			Txt.Draw(win, tempPosition)
 			gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
 			itemCount++
-			if itemCount == 30 {
-				xOffSet += 300
-			}
 		} else if itemCount > 30 && itemCount <= 45 {
+			xOffSet += 400
 			Txt.Clear()
 			Txt.Color = colornames.White
 			fmt.Fprintln(Txt, gotoName)

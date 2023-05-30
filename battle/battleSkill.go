@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
+	"strconv"
 	"strings"
 	"time"
 
@@ -127,7 +128,7 @@ var bulletDamageSkill = []float64{0.0, 0.0, 0.0, 0.0, 0.0}
 
 func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
 	xOffSet := 50.0
-	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 100
+	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 150
 	txtPos := pixel.V(xOffSet, yOffSet)
 	myUtil.ScreenTxt.Color = colornames.White
 	myUtil.HunterBulletTxt.Clear()
@@ -137,7 +138,7 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 	tempPosition := pixel.IM.Moved(txtPos)
 	myUtil.HunterBulletTxt.Draw(win, tempPosition)
 
-	question := words[score]
+	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
@@ -153,7 +154,7 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
 					if index == len(question) {
 						index = 0
-						score++
+						wordsNum++
 						//enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
 						//PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
 						//tempWordDamage = 0.0
@@ -198,7 +199,7 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 	if bulletLoadingSkill[0] && !bulletLoadingSkill[1] && !bulletLoadingSkill[2] && !bulletLoadingSkill[3] && !bulletLoadingSkill[4] {
 		myUtil.HunterBulletTxt.Clear()
 		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1], bulletDamageSkill[0])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-1], bulletDamageSkill[0])
 		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
@@ -206,8 +207,8 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 	} else if bulletLoadingSkill[0] && bulletLoadingSkill[1] && !bulletLoadingSkill[2] && !bulletLoadingSkill[3] && !bulletLoadingSkill[4] {
 		myUtil.HunterBulletTxt.Clear()
 		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1], bulletDamageSkill[1])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-2], bulletDamageSkill[0])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-1], bulletDamageSkill[1])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-2], bulletDamageSkill[0])
 		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
@@ -215,9 +216,9 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 	} else if bulletLoadingSkill[0] && bulletLoadingSkill[1] && bulletLoadingSkill[2] && !bulletLoadingSkill[3] && !bulletLoadingSkill[4] {
 		myUtil.HunterBulletTxt.Clear()
 		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1], bulletDamageSkill[2])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-2], bulletDamageSkill[1])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-3], bulletDamageSkill[0])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-1], bulletDamageSkill[2])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-2], bulletDamageSkill[1])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-3], bulletDamageSkill[0])
 		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
@@ -225,10 +226,10 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 	} else if bulletLoadingSkill[0] && bulletLoadingSkill[1] && bulletLoadingSkill[2] && bulletLoadingSkill[3] && !bulletLoadingSkill[4] {
 		myUtil.HunterBulletTxt.Clear()
 		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1], bulletDamageSkill[3])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-2], bulletDamageSkill[2])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-3], bulletDamageSkill[1])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-4], bulletDamageSkill[0])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-1], bulletDamageSkill[3])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-2], bulletDamageSkill[2])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-3], bulletDamageSkill[1])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-4], bulletDamageSkill[0])
 		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
@@ -236,11 +237,11 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 	} else if bulletLoadingSkill[0] && bulletLoadingSkill[1] && bulletLoadingSkill[2] && bulletLoadingSkill[3] && bulletLoadingSkill[4] {
 		myUtil.HunterBulletTxt.Clear()
 		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1], bulletDamageSkill[4])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-2], bulletDamageSkill[3])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-3], bulletDamageSkill[2])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-4], bulletDamageSkill[1])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-5], bulletDamageSkill[0])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-1], bulletDamageSkill[4])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-2], bulletDamageSkill[3])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-3], bulletDamageSkill[2])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-4], bulletDamageSkill[1])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-5], bulletDamageSkill[0])
 		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
@@ -271,10 +272,10 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 func InitBattleTextHunterSkill(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
 	if myState.CurrentGS == myState.SkillScreen {
-		tempWords := words[score]
+		tempWords := words[wordsNum]
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, wordsJapanese[words[score]])
+		fmt.Fprintln(Txt, wordsJapanese[words[wordsNum]])
 		fmt.Fprint(Txt, "> ")
 		Txt.Color = colornames.Darkslategray
 		fmt.Fprint(Txt, tempWords[:index])
@@ -285,21 +286,21 @@ func InitBattleTextHunterSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
 		spacing := 100.0
-		if len(words)-score != 1 {
+		if len(words)-wordsNum != 1 {
 			Txt.Color = colornames.Darkgray
 			offset := Txt.Bounds().W()
 			Txt.Clear()
-			fmt.Fprintln(Txt, wordsJapanese[words[score+1]])
-			fmt.Fprintln(Txt, words[score+1])
+			fmt.Fprintln(Txt, wordsJapanese[words[wordsNum+1]])
+			fmt.Fprintln(Txt, words[wordsNum+1])
 			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 			Txt.Dot.X = TxtOrigX
 		}
-		if !(len(words)-score == 2 || len(words)-score == 1) {
+		if !(len(words)-wordsNum == 2 || len(words)-wordsNum == 1) {
 			Txt.Color = colornames.Gray
 			offset += Txt.Bounds().W()
 			Txt.Clear()
-			fmt.Fprintln(Txt, wordsJapanese[words[score+2]])
-			fmt.Fprintln(Txt, words[score+2])
+			fmt.Fprintln(Txt, wordsJapanese[words[wordsNum+2]])
+			fmt.Fprintln(Txt, words[wordsNum+2])
 			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
@@ -396,7 +397,7 @@ var setTime float64
 var timeBool bool
 
 func BattleTypingMagicUserSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
-	question := words[score]
+	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
@@ -415,14 +416,14 @@ func BattleTypingMagicUserSkill(win *pixelgl.Window, player *player.PlayerStatus
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++
-					magicHP += 0.01
+					magicHP += 0.1
 					if index == len(question) {
 						index = 0
-						score++
+						wordsNum++
 					}
 				} else {
 					missType++
-					magicHP -= 0.01
+					magicHP -= 0.1
 				}
 			}
 		} else {
@@ -435,7 +436,7 @@ func BattleTypingMagicUserSkill(win *pixelgl.Window, player *player.PlayerStatus
 		if magicHP < 0 {
 			magicHP = 0
 		}
-		player.HP += float64(magicHP * player.MaxHP)
+		player.HP += float64(magicHP)
 		magicHP = 0
 		if player.HP >= player.MaxHP {
 			player.HP = player.MaxHP
@@ -448,15 +449,15 @@ func BattleTypingMagicUserSkill(win *pixelgl.Window, player *player.PlayerStatus
 func InitBattleTextMagicUserSkill(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
 	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "+HP:", magicHP)
+	Txt.Color = colornames.Green
+	fmt.Fprintln(Txt, "+HP:", strconv.FormatFloat(magicHP, 'f', 2, 64))
 	myPos.DrawPos(win, Txt, myPos.CenLefPos(win, Txt))
 
 	if myState.CurrentGS == myState.SkillScreen {
-		tempWords := words[score]
+		tempWords := words[wordsNum]
 		Txt.Clear()
 		Txt.Color = colornames.Lightgreen
-		fmt.Fprintln(Txt, wordsJapanese[words[score]])
+		fmt.Fprintln(Txt, wordsJapanese[words[wordsNum]])
 		fmt.Fprint(Txt, "> ")
 		Txt.Color = colornames.Green
 		fmt.Fprint(Txt, tempWords[:index])
@@ -467,21 +468,21 @@ func InitBattleTextMagicUserSkill(win *pixelgl.Window, Txt *text.Text, elapsed t
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
 		spacing := 100.0
-		if len(words)-score != 1 {
+		if len(words)-wordsNum != 1 {
 			Txt.Color = colornames.Lightgreen
 			offset := Txt.Bounds().W()
 			Txt.Clear()
-			fmt.Fprintln(Txt, wordsJapanese[words[score+1]])
-			fmt.Fprintln(Txt, words[score+1])
+			fmt.Fprintln(Txt, wordsJapanese[words[wordsNum+1]])
+			fmt.Fprintln(Txt, words[wordsNum+1])
 			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 			Txt.Dot.X = TxtOrigX
 		}
-		if !(len(words)-score == 2 || len(words)-score == 1) {
+		if !(len(words)-wordsNum == 2 || len(words)-wordsNum == 1) {
 			Txt.Color = colornames.Lightgreen
 			offset += Txt.Bounds().W()
 			Txt.Clear()
-			fmt.Fprintln(Txt, wordsJapanese[words[score+2]])
-			fmt.Fprintln(Txt, words[score+2])
+			fmt.Fprintln(Txt, wordsJapanese[words[wordsNum+2]])
+			fmt.Fprintln(Txt, words[wordsNum+2])
 			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
 	}
@@ -519,7 +520,7 @@ func BattleTypingMonsterSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 					index++
 					indexMonster += 2
 					collectType++
-					tempWordDamage -= float64(rand.Intn(int(player.OP*2)) - rand.Intn(int(player.OP)))
+					tempWordDamage -= float64(rand.Intn(int(player.OP * 3)) /* - rand.Intn(int(player.OP))*/)
 					if index == len(question) {
 						index = 0
 						indexMonster = 0

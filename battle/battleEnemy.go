@@ -23,22 +23,24 @@ func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, el
 			tempWordDamage = 0
 		}
 		if pressEnter == true {
-			if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 && lock == false && lock2 == false {
+			if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 && animationLock[0] == false && animationLock[1] == false {
 				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 1.05
 				if enemy.EnemySettings[myGame.StageNum].EnemySize > tempEnemySize*1.2 {
-					lock = true
+					animationLock[0] = true
 					win.Canvas().Clear(colornames.Red)
 				}
-			} else if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && lock == true && lock2 == false {
+			} else if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && animationLock[0] == true && animationLock[1] == false {
 				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 0.95
 				if enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize {
-					lock2 = true
+					animationLock[1] = true
 				}
-			} else if lock == true && lock2 == true {
+			} else if animationLock[0] == true && animationLock[1] == true {
 				enemy.EnemySettings[myGame.StageNum].EnemySize = tempEnemySize
-				lock = false
-				lock2 = false
-				player.HP -= enemy.EnemySettings[myGame.StageNum].OP
+				animationLock[0] = false
+				animationLock[1] = false
+				if enemy.EnemySettings[myGame.StageNum].OP-player.DP >= 0 {
+					player.HP -= enemy.EnemySettings[myGame.StageNum].OP - player.DP
+				}
 				myState.CurrentGS = myState.PlayingScreen
 				pressEnter = false
 				index = 0

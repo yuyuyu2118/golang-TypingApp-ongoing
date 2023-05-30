@@ -109,6 +109,6 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 	case myState.SkillScreen:
 		myGame.InitSkillScreen(win, Txt)
 	}
-	player.InitPlayerStatus(win, myUtil.ScreenTxt)
+	player.InitPlayerStatus(win, myUtil.StatusTxt)
 
 }

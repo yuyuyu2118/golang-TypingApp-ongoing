@@ -121,7 +121,7 @@ func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pl
 					if belongWeapon == 0 {
 						if player.Gold >= requiredGold {
 							log.Println(descWeapon[i+1][4], "買える", player.Gold)
-							createOk := CreateWeaponEvent(descWeapon, i)
+							createOk := CreateWeaponEvent(win, descWeapon, i)
 							if createOk {
 								player.Gold -= requiredGold
 								tempWeapon = "weapon" + strconv.Itoa(i+1)
@@ -318,7 +318,7 @@ func SubDescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
 	buySellSlice = append(buySellSlice, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
 }
 
-func CreateWeaponEvent(descWeapon [][]string, num int) bool {
+func CreateWeaponEvent(win *pixelgl.Window, descWeapon [][]string, num int) bool {
 	//TODO: 素材が足りるかどうかの判定実装中
 	num++
 	tempSlice, _ := CountMyItems(SaveFilePathItems)
@@ -366,6 +366,16 @@ func CreateWeaponEvent(descWeapon [][]string, num int) bool {
 		log.Println(tempSlice)
 		SaveGameLostItems(SaveFilePathItems, tempSlice)
 		log.Println("素材を消費して武器を作成しました。")
+
+		xOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).X + 300
+		myUtil.DescriptionTxt.Clear()
+		myUtil.DescriptionTxt.Color = colornames.White
+		fmt.Fprintln(myUtil.DescriptionTxt, "武器を作成しました。")
+		yOffSet := myUtil.DescriptionTxt.LineHeight + 50
+		txtPos := pixel.V(xOffSet, yOffSet)
+		tempPosition := pixel.IM.Moved(txtPos)
+		myUtil.DescriptionTxt.Draw(win, tempPosition)
+
 		return true
 	} else {
 		log.Println("素材が一部足りません")

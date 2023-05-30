@@ -1,13 +1,18 @@
 package battle
 
 import (
+	"fmt"
+	"strconv"
 	"time"
 
+	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
+	"golang.org/x/image/colornames"
 )
 
 var battleTimeBool bool
@@ -18,9 +23,19 @@ func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed
 		elapsed = time.Since(startTime)
 		battleTimeBool = true
 	}
+
+	xOffSet := myPos.TopRigPos(win, myUtil.ScreenTxt).X
+	myUtil.ScreenTxt.Clear()
+	myUtil.ScreenTxt.Color = colornames.White
+	fmt.Fprintln(myUtil.ScreenTxt, "アタックタイマー", strconv.FormatFloat(player.AttackTimer-elapsed.Seconds(), 'f', 2, 64))
+	yOffSet := myUtil.ScreenTxt.LineHeight
+	txtPos := pixel.V(xOffSet, yOffSet)
+	tempPosition := pixel.IM.Moved(txtPos)
+	myUtil.ScreenTxt.Draw(win, tempPosition)
+
 	if player.Job == "No Job" {
 		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
-		myState.CurrentGS = BattleTyping(win, player, elapsed)
+		myState.CurrentGS = BattleTypingTest(win, player, elapsed)
 	} else if player.Job == "見習い剣士" {
 		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingRookie(win, player, elapsed)

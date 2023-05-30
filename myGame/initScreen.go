@@ -27,7 +27,7 @@ func InitStartScreen(win *pixelgl.Window, StartTxt *text.Text, alpha float64, an
 	txtColor := color.RGBA{R: 255, G: 255, B: 255, A: uint8(alpha * 255)} // テキストのアルファ値を更新
 	StartTxt.Color = txtColor
 
-	myUtil.CompletedText.Color = txtColor
+	myUtil.CompletedTxt.Color = txtColor
 
 	startLines := []string{
 		"タイピングバトルRPG",

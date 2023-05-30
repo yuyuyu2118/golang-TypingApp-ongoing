@@ -90,7 +90,7 @@ func InitJob(win *pixelgl.Window, Txt *text.Text) {
 
 func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
 
-	for i := 0; i < len(keyToJob)-1; i++ {
+	for i := 0; i < len(keyToJob); i++ {
 		key := pixelgl.Button(i + int(pixelgl.Key1))
 		if (jobButtonSlice[i].Contains(mousePos) || win.Pressed(key)) && event.UnlockNewJobEventInstance.Jobs[i] && myState.CurrentGS == myState.JobSelect {
 			currentjobState = JobState(i + 1)

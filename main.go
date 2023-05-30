@@ -95,7 +95,7 @@ func run() {
 			event.InitializeEventInstance(loadContent)
 
 			myGame.InitEndScreen(win, myUtil.ScreenTxt)
-			myState.CurrentGS = battle.BattleEndScreen(win, myUtil.ScreenTxt, player, &enemy.EnemySettings[myGame.StageNum])
+			myState.CurrentGS = battle.BattleEndScreen(win, myUtil.ScreenTxt, player, &enemy.EnemySettings[myGame.StageNum], loadContent)
 
 			if !myUtil.GetSaveReset() {
 				myGame.SaveGame(myGame.SaveFilePath, 1, player)
