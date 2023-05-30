@@ -8,9 +8,9 @@ import (
 	"time"
 )
 
-func InitializeQuestion() []string {
+func InitializeQuestion(filePath string) []string {
 	words := []string{}
-	file, _ := os.Open("assets\\question\\question2_6.csv")
+	file, _ := os.Open(filePath)
 	defer file.Close()
 	reader := csv.NewReader(file)
 	for {
@@ -18,11 +18,9 @@ func InitializeQuestion() []string {
 		if err == io.EOF {
 			break
 		}
-		//wordsMap[record[1]] = record[2]
 		words = append(words, record[2])
 	}
 	Shuffle(words)
-	//wordsMap = shuffleMap(wordsMap)
 	return words
 }
 
@@ -49,8 +47,8 @@ func ShufflePairs(pairs [][2]string) [][2]string {
 	return shuffledPairs
 }
 
-func LoadWordsFromCSV() (map[string]string, []string, error) {
-	file, err := os.Open("assets\\question\\question2_6.csv")
+func LoadWordsFromCSV(filePath string) (map[string]string, []string, error) {
+	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, nil, err
 	}

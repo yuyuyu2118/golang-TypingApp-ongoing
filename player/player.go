@@ -321,19 +321,17 @@ func (player *PlayerStatus) SetPlayerBattleInf(win *pixelgl.Window, Txt *text.Te
 func (player *PlayerStatus) InitPlayerStatus(win *pixelgl.Window, Txt *text.Text) {
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, player.Job, " Gold:", player.Gold, "S")
-	fmt.Fprintln(Txt, "アタックタイマー: ", player.AttackTimer)
-	//TODO: 攻撃力防御力の表示をする
-	// fmt.Fprintln(Txt, "攻撃力: ", player.OP)
-	// fmt.Fprintln(Txt, "防御力: ", player.DP)
-	tempPosition := myPos.TopLefPos(win, Txt).Add(pixel.V(0, 30))
+	fmt.Fprintln(Txt, "職業:", player.Job, " お金:", player.Gold, "S")
+	fmt.Fprintln(Txt, "攻撃力:", player.OP, "防御力:", player.DP)
+	fmt.Fprintln(Txt, "アタックタイマー:", player.AttackTimer)
+	tempPosition := myPos.TopLefPos(win, Txt).Add(pixel.V(30, 30))
 	myPos.DrawPos(win, Txt, tempPosition)
 }
 
 func InitPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, player.HP, "\n", player.SP)
+	fmt.Fprintln(Txt, strconv.FormatFloat(player.HP, 'f', 2, 64), "\n", strconv.FormatFloat(player.SP, 'f', 2, 64))
 	xOffSet := 30.0
 	yOffSet := 50.0
 	txtPos := pixel.V(xOffSet, yOffSet)

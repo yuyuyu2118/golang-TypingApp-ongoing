@@ -2,6 +2,7 @@ package battle
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -25,25 +26,25 @@ func InitBattleTextV1(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "> ", words[score])
+	fmt.Fprintln(Txt, "> ", words[wordsNum])
 	myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt))
 
 	offset := Txt.Bounds().W()
 	TxtOrigX := Txt.Dot.X
 	spacing := 100.0
-	if len(words)-score != 1 {
+	if len(words)-wordsNum != 1 {
 		Txt.Color = colornames.Darkgray
 		offset := Txt.Bounds().W()
 		Txt.Clear()
-		fmt.Fprintln(Txt, words[score+1])
+		fmt.Fprintln(Txt, words[wordsNum+1])
 		myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 		Txt.Dot.X = TxtOrigX
 	}
-	if !(len(words)-score == 2 || len(words)-score == 1) {
+	if !(len(words)-wordsNum == 2 || len(words)-wordsNum == 1) {
 		Txt.Color = colornames.Gray
 		offset += Txt.Bounds().W()
 		Txt.Clear()
-		fmt.Fprintln(Txt, words[score+2])
+		fmt.Fprintln(Txt, words[wordsNum+2])
 		myPos.DrawPos(win, Txt, myPos.BottleRoundCenterPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 	}
 	return elapsed
@@ -52,10 +53,10 @@ func InitBattleTextV1(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
 	if myState.CurrentGS == myState.PlayingScreen {
-		tempWords := words[score]
+		tempWords := words[wordsNum]
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, wordsJapanese[words[score]])
+		fmt.Fprintln(Txt, wordsJapanese[words[wordsNum]])
 		Txt.Color = colornames.Darkslategray
 		fmt.Fprint(Txt, tempWords[:index])
 		Txt.Color = colornames.White
@@ -65,21 +66,21 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
 		spacing := 100.0
-		if len(words)-score != 1 {
+		if len(words)-wordsNum != 1 {
 			Txt.Color = colornames.Darkgray
 			offset := Txt.Bounds().W()
 			Txt.Clear()
-			fmt.Fprintln(Txt, wordsJapanese[words[score+1]])
-			fmt.Fprintln(Txt, words[score+1])
+			fmt.Fprintln(Txt, wordsJapanese[words[wordsNum+1]])
+			fmt.Fprintln(Txt, words[wordsNum+1])
 			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 			Txt.Dot.X = TxtOrigX
 		}
-		if !(len(words)-score == 2 || len(words)-score == 1) {
+		if !(len(words)-wordsNum == 2 || len(words)-wordsNum == 1) {
 			Txt.Color = colornames.Gray
 			offset += Txt.Bounds().W()
 			Txt.Clear()
-			fmt.Fprintln(Txt, wordsJapanese[words[score+2]])
-			fmt.Fprintln(Txt, words[score+2])
+			fmt.Fprintln(Txt, wordsJapanese[words[wordsNum+2]])
+			fmt.Fprintln(Txt, words[wordsNum+2])
 			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
@@ -140,40 +141,44 @@ func InitBattleTextV2Skill(win *pixelgl.Window, Txt *text.Text, elapsed time.Dur
 }
 
 func InitBattleTextMagicUser(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
-	var tempKanjiString = "魔法力: "
-	var tempKanji []rune
-	for _, v := range tempKanjiString {
-		tempKanji = append(tempKanji, rune(v))
-	}
-	magic1Txt := myUtil.InitMagicJapanText(myUtil.JapanFontPath, 40, colornames.White, tempKanji)
-	magic2Txt := myUtil.InitMagicJapanText(myUtil.JapanFontPath, 45, colornames.White, tempKanji)
-	magic3Txt := myUtil.InitMagicJapanText(myUtil.JapanFontPath, 50, colornames.White, tempKanji)
-	magic4Txt := myUtil.InitMagicJapanText(myUtil.JapanFontPath, 55, colornames.White, tempKanji)
 
 	if myState.CurrentGS == myState.PlayingScreen {
-		Txt.Clear()
 		if magicCollectType >= 0 && magicCollectType < 25 {
-			Txt.Color = colornames.White
-			fmt.Fprintln(magic1Txt, "魔法力:", magicCollectType)
-			myPos.DrawPos(win, magic1Txt, myPos.CenLefPos(win, Txt).Sub(pixel.V(magic1Txt.TabWidth/2, magic1Txt.LineHeight/2)))
+			myUtil.Magic1Txt.Clear()
+			myUtil.Magic1Txt.Color = colornames.White
+			fmt.Fprintln(myUtil.Magic1Txt, "魔法力:", strconv.FormatFloat(magicCollectType, 'f', 2, 64))
+			myPos.DrawPos(win, myUtil.Magic1Txt, myPos.CenLefPos(win, Txt).Sub(pixel.V(myUtil.Magic1Txt.TabWidth/2-50, myUtil.Magic1Txt.LineHeight/2-150)))
 		} else if magicCollectType >= 25 && magicCollectType < 50 {
-			magic2Txt.Color = colornames.Yellow
-			fmt.Fprintln(magic2Txt, "魔法力:", magicCollectType)
-			myPos.DrawPos(win, magic2Txt, myPos.CenLefPos(win, Txt).Sub(pixel.V(magic2Txt.TabWidth/2, magic2Txt.LineHeight/2)))
+			myUtil.Magic2Txt.Clear()
+			myUtil.Magic2Txt.Color = colornames.Yellow
+			fmt.Fprintln(myUtil.Magic2Txt, "魔法力:", strconv.FormatFloat(magicCollectType, 'f', 2, 64))
+			myPos.DrawPos(win, myUtil.Magic2Txt, myPos.CenLefPos(win, Txt).Sub(pixel.V(myUtil.Magic2Txt.TabWidth/2-50, myUtil.Magic2Txt.LineHeight/2-150)))
 		} else if magicCollectType >= 50 && magicCollectType < 100 {
-			magic3Txt.Color = colornames.Orange
-			fmt.Fprintln(magic3Txt, "魔法力:", magicCollectType)
-			myPos.DrawPos(win, magic3Txt, myPos.CenLefPos(win, Txt).Sub(pixel.V(magic3Txt.TabWidth/2, magic3Txt.LineHeight/2)))
-		} else if magicCollectType >= 100 {
-			magic4Txt.Color = colornames.Red
-			fmt.Fprintln(magic4Txt, "魔法力:", magicCollectType)
-			myPos.DrawPos(win, magic4Txt, myPos.CenLefPos(win, Txt).Sub(pixel.V(magic4Txt.TabWidth/2, magic4Txt.LineHeight/2)))
+			myUtil.Magic3Txt.Clear()
+			myUtil.Magic3Txt.Color = colornames.Orange
+			fmt.Fprintln(myUtil.Magic3Txt, "魔法力:", strconv.FormatFloat(magicCollectType, 'f', 2, 64))
+			myPos.DrawPos(win, myUtil.Magic3Txt, myPos.CenLefPos(win, Txt).Sub(pixel.V(myUtil.Magic3Txt.TabWidth/2-50, myUtil.Magic3Txt.LineHeight/2-150)))
+		} else if magicCollectType >= 100 && magicCollectType < 500 {
+			myUtil.Magic4Txt.Clear()
+			myUtil.Magic4Txt.Color = colornames.Red
+			fmt.Fprintln(myUtil.Magic4Txt, "魔法力:", strconv.FormatFloat(magicCollectType, 'f', 2, 64))
+			myPos.DrawPos(win, myUtil.Magic4Txt, myPos.CenLefPos(win, Txt).Sub(pixel.V(myUtil.Magic4Txt.TabWidth/2-50, myUtil.Magic4Txt.LineHeight/2-150)))
+		} else if magicCollectType >= 500 && magicCollectType < 1000 {
+			myUtil.Magic5Txt.Clear()
+			myUtil.Magic5Txt.Color = colornames.Darkred
+			fmt.Fprintln(myUtil.Magic5Txt, "魔法力:", strconv.FormatFloat(magicCollectType, 'f', 2, 64))
+			myPos.DrawPos(win, myUtil.Magic5Txt, myPos.CenLefPos(win, Txt).Sub(pixel.V(myUtil.Magic5Txt.TabWidth/2-50, myUtil.Magic5Txt.LineHeight/2-150)))
+		} else if magicCollectType >= 1000 {
+			myUtil.Magic6Txt.Clear()
+			myUtil.Magic6Txt.Color = colornames.Purple
+			fmt.Fprintln(myUtil.Magic6Txt, "魔法力:", strconv.FormatFloat(magicCollectType, 'f', 2, 64))
+			myPos.DrawPos(win, myUtil.Magic6Txt, myPos.CenLefPos(win, Txt).Sub(pixel.V(myUtil.Magic6Txt.TabWidth/2-50, myUtil.Magic6Txt.LineHeight/2-150)))
 		}
 
-		tempWords := words[score]
+		tempWords := words[wordsNum]
 		Txt.Clear()
 		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, wordsJapanese[words[score]])
+		fmt.Fprintln(Txt, wordsJapanese[words[wordsNum]])
 		Txt.Color = colornames.Darkslategray
 		fmt.Fprint(Txt, tempWords[:index])
 		Txt.Color = colornames.White
@@ -183,21 +188,21 @@ func InitBattleTextMagicUser(win *pixelgl.Window, Txt *text.Text, elapsed time.D
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
 		spacing := 100.0
-		if len(words)-score != 1 {
+		if len(words)-wordsNum != 1 {
 			Txt.Color = colornames.Darkgray
 			offset := Txt.Bounds().W()
 			Txt.Clear()
-			fmt.Fprintln(Txt, wordsJapanese[words[score+1]])
-			fmt.Fprintln(Txt, words[score+1])
+			fmt.Fprintln(Txt, wordsJapanese[words[wordsNum+1]])
+			fmt.Fprintln(Txt, words[wordsNum+1])
 			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 			Txt.Dot.X = TxtOrigX
 		}
-		if !(len(words)-score == 2 || len(words)-score == 1) {
+		if !(len(words)-wordsNum == 2 || len(words)-wordsNum == 1) {
 			Txt.Color = colornames.Gray
 			offset += Txt.Bounds().W()
 			Txt.Clear()
-			fmt.Fprintln(Txt, wordsJapanese[words[score+2]])
-			fmt.Fprintln(Txt, words[score+2])
+			fmt.Fprintln(Txt, wordsJapanese[words[wordsNum+2]])
+			fmt.Fprintln(Txt, words[wordsNum+2])
 			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
@@ -219,12 +224,12 @@ func InitBattleTextMagicUser(win *pixelgl.Window, Txt *text.Text, elapsed time.D
 func InitBattleTextMonster(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
 	if myState.CurrentGS == myState.PlayingScreen {
-		tempWords := words[score]
+		tempWords := words[wordsNum]
 		tempWordsSlice := strings.Split(tempWords, "")
 		tempWords = strings.Join(tempWordsSlice, " ")
 		Txt.Clear()
 		Txt.Color = colornames.White
-		for i := 0; i < len(words[score])-1; i++ {
+		for i := 0; i < len(words[wordsNum])-1; i++ {
 			fmt.Fprint(Txt, "?")
 		}
 		fmt.Fprintln(Txt, "?")

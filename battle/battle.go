@@ -15,78 +15,72 @@ import (
 )
 
 var (
-	score                   = 0
-	wordsJapanese, words, _ = LoadWordsFromCSV()
+	wordsNum                = 0
+	wordsJapanese, words, _ = LoadWordsFromCSV("assets\\question\\question2_6.csv")
 	index                   = 0
 	yourTime                = 0.0
 
-	gainGold = 0
-	lostGold = 0
+	//別の関数で呼び出す用
+	gainGold            = 0
+	gainGoldCollectType = 0
+	lostGold            = 0
+	lostGoldMissType    = 0
 
-	AttackCount = 3.0
-	tempCount   = 0.0
-	lock        = false
-	lock2       = false
-	pressEnter  = false
-
+	AttackCount    = 3.0
+	tempCount      = 0.0
+	animationLock  = []bool{false, false}
+	pressEnter     = false
 	tempWordDamage = 0.0
 	tempEnemySize  = 0.0
 )
 
 func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed time.Duration, currentGameState myState.GameState) myState.GameState {
+	//自分がやられたとき
 	if player.HP <= 0 {
 		yourTime = float64(elapsed.Seconds())
-		min := int(float64(enemyInf.Gold) * 0.7)
-		max := int(float64(enemyInf.Gold) * 1.3)
-		lostGold = rand.Intn(max-min+1) + min
-		player.Gold -= lostGold
-		log.Println("GameOver!!")
+
+		lostGoldMin := int(float64(enemyInf.Gold) * 0.7)
+		lostGoldMax := int(float64(enemyInf.Gold) * 1.3)
+		lostGold = rand.Intn(lostGoldMax-lostGoldMin+1) + lostGoldMin
+		lostGoldMissType = int(float64(missType) * 0.1)
+
+		player.Gold -= (lostGold + lostGoldMissType)
+
+		log.Println("DeathFlug: GameOver")
 		currentGameState = myState.EndScreen
 	}
+	//敵を倒したとき
 	if enemyInf.HP <= 0 {
-		//GoldRandom
-		min := int(float64(enemyInf.Gold) * 0.7)
-		max := int(float64(enemyInf.Gold) * 1.3)
-		gainGold = rand.Intn(max-min+1) + min
-		player.Gold += gainGold
+
+		gainGoldMin := int(float64(enemyInf.Gold) * 0.7)
+		gainGoldMax := int(float64(enemyInf.Gold) * 1.3)
+		gainGold = rand.Intn(gainGoldMax-gainGoldMin+1) + gainGoldMin
+		gainGoldCollectType = int(float64(collectType) * 0.1)
+
+		player.Gold += gainGold + gainGoldCollectType
+
 		//AbilityPointの付与
 		player.AP += enemyInf.DropAP
+
 		index = 0
-		score++
+		wordsNum++
+
+		log.Println("DeathFlug: DefeatEnemy")
 		currentGameState = myState.EndScreen
+
 		yourTime = float64(elapsed.Seconds())
 		for _, name := range enemy.EnemyNameSlice {
 			if enemyInf.Name == name {
 				myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, name)
 			}
 		}
-		// if enemyInf.Name == "Slime" {
-		// 	myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, "Slime")
-		// } else if enemyInf.Name == "Bird" {
-		// 	myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, "Bird")
-		// } else if enemyInf.Name == "Plant" {
-		// 	myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, "Plant")
-		// } else if enemyInf.Name == "Goblin" {
-		// 	myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, "Goblin")
-		// } else if enemyInf.Name == "Zombie" {
-		// 	myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, "Zombie")
-		// } else if enemyInf.Name == "Fairy" {
-		// 	myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, "Fairy")
-		// } else if enemyInf.Name == "Skull" {
-		// 	myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, "Skull")
-		// } else if enemyInf.Name == "Wizard" {
-		// 	myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, "Wizard")
-		// } else if enemyInf.Name == "Solidier" {
-		// 	myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, "Solidier")
-		// } else if enemyInf.Name == "Dragon" {
-		// 	myGame.SaveDefeatedEnemyEvent(myGame.SaveFilePath, 2, "Dragon")
-		// }
 	}
+
 	return currentGameState
 }
 
-func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
-	question := words[score]
+func BattleTypingTest(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
@@ -103,7 +97,7 @@ func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0
-						score++
+						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
 						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
 						tempWordDamage = 0.0
@@ -124,21 +118,21 @@ func BattleTyping(win *pixelgl.Window, player *player.PlayerStatus, elapsed time
 			tempWordDamage = 0
 		}
 		if pressEnter == true {
-			if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 && lock == false && lock2 == false {
+			if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 && animationLock[0] == false && animationLock[1] == false {
 				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 1.05
 				if enemy.EnemySettings[myGame.StageNum].EnemySize > tempEnemySize*1.2 {
-					lock = true
+					animationLock[0] = true
 					win.Canvas().Clear(colornames.Red)
 				}
-			} else if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && lock == true && lock2 == false {
+			} else if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && animationLock[0] == true && animationLock[1] == false {
 				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 0.95
 				if enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize {
-					lock2 = true
+					animationLock[1] = true
 				}
-			} else if lock == true && lock2 == true {
+			} else if animationLock[0] == true && animationLock[1] == true {
 				enemy.EnemySettings[myGame.StageNum].EnemySize = tempEnemySize
-				lock = false
-				lock2 = false
+				animationLock[0] = false
+				animationLock[1] = false
 				player.HP -= enemy.EnemySettings[myGame.StageNum].OP
 				myState.CurrentGS = myState.PlayingScreen
 				pressEnter = false

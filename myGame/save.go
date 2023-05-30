@@ -9,6 +9,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/yuyuyu2118/typingGo/player"
 )
@@ -33,7 +34,7 @@ func SaveGame(saveFilePath string, saveNum int, player *player.PlayerStatus) {
 	Language := player.Language
 	AttackTime := strconv.FormatFloat(player.AttackTimer, 'f', -1, 64)
 	BaseOP := strconv.FormatFloat(3.0, 'f', -1, 64)
-	BaseDP := strconv.FormatFloat(1.0, 'f', -1, 64)
+	BaseDP := strconv.FormatFloat(0.0, 'f', -1, 64)
 	BaseAttackTime := strconv.FormatFloat(4.0, 'f', -1, 64)
 	saveContent := Name + "," + MaxHP + "," + HP + "," + OP + "," + DP + "," + MaxSP + "," + SP + "," + BaseSP + "," + Gold + "," + Job + "," + AP + "," + Language + "," + AttackTime + "," + BaseOP + "," + BaseDP + "," + BaseAttackTime
 
@@ -64,6 +65,8 @@ func SaveGame(saveFilePath string, saveNum int, player *player.PlayerStatus) {
 	}
 
 	fmt.Println("保存ファイルを更新しました。")
+	time.Sleep(10 * time.Millisecond)
+
 }
 
 func SaveFileLoad(saveFilePath string) [][]string {
@@ -73,7 +76,7 @@ func SaveFileLoad(saveFilePath string) [][]string {
 
 func SaveFileCheck(saveFilePath string) {
 	tempInitText := []string{"Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,AttackTimer,BaseOP,BaseDP,BaseAttackTimer",
-		"NoName,30,30,3,1,50,0,2,0,No Job,0,Japanese,4.0,3.0,1.0,4.0",
+		"NoName,30,30,3,0,50,0,2,0,No Job,0,Japanese,4.0,3.0,0.0,4.0",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
@@ -178,6 +181,7 @@ func SaveDefeatedEnemyEvent(saveFilePath string, saveNum int, defeatEnemy string
 	}
 
 	fmt.Println("保存ファイルを更新しました。")
+	time.Sleep(10 * time.Millisecond)
 }
 
 func SaveWeaponPurchaseEvent(saveFilePath string, saveNum int, purchaseWeapon string, player *player.PlayerStatus) {
@@ -246,6 +250,7 @@ func SaveWeaponPurchaseEvent(saveFilePath string, saveNum int, purchaseWeapon st
 	}
 
 	fmt.Println("保存ファイルを更新しました。")
+	time.Sleep(10 * time.Millisecond)
 }
 
 func SaveArmorPurchaseEvent(saveFilePath string, saveNum int, purchaseArmor string, player *player.PlayerStatus) {
@@ -314,6 +319,7 @@ func SaveArmorPurchaseEvent(saveFilePath string, saveNum int, purchaseArmor stri
 	}
 
 	fmt.Println("保存ファイルを更新しました。")
+	time.Sleep(10 * time.Millisecond)
 }
 
 func SaveAccessoryPurchaseEvent(saveFilePath string, saveNum int, purchaseAccessory string, player *player.PlayerStatus) {
@@ -382,6 +388,7 @@ func SaveAccessoryPurchaseEvent(saveFilePath string, saveNum int, purchaseAccess
 	}
 
 	fmt.Println("保存ファイルを更新しました。")
+	time.Sleep(10 * time.Millisecond)
 }
 
 // func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, player *player.PlayerStatus) {
@@ -755,6 +762,7 @@ func SaveGameWeapon(saveFilePath string, saveNum int, player *player.PlayerStatu
 	}
 
 	fmt.Println("保存ファイルを更新しました。")
+	time.Sleep(10 * time.Millisecond)
 }
 
 func SaveGameArmor(saveFilePath string, saveNum int, player *player.PlayerStatus) {
@@ -792,6 +800,7 @@ func SaveGameArmor(saveFilePath string, saveNum int, player *player.PlayerStatus
 	}
 
 	fmt.Println("保存ファイルを更新しました。")
+	time.Sleep(10 * time.Millisecond)
 }
 
 func SaveGameAccessory(saveFilePath string, saveNum int, player *player.PlayerStatus) {
@@ -829,4 +838,5 @@ func SaveGameAccessory(saveFilePath string, saveNum int, player *player.PlayerSt
 	}
 
 	fmt.Println("保存ファイルを更新しました。")
+	time.Sleep(10 * time.Millisecond)
 }

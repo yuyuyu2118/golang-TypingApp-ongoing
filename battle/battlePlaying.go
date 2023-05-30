@@ -18,7 +18,7 @@ import (
 )
 
 func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
-	question := words[score]
+	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
@@ -35,7 +35,7 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0
-						score++
+						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
 						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
 						tempWordDamage = 0.0
@@ -63,7 +63,7 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	txtPos := pixel.V(0, 0)
 	myUtil.ScreenTxt.Color = colornames.White
 
-	question := words[score]
+	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
@@ -79,7 +79,7 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0
-						score++
+						wordsNum++
 						//enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
 						//PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
 						//tempWordDamage = 0.0
@@ -113,7 +113,7 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	if bulletLoading[0] && !bulletLoading[1] && !bulletLoading[2] {
 		myUtil.HunterBulletTxt.Clear()
 		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1], bulletDamage[0])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-1], bulletDamage[0])
 		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
@@ -121,8 +121,8 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	} else if bulletLoading[0] && bulletLoading[1] && !bulletLoading[2] {
 		myUtil.HunterBulletTxt.Clear()
 		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1], bulletDamage[1])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-2], bulletDamage[0])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-1], bulletDamage[1])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-2], bulletDamage[0])
 		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
@@ -130,9 +130,9 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	} else if bulletLoading[0] && bulletLoading[1] && bulletLoading[2] {
 		myUtil.HunterBulletTxt.Clear()
 		myUtil.HunterBulletTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-1], bulletDamage[2])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-2], bulletDamage[1])
-		fmt.Fprintln(myUtil.HunterBulletTxt, words[score-3], bulletDamage[0])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-1], bulletDamage[2])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-2], bulletDamage[1])
+		fmt.Fprintln(myUtil.HunterBulletTxt, words[wordsNum-3], bulletDamage[0])
 		yOffSet -= myUtil.HunterBulletTxt.LineHeight + 30
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
@@ -160,7 +160,7 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 }
 
 func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
-	question := words[score]
+	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
@@ -180,7 +180,7 @@ func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed 
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0
-						score++
+						wordsNum++
 					}
 				} else {
 					missType++
@@ -200,7 +200,7 @@ var magicCollectType = 0.0
 var magicMissType = 0
 
 func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
-	question := words[score]
+	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
@@ -220,13 +220,19 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 						magicCollectType += player.OP * 1
 					} else if magicCollectType >= 100 {
 						magicCollectType += player.OP * 1.5
+					} else if magicCollectType >= 500 {
+						magicCollectType += player.OP * 3.0
+					} else if magicCollectType >= 1000 {
+						magicCollectType += player.OP * 20.0
+					} else if magicCollectType >= 2500 {
+						magicCollectType += player.OP * 50.0
 					}
 					log.Println(magicCollectType)
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0
-						score++
-						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
+						wordsNum++
+						//PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
 					}
 				} else {
 					missType++
@@ -239,6 +245,12 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 						magicCollectType -= player.OP * 10.0
 					} else if magicCollectType >= 100 {
 						magicCollectType -= player.OP * 30.0
+					} else if magicCollectType >= 500 {
+						magicCollectType -= player.OP * 50.0
+					} else if magicCollectType >= 1000 {
+						magicCollectType -= player.OP * 100.0
+					} else if magicCollectType >= 2500 {
+						magicCollectType -= player.OP * 500.0
 					}
 					if magicCollectType < 0 {
 						magicCollectType = 0
@@ -264,7 +276,7 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 var indexMonster int
 
 func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
-	question := words[score]
+	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
@@ -277,12 +289,12 @@ func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elaps
 					index++
 					indexMonster += 2
 					collectType++
-					tempWordDamage -= float64(rand.Intn(int(player.OP*2)) - rand.Intn(int(player.OP)))
+					tempWordDamage -= float64(rand.Intn(int(player.OP * 2)) /* - rand.Intn(int(player.OP))*/)
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0
 						indexMonster = 0
-						score++
+						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
 						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
 						tempWordDamage = 0

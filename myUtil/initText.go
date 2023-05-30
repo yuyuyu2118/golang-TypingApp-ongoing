@@ -21,7 +21,14 @@ var (
 	DescriptionTxt  *text.Text
 	BasicTxt        *text.Text
 	HunterBulletTxt *text.Text
-	CompletedText   *text.Text
+	CompletedTxt    *text.Text
+	StatusTxt       *text.Text
+	Magic1Txt       *text.Text
+	Magic2Txt       *text.Text
+	Magic3Txt       *text.Text
+	Magic4Txt       *text.Text
+	Magic5Txt       *text.Text
+	Magic6Txt       *text.Text
 )
 
 var (
@@ -37,7 +44,21 @@ func InitTxtFontLoading() {
 	ScreenTxt = InitAnyJapanText(JapanFontPath, 40, colornames.White)
 	DescriptionTxt = InitAnyJapanText(JapanFontPath, 30, colornames.White)
 	HunterBulletTxt = InitAnyJapanText(JapanFontPathBold, 60, colornames.White)
-	CompletedText = InitAnyJapanText(JapanFontPathBold, 70, colornames.White)
+	CompletedTxt = InitAnyJapanText(JapanFontPathBold, 70, colornames.White)
+	StatusTxt = InitAnyJapanText(JapanFontPathBold, 35, colornames.White)
+
+	var tempKanjiString = "魔法力: "
+	var tempKanji []rune
+	for _, v := range tempKanjiString {
+		tempKanji = append(tempKanji, rune(v))
+	}
+
+	Magic1Txt = InitMagicJapanText(JapanFontPath, 40, colornames.White, tempKanji)
+	Magic2Txt = InitMagicJapanText(JapanFontPath, 45, colornames.White, tempKanji)
+	Magic3Txt = InitMagicJapanText(JapanFontPath, 50, colornames.White, tempKanji)
+	Magic4Txt = InitMagicJapanText(JapanFontPath, 55, colornames.White, tempKanji)
+	Magic5Txt = InitMagicJapanText(JapanFontPath, 60, colornames.White, tempKanji)
+	Magic6Txt = InitMagicJapanText(JapanFontPath, 65, colornames.White, tempKanji)
 	// startTxt := initializeAnyText(fontPath, 80, colornames.White)
 	// endTxt := initializeAnyText(fontPath, 60, colornames.White)
 }
