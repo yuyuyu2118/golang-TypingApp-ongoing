@@ -48,7 +48,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 	//DropEvent
 	if !dropEvent {
 		for i := 0; i < 9; i++ {
-			if rand.Float64() <= 0.15 { // 15%の確率でアイテムをドロップ
+			if rand.Float64() <= 0.35 { // 35%の確率でアイテムをドロップ
 				dropRandomItem = append(dropRandomItem, enemy.DropItems[i])
 			}
 		}
