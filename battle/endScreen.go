@@ -48,7 +48,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 	//DropEvent
 	if !dropEvent {
 		for i := 0; i < 9; i++ {
-			if rand.Float64() <= 0.35 { // 35%の確率でアイテムをドロップ
+			if rand.Float64() <= 0.5 { // 40%の確率でアイテムをドロップ
 				dropRandomItem = append(dropRandomItem, enemy.DropItems[i])
 			}
 		}
@@ -60,7 +60,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		dropEvent = true
 	}
 
-	ClearTxt := []string{"正解タイプボーナスゴールド: " + strconv.Itoa(collectType) + " * 0.1 = " + strconv.Itoa(gainGoldCollectType),
+	ClearTxt := []string{"正解タイプボーナスゴールド: " + strconv.Itoa(collectType) + " * 1.0 = " + strconv.Itoa(gainGoldCollectType),
 		"モンスタードロップゴールド: " + strconv.Itoa(gainGold) + "S",
 		"",
 		" 入力単語数:" + strconv.Itoa(wordsNum),
@@ -113,19 +113,35 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		// }
 		// log.Println(endLines)
 	} else {
-		yourTimeString := fmt.Sprintf("%0.3f", yourTime)
 		//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
 		endLines := []string{
-			"GameOver...",
-			"You lost " + strconv.Itoa(lostGold) + " gold",
-			"YourScore : " + strconv.Itoa(wordsNum),
-			"\n",
-			"yourTime =" + yourTimeString,
-			"collectType = " + strconv.Itoa(collectType) + " missType = " + strconv.Itoa(missType),
-			"\n\n",
-			"ReSTART : Press Tab | Back : Press BackSpace",
+			"あなたは負けてしまいました",
+			"失ったゴールド" + strconv.Itoa(lostGold) + " gold",
+			" 入力単語数:" + strconv.Itoa(wordsNum),
+			"正解タイプ数:" + strconv.Itoa(collectType),
+			"正解タイプ数:" + strconv.Itoa(collectType),
+			"ミスタイプ数:" + strconv.Itoa(missType),
 		}
-		myPos.LineCenterAlign(win, endLines, Txt, "center")
+
+		for i, value := range endLines {
+			if i < 10 {
+				myUtil.ScreenTxt.Clear()
+				myUtil.ScreenTxt.Color = colornames.White
+				fmt.Fprintln(myUtil.ScreenTxt, value)
+				yOffSet -= myUtil.ScreenTxt.LineHeight + 20
+				txtPos = pixel.V(xOffSet, yOffSet)
+				tempPosition := pixel.IM.Moved(txtPos)
+				myUtil.ScreenTxt.Draw(win, tempPosition)
+			} else if i >= 10 {
+				myUtil.ScreenTxt.Clear()
+				myUtil.ScreenTxt.Color = colornames.White
+				fmt.Fprintln(myUtil.ScreenTxt, value)
+				yOffSet2 -= myUtil.ScreenTxt.LineHeight + 20
+				txtPos = pixel.V(xOffSet2, yOffSet2)
+				tempPosition := pixel.IM.Moved(txtPos)
+				myUtil.ScreenTxt.Draw(win, tempPosition)
+			}
+		}
 	}
 
 	//画面遷移,いろいろリセット

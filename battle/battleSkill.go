@@ -520,7 +520,7 @@ func BattleTypingMonsterSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 					index++
 					indexMonster += 2
 					collectType++
-					tempWordDamage -= float64(rand.Intn(int(player.OP * 3)) /* - rand.Intn(int(player.OP))*/)
+					tempWordDamage -= float64(rand.Intn(int(player.OP * 5)) /* - rand.Intn(int(player.OP))*/)
 					if index == len(question) {
 						index = 0
 						indexMonster = 0

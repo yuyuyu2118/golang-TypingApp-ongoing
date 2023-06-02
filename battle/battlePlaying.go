@@ -223,9 +223,9 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 					} else if magicCollectType >= 500 {
 						magicCollectType += player.OP * 3.0
 					} else if magicCollectType >= 1000 {
-						magicCollectType += player.OP * 20.0
+						magicCollectType += player.OP * 15.0
 					} else if magicCollectType >= 2500 {
-						magicCollectType += player.OP * 50.0
+						magicCollectType += player.OP * 30.0
 					}
 					log.Println(magicCollectType)
 					player.SP += player.BaseSP
@@ -289,7 +289,7 @@ func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elaps
 					index++
 					indexMonster += 2
 					collectType++
-					tempWordDamage -= float64(rand.Intn(int(player.OP * 2)) /* - rand.Intn(int(player.OP))*/)
+					tempWordDamage -= float64(rand.Intn(int(player.OP * 3.5)) /* - rand.Intn(int(player.OP))*/)
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0

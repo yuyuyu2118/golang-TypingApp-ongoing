@@ -104,7 +104,7 @@ func StageClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState 
 
 	for i := 0; i < len(keyToDungeon)-1; i++ {
 		key := pixelgl.Button(i + int(pixelgl.Key1))
-		if (dungeonButtonSlice[i].Contains(mousePos) || win.Pressed(key)) && event.UnlockNewDungeonEventInstance.Dungeons[i] && myState.CurrentGS == myState.StageSelect {
+		if (win.Pressed(key)) && event.UnlockNewDungeonEventInstance.Dungeons[i] && myState.CurrentGS == myState.StageSelect {
 			currentdungeonState = DungeonState(i + 1)
 			myState.CurrentGS = myState.PlayingScreen
 			StageNum = i
@@ -113,7 +113,7 @@ func StageClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState 
 		}
 	}
 
-	if (dungeonButtonSlice[9].Contains(mousePos) || win.JustPressed(pixelgl.Key0)) && event.UnlockNewDungeonEventInstance.Dungeons[9] && myState.CurrentGS == myState.StageSelect {
+	if (win.JustPressed(pixelgl.Key0)) && event.UnlockNewDungeonEventInstance.Dungeons[9] && myState.CurrentGS == myState.StageSelect {
 		currentdungeonState = DungeonState(9)
 		myState.CurrentGS = myState.PlayingScreen
 		StageNum = 9
