@@ -31,7 +31,8 @@ func InitTown(win *pixelgl.Window, Txt *text.Text) {
 	txtPos := pixel.V(0, 0)
 
 	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
-	townSlice := []string{"1. 武器店", "2. 防具店", "3. アクセサリー店", "4. 鍛冶屋", "5. 装備"}
+	//townSlice := []string{"1. 武器店", "2. 防具店", "3. アクセサリー店", "4. 鍛冶屋", "5. 装備"}
+	townSlice := []string{"1. 武器店", "2. 防具店", "3. アクセサリー店", "4. 装備"}
 
 	for _, townName := range townSlice {
 		Txt.Clear()
@@ -56,10 +57,10 @@ func TownClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 	} else if myState.CurrentGS == myState.TownScreen && (townButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
 		myState.CurrentGS = myState.AccessoryShop
 		log.Println("Town->AccessoryShop")
-	} else if myState.CurrentGS == myState.TownScreen && (townButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
+		/*} else if myState.CurrentGS == myState.TownScreen && (townButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
 		myState.CurrentGS = myState.BlackSmith
-		log.Println("Town->BlackSmith")
-	} else if myState.CurrentGS == myState.TownScreen && (townButtonSlice[4].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) {
+		log.Println("Town->BlackSmith")*/
+	} else if myState.CurrentGS == myState.TownScreen && (townButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
 		myState.CurrentGS = myState.EquipmentScreen
 		log.Println("Town->EquipmentScreen")
 	} else if myState.CurrentGS == myState.TownScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
