@@ -35,7 +35,7 @@ func BattleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *
 
 var (
 	RookieSkillCount = 0
-	RookieSkillWords = []string{"oreno", "kenngiwo", "kuraeee"}
+	RookieSkillWords = []string{"oreno", "kenngiwo", "kurae!!"}
 )
 
 func BattleTypingRookieSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
@@ -84,8 +84,14 @@ func InitBattleTextRookieSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 	if myState.CurrentGS == myState.SkillScreen {
 		tempWords := RookieSkillWords[RookieSkillCount]
 		Txt.Clear()
-		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, "俺の")
+		Txt.Color = colornames.Orange
+		if RookieSkillCount == 0 {
+			fmt.Fprintln(Txt, "俺の")
+		} else if RookieSkillCount == 1 {
+			fmt.Fprintln(Txt, "剣技を")
+		} else if RookieSkillCount == 2 {
+			fmt.Fprintln(Txt, "くらえ!!")
+		}
 		fmt.Fprint(Txt, "> ")
 		Txt.Color = colornames.Darkslategray
 		fmt.Fprint(Txt, tempWords[:index])
@@ -100,7 +106,11 @@ func InitBattleTextRookieSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 			Txt.Color = colornames.Orange
 			offset := Txt.Bounds().W()
 			Txt.Clear()
-			fmt.Fprintln(Txt, "剣技を")
+			if RookieSkillCount == 0 {
+				fmt.Fprintln(Txt, "剣技を")
+			} else if RookieSkillCount == 1 {
+				fmt.Fprintln(Txt, "くらえ!!")
+			}
 			fmt.Fprintln(Txt, RookieSkillWords[RookieSkillCount+1])
 			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing, 0)))
 			Txt.Dot.X = TxtOrigX
@@ -109,7 +119,7 @@ func InitBattleTextRookieSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 			Txt.Color = colornames.Orange
 			offset += Txt.Bounds().W()
 			Txt.Clear()
-			fmt.Fprintln(Txt, "くらえええ!!")
+			fmt.Fprintln(Txt, "くらえ!!")
 			fmt.Fprintln(Txt, RookieSkillWords[RookieSkillCount+2])
 			myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt).Add(pixel.V(offset+spacing*2, 0)))
 		}
