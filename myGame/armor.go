@@ -90,7 +90,7 @@ func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pla
 
 	for i := 0; i < len(keyToArmor)-1; i++ {
 		key := pixelgl.Button(i + int(pixelgl.Key1))
-		if (buttonSliceArmor[i].Contains(mousePos) || win.Pressed(key)) && event.ArmorPurchaseEventInstance.Armors[i] && myState.CurrentGS == myState.ArmorShop {
+		if (win.Pressed(key)) && event.ArmorPurchaseEventInstance.Armors[i] && myState.CurrentGS == myState.ArmorShop {
 			currentarmorState = ArmorState(i + 1)
 			//CreateArmorEvent(descArmor, 0)
 			log.Println("防具屋->防具", i+1)
@@ -98,7 +98,7 @@ func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pla
 		}
 	}
 
-	if (buttonSliceArmor[9].Contains(mousePos) || win.JustPressed(pixelgl.Key0)) && event.ArmorPurchaseEventInstance.Armors[9] && myState.CurrentGS == myState.ArmorShop {
+	if (win.JustPressed(pixelgl.Key0)) && event.ArmorPurchaseEventInstance.Armors[9] && myState.CurrentGS == myState.ArmorShop {
 		currentarmorState = armor10
 		log.Println("防具屋->防具10")
 	} else if win.JustPressed(pixelgl.KeyBackspace) && myState.CurrentGS == myState.ArmorShop {
@@ -107,7 +107,7 @@ func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pla
 	}
 
 	if len(buySellSliceArmor) > 0 {
-		if (buySellSliceArmor[0].Contains(mousePos) || win.JustPressed(pixelgl.KeyB)) && player.Gold >= 100 {
+		if (win.JustPressed(pixelgl.KeyB)) && player.Gold >= 100 {
 			loadContent := SaveFileLoad(SaveFilePath)
 			//TODO: お金が足りないときの処理を記述
 			for i := 0; i < len(keyToArmor)-1; i++ {
@@ -349,52 +349,52 @@ func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string, player
 func ArmorBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) {
 	loadContent := SaveFileLoad(SaveFilePath)
 
-	if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) && (player.PossessedArmor[0] == "1") {
+	if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key1)) && (player.PossessedArmor[0] == "1") {
 		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[1][1])
 		player.EquipmentArmor[2] = descArmor[1][2]
 		player.EquipmentArmor[3] = descArmor[1][3]
 		log.Println("装備1")
-	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) && (player.PossessedArmor[1] == "1") {
+	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key2)) && (player.PossessedArmor[1] == "1") {
 		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[2][1])
 		player.EquipmentArmor[2] = descArmor[2][2]
 		player.EquipmentArmor[3] = descArmor[2][3]
 		log.Println("装備2")
-	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) && (player.PossessedArmor[2] == "1") {
+	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key3)) && (player.PossessedArmor[2] == "1") {
 		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[3][1])
 		player.EquipmentArmor[2] = descArmor[3][2]
 		player.EquipmentArmor[3] = descArmor[3][3]
 		log.Println("装備3")
-	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) && (player.PossessedArmor[3] == "1") {
+	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key4)) && (player.PossessedArmor[3] == "1") {
 		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[4][1])
 		player.EquipmentArmor[2] = descArmor[4][2]
 		player.EquipmentArmor[3] = descArmor[4][3]
 		log.Println("装備4")
-	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key5)) && (player.PossessedArmor[4] == "1") {
+	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key5)) && (player.PossessedArmor[4] == "1") {
 		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[5][1])
 		player.EquipmentArmor[2] = descArmor[5][2]
 		player.EquipmentArmor[3] = descArmor[5][3]
 		log.Println("装備5")
-	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key6)) && (player.PossessedArmor[5] == "1") {
+	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key6)) && (player.PossessedArmor[5] == "1") {
 		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[6][1])
 		player.EquipmentArmor[2] = descArmor[6][2]
 		player.EquipmentArmor[3] = descArmor[6][3]
 		log.Println("装備6")
-	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key7)) && (player.PossessedArmor[6] == "1") {
+	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key7)) && (player.PossessedArmor[6] == "1") {
 		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[7][1])
 		player.EquipmentArmor[2] = descArmor[7][2]
 		player.EquipmentArmor[3] = descArmor[7][3]
 		log.Println("装備7")
-	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key8)) && (player.PossessedArmor[7] == "1") {
+	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key8)) && (player.PossessedArmor[7] == "1") {
 		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[8][1])
 		player.EquipmentArmor[2] = descArmor[8][2]
 		player.EquipmentArmor[3] = descArmor[8][3]
 		log.Println("装備8")
-	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key9)) && (player.PossessedArmor[8] == "1") {
+	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key9)) && (player.PossessedArmor[8] == "1") {
 		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[9][1])
 		player.EquipmentArmor[2] = descArmor[9][2]
 		player.EquipmentArmor[3] = descArmor[9][3]
 		log.Println("装備9")
-	} else if myState.CurrentBelong == myState.ArmorBelong && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key0)) && (player.PossessedArmor[9] == "1") {
+	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key0)) && (player.PossessedArmor[9] == "1") {
 		player.EquipmentArmor[0] = strings.NewReplacer("【", "", "】", "").Replace(descArmor[10][1])
 		player.EquipmentArmor[2] = descArmor[10][2]
 		player.EquipmentArmor[3] = descArmor[10][3]

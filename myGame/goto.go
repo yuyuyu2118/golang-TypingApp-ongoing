@@ -80,16 +80,16 @@ func InitGoTo(win *pixelgl.Window, Txt *text.Text, bottleText string) {
 func GoToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
 	//TODO ページを作成したら追加
 	//TODO: 全部この形式にする　やばいバグ
-	if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[0].Contains(mousePos) || win.JustPressed(pixelgl.Key1)) {
+	if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.Key1)) {
 		myState.CurrentGS = myState.StageSelect
 		log.Println("GoToScreen->Dungeon")
-	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[1].Contains(mousePos) || win.JustPressed(pixelgl.Key2)) {
+	} else if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.Key2)) {
 		myState.CurrentGS = myState.TownScreen
 		log.Println("GoToScreen->Town")
-	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[2].Contains(mousePos) || win.JustPressed(pixelgl.Key3)) {
+	} else if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.Key3)) {
 		myState.CurrentGS = myState.EquipmentScreen
 		log.Println("GoToScreen->Equipment")
-	} else if myState.CurrentGS == myState.GoToScreen && (gotoButtonSlice[3].Contains(mousePos) || win.JustPressed(pixelgl.Key4)) {
+	} else if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.Key4)) {
 		myState.CurrentGS = myState.JobSelect
 		log.Println("GoToScreen->JobSelect")
 	} else if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
