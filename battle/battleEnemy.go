@@ -11,43 +11,46 @@ import (
 	"golang.org/x/image/colornames"
 )
 
-func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
-	//eSize := enemy.EnemySettings[myGame.StageNum].EnemySize
+var animationPhase int
+var animationInProgress bool
 
+func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
 	if myState.CurrentGS == myState.BattleEnemyScreen {
-		//攻撃判定
-		//PressEnter
-		if win.JustPressed(pixelgl.KeyEnter) {
-			pressEnter = true
+		if myState.CurrentGS == myState.BattleEnemyScreen && win.JustPressed(pixelgl.KeyEnter) && !animationInProgress {
+			animationInProgress = true
 			tempEnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize
 			tempWordDamage = 0
 		}
-		if pressEnter == true {
-			if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 && animationLock[0] == false && animationLock[1] == false {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 1.05
-				if enemy.EnemySettings[myGame.StageNum].EnemySize > tempEnemySize*1.2 {
-					animationLock[0] = true
-					win.Canvas().Clear(colornames.Red)
-				}
-			} else if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && animationLock[0] == true && animationLock[1] == false {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 0.95
-				if enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize {
-					animationLock[1] = true
-				}
-			} else if animationLock[0] == true && animationLock[1] == true {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = tempEnemySize
-				animationLock[0] = false
-				animationLock[1] = false
-				if enemy.EnemySettings[myGame.StageNum].OP-player.DP >= 0 {
-					player.HP -= enemy.EnemySettings[myGame.StageNum].OP - player.DP
-				}
-				myState.CurrentGS = myState.PlayingScreen
-				pressEnter = false
-				index = 0
-				indexMonster = 0
-			}
+		if animationInProgress {
+			EnemyAttackAnimation(win, player)
 		}
 	}
 	myState.CurrentGS = DeathFlug(player, &enemy.EnemySettings[myGame.StageNum], elapsed, myState.CurrentGS)
 	return myState.CurrentGS
+}
+
+func EnemyAttackAnimation(win *pixelgl.Window, player *player.PlayerStatus) {
+	switch animationPhase {
+	case 0:
+		if enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 {
+			enemy.EnemySettings[myGame.StageNum].EnemySize *= 1.05
+		} else {
+			win.Canvas().Clear(colornames.Red)
+			animationPhase++
+		}
+	case 1:
+		if enemy.EnemySettings[myGame.StageNum].EnemySize > tempEnemySize {
+			enemy.EnemySettings[myGame.StageNum].EnemySize *= 0.95
+		} else {
+			enemy.EnemySettings[myGame.StageNum].EnemySize = tempEnemySize
+			if enemy.EnemySettings[myGame.StageNum].OP-player.DP >= 0 {
+				player.HP -= enemy.EnemySettings[myGame.StageNum].OP - player.DP
+			}
+			myState.CurrentGS = myState.PlayingScreen
+			index = 0
+			indexMonster = 0
+			animationPhase = 0
+			animationInProgress = false
+		}
+	}
 }

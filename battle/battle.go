@@ -11,7 +11,6 @@ import (
 	"github.com/yuyuyu2118/typingGo/myGame"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/player"
-	"golang.org/x/image/colornames"
 )
 
 var (
@@ -28,8 +27,6 @@ var (
 
 	AttackCount    = 3.0
 	tempCount      = 0.0
-	animationLock  = []bool{false, false}
-	pressEnter     = false
 	tempWordDamage = 0.0
 	tempEnemySize  = 0.0
 )
@@ -117,32 +114,13 @@ func BattleTypingTest(win *pixelgl.Window, player *player.PlayerStatus, elapsed 
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {
 		//攻撃判定
 		//PressEnter
-		if win.JustPressed(pixelgl.KeyEnter) {
-			pressEnter = true
+		if myState.CurrentGS == myState.BattleEnemyScreen && win.JustPressed(pixelgl.KeyEnter) && !animationInProgress {
+			animationInProgress = true
 			tempEnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize
 			tempWordDamage = 0
 		}
-		if pressEnter == true {
-			if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 && animationLock[0] == false && animationLock[1] == false {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 1.05
-				if enemy.EnemySettings[myGame.StageNum].EnemySize > tempEnemySize*1.2 {
-					animationLock[0] = true
-					win.Canvas().Clear(colornames.Red)
-				}
-			} else if enemy.EnemySettings[myGame.StageNum].EnemySize >= tempEnemySize && animationLock[0] == true && animationLock[1] == false {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize * 0.95
-				if enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize {
-					animationLock[1] = true
-				}
-			} else if animationLock[0] == true && animationLock[1] == true {
-				enemy.EnemySettings[myGame.StageNum].EnemySize = tempEnemySize
-				animationLock[0] = false
-				animationLock[1] = false
-				player.HP -= enemy.EnemySettings[myGame.StageNum].OP
-				myState.CurrentGS = myState.PlayingScreen
-				pressEnter = false
-				index = 0
-			}
+		if animationInProgress {
+			EnemyAttackAnimation(win, player)
 		}
 	}
 
