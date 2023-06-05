@@ -32,6 +32,7 @@ func run() {
 	myPos.SetCfg(winHSize)
 	myUtil.InitTxtFontLoading()
 	loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
+	myGame.SaveFileItemsCheck(myGame.SaveFilePathItems)
 	player := player.NewPlayerStatus(loadContent)
 	event.InitializeEventInstance(loadContent)
 	enemy.CreateEnemySettings()

@@ -1,6 +1,7 @@
 package myGame
 
 import (
+	"bufio"
 	"encoding/csv"
 	"fmt"
 	"io/ioutil"
@@ -563,6 +564,9 @@ func SaveFileItemsCheck(saveFilePathItems string) {
 		fmt.Println("保存ファイルを初期化しました。初期化テキストを出力しました。")
 		return
 	}
+
+	SaveFileItemsCheckUpdateV101(saveFilePathItems)
+
 }
 
 func SaveFileItemsLoad(saveFilePathItems string) [][]string {
@@ -841,4 +845,61 @@ func SaveGameAccessory(saveFilePath string, saveNum int, player *player.PlayerSt
 
 	fmt.Println("保存ファイルを更新しました。")
 	time.Sleep(10 * time.Millisecond)
+}
+
+func SaveFileItemsCheckUpdateV101(saveFilePathItems string) {
+	// Read CSV contents
+	file, err := os.Open(saveFilePathItems)
+	if err != nil {
+		fmt.Println("ファイルを開くことができませんでした:", err)
+		return
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	itemMap := make(map[string]int)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		splitLine := strings.Split(line, ",")
+
+		switch splitLine[0] {
+		case "糸":
+			splitLine[0] = "木の枝"
+		case "針金":
+			splitLine[0] = "ただの砥石"
+		case "鋭い刃物", "新鮮な果物":
+			splitLine[0] = "錆びた鉄鉱石"
+		case "小さな砥石":
+			splitLine[0] = "ただの砥石"
+		case "皮革", "木工用接着剤":
+			splitLine[0] = "木材"
+		case "鋭い刃物", "新鮮な果物":
+			splitLine[0] = "錆びた鉄鉱石"
+		}
+		itemName := splitLine[0]
+		itemValue, _ := strconv.Atoi(splitLine[1])
+
+		itemMap[itemName] += itemValue
+	}
+
+	err = scanner.Err()
+	if err != nil {
+		fmt.Println("ファイルの読み取り中にエラーが発生しました:", err)
+		return
+	}
+
+	var outputLines []string
+	for key, value := range itemMap {
+		outputLines = append(outputLines, fmt.Sprintf("%s,%d", key, value))
+	}
+
+	output := strings.Join(outputLines, "\n")
+	err = ioutil.WriteFile(saveFilePathItems, []byte(output), 0644)
+	if err != nil {
+		fmt.Println("CSVファイルの更新に失敗しました:", err)
+		return
+	}
+
+	fmt.Println("CSVファイルの内容を更新しました。")
 }
