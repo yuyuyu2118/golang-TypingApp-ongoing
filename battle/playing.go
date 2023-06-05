@@ -3,7 +3,6 @@ package battle
 import (
 	"fmt"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/faiface/pixel"
@@ -224,19 +223,18 @@ func InitBattleTextMagicUser(win *pixelgl.Window, Txt *text.Text, elapsed time.D
 func InitBattleTextMonster(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration) time.Duration {
 
 	if myState.CurrentGS == myState.PlayingScreen {
+
 		tempWords := words[wordsNum]
-		tempWordsSlice := strings.Split(tempWords, "")
-		tempWords = strings.Join(tempWordsSlice, " ")
 		Txt.Clear()
 		Txt.Color = colornames.White
 		for i := 0; i < len(words[wordsNum])-1; i++ {
 			fmt.Fprint(Txt, "?")
 		}
 		fmt.Fprintln(Txt, "?")
-		Txt.Color = colornames.Gray
-		fmt.Fprint(Txt, tempWords[:indexMonster])
+		Txt.Color = colornames.Darkslategray
+		fmt.Fprint(Txt, tempWords[:index])
 		Txt.Color = colornames.White
-		fmt.Fprint(Txt, tempWords[indexMonster:])
+		fmt.Fprint(Txt, tempWords[index:])
 		myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt))
 
 	} else if myState.CurrentGS == myState.BattleEnemyScreen {

@@ -5,7 +5,6 @@ import (
 	"log"
 	"math/rand"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/faiface/pixel"
@@ -528,12 +527,10 @@ func BattleTypingMonsterSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 			if typed != "" {
 				if typed[0] == temp[index] && index < len(question) {
 					index++
-					indexMonster += 2
 					collectType++
 					tempWordDamage -= float64(rand.Intn(int(player.OP * 5)) /* - rand.Intn(int(player.OP))*/)
 					if index == len(question) {
 						index = 0
-						indexMonster = 0
 						MonsterSkillWord = ""
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
 						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
@@ -543,11 +540,12 @@ func BattleTypingMonsterSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 				} else {
 					missType++
 					player.HP--
+					win.Canvas().Clear(colornames.Red)
 				}
 			}
 		} else {
 			myState.CurrentGS = myState.SkillScreen
-			indexMonster = 0
+			index = 0
 		}
 	}
 
@@ -563,14 +561,11 @@ func InitBattleTextMonsterSkill(win *pixelgl.Window, Txt *text.Text, elapsed tim
 
 	if myState.CurrentGS == myState.SkillScreen {
 		tempWords := MonsterSkillWord
-		tempWordsSlice := strings.Split(tempWords, "")
-		tempWords = strings.Join(tempWordsSlice, " ")
 		Txt.Clear()
-		Txt.Color = colornames.Gray
-		log.Println(indexMonster)
-		fmt.Fprint(Txt, tempWords[:indexMonster])
+		Txt.Color = colornames.Darkslategray
+		fmt.Fprint(Txt, tempWords[:index])
 		Txt.Color = colornames.White
-		fmt.Fprint(Txt, tempWords[indexMonster:])
+		fmt.Fprint(Txt, tempWords[index:])
 		myPos.DrawPos(win, Txt, myPos.RoundCenPos(win, Txt))
 	}
 
