@@ -386,23 +386,29 @@ func InitAccessoryBelong(win *pixelgl.Window, Txt *text.Text, botText string, pl
 	for i, value := range accessoryName {
 		if counts["accessory"+strconv.Itoa(i)] != 0 {
 			//tempInt := counts["accessory"+strconv.Itoa(i)]
-			equipmentSlice = append(equipmentSlice, value /*+": "+strconv.Itoa(tempInt)*/)
+			equipmentSlice = append(equipmentSlice, strconv.Itoa(i+1)+". "+value /*+": "+strconv.Itoa(tempInt)*/)
+		} else {
+			equipmentSlice = append(equipmentSlice, "")
 		}
 	}
 
 	for i, equipmentName := range equipmentSlice {
 		Txt.Clear()
 		Txt.Color = colornames.White
-		if player.EquipmentAccessory[0] == accessoryName[i] {
-			fmt.Fprintln(Txt, "E.", equipmentName)
-		} else {
-			fmt.Fprintln(Txt, equipmentName)
-		}
+		fmt.Fprintln(Txt, equipmentName)
 		yOffSet -= Txt.LineHeight + 25
 		txtPos = pixel.V(xOffSet, yOffSet)
 		tempPosition := pixel.IM.Moved(txtPos)
 		Txt.Draw(win, tempPosition)
 		equipmentButtonSlice = append(equipmentButtonSlice, Txt.Bounds().Moved(txtPos))
+
+		if player.EquipmentAccessory[0] == accessoryName[i] {
+			Txt.Clear()
+			fmt.Fprintln(Txt, "E. ")
+			txtPos = pixel.V(xOffSet-40, yOffSet)
+			tempPosition = pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
 	}
 	equipmentSlice = equipmentSlice[:0]
 }
