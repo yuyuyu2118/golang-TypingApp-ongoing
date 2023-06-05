@@ -1,6 +1,6 @@
 Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,language,AttackTimer,BaseOP,BaseDP,BaseAttackTimer
-NoName,30,30,5,7.5,50,0,2,9685,魔法使い,19,Japanese,7.25,3,0,4
-16,1,2,1,1,0,0,0,0,0,,,,,,
+NoName,30,30,5,7.5,50,0,2,11169,狩人,42,Japanese,7.25,3,0,4
+2,2,1,0,0,0,0,0,0,0,,,,,,
 1,0,1,1,0,0,0,0,0,0,,,,,,
 1,1,0,0,1,0,0,0,0,0,,,,,,
 1,0,1,0,1,0,0,0,0,0,,,,,,

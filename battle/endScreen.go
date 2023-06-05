@@ -78,7 +78,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 
 	//新武器や新ダンジョンを解放した旨のメッセージ
 	for i, v := range loadContent[2] {
-		if v == strconv.Itoa(1) {
+		if myGame.StageNum == i && v == strconv.Itoa(1) {
 			for _, v := range unlockElements[i] {
 				ClearTxt = append(ClearTxt, v)
 			}
