@@ -30,7 +30,7 @@ func InitBattleTextV1(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 
 	offset := Txt.Bounds().W()
 	TxtOrigX := Txt.Dot.X
-	spacing := 100.0
+	spacing := 120.0
 	if len(words)-wordsNum != 1 {
 		Txt.Color = colornames.Darkgray
 		offset := Txt.Bounds().W()
@@ -64,7 +64,7 @@ func InitBattleTextV2(win *pixelgl.Window, Txt *text.Text, elapsed time.Duration
 
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
-		spacing := 100.0
+		spacing := 120.0
 		if len(words)-wordsNum != 1 {
 			Txt.Color = colornames.Darkgray
 			offset := Txt.Bounds().W()
@@ -113,7 +113,7 @@ func InitBattleTextV2Skill(win *pixelgl.Window, Txt *text.Text, elapsed time.Dur
 
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
-		spacing := 100.0
+		spacing := 120.0
 		if len(RookieSkillWords)-RookieSkillCount != 1 {
 			Txt.Color = colornames.Orange
 			offset := Txt.Bounds().W()
@@ -186,7 +186,7 @@ func InitBattleTextMagicUser(win *pixelgl.Window, Txt *text.Text, elapsed time.D
 
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
-		spacing := 100.0
+		spacing := 120.0
 		if len(words)-wordsNum != 1 {
 			Txt.Color = colornames.Darkgray
 			offset := Txt.Bounds().W()
