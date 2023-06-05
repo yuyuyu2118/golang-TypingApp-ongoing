@@ -55,7 +55,7 @@ func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed
 		gainGoldMin := int(float64(enemyInf.Gold) * 0.7)
 		gainGoldMax := int(float64(enemyInf.Gold) * 1.3)
 		gainGold = rand.Intn(gainGoldMax-gainGoldMin+1) + gainGoldMin
-		gainGoldCollectType = int(float64(collectType) * 1.0)
+		gainGoldCollectType = int(float64(collectType) * 0.5)
 
 		player.Gold += gainGold + gainGoldCollectType
 

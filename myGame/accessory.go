@@ -186,7 +186,7 @@ func DescriptionAccessory(win *pixelgl.Window, descAccessory [][]string, num int
 	myUtil.DescriptionTxt.Draw(win, tempPosition)
 
 	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descAccessory[num][6], descAccessory[num][7]+"個, ", descAccessory[num][8], descAccessory[num][9]+"個, ", descAccessory[num][10], descAccessory[num][11]+"個")
+	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descAccessory[num][6], descAccessory[num][7]+"個, ", descAccessory[num][8], descAccessory[num][9]+"個")
 	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
 	txtPos = pixel.V(xOffSet, yOffSet)
 	tempPosition = pixel.IM.Moved(txtPos)
@@ -249,6 +249,9 @@ func CreateAccessoryEvent(descAccessory [][]string, num int) bool {
 				log.Println(name, count, tempCount, "足りてます")
 				tempBool[0] = true
 			}
+		} else if (descAccessory)[num][5] == "" {
+			//log.Println("なし")
+			tempBool[0] = true
 		}
 		if name == descAccessory[num][8] {
 			tempCount, _ := strconv.Atoi(descAccessory[num][9])
@@ -256,6 +259,9 @@ func CreateAccessoryEvent(descAccessory [][]string, num int) bool {
 				log.Println(name, count, tempCount, "足りてます")
 				tempBool[1] = true
 			}
+		} else if (descAccessory)[num][7] == "" {
+			//log.Println("なし")
+			tempBool[1] = true
 		}
 		if name == descAccessory[num][10] {
 			tempCount, _ := strconv.Atoi(descAccessory[num][11])
@@ -263,6 +269,9 @@ func CreateAccessoryEvent(descAccessory [][]string, num int) bool {
 				log.Println(name, count, tempCount, "足りてます")
 				tempBool[2] = true
 			}
+		} else if (descAccessory)[num][9] == "" {
+			//log.Println("なし")
+			tempBool[2] = true
 		}
 	}
 	if tempBool[0] && tempBool[1] && tempBool[2] {

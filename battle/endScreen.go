@@ -26,7 +26,7 @@ var unlockElements = [][]string{{"新職業: 見習い剣士", "新武器: 木�
 	{"新職業: 狩人", "新武器: 果物ナイフ", "新防具: フルーツアーマー", "新アクセサリー: フルーツブレスレット", "新ダンジョン解放: プラント"},
 	{"新職業: モンク", "新武器: 木刀", "新防具: 木の鎧", "新アクセサリー: 平和のバンド", "新ダンジョン解放: ゴブリン"},
 	{"新職業: 魔法使い", "新武器: ドレインソード", "新防具: ソウルバインドプレート", "新アクセサリー: ライフリンクのリング", "新ダンジョン解放: ゾンビ"},
-	{"新職業: モンスター", "新武器: スタンハンマー", "新防具: スタンプレート", "新アクセサリー: ショックウェーブリング", "新ダンジョン解放: フェアリー"},
+	{"新職業: 化け物", "新武器: スタンハンマー", "新防具: スタンプレート", "新アクセサリー: ショックウェーブリング", "新ダンジョン解放: フェアリー"},
 	{"新武器: 鉄の剣", "新防具: 鉄の鎧", "新アクセサリー: 鉄のブレスレット", "新ダンジョン解放: スカル"},
 	{"新武器: 隼の剣", "新防具: 飛翔のマント", "新アクセサリー: 疾走のリング", "新ダンジョン解放: ウィザード"},
 	{"新武器: 勇者の剣", "新防具: 勇者の鎧", "新アクセサリー: 勇者のペンダント", "新ダンジョン解放: ソルジャー"},
@@ -47,20 +47,20 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
 	//DropEvent
 	if !dropEvent {
-		for i := 0; i < 9; i++ {
-			if rand.Float64() <= 0.5 { // 40%の確率でアイテムをドロップ
+		for i := 0; i < 4; i++ {
+			if rand.Float64() <= 0.45 { // 40%の確率でアイテムをドロップ
 				dropRandomItem = append(dropRandomItem, enemy.DropItems[i])
 			}
 		}
 		if rand.Float64() <= 0.05 { // 5%の確率でアイテムをドロップ
-			dropRandomItem = append(dropRandomItem, enemy.DropItems[9])
+			dropRandomItem = append(dropRandomItem, enemy.DropItems[4])
 		}
 		myGame.SaveFileItemsLoad(myGame.SaveFilePathItems)
 		myGame.SaveGameItems(myGame.SaveFilePathItems, dropRandomItem)
 		dropEvent = true
 	}
 
-	ClearTxt := []string{"正解タイプボーナスゴールド: " + strconv.Itoa(collectType) + " * 1.0 = " + strconv.Itoa(gainGoldCollectType),
+	ClearTxt := []string{"正解タイプボーナスゴールド: " + strconv.Itoa(collectType) + " * 0.5 = " + strconv.Itoa(gainGoldCollectType),
 		"モンスタードロップゴールド: " + strconv.Itoa(gainGold) + "S",
 		"",
 		" 入力単語数:" + strconv.Itoa(wordsNum),

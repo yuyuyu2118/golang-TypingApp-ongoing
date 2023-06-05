@@ -185,7 +185,7 @@ func DescriptionArmor(win *pixelgl.Window, descArmor [][]string, num int) {
 	myUtil.DescriptionTxt.Draw(win, tempPosition)
 
 	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descArmor[num][5], descArmor[num][6]+"個, ", descArmor[num][7], descArmor[num][8]+"個, ", descArmor[num][9], descArmor[num][10]+"個")
+	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descArmor[num][5], descArmor[num][6]+"個, ", descArmor[num][7], descArmor[num][8]+"個")
 	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
 	txtPos = pixel.V(xOffSet, yOffSet)
 	tempPosition = pixel.IM.Moved(txtPos)
@@ -249,6 +249,9 @@ func CreateArmorEvent(descArmor [][]string, num int) bool {
 				log.Println(name, count, tempCount, "足りてます")
 				tempBool[0] = true
 			}
+		} else if (descArmor)[num][5] == "" {
+			//log.Println("なし")
+			tempBool[0] = true
 		}
 		if name == descArmor[num][7] {
 			tempCount, _ := strconv.Atoi(descArmor[num][8])
@@ -256,6 +259,9 @@ func CreateArmorEvent(descArmor [][]string, num int) bool {
 				log.Println(name, count, tempCount, "足りてます")
 				tempBool[1] = true
 			}
+		} else if (descArmor)[num][7] == "" {
+			//log.Println("なし")
+			tempBool[1] = true
 		}
 		if name == descArmor[num][9] {
 			tempCount, _ := strconv.Atoi(descArmor[num][10])
@@ -263,6 +269,9 @@ func CreateArmorEvent(descArmor [][]string, num int) bool {
 				log.Println(name, count, tempCount, "足りてます")
 				tempBool[2] = true
 			}
+		} else if (descArmor)[num][9] == "" {
+			//log.Println("なし")
+			tempBool[2] = true
 		}
 	}
 	if tempBool[0] && tempBool[1] && tempBool[2] {
