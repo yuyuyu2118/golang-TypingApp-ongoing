@@ -24,7 +24,7 @@ var dropEvent bool
 
 var unlockElements = [][]string{{"新職業: 見習い剣士", "新武器: 木の棒", "新防具: 草織りのローブ", "新アクセサリー: 樹木のペンダント", "新ダンジョン解放: バード"},
 	{"新職業: 狩人", "新武器: 果物ナイフ", "新防具: フルーツアーマー", "新アクセサリー: フルーツブレスレット", "新ダンジョン解放: プラント"},
-	{"新職業: モンク", "新武器: 木刀", "新防具: 木の鎧", "新アクセサリー: 平和のバンド", "新ダンジョン解放: ゴブリン"},
+	{"新職業: モンク", "新武器: 木刀", "新防具: 木の鎧", "新アクセサリー: 平和のバンド", "新ダンジョン解放: コボルト"},
 	{"新職業: 魔法使い", "新武器: ドレインソード", "新防具: ソウルバインドプレート", "新アクセサリー: ライフリンクのリング", "新ダンジョン解放: ゾンビ"},
 	{"新職業: 化け物", "新武器: スタンハンマー", "新防具: スタンプレート", "新アクセサリー: ショックウェーブリング", "新ダンジョン解放: フェアリー"},
 	{"新武器: 鉄の剣", "新防具: 鉄の鎧", "新アクセサリー: 鉄のブレスレット", "新ダンジョン解放: スカル"},
@@ -60,7 +60,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		dropEvent = true
 	}
 
-	ClearTxt := []string{"正解タイプボーナスゴールド: " + strconv.Itoa(collectType) + " * 0.5 = " + strconv.Itoa(gainGoldCollectType),
+	ClearTxt := []string{"正解タイプボーナスゴールド: " + strconv.Itoa(collectType) + " * 0.3 = " + strconv.Itoa(gainGoldCollectType),
 		"モンスタードロップゴールド: " + strconv.Itoa(gainGold) + "S",
 		"",
 		" 入力単語数:" + strconv.Itoa(wordsNum),

@@ -45,7 +45,7 @@ var keyToDungeon = map[pixelgl.Button]DungeonState{
 
 var stageSlice = []string{"1. ???", "2. ???", "3. ???", "4. ???", "5. ???", "6. ???", "7. ???", "8. ???", "9. ???", "0. ???"}
 var stageNum = []string{"dungeon0", "dungeon1", "dungeon2", "dungeon3", "dungeon4", "dungeon5", "dungeon6", "dungeon7", "dungeon8", "dungeon9"}
-var stageName = []string{"スライム", "バード", "プラント", "ゴブリン", "ゾンビ", "フェアリー", "スカル", "ウィザード", "ソルジャー", "ドラゴン"}
+var stageName = []string{"スライム", "バード", "プラント", "コボルト", "ゾンビ", "フェアリー", "スカル", "ウィザード", "ソルジャー", "ドラゴン"}
 
 var StageNum int
 

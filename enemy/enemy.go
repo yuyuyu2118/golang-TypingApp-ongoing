@@ -28,7 +28,7 @@ type EnemyStatus struct {
 }
 
 var EnemyPath = "assets\\monster\\"
-var EnemyNameSlice = []string{"Slime", "Bird", "Plant", "Goblin", "Zombie", "Fairy", "Skull", "Wizard", "Solidier", "Dragon"}
+var EnemyNameSlice = []string{"Slime", "Bird", "Plant", "Kobold", "Zombie", "Fairy", "Skull", "Wizard", "Solidier", "Dragon"}
 
 func CreateEnemyInstance() *[]EnemyStatus {
 	temp := myIo.CsvToSliceAll("enemy/enemySettings/enemy.csv")
