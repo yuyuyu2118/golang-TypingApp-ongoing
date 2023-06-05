@@ -139,7 +139,7 @@ func SaveDefeatedEnemyEvent(saveFilePath string, saveNum int, defeatEnemy string
 	} else if defeatEnemy == "Plant" {
 		tempInt, _ = strconv.Atoi(loadContent[2][2])
 		loadContent[2][2] = strconv.Itoa(tempInt + 1)
-	} else if defeatEnemy == "Goblin" {
+	} else if defeatEnemy == "Kobold" {
 		tempInt, _ = strconv.Atoi(loadContent[2][3])
 		loadContent[2][3] = strconv.Itoa(tempInt + 1)
 	} else if defeatEnemy == "Zombie" {

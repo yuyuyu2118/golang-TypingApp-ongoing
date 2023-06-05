@@ -124,7 +124,7 @@ func CreateUnlockNewDungeonEvent(value []string) {
 // 	Slime    bool
 // 	Bird     bool
 // 	Plant    bool
-// 	Goblin   bool
+// 	Kobold  bool
 // 	Zombie   bool
 // 	Fairy    bool
 // 	Skull    bool
@@ -151,7 +151,7 @@ func CreateUnlockNewDungeonEvent(value []string) {
 // 		Slime:    defeatedEnemyBool[0],
 // 		Bird:     defeatedEnemyBool[1],
 // 		Plant:    defeatedEnemyBool[2],
-// 		Goblin:   defeatedEnemyBool[3],
+// 		Kobold:   defeatedEnemyBool[3],
 // 		Zombie:   defeatedEnemyBool[4],
 // 		Fairy:    defeatedEnemyBool[5],
 // 		Skull:    defeatedEnemyBool[6],
