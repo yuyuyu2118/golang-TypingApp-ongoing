@@ -94,6 +94,9 @@ func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player
 			currentaccessoryState = AccessoryState(i + 1)
 			//CreateAccessoryEvent(descAccessory, 0)
 			log.Println("アクセサリー屋->アクセサリー", i+1)
+			tempMyMaterialBool = false
+			tempMyMaterialName = []string{"", ""}
+			tempMyMaterialCount = []int{0, 0}
 			break
 		}
 	}
@@ -101,9 +104,15 @@ func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player
 	if (win.JustPressed(pixelgl.Key0)) && event.AccessoryPurchaseEventInstance.Accessorys[9] && myState.CurrentGS == myState.AccessoryShop {
 		currentaccessoryState = accessory10
 		log.Println("アクセサリー屋->アクセサリー10")
+		tempMyMaterialBool = false
+		tempMyMaterialName = []string{"", ""}
+		tempMyMaterialCount = []int{0, 0}
 	} else if win.JustPressed(pixelgl.KeyBackspace) && myState.CurrentGS == myState.AccessoryShop {
 		myState.CurrentGS = myState.TownScreen
 		log.Println("アクセサリー屋->町")
+		tempMyMaterialBool = false
+		tempMyMaterialName = []string{"", ""}
+		tempMyMaterialCount = []int{0, 0}
 	}
 
 	if len(buySellSliceAccessory) > 0 {
@@ -123,6 +132,9 @@ func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player
 							if createOk {
 								player.Gold -= requiredGold
 								tempAccessory = "accessory" + strconv.Itoa(i+1)
+								tempMyMaterialBool = false
+								tempMyMaterialName = []string{"", ""}
+								tempMyMaterialCount = []int{0, 0}
 							}
 						} else {
 							log.Println(descAccessory[i+1][5], "お金が足りない", player.Gold)
@@ -155,6 +167,8 @@ func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player
 }
 
 func DescriptionAccessory(win *pixelgl.Window, descAccessory [][]string, num int) {
+	loadContent = SaveFileLoad(SaveFilePath)
+	temp, _ := CountMyItems(SaveFilePathItems)
 	//TODO: Tabを押している間は強化素材等の情報を表示する
 	//TODO: 行数削減したい
 	num++
@@ -187,6 +201,32 @@ func DescriptionAccessory(win *pixelgl.Window, descAccessory [][]string, num int
 
 	myUtil.DescriptionTxt.Clear()
 	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descAccessory[num][6], descAccessory[num][7]+"個, ", descAccessory[num][8], descAccessory[num][9]+"個")
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	if !tempMyMaterialBool {
+		tempMyMaterialName[0] = descAccessory[num][6]
+		tempMyMaterialName[1] = descAccessory[num][8]
+		for name, count := range temp {
+			if name == descAccessory[num][6] {
+				tempMyMaterialName[0] = name
+				tempMyMaterialCount[0] = count
+			} else if name == descAccessory[num][8] {
+				tempMyMaterialName[1] = name
+				tempMyMaterialCount[1] = count
+			} else if name == descAccessory[num][10] {
+				tempMyMaterialName[2] = name
+				tempMyMaterialCount[2] = count
+			}
+		}
+		tempMyMaterialBool = true
+	}
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, "所持:", tempMyMaterialName[0], strconv.Itoa(tempMyMaterialCount[0])+"個,", tempMyMaterialName[1], strconv.Itoa(tempMyMaterialCount[1])+"個")
+	//fmt.Fprintln(myUtil.DescriptionTxt, "所持: "+descWeapon[num][5], tempMaterials[0]+"個, ", descWeapon[num][7], tempMaterials[1]+"個, ", descWeapon[num][9], tempMaterials[2]+"個")
 	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
 	txtPos = pixel.V(xOffSet, yOffSet)
 	tempPosition = pixel.IM.Moved(txtPos)
@@ -230,11 +270,23 @@ func DescriptionAccessory(win *pixelgl.Window, descAccessory [][]string, num int
 	myUtil.DescriptionTxt.Clear()
 	myUtil.DescriptionTxt.Color = colornames.White
 	fmt.Fprintln(myUtil.DescriptionTxt, "B. 作ってもらう")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
 	txtPos = pixel.V(xOffSet, yOffSet)
 	tempPosition = pixel.IM.Moved(txtPos)
 	myUtil.DescriptionTxt.Draw(win, tempPosition)
 	buySellSliceAccessory = append(buySellSliceAccessory, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
+
+	loadContent = SaveFileLoad(SaveFilePath)
+
+	if loadContent[5][num-1] == strconv.Itoa(1) {
+		myUtil.DescriptionTxt.Clear()
+		myUtil.DescriptionTxt.Color = colornames.White
+		fmt.Fprintln(myUtil.DescriptionTxt, "作成済み")
+		xOffSet += 400
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition = pixel.IM.Moved(txtPos)
+		myUtil.DescriptionTxt.Draw(win, tempPosition)
+	}
 }
 
 func CreateAccessoryEvent(descAccessory [][]string, num int) bool {
@@ -249,7 +301,7 @@ func CreateAccessoryEvent(descAccessory [][]string, num int) bool {
 				log.Println(name, count, tempCount, "足りてます")
 				tempBool[0] = true
 			}
-		} else if (descAccessory)[num][5] == "" {
+		} else if (descAccessory)[num][6] == "" {
 			//log.Println("なし")
 			tempBool[0] = true
 		}
@@ -259,7 +311,7 @@ func CreateAccessoryEvent(descAccessory [][]string, num int) bool {
 				log.Println(name, count, tempCount, "足りてます")
 				tempBool[1] = true
 			}
-		} else if (descAccessory)[num][7] == "" {
+		} else if (descAccessory)[num][8] == "" {
 			//log.Println("なし")
 			tempBool[1] = true
 		}
@@ -269,7 +321,7 @@ func CreateAccessoryEvent(descAccessory [][]string, num int) bool {
 				log.Println(name, count, tempCount, "足りてます")
 				tempBool[2] = true
 			}
-		} else if (descAccessory)[num][9] == "" {
+		} else if (descAccessory)[num][10] == "" {
 			//log.Println("なし")
 			tempBool[2] = true
 		}
@@ -420,7 +472,7 @@ func AccessoryBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *
 		log.Println("装備0")
 	} else if myState.CurrentBelong == myState.AccessoryBelong && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentBelong = myState.AccessoryBelong
-		myState.CurrentGS = myState.GoToScreen
+		myState.CurrentGS = myState.TownScreen
 		log.Println("所持品/武器->GoTo")
 	}
 	tempOP1, _ := strconv.ParseFloat(loadContent[1][13], 64)

@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	//TODO: buttonSliceの名前変える
+	//TODO: buttonSliceの名前変えるs
 	buttonSlice           = []pixel.Rect{}
 	buttonSliceArmor      = []pixel.Rect{}
 	buttonSliceAccessory  = []pixel.Rect{}
