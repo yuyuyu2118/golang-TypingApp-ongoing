@@ -186,7 +186,7 @@ func DescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
 	myUtil.DescriptionTxt.Draw(win, tempPosition)
 
 	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descWeapon[num][5], descWeapon[num][6]+"個, ", descWeapon[num][7], descWeapon[num][8]+"個, ", descWeapon[num][9], descWeapon[num][10]+"個")
+	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descWeapon[num][5], descWeapon[num][6]+"個, ", descWeapon[num][7], descWeapon[num][8]+"個")
 	//fmt.Fprintln(myUtil.DescriptionTxt, "所持: "+descWeapon[num][5], tempMaterials[0]+"個, ", descWeapon[num][7], tempMaterials[1]+"個, ", descWeapon[num][9], tempMaterials[2]+"個")
 	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
 	txtPos = pixel.V(xOffSet, yOffSet)
@@ -255,7 +255,7 @@ func SubDescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
 	myUtil.DescriptionTxt.Draw(win, tempPosition)
 
 	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "強化素材: "+descWeapon[num][19], descWeapon[num][20]+"個, ", descWeapon[num][21], descWeapon[num][22]+"個, ", descWeapon[num][23], descWeapon[num][24]+"個, ")
+	fmt.Fprintln(myUtil.DescriptionTxt, "強化素材: "+descWeapon[num][19], descWeapon[num][20]+"個")
 	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
 	txtPos = pixel.V(xOffSet, yOffSet)
 	tempPosition = pixel.IM.Moved(txtPos)
@@ -325,26 +325,36 @@ func CreateWeaponEvent(win *pixelgl.Window, descWeapon [][]string, num int) bool
 	var tempBool = []bool{false, false, false}
 
 	for name, count := range tempSlice {
+		//log.Println(name, count)
 		if name == descWeapon[num][5] {
 			tempCount, _ := strconv.Atoi(descWeapon[num][6])
 			if count >= tempCount {
-				log.Println(name, count, tempCount, "足りてます")
+				//log.Println(name, count, tempCount, "足りてます")
 				tempBool[0] = true
 			}
+		} else if (descWeapon)[num][5] == "" {
+			//log.Println("なし")
+			tempBool[0] = true
 		}
 		if name == descWeapon[num][7] {
 			tempCount, _ := strconv.Atoi(descWeapon[num][8])
 			if count >= tempCount {
-				log.Println(name, count, tempCount, "足りてます")
+				//log.Println(name, count, tempCount, "足りてます")
 				tempBool[1] = true
 			}
+		} else if (descWeapon)[num][7] == "" {
+			//log.Println("なし")
+			tempBool[1] = true
 		}
 		if name == descWeapon[num][9] {
 			tempCount, _ := strconv.Atoi(descWeapon[num][10])
 			if count >= tempCount {
-				log.Println(name, count, tempCount, "足りてます")
+				//log.Println(name, count, tempCount, "足りてます")
 				tempBool[2] = true
 			}
+		} else if (descWeapon)[num][9] == "" {
+			//log.Println("なし")
+			tempBool[2] = true
 		}
 	}
 	if tempBool[0] && tempBool[1] && tempBool[2] {
