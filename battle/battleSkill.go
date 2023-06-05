@@ -100,7 +100,7 @@ func InitBattleTextRookieSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
-		spacing := 100.0
+		spacing := 120.0
 		if len(RookieSkillWords)-RookieSkillCount != 1 {
 			Txt.Color = colornames.Orange
 			offset := Txt.Bounds().W()
@@ -294,7 +294,7 @@ func InitBattleTextHunterSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
-		spacing := 100.0
+		spacing := 120.0
 		if len(words)-wordsNum != 1 {
 			Txt.Color = colornames.Darkgray
 			offset := Txt.Bounds().W()
@@ -476,7 +476,7 @@ func InitBattleTextMagicUserSkill(win *pixelgl.Window, Txt *text.Text, elapsed t
 
 		offset := Txt.Bounds().W()
 		TxtOrigX := Txt.Dot.X
-		spacing := 100.0
+		spacing := 120.0
 		if len(words)-wordsNum != 1 {
 			Txt.Color = colornames.Lightgreen
 			offset := Txt.Bounds().W()
