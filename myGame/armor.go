@@ -94,6 +94,9 @@ func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pla
 			currentarmorState = ArmorState(i + 1)
 			//CreateArmorEvent(descArmor, 0)
 			log.Println("防具屋->防具", i+1)
+			tempMyMaterialBool = false
+			tempMyMaterialName = []string{"", ""}
+			tempMyMaterialCount = []int{0, 0}
 			break
 		}
 	}
@@ -101,9 +104,15 @@ func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pla
 	if (win.JustPressed(pixelgl.Key0)) && event.ArmorPurchaseEventInstance.Armors[9] && myState.CurrentGS == myState.ArmorShop {
 		currentarmorState = armor10
 		log.Println("防具屋->防具10")
+		tempMyMaterialBool = false
+		tempMyMaterialName = []string{"", ""}
+		tempMyMaterialCount = []int{0, 0}
 	} else if win.JustPressed(pixelgl.KeyBackspace) && myState.CurrentGS == myState.ArmorShop {
 		myState.CurrentGS = myState.TownScreen
 		log.Println("防具屋->町")
+		tempMyMaterialBool = false
+		tempMyMaterialName = []string{"", ""}
+		tempMyMaterialCount = []int{0, 0}
 	}
 
 	if len(buySellSliceArmor) > 0 {
@@ -123,6 +132,9 @@ func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pla
 							if createOk {
 								player.Gold -= requiredGold
 								tempArmor = "armor" + strconv.Itoa(i+1)
+								tempMyMaterialBool = false
+								tempMyMaterialName = []string{"", ""}
+								tempMyMaterialCount = []int{0, 0}
 							}
 						} else {
 							log.Println(descArmor[i+1][4], "お金が足りない", player.Gold)
@@ -155,6 +167,8 @@ func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.Pla
 }
 
 func DescriptionArmor(win *pixelgl.Window, descArmor [][]string, num int) {
+	loadContent = SaveFileLoad(SaveFilePath)
+	temp, _ := CountMyItems(SaveFilePathItems)
 	//TODO: Tabを押している間は強化素材等の情報を表示する
 	num++
 	xOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).X + 300
@@ -186,6 +200,32 @@ func DescriptionArmor(win *pixelgl.Window, descArmor [][]string, num int) {
 
 	myUtil.DescriptionTxt.Clear()
 	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descArmor[num][5], descArmor[num][6]+"個, ", descArmor[num][7], descArmor[num][8]+"個")
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
+	txtPos = pixel.V(xOffSet, yOffSet)
+	tempPosition = pixel.IM.Moved(txtPos)
+	myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	if !tempMyMaterialBool {
+		tempMyMaterialName[0] = descWeapon[num][5]
+		tempMyMaterialName[1] = descWeapon[num][7]
+		for name, count := range temp {
+			if name == descArmor[num][5] {
+				tempMyMaterialName[0] = name
+				tempMyMaterialCount[0] = count
+			} else if name == descArmor[num][7] {
+				tempMyMaterialName[1] = name
+				tempMyMaterialCount[1] = count
+			} else if name == descArmor[num][9] {
+				tempMyMaterialName[2] = name
+				tempMyMaterialCount[2] = count
+			}
+		}
+		tempMyMaterialBool = true
+	}
+
+	myUtil.DescriptionTxt.Clear()
+	fmt.Fprintln(myUtil.DescriptionTxt, "所持:", tempMyMaterialName[0], strconv.Itoa(tempMyMaterialCount[0])+"個,", tempMyMaterialName[1], strconv.Itoa(tempMyMaterialCount[1])+"個")
+	//fmt.Fprintln(myUtil.DescriptionTxt, "所持: "+descWeapon[num][5], tempMaterials[0]+"個, ", descWeapon[num][7], tempMaterials[1]+"個, ", descWeapon[num][9], tempMaterials[2]+"個")
 	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
 	txtPos = pixel.V(xOffSet, yOffSet)
 	tempPosition = pixel.IM.Moved(txtPos)
@@ -229,11 +269,22 @@ func DescriptionArmor(win *pixelgl.Window, descArmor [][]string, num int) {
 	myUtil.DescriptionTxt.Clear()
 	myUtil.DescriptionTxt.Color = colornames.White
 	fmt.Fprintln(myUtil.DescriptionTxt, "B. 作ってもらう")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
+	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
 	txtPos = pixel.V(xOffSet, yOffSet)
 	tempPosition = pixel.IM.Moved(txtPos)
 	myUtil.DescriptionTxt.Draw(win, tempPosition)
 	buySellSliceArmor = append(buySellSliceArmor, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
+
+	loadContent = SaveFileLoad(SaveFilePath)
+	if loadContent[4][num-1] == strconv.Itoa(1) {
+		myUtil.DescriptionTxt.Clear()
+		myUtil.DescriptionTxt.Color = colornames.White
+		fmt.Fprintln(myUtil.DescriptionTxt, "作成済み")
+		xOffSet += 400
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition = pixel.IM.Moved(txtPos)
+		myUtil.DescriptionTxt.Draw(win, tempPosition)
+	}
 }
 
 func CreateArmorEvent(descArmor [][]string, num int) bool {
@@ -410,7 +461,7 @@ func ArmorBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *play
 		log.Println("装備0")
 	} else if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentBelong = myState.ArmorBelong
-		myState.CurrentGS = myState.GoToScreen
+		myState.CurrentGS = myState.TownScreen
 		log.Println("所持品/武器->GoTo")
 	}
 	tempDP1, _ := strconv.ParseFloat(loadContent[1][14], 64)

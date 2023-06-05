@@ -17,6 +17,8 @@ import (
 var SaveFilePath = "player\\save\\save.csv"
 var SaveFilePathItems = "player\\save\\saveItems.csv"
 
+var loadContent = SaveFileLoad(SaveFilePath)
+
 func SaveGame(saveFilePath string, saveNum int, player *player.PlayerStatus) {
 	SaveFileCheck(saveFilePath)
 	//saveContent := "NoName,30,30,3,1,50,0,2," + strconv.Itoa(player.Gold) + "," + player.Job + "," + strconv.Itoa(player.AP) + ",Japanese,"
