@@ -48,7 +48,6 @@ func EnemyAttackAnimation(win *pixelgl.Window, player *player.PlayerStatus) {
 			}
 			myState.CurrentGS = myState.PlayingScreen
 			index = 0
-			indexMonster = 0
 			animationPhase = 0
 			animationInProgress = false
 		}

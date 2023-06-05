@@ -273,8 +273,6 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 	return myState.CurrentGS
 }
 
-var indexMonster int
-
 func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
@@ -287,13 +285,11 @@ func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elaps
 			if typed != "" {
 				if typed[0] == temp[index] && index < len(question) {
 					index++
-					indexMonster += 2
 					collectType++
 					tempWordDamage -= float64(rand.Intn(int(player.OP * 3.5)) /* - rand.Intn(int(player.OP))*/)
 					player.SP += player.BaseSP
 					if index == len(question) {
 						index = 0
-						indexMonster = 0
 						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
 						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
@@ -301,12 +297,14 @@ func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elaps
 						if rand.Float64() <= 0.1 { // 10%の確率で自分に攻撃
 							player.HP--
 							player.SP--
+							win.Canvas().Clear(colornames.Red)
 						}
 					}
 				} else {
 					missType++
 					if rand.Float64() <= 0.3 { // 30%の確率で自分に攻撃
 						player.HP--
+						win.Canvas().Clear(colornames.Red)
 					}
 				}
 			}
