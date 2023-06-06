@@ -31,13 +31,13 @@ func AttackRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus,
 	} else if player.EquipmentWeapon[0] == weaponName[7] {
 		log.Println(myGame.StageNum)
 		if rand.Float64() <= 0.15 {
-			UniqueSkill(win, (*tempWordDamage)*(float64(myGame.StageNum)*0.25), win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Orange, player, "Holiness! ")
+			UniqueSkill(win, (*tempWordDamage)*(float64(myGame.StageNum)*0.25), win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Darkorange, player, "Holiness! ")
 			enemy.HP += (*tempWordDamage) * (float64(myGame.StageNum) * 0.25)
 		}
 	} else if player.EquipmentWeapon[0] == weaponName[8] {
 		log.Println(myGame.StageNum)
 		if rand.Float64() <= 0.2 {
-			UniqueSkill(win, (*tempWordDamage)*1.3, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Purple, player, "Mind'sEye! ")
+			UniqueSkill(win, (*tempWordDamage)*1.3, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Aqua, player, "Mind'sEye! ")
 			enemy.HP += (*tempWordDamage) * 1.3
 		}
 	}
@@ -50,13 +50,13 @@ func AttackRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus,
 	} else if player.EquipmentAccessory[0] == accessoryName[8] {
 		log.Println(myGame.StageNum)
 		if rand.Float64() <= 0.05 {
-			UniqueSkill(win, 1.25, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Red, player, "Sharpen! OP*")
+			UniqueSkill(win, 1.25, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Purple, player, "Sharpen! OP*")
 			player.OP *= 1.25
 		}
 	} else if player.EquipmentAccessory[0] == accessoryName[9] {
 		log.Println(myGame.StageNum)
 		if rand.Float64() <= 0.05 {
-			UniqueSkill(win, 1.25, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Red, player, "SoulProtect! DP*")
+			UniqueSkill(win, 1.25, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Silver, player, "SoulProtect! DP*")
 			player.DP *= 1.25
 		}
 	}
@@ -115,7 +115,7 @@ func AttackRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 	if player.EquipmentArmor[0] == armorName[8] {
 		for i := 0; i < rand.Intn(3); i++ {
 			randomPotision := 40.0 * float64(i)
-			UniqueSkill(win, (*tempWordDamage)*0.3, win.Bounds().Center().Sub(pixel.V(0, 200+randomPotision)), colornames.Yellow, player, "ShadowSwift! ")
+			UniqueSkill(win, (*tempWordDamage)*0.3, win.Bounds().Center().Sub(pixel.V(0, 200+randomPotision)), colornames.Yellowgreen, player, "ShadowSwift! ")
 			enemy.HP += (*tempWordDamage) * 0.3
 		}
 	}
@@ -124,7 +124,7 @@ func AttackRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 func RecoveryRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
 	if player.EquipmentArmor[0] == armorName[3] {
 		if rand.Float64() <= 0.1 {
-			UniqueSkill(win, enemy.MaxOP*0.05, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Whitesmoke, player, "SoulBind! ")
+			UniqueSkill(win, enemy.MaxOP*0.05, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Green, player, "SoulBind! ")
 			player.HP += enemy.MaxOP * 0.05
 			if player.HP >= player.MaxHP {
 				player.HP = player.MaxHP
@@ -146,7 +146,7 @@ func RecoveryRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus
 func TimerRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, tempTimer *float64) float64 {
 	if player.EquipmentArmor[0] == armorName[4] {
 		if rand.Float64() <= 0.1 {
-			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Orange, player, "StampMaster! ")
+			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Blue, player, "StampMaster! ")
 			return 1.0
 		}
 	}
@@ -192,13 +192,13 @@ func DefenceRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus,
 func BuffRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if player.EquipmentArmor[0] == armorName[9] {
 		if rand.Float64() <= 0.1 {
-			UniqueSkill(win, 1.3, win.Bounds().Center().Sub(pixel.V(0, 250)), colornames.Red, player, "UnderWorld! OP*")
+			UniqueSkill(win, 1.3, win.Bounds().Center().Sub(pixel.V(0, 250)), colornames.Purple, player, "UnderWorld! OP*")
 			player.OP *= 1.3
 		}
 	}
 	if player.EquipmentAccessory[0] == accessoryName[7] {
 		if rand.Float64() <= 0.05 {
-			UniqueSkill(win, 1.1, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Red, player, "Brave! OP&DP*")
+			UniqueSkill(win, 1.1, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Purple, player, "Brave! OP&DP*")
 			player.OP *= 1.1
 			player.DP *= 1.1
 		}

@@ -66,7 +66,7 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 var bulletLoading = []bool{false, false, false}
 var bulletDamage = []float64{0.0, 0.0, 0.0}
 
-func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 100
 	txtPos := pixel.V(0, 0)
@@ -76,7 +76,8 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.AttackTimer - elapsed.Seconds()
+	*tempTimer = player.AttackTimer - elapsed.Seconds() + SkillTimer
+	tempCount = *tempTimer
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
@@ -89,6 +90,13 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 					if index == len(question) {
 						index = 0
 						wordsNum++
+
+						AttackRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						RecoveryRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						SkillTimer += TimerRelationWeaponSkill(win, player, tempTimer)
+						DebuffRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+						AttackRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						BuffRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
 						//enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
 						//PlayerAttack(win, int(tempWordDamage), win.Bounds().Center().Sub(pixel.V(50, 150)))
 						//tempWordDamage = 0.0
@@ -168,12 +176,13 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	return myState.CurrentGS
 }
 
-func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.AttackTimer - elapsed.Seconds()
+	*tempTimer = player.AttackTimer - elapsed.Seconds() + SkillTimer
+	tempCount = *tempTimer
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
@@ -182,6 +191,14 @@ func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed 
 					index++
 					collectType++
 					tempWordDamage -= player.OP + float64(-rand.Intn(3))
+
+					AttackRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+					RecoveryRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+					SkillTimer += TimerRelationWeaponSkill(win, player, tempTimer)
+					DebuffRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+					AttackRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+					BuffRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+
 					enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
 					randomValue := (-1 * (100 + (rand.Float64() * 200)))
 					PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, randomValue)))
@@ -209,12 +226,13 @@ func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed 
 var magicCollectType = 0.0
 var magicMissType = 0
 
-func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.AttackTimer - elapsed.Seconds()
+	*tempTimer = player.AttackTimer - elapsed.Seconds() + SkillTimer
+	tempCount = *tempTimer
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
@@ -222,6 +240,7 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++
+
 					if magicCollectType >= 0 && magicCollectType < 25 {
 						magicCollectType += player.OP * 0.25
 					} else if magicCollectType >= 25 && magicCollectType < 50 {
@@ -240,6 +259,15 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 					log.Println(magicCollectType)
 					player.SP += player.BaseSP
 					if index == len(question) {
+
+						tempWordDamage = -magicCollectType * 0.3
+						AttackRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						RecoveryRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						SkillTimer += TimerRelationWeaponSkill(win, player, tempTimer)
+						DebuffRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+						AttackRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						BuffRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+
 						index = 0
 						wordsNum++
 						//PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
@@ -283,12 +311,13 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 	return myState.CurrentGS
 }
 
-func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.AttackTimer - elapsed.Seconds()
+	*tempTimer = player.AttackTimer - elapsed.Seconds() + SkillTimer
+	tempCount = *tempTimer
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
@@ -296,9 +325,17 @@ func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elaps
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++
-					tempWordDamage -= float64(rand.Intn(int(player.OP * 3.5)) /* - rand.Intn(int(player.OP))*/)
+					tempWordDamage -= float64(rand.Intn(int(player.OP * 3.0)) /* - rand.Intn(int(player.OP))*/)
 					player.SP += player.BaseSP
 					if index == len(question) {
+
+						AttackRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						RecoveryRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						SkillTimer += TimerRelationWeaponSkill(win, player, tempTimer)
+						DebuffRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+						AttackRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						BuffRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+
 						index = 0
 						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage

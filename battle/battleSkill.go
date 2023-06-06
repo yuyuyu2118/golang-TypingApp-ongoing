@@ -355,7 +355,8 @@ func BattleTypingMonkSkill(win *pixelgl.Window, player *player.PlayerStatus, ela
 					collectType++
 					tempWordDamage -= player.OP + float64(-rand.Intn(3)-1)
 					enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
-					PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, -200)))
+					randomValue := (-1 * (100 + (rand.Float64() * 200)))
+					PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, randomValue)))
 					tempWordDamage = 0.0
 					if index == len(question) {
 						index = 0
@@ -460,7 +461,7 @@ func InitBattleTextMagicUserSkill(win *pixelgl.Window, Txt *text.Text, elapsed t
 	Txt.Clear()
 	Txt.Color = colornames.Green
 	fmt.Fprintln(Txt, "+HP:", strconv.FormatFloat(magicHP, 'f', 2, 64))
-	myPos.DrawPos(win, Txt, myPos.CenLefPos(win, Txt))
+	myPos.DrawPos(win, Txt, myPos.CenLefPos(win, Txt).Add(pixel.V(0, -100)))
 
 	if myState.CurrentGS == myState.SkillScreen {
 		tempWords := words[wordsNum]
@@ -528,7 +529,7 @@ func BattleTypingMonsterSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++
-					tempWordDamage -= float64(rand.Intn(int(player.OP * 5)) /* - rand.Intn(int(player.OP))*/)
+					tempWordDamage -= float64(rand.Intn(int(player.OP * 4.0)) /* - rand.Intn(int(player.OP))*/)
 					if index == len(question) {
 						index = 0
 						MonsterSkillWord = ""

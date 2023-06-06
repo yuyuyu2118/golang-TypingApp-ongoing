@@ -536,7 +536,7 @@ func SaveGameItems(SaveFilePathItems string, gainItem []string) error {
 }
 
 func SaveFileItemsCheck(saveFilePathItems string) {
-	initializeText := " "
+	initializeText := "木の枝,0"
 	fileInfo, err := os.Stat(saveFilePathItems)
 	if err != nil {
 		// ファイルが存在しない場合、初回呼び出しとして初期化テキストを出力
