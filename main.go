@@ -39,7 +39,7 @@ func run() {
 
 	imd := imdraw.New(nil)
 	setTime := time.Now()
-	fadeDuration := 3.0
+	fadeDuration := 1.0
 
 	startTime = time.Now()
 
