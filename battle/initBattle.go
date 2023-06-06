@@ -44,16 +44,16 @@ func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed
 		myState.CurrentGS = BattleTypingRookie(win, player, elapsed, &DispTimer)
 	} else if player.Job == "狩人" {
 		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
-		myState.CurrentGS = BattleTypingHunter(win, player, elapsed)
+		myState.CurrentGS = BattleTypingHunter(win, player, elapsed, &DispTimer)
 	} else if player.Job == "モンク" {
 		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
-		myState.CurrentGS = BattleTypingMonk(win, player, elapsed)
+		myState.CurrentGS = BattleTypingMonk(win, player, elapsed, &DispTimer)
 	} else if player.Job == "魔法使い" {
 		InitBattleTextMagicUser(win, myUtil.ScreenTxt, elapsed)
-		myState.CurrentGS = BattleTypingMagicUser(win, player, elapsed)
+		myState.CurrentGS = BattleTypingMagicUser(win, player, elapsed, &DispTimer)
 	} else if player.Job == "化け物" {
 		InitBattleTextMonster(win, myUtil.ScreenTxt, elapsed)
-		myState.CurrentGS = BattleTypingMonster(win, player, elapsed)
+		myState.CurrentGS = BattleTypingMonster(win, player, elapsed, &DispTimer)
 	}
 }
 
