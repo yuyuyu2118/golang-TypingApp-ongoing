@@ -21,7 +21,10 @@ func BattleTypingEnemySlime(win *pixelgl.Window, player *myPlayer.PlayerStatus, 
 			tempEnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize
 			tempWordDamage = 0
 			SkillTimer = 0.0
+<<<<<<< HEAD
 			DefenceRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+=======
+>>>>>>> 4715f1e (武器の固有スキルを設定)
 		}
 		if animationInProgress {
 			EnemyAttackAnimation(win, player)
@@ -53,11 +56,15 @@ func EnemyAttackAnimation(win *pixelgl.Window, player *myPlayer.PlayerStatus) {
 			index = 0
 			animationPhase = 0
 			animationInProgress = false
+<<<<<<< HEAD
 			player.OP = player.MaxOP
 			player.DP = player.MaxDP
 			enemy.EnemySettings[myGame.StageNum].OP = enemy.EnemySettings[myGame.StageNum].MaxOP
 			RecoveryRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
 			SkillTimer += TimerRelationArmorSkill(win, player, &tempWordDamage)
+=======
+			enemy.EnemySettings[myGame.StageNum].OP = enemy.EnemySettings[myGame.StageNum].MaxOP
+>>>>>>> 4715f1e (武器の固有スキルを設定)
 		}
 	}
 }
