@@ -60,7 +60,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		dropEvent = true
 	}
 
-	ClearTxt := []string{"正解タイプボーナスゴールド: " + strconv.Itoa(collectType) + " * 0.3 = " + strconv.Itoa(gainGoldCollectType),
+	ClearTxt := []string{"正解タイプボーナスゴールド: " + strconv.Itoa(collectType) + " * 0.5 = " + strconv.Itoa(gainGoldCollectType),
 		"モンスタードロップゴールド: " + strconv.Itoa(gainGold) + "S",
 		"",
 		" 入力単語数:" + strconv.Itoa(wordsNum),
