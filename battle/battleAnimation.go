@@ -67,7 +67,7 @@ func DrawDamageAnimation(win *pixelgl.Window, anim *DamageAnimation) {
 
 		// ランダムなオフセットを生成（初回のみ）
 		if anim.Offset == pixel.ZV {
-			anim.Offset = pixel.V(rand.Float64()*150-20, rand.Float64()*50-20)
+			anim.Offset = pixel.V(rand.Float64(), rand.Float64())
 		}
 
 		alpha := 1.0
@@ -119,6 +119,12 @@ func PlayerAttack(win *pixelgl.Window, damage float64, position pixel.Vec) {
 	}()
 }
 
+const (
+	uniqueSkillAnimationSpeed    = 0.04
+	uniqueSkillAnimationFPS      = 60
+	uniqueSkillAnimationDuration = 5 * time.Second
+)
+
 type UniqueSkillAnimation struct {
 	Text       string
 	Position   pixel.Vec
@@ -132,8 +138,8 @@ var UniqueSkillAnimations []*UniqueSkillAnimation
 
 func RunUniqueSkillAnimation(win *pixelgl.Window, anim *UniqueSkillAnimation, txtColor color.Color) {
 	for anim.Progress <= 1.0 {
-		anim.Progress += animationSpeed
-		time.Sleep(time.Second / animationFPS)
+		anim.Progress += uniqueSkillAnimationSpeed
+		time.Sleep(time.Second / uniqueSkillAnimationFPS)
 		if anim.RemoveFlag {
 			close(anim.Done)
 			return
@@ -167,7 +173,7 @@ func DrawUniqueSkillAnimation(win *pixelgl.Window, anim *UniqueSkillAnimation, t
 
 		// ランダムなオフセットを生成（初回のみ）
 		if anim.Offset == pixel.ZV {
-			anim.Offset = pixel.V(rand.Float64()*250-20, rand.Float64()*70-20)
+			anim.Offset = pixel.V(rand.Float64(), rand.Float64())
 		}
 
 		alpha := 1.0
@@ -193,22 +199,36 @@ func RemoveUniqueSkillAnimation(anim *UniqueSkillAnimation) {
 
 var tempTxt string
 
-func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txtColor color.Color, player *player.PlayerStatus) {
+func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txtColor color.Color, player *player.PlayerStatus, assignTxt string) {
 
 	if player.EquipmentWeapon[0] == weaponName[3] {
-		tempTxt = "Reocovery! "
+		tempTxt = "LifeDrain! "
 	} else if player.EquipmentWeapon[0] == weaponName[4] {
-		tempTxt = "Stun! "
+		tempTxt = "StunAttack! "
 	} else if player.EquipmentWeapon[0] == weaponName[5] {
-		tempTxt = "Critical! "
+		tempTxt = "CriticalSlash! "
 	} else if player.EquipmentWeapon[0] == weaponName[6] {
-		tempTxt = "Slash! "
+		tempTxt = "SwiftSlash! "
 	} else if player.EquipmentWeapon[0] == weaponName[7] {
 		tempTxt = "Holiness! "
 	} else if player.EquipmentWeapon[0] == weaponName[8] {
-		tempTxt = "Mind's Eye! "
+		tempTxt = "Mind'sEye! "
 	} else if player.EquipmentWeapon[0] == weaponName[9] {
-		tempTxt = "EnemyOP "
+		tempTxt = "ShadowCurse! "
+	}
+
+	if player.EquipmentArmor[0] == armorName[3] {
+		tempTxt = "SoulBind! "
+	} else if player.EquipmentArmor[0] == armorName[4] {
+		tempTxt = "StampMaster! "
+	} else if player.EquipmentArmor[0] == armorName[5] {
+		tempTxt = "IronWall! "
+	} else if player.EquipmentArmor[0] == armorName[6] {
+		tempTxt = "Floating! "
+	} else if player.EquipmentArmor[0] == armorName[7] {
+		tempTxt = assignTxt
+	} else if player.EquipmentArmor[0] == armorName[8] {
+		tempTxt = assignTxt
 	}
 
 	anim := &UniqueSkillAnimation{
@@ -230,7 +250,7 @@ func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txt
 
 	go func() {
 		select {
-		case <-time.After(animationDuration):
+		case <-time.After(uniqueSkillAnimationDuration):
 			removeChan <- anim
 		case animToRemove := <-removeChan:
 			RemoveUniqueSkillAnimation(animToRemove)

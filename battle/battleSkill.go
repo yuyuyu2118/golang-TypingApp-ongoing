@@ -55,7 +55,7 @@ func BattleTypingRookieSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 						index = 0
 						RookieSkillCount++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
-						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
+						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, -200)))
 						tempWordDamage = 0.0
 						if RookieSkillCount == 3 {
 							RookieSkillCount = 0
@@ -260,11 +260,11 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, e
 	if win.JustPressed(pixelgl.KeyEnter) {
 		bulletDamageSkills := bulletDamageSkill[0] + bulletDamageSkill[1] + bulletDamageSkill[2] + bulletDamageSkill[3] + bulletDamageSkill[4]
 		//enemy.EnemySettings[myGame.StageNum].HP += float64(bulletDamageSkills) //TODO: debug用
-		PlayerAttack(win, bulletDamageSkill[0], win.Bounds().Center().Sub(pixel.V(50, -200)))
-		PlayerAttack(win, bulletDamageSkill[1], win.Bounds().Center().Sub(pixel.V(-100, -200)))
-		PlayerAttack(win, bulletDamageSkill[2], win.Bounds().Center().Sub(pixel.V(200, -200)))
-		PlayerAttack(win, bulletDamageSkill[3], win.Bounds().Center().Sub(pixel.V(-200, -200)))
-		PlayerAttack(win, bulletDamageSkill[4], win.Bounds().Center().Sub(pixel.V(300, -200)))
+		PlayerAttack(win, bulletDamageSkill[0], win.Bounds().Center().Sub(pixel.V(-200, -150)))
+		PlayerAttack(win, bulletDamageSkill[1], win.Bounds().Center().Sub(pixel.V(-200, -200)))
+		PlayerAttack(win, bulletDamageSkill[2], win.Bounds().Center().Sub(pixel.V(-200, -250)))
+		PlayerAttack(win, bulletDamageSkill[3], win.Bounds().Center().Sub(pixel.V(-200, -100)))
+		PlayerAttack(win, bulletDamageSkill[4], win.Bounds().Center().Sub(pixel.V(-200, -300)))
 		enemy.EnemySettings[myGame.StageNum].HP += float64(bulletDamageSkills)
 		for i := 0; i < 5; i++ {
 			bulletDamageSkill[i] = 0
@@ -355,7 +355,7 @@ func BattleTypingMonkSkill(win *pixelgl.Window, player *player.PlayerStatus, ela
 					collectType++
 					tempWordDamage -= player.OP + float64(-rand.Intn(3)-1)
 					enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
-					PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
+					PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, -200)))
 					tempWordDamage = 0.0
 					if index == len(question) {
 						index = 0
@@ -533,7 +533,7 @@ func BattleTypingMonsterSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 						index = 0
 						MonsterSkillWord = ""
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
-						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
+						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, -200)))
 						tempWordDamage = 0.0
 						myState.CurrentGS = myState.PlayingScreen
 					}
