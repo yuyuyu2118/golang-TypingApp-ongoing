@@ -11,6 +11,7 @@ import (
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myUtil"
+	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -119,12 +120,15 @@ func PlayerAttack(win *pixelgl.Window, damage float64, position pixel.Vec) {
 	}()
 }
 
+<<<<<<< HEAD
 const (
 	uniqueSkillAnimationSpeed    = 0.04
 	uniqueSkillAnimationFPS      = 180
 	uniqueSkillAnimationDuration = 5 * time.Second
 )
 
+=======
+>>>>>>> 4715f1e (武器の固有スキルを設定)
 type UniqueSkillAnimation struct {
 	Text       string
 	Position   pixel.Vec
@@ -138,8 +142,13 @@ var UniqueSkillAnimations []*UniqueSkillAnimation
 
 func RunUniqueSkillAnimation(win *pixelgl.Window, anim *UniqueSkillAnimation, txtColor color.Color) {
 	for anim.Progress <= 1.0 {
+<<<<<<< HEAD
 		anim.Progress += uniqueSkillAnimationSpeed
 		time.Sleep(time.Second / uniqueSkillAnimationFPS)
+=======
+		anim.Progress += animationSpeed
+		time.Sleep(time.Second / animationFPS)
+>>>>>>> 4715f1e (武器の固有スキルを設定)
 		if anim.RemoveFlag {
 			close(anim.Done)
 			return
@@ -173,7 +182,11 @@ func DrawUniqueSkillAnimation(win *pixelgl.Window, anim *UniqueSkillAnimation, t
 
 		// ランダムなオフセットを生成（初回のみ）
 		if anim.Offset == pixel.ZV {
+<<<<<<< HEAD
 			anim.Offset = pixel.V(rand.Float64(), rand.Float64())
+=======
+			anim.Offset = pixel.V(rand.Float64()*250-20, rand.Float64()*70-20)
+>>>>>>> 4715f1e (武器の固有スキルを設定)
 		}
 
 		alpha := 1.0
@@ -199,6 +212,7 @@ func RemoveUniqueSkillAnimation(anim *UniqueSkillAnimation) {
 
 var tempTxt string
 
+<<<<<<< HEAD
 func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txtColor color.Color, player *myPlayer.PlayerStatus, assignTxt string) {
 
 	if player.EquipmentWeapon[0] == weaponName[3] {
@@ -247,6 +261,24 @@ func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txt
 		tempTxt = assignTxt
 	} else if player.EquipmentAccessory[0] == accessoryName[9] {
 		tempTxt = assignTxt
+=======
+func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txtColor color.Color, player *player.PlayerStatus) {
+
+	if player.EquipmentWeapon[0] == weaponName[3] {
+		tempTxt = "Reocovery! "
+	} else if player.EquipmentWeapon[0] == weaponName[4] {
+		tempTxt = "Stun! "
+	} else if player.EquipmentWeapon[0] == weaponName[5] {
+		tempTxt = "Critical! "
+	} else if player.EquipmentWeapon[0] == weaponName[6] {
+		tempTxt = "Slash! "
+	} else if player.EquipmentWeapon[0] == weaponName[7] {
+		tempTxt = "Holiness! "
+	} else if player.EquipmentWeapon[0] == weaponName[8] {
+		tempTxt = "Mind's Eye! "
+	} else if player.EquipmentWeapon[0] == weaponName[9] {
+		tempTxt = "EnemyOP "
+>>>>>>> 4715f1e (武器の固有スキルを設定)
 	}
 
 	anim := &UniqueSkillAnimation{
@@ -268,7 +300,11 @@ func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txt
 
 	go func() {
 		select {
+<<<<<<< HEAD
 		case <-time.After(uniqueSkillAnimationDuration):
+=======
+		case <-time.After(animationDuration):
+>>>>>>> 4715f1e (武器の固有スキルを設定)
 			removeChan <- anim
 		case animToRemove := <-removeChan:
 			RemoveUniqueSkillAnimation(animToRemove)

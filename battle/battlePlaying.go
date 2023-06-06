@@ -19,7 +19,11 @@ import (
 
 var SkillTimer float64
 
+<<<<<<< HEAD
 func BattleTypingRookie(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+=======
+func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+>>>>>>> 4715f1e (武器の固有スキルを設定)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -37,12 +41,19 @@ func BattleTypingRookie(win *pixelgl.Window, player *myPlayer.PlayerStatus, elap
 					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
 					player.SP += player.BaseSP
 					if index == len(question) {
+<<<<<<< HEAD
 						AttackRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
 						RecoveryRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
 						SkillTimer += TimerRelationWeaponSkill(win, player, tempTimer)
 						DebuffRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
 						AttackRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
 						BuffRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+=======
+						AttackRelationSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						RecoveryRelationSkill(win, player, &tempWordDamage)
+						SkillTimer += TimerRelationSkill(win, player, tempTimer)
+						DebuffRelationSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+>>>>>>> 4715f1e (武器の固有スキルを設定)
 						index = 0
 						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
