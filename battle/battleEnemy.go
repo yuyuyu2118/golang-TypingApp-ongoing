@@ -21,6 +21,7 @@ func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, el
 			tempEnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize
 			tempWordDamage = 0
 			SkillTimer = 0.0
+			DefenceRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
 		}
 		if animationInProgress {
 			EnemyAttackAnimation(win, player)
@@ -45,13 +46,17 @@ func EnemyAttackAnimation(win *pixelgl.Window, player *player.PlayerStatus) {
 		} else {
 			enemy.EnemySettings[myGame.StageNum].EnemySize = tempEnemySize
 			if enemy.EnemySettings[myGame.StageNum].OP-player.DP >= 0 {
+				//Enemyの攻撃
 				player.HP -= enemy.EnemySettings[myGame.StageNum].OP - player.DP
 			}
 			myState.CurrentGS = myState.PlayingScreen
 			index = 0
 			animationPhase = 0
 			animationInProgress = false
+			player.DP = player.MaxDP
 			enemy.EnemySettings[myGame.StageNum].OP = enemy.EnemySettings[myGame.StageNum].MaxOP
+			RecoveryRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+			SkillTimer += TimerRelationArmorSkill(win, player, &tempWordDamage)
 		}
 	}
 }

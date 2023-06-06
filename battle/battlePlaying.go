@@ -37,14 +37,15 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
 					player.SP += player.BaseSP
 					if index == len(question) {
-						AttackRelationSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
-						RecoveryRelationSkill(win, player, &tempWordDamage)
-						SkillTimer += TimerRelationSkill(win, player, tempTimer)
-						DebuffRelationSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+						AttackRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						RecoveryRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						SkillTimer += TimerRelationWeaponSkill(win, player, tempTimer)
+						DebuffRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+						AttackRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
 						index = 0
 						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
-						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
+						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, -200)))
 						tempWordDamage = 0.0
 					}
 				} else {
@@ -149,9 +150,9 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	if win.JustPressed(pixelgl.KeyEnter) {
 		bulletDamages := bulletDamage[0] + bulletDamage[1] + bulletDamage[2]
 		//enemy.EnemySettings[myGame.StageNum].HP += float64(bulletDamages) //TODO: debug用
-		PlayerAttack(win, bulletDamage[0], win.Bounds().Center().Sub(pixel.V(50, -200)))
-		PlayerAttack(win, bulletDamage[1], win.Bounds().Center().Sub(pixel.V(-100, -200)))
-		PlayerAttack(win, bulletDamage[2], win.Bounds().Center().Sub(pixel.V(200, -200)))
+		PlayerAttack(win, bulletDamage[0], win.Bounds().Center().Sub(pixel.V(-200, -150)))
+		PlayerAttack(win, bulletDamage[1], win.Bounds().Center().Sub(pixel.V(-200, -200)))
+		PlayerAttack(win, bulletDamage[2], win.Bounds().Center().Sub(pixel.V(-200, -250)))
 		enemy.EnemySettings[myGame.StageNum].HP += float64(bulletDamages)
 		for i := 0; i < 3; i++ {
 			bulletDamage[i] = 0
@@ -181,7 +182,8 @@ func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed 
 					collectType++
 					tempWordDamage -= player.OP + float64(-rand.Intn(3))
 					enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
-					PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, -250)))
+					randomValue := (-1 * (100 + (rand.Float64() * 200)))
+					PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, randomValue)))
 					tempWordDamage = 0.0
 					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
 					player.SP += player.BaseSP
@@ -270,7 +272,7 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 	}
 
 	if win.JustPressed(pixelgl.KeyEnter) {
-		PlayerAttack(win, -magicCollectType, win.Bounds().Center().Sub(pixel.V(50, -200)))
+		PlayerAttack(win, -magicCollectType, win.Bounds().Center().Sub(pixel.V(-200, -200)))
 		enemy.EnemySettings[myGame.StageNum].HP += float64(-magicCollectType)
 		magicCollectType = 0
 	}
@@ -299,7 +301,7 @@ func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elaps
 						index = 0
 						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
-						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(50, 150)))
+						PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, -200)))
 						tempWordDamage = 0
 						if rand.Float64() <= 0.1 { // 10%の確率で自分に攻撃
 							player.HP--
