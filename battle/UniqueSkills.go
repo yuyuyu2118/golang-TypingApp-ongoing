@@ -19,26 +19,33 @@ var accessoryName = []string{"樹木のペンダント", "フルーツブレス�
 func AttackRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
 	if player.EquipmentWeapon[0] == weaponName[5] {
 		if rand.Float64() <= 0.1 {
-			UniqueSkill(win, (*tempWordDamage)*1.5, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Aqua, player, "")
+			UniqueSkill(win, (*tempWordDamage)*1.5, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Aqua, player, "CriticalSlash! ")
 			enemy.HP += (*tempWordDamage) * 1.5
 		}
 	} else if player.EquipmentWeapon[0] == weaponName[6] {
 		for i := 0; i < rand.Intn(3); i++ {
 			randomPotision := 50.0 * float64(i)
-			UniqueSkill(win, (*tempWordDamage)*0.5, win.Bounds().Center().Sub(pixel.V(0, 150+randomPotision)), colornames.Yellow, player, "")
+			UniqueSkill(win, (*tempWordDamage)*0.5, win.Bounds().Center().Sub(pixel.V(0, 150+randomPotision)), colornames.Yellow, player, "SwiftSlash! ")
 			enemy.HP += (*tempWordDamage) * 0.5
 		}
 	} else if player.EquipmentWeapon[0] == weaponName[7] {
 		log.Println(myGame.StageNum)
 		if rand.Float64() <= 0.2 {
-			UniqueSkill(win, (*tempWordDamage)*(float64(myGame.StageNum)*0.25), win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Orange, player, "")
+			UniqueSkill(win, (*tempWordDamage)*(float64(myGame.StageNum)*0.25), win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Orange, player, "Holiness! ")
 			enemy.HP += (*tempWordDamage) * (float64(myGame.StageNum) * 0.25)
 		}
 	} else if player.EquipmentWeapon[0] == weaponName[8] {
 		log.Println(myGame.StageNum)
 		if rand.Float64() <= 0.3 {
-			UniqueSkill(win, (*tempWordDamage)*1.5, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Purple, player, "")
+			UniqueSkill(win, (*tempWordDamage)*1.5, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Purple, player, "Mind'sEye! ")
 			enemy.HP += (*tempWordDamage) * 1.5
+		}
+	}
+	if player.EquipmentAccessory[0] == accessoryName[4] {
+		log.Println(myGame.StageNum)
+		if rand.Float64() <= 0.05 {
+			UniqueSkill(win, (*tempWordDamage)*0.25, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Red, player, "ShockWave! ")
+			enemy.HP += (*tempWordDamage) * 0.25
 		}
 	}
 }
@@ -46,20 +53,37 @@ func AttackRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus,
 func RecoveryRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
 	if player.EquipmentWeapon[0] == weaponName[3] {
 		if rand.Float64() <= 0.1 {
-			UniqueSkill(win, -(*tempWordDamage)*0.01, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Green, player, "")
+			UniqueSkill(win, -(*tempWordDamage)*0.01, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Green, player, "LifeDrain! ")
 			player.HP += -(*tempWordDamage) * 0.01
 			if player.HP >= player.MaxHP {
 				player.HP = player.MaxHP
 			}
 		}
 	}
-	//if player.EquipmentWeapon
+	if player.EquipmentArmor[0] == armorName[9] {
+		if rand.Float64() <= 0.1 {
+			UniqueSkill(win, -(*tempWordDamage)*0.01, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Green, player, "UnderWorld! ")
+			player.HP += -(*tempWordDamage) * 0.01
+			if player.HP >= player.MaxHP {
+				player.HP = player.MaxHP
+			}
+		}
+	}
+	if player.EquipmentAccessory[0] == accessoryName[3] {
+		if rand.Float64() <= 0.05 {
+			UniqueSkill(win, -(*tempWordDamage)*0.01, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Green, player, "LifeLink! ")
+			player.HP += -(*tempWordDamage) * 0.01
+			if player.HP >= player.MaxHP {
+				player.HP = player.MaxHP
+			}
+		}
+	}
 }
 
 func TimerRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, tempTimer *float64) float64 {
 	if player.EquipmentWeapon[0] == weaponName[4] {
 		if rand.Float64() <= 0.1 {
-			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Blue, player, "")
+			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Blue, player, "StunAttack! ")
 			return 1.0
 		}
 	}
@@ -69,7 +93,7 @@ func TimerRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 func DebuffRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if player.EquipmentWeapon[0] == weaponName[9] {
 		if rand.Float64() <= 0.15 {
-			UniqueSkill(win, -1.0, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Red, player, "")
+			UniqueSkill(win, -1.0, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Red, player, "ShadowCurse! ")
 			enemy.OP -= 1.0
 		}
 	}
@@ -88,7 +112,7 @@ func AttackRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 func RecoveryRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
 	if player.EquipmentArmor[0] == armorName[3] {
 		if rand.Float64() <= 0.1 {
-			UniqueSkill(win, enemy.MaxOP*0.05, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Whitesmoke, player, "")
+			UniqueSkill(win, enemy.MaxOP*0.05, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Whitesmoke, player, "SoulBind! ")
 			player.HP += enemy.MaxOP * 0.05
 			if player.HP >= player.MaxHP {
 				player.HP = player.MaxHP
@@ -110,7 +134,7 @@ func RecoveryRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus
 func TimerRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, tempTimer *float64) float64 {
 	if player.EquipmentArmor[0] == armorName[4] {
 		if rand.Float64() <= 0.1 {
-			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Orange, player, "")
+			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Orange, player, "StampMaster! ")
 			return 1.0
 		}
 	}
@@ -120,23 +144,39 @@ func TimerRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, t
 func DefenceRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if player.EquipmentArmor[0] == armorName[5] {
 		if rand.Float64() <= 0.1 {
-			UniqueSkill(win, player.DP*1.5, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Silver, player, "")
+			UniqueSkill(win, player.DP*1.5, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Silver, player, "IronWall! DP")
 			player.DP *= 1.5
 		}
 	} else if player.EquipmentArmor[0] == armorName[6] {
-		if rand.Float64() <= 1.0 {
-			UniqueSkill(win, -99, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Silver, player, "")
+		if rand.Float64() <= 0.1 {
+			UniqueSkill(win, -99, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Silver, player, "Floating! ")
 			enemy.OP -= 99
 		}
 	} else if player.EquipmentArmor[0] == armorName[7] {
 		if rand.Float64() <= 0.1 {
-			UniqueSkill(win, player.DP*1.25, win.Bounds().Center().Sub(pixel.V(0, 250)), colornames.Silver, player, "BraveDefence! ")
+			UniqueSkill(win, player.DP*1.25, win.Bounds().Center().Sub(pixel.V(0, 250)), colornames.Silver, player, "BraveDefence! DP")
 			player.DP *= 1.25
 		}
 	} else if player.EquipmentArmor[0] == armorName[8] {
-		if rand.Float64() <= 1.0 {
+		if rand.Float64() <= 0.1 {
 			UniqueSkill(win, -99, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Silver, player, "ShadowEscape! ")
 			enemy.OP -= 99
+		}
+	}
+
+	if player.EquipmentAccessory[0] == accessoryName[5] {
+		if rand.Float64() <= 1.0 {
+			UniqueSkill(win, player.DP*1.1, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Silver, player, "Protect! DP")
+			player.DP *= 1.1
+		}
+	}
+}
+
+func BuffRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
+	if player.EquipmentArmor[0] == armorName[9] {
+		if rand.Float64() <= 0.1 {
+			UniqueSkill(win, 1.5, win.Bounds().Center().Sub(pixel.V(0, 250)), colornames.Red, player, "UnderWorld! *")
+			player.OP *= 1.5
 		}
 	}
 }
