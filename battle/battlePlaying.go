@@ -42,6 +42,7 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 						SkillTimer += TimerRelationWeaponSkill(win, player, tempTimer)
 						DebuffRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
 						AttackRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						BuffRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
 						index = 0
 						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
