@@ -874,8 +874,99 @@ func SaveFileItemsCheckUpdateV101(saveFilePathItems string) {
 			splitLine[0] = "ただの砥石"
 		case "皮革", "木工用接着剤":
 			splitLine[0] = "木材"
-		case "鋭い刃物", "新鮮な果物":
+		case "魔力の鉱石", "呪文の書":
+			splitLine[0] = "魔鉱石"
+		case "生命のエキス":
+			splitLine[0] = "ただの砥石"
+		case "堅固な木材", "鉄の塊":
+			splitLine[0] = "鉄鉱石"
+		case "衝撃吸収材":
+			splitLine[0] = "鋭い砥石"
+		case "鍛治のハンマー":
+			splitLine[0] = "精錬された鉄"
+		case "風の石":
+			splitLine[0] = "軽量な合金"
+		case "機敏な羽根":
+			splitLine[0] = "鋭い砥石"
+		case "堅固な鋼鉄", "竜の鱗":
+			splitLine[0] = "伝説の鋼"
+		case "魔力の宝珠":
+			splitLine[0] = "精密砥石"
+		case "神秘の石":
+			splitLine[0] = "古代の鉄鉱石"
+		case "優れた磨き粉":
+			splitLine[0] = "精密砥石"
+		case "鋭利な刃物", "魔力の結晶":
+			splitLine[0] = "暗黒の合金"
+
+		case "金の糸":
+			splitLine[0] = "小さな宝石"
+		case "守護の石":
+			splitLine[0] = "宝石"
+
+		case "草":
+			splitLine[0] = "木の枝"
+		case "リンゴ", "オレンジ":
+			splitLine[0] = "ロープ"
+		case "バナナ":
+			splitLine[0] = "ロープ"
+		case "魂の結晶", "鉄鉱石の欠片":
+			splitLine[0] = "魔鉱石"
+		case "ルーン石":
+			splitLine[0] = "頑丈なロープ"
+		case "スタンプカード":
+			splitLine[0] = "頑丈なロープ"
+		case "軽い鉄鉱石":
+			splitLine[0] = "精錬された鉄"
+		case "羽根":
+			splitLine[0] = "軽量な合金"
+		case "魔法の鉄鉱石", "巨大な竜の鱗":
+			splitLine[0] = "伝説の鋼"
+		case "勇者の証":
+			splitLine[0] = "最高のロープ"
+		case "幻影の絹糸":
+			splitLine[0] = "古代の鉄鉱石"
+		case "冥界の魂鉱石", "呪詛の織物":
+			splitLine[0] = "暗黒の合金"
+		case "魂魄":
+			splitLine[0] = "最高のロープ"
+
+		case "魔法の粉":
+			splitLine[0] = "木の枝"
+		case "緑の宝石":
+			splitLine[0] = "小さな宝石"
+		case "果物の種", "銀色の鎖":
 			splitLine[0] = "錆びた鉄鉱石"
+		case "太陽の水滴":
+			splitLine[0] = "小さな宝石"
+		case "癒しの草", "聖なる石":
+			splitLine[0] = "木材"
+		case "生命のエッセンス", "幻の鋼":
+			splitLine[0] = "魔鉱石"
+		case "魔鉱石":
+			splitLine[0] = "小さな宝石"
+		case "雷の結晶", "エネルギーの粉":
+			splitLine[0] = "鉄鉱石"
+		case "導電金属":
+			splitLine[0] = "宝石"
+		case "炎の粉":
+			splitLine[0] = "精錬された鉄"
+		case "鍛冶のハンマ-":
+			splitLine[0] = "宝石"
+		case "風の羽根", "弾力のある皮":
+			splitLine[0] = "軽量な合金"
+		case "速度の石":
+			splitLine[0] = "宝石"
+		case "勇気の石", "神秘の鉱石":
+			splitLine[0] = "伝説の鋼"
+		case "金属片":
+			splitLine[0] = "古代の鉄鉱石"
+		case "彫刻道具":
+			splitLine[0] = "大きな宝石"
+		case "幽霊の石", "鈍銀":
+			splitLine[0] = "暗黒の合金"
+		case "祈りの花":
+			splitLine[0] = "大きな宝石"
 		}
 		itemName := splitLine[0]
 		itemValue, _ := strconv.Atoi(splitLine[1])
