@@ -70,9 +70,13 @@ func AttackRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus,
 =======
 =======
 		if rand.Float64() <= 0.15 {
+<<<<<<< HEAD
 >>>>>>> 87d8ae0 (敵HPの位置調整)
 			UniqueSkill(win, (*tempWordDamage)*(float64(myGame.StageNum)*0.25), win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Orange, player, "Holiness! ")
 >>>>>>> f10e2c1 (防具のスキル追加完了)
+=======
+			UniqueSkill(win, (*tempWordDamage)*(float64(myGame.StageNum)*0.25), win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Darkorange, player, "Holiness! ")
+>>>>>>> 124dadb (スキル調整)
 			enemy.HP += (*tempWordDamage) * (float64(myGame.StageNum) * 0.25)
 		}
 	} else if player.EquipmentWeapon[0] == weaponName[8] {
@@ -108,7 +112,7 @@ func AttackRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus,
 >>>>>>> 4715f1e (武器の固有スキルを設定)
 =======
 		if rand.Float64() <= 0.2 {
-			UniqueSkill(win, (*tempWordDamage)*1.3, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Purple, player, "Mind'sEye! ")
+			UniqueSkill(win, (*tempWordDamage)*1.3, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Aqua, player, "Mind'sEye! ")
 			enemy.HP += (*tempWordDamage) * 1.3
 >>>>>>> 87d8ae0 (敵HPの位置調整)
 		}
@@ -122,13 +126,13 @@ func AttackRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus,
 	} else if player.EquipmentAccessory[0] == accessoryName[8] {
 		log.Println(myGame.StageNum)
 		if rand.Float64() <= 0.05 {
-			UniqueSkill(win, 1.25, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Red, player, "Sharpen! OP*")
+			UniqueSkill(win, 1.25, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Purple, player, "Sharpen! OP*")
 			player.OP *= 1.25
 		}
 	} else if player.EquipmentAccessory[0] == accessoryName[9] {
 		log.Println(myGame.StageNum)
 		if rand.Float64() <= 0.05 {
-			UniqueSkill(win, 1.25, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Red, player, "SoulProtect! DP*")
+			UniqueSkill(win, 1.25, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Silver, player, "SoulProtect! DP*")
 			player.DP *= 1.25
 		}
 	}
@@ -282,7 +286,7 @@ func AttackRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 >>>>>>> c9826ea (武器全種のスキル追加)
 =======
 			randomPotision := 40.0 * float64(i)
-			UniqueSkill(win, (*tempWordDamage)*0.3, win.Bounds().Center().Sub(pixel.V(0, 200+randomPotision)), colornames.Yellow, player, "ShadowSwift! ")
+			UniqueSkill(win, (*tempWordDamage)*0.3, win.Bounds().Center().Sub(pixel.V(0, 200+randomPotision)), colornames.Yellowgreen, player, "ShadowSwift! ")
 			enemy.HP += (*tempWordDamage) * 0.3
 >>>>>>> 87d8ae0 (敵HPの位置調整)
 		}
@@ -299,11 +303,15 @@ func RecoveryRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus
 	if player.EquipmentArmor[0] == armorName[3] {
 		if rand.Float64() <= 0.1 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			UniqueSkill(win, enemy.MaxOP*0.05, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Whitesmoke, player, "")
 >>>>>>> c9826ea (武器全種のスキル追加)
 =======
 			UniqueSkill(win, enemy.MaxOP*0.05, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Whitesmoke, player, "SoulBind! ")
 >>>>>>> f10e2c1 (防具のスキル追加完了)
+=======
+			UniqueSkill(win, enemy.MaxOP*0.05, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Green, player, "SoulBind! ")
+>>>>>>> 124dadb (スキル調整)
 			player.HP += enemy.MaxOP * 0.05
 			if player.HP >= player.MaxHP {
 				player.HP = player.MaxHP
@@ -332,11 +340,15 @@ func TimerRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, t
 	if player.EquipmentArmor[0] == armorName[4] {
 		if rand.Float64() <= 0.1 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Orange, player, "")
 >>>>>>> c9826ea (武器全種のスキル追加)
 =======
 			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Orange, player, "StampMaster! ")
 >>>>>>> f10e2c1 (防具のスキル追加完了)
+=======
+			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Blue, player, "StampMaster! ")
+>>>>>>> 124dadb (スキル調整)
 			return 1.0
 		}
 	}
@@ -434,17 +446,21 @@ func BuffRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, en
 	if player.EquipmentArmor[0] == armorName[9] {
 		if rand.Float64() <= 0.1 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			UniqueSkill(win, 1.5, win.Bounds().Center().Sub(pixel.V(0, 250)), colornames.Red, player, "UnderWorld! *")
 			player.OP *= 1.5
 >>>>>>> f10e2c1 (防具のスキル追加完了)
 =======
 			UniqueSkill(win, 1.3, win.Bounds().Center().Sub(pixel.V(0, 250)), colornames.Red, player, "UnderWorld! OP*")
+=======
+			UniqueSkill(win, 1.3, win.Bounds().Center().Sub(pixel.V(0, 250)), colornames.Purple, player, "UnderWorld! OP*")
+>>>>>>> 124dadb (スキル調整)
 			player.OP *= 1.3
 		}
 	}
 	if player.EquipmentAccessory[0] == accessoryName[7] {
 		if rand.Float64() <= 0.05 {
-			UniqueSkill(win, 1.1, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Red, player, "Brave! OP&DP*")
+			UniqueSkill(win, 1.1, win.Bounds().Center().Sub(pixel.V(0, 300)), colornames.Purple, player, "Brave! OP&DP*")
 			player.OP *= 1.1
 			player.DP *= 1.1
 >>>>>>> 87d8ae0 (敵HPの位置調整)
