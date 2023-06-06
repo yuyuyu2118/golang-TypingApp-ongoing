@@ -17,12 +17,15 @@ import (
 	"golang.org/x/image/colornames"
 )
 
-func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+var SkillTimer float64
+
+func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
 
-	tempCount = player.AttackTimer - elapsed.Seconds()
+	*tempTimer = player.AttackTimer - elapsed.Seconds() + SkillTimer
+	tempCount = *tempTimer
 
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
@@ -34,6 +37,10 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
 					player.SP += player.BaseSP
 					if index == len(question) {
+						AttackRelationSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
+						RecoveryRelationSkill(win, player, &tempWordDamage)
+						SkillTimer += TimerRelationSkill(win, player, tempTimer)
+						DebuffRelationSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
 						index = 0
 						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage

@@ -17,17 +17,20 @@ import (
 
 var battleTimeBool bool
 var startTime time.Time
+var DispTimer float64
 
 func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
 	if !battleTimeBool {
 		elapsed = time.Since(startTime)
 		battleTimeBool = true
+		DispTimer = player.AttackTimer - elapsed.Seconds()
 	}
 
 	xOffSet := myPos.TopRigPos(win, myUtil.ScreenTxt).X - 100
 	myUtil.ScreenTxt.Clear()
 	myUtil.ScreenTxt.Color = colornames.White
-	fmt.Fprintln(myUtil.ScreenTxt, "アタックタイマー", strconv.FormatFloat(player.AttackTimer-elapsed.Seconds(), 'f', 2, 64))
+
+	fmt.Fprintln(myUtil.ScreenTxt, "アタックタイマー", strconv.FormatFloat(DispTimer, 'f', 2, 64))
 	yOffSet := myUtil.ScreenTxt.LineHeight
 	txtPos := pixel.V(xOffSet, yOffSet)
 	tempPosition := pixel.IM.Moved(txtPos)
@@ -38,7 +41,7 @@ func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed
 		myState.CurrentGS = BattleTypingTest(win, player, elapsed)
 	} else if player.Job == "見習い剣士" {
 		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
-		myState.CurrentGS = BattleTypingRookie(win, player, elapsed)
+		myState.CurrentGS = BattleTypingRookie(win, player, elapsed, &DispTimer)
 	} else if player.Job == "狩人" {
 		InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 		myState.CurrentGS = BattleTypingHunter(win, player, elapsed)

@@ -25,6 +25,7 @@ type EnemyStatus struct {
 	DropAP     int
 	EnemySize  float64
 	DropItems  []string
+	MaxOP      float64
 }
 
 var EnemyPath = "assets\\monster\\"
@@ -46,9 +47,10 @@ func CreateEnemyInstance() *[]EnemyStatus {
 		AttackTick, _ := strconv.ParseFloat(value[7], 64)
 		DropAP, _ := strconv.Atoi((value[8]))
 		EnemySize, _ := strconv.ParseFloat(value[9], 64)
-		for i := 10; i < 20; i++ {
+		for i := 10; i < 15; i++ {
 			DropItems = append(DropItems, value[i])
 		}
+		MaxOP, _ := strconv.ParseFloat(value[15], 64)
 
 		tempInstance := EnemyStatus{
 			Name:       Name,
@@ -62,6 +64,7 @@ func CreateEnemyInstance() *[]EnemyStatus {
 			DropAP:     DropAP,
 			EnemySize:  EnemySize,
 			DropItems:  DropItems,
+			MaxOP:      MaxOP,
 		}
 		instance = append(instance, tempInstance)
 	}

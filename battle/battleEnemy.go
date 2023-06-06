@@ -20,6 +20,7 @@ func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, el
 			animationInProgress = true
 			tempEnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize
 			tempWordDamage = 0
+			SkillTimer = 0.0
 		}
 		if animationInProgress {
 			EnemyAttackAnimation(win, player)
@@ -50,6 +51,7 @@ func EnemyAttackAnimation(win *pixelgl.Window, player *player.PlayerStatus) {
 			index = 0
 			animationPhase = 0
 			animationInProgress = false
+			enemy.EnemySettings[myGame.StageNum].OP = enemy.EnemySettings[myGame.StageNum].MaxOP
 		}
 	}
 }
