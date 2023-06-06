@@ -355,8 +355,12 @@ func BattleTypingMonkSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, e
 					collectType++
 					tempWordDamage -= player.OP + float64(-rand.Intn(3)-1)
 					enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
+<<<<<<< HEAD
 					randomValue := (-1 * (100 + (rand.Float64() * 200)))
 					PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, randomValue)))
+=======
+					PlayerAttack(win, tempWordDamage, win.Bounds().Center().Sub(pixel.V(-200, -200)))
+>>>>>>> c9826ea (武器全種のスキル追加)
 					tempWordDamage = 0.0
 					if index == len(question) {
 						index = 0

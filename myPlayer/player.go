@@ -16,6 +16,7 @@ import (
 )
 
 type PlayerStatus struct {
+<<<<<<< HEAD:myPlayer/player.go
 	Name                 string
 	MaxHP                float64
 	HP                   float64
@@ -49,6 +50,31 @@ type PlayerStatus struct {
 	AccessoryEnhancement []string
 	AccessoryGemUnlock   []string
 	AccessoryModifier    []string
+=======
+	Name               string
+	MaxHP              float64
+	HP                 float64
+	OP                 float64
+	MaxDP              float64
+	DP                 float64
+	MaxSP              float64
+	SP                 float64
+	BaseSP             float64
+	Gold               int
+	Job                string
+	AP                 int
+	Language           string
+	AttackTimer        float64
+	BaseOP             float64
+	BaseDP             float64
+	BaseAttackTimer    float64
+	PossessedWeapon    []string
+	PossessedArmor     []string
+	PossessedAccessory []string
+	EquipmentWeapon    []string
+	EquipmentArmor     []string
+	EquipmentAccessory []string
+>>>>>>> c9826ea (武器全種のスキル追加):player/player.go
 }
 
 var (
@@ -124,6 +150,7 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 	tempAttackTimer4, _ := strconv.ParseFloat(value[8][3], 64)
 
 	PlayerStatusInstance := &PlayerStatus{
+<<<<<<< HEAD:myPlayer/player.go
 		Name:                 Name,
 		MaxHP:                MaxHP,
 		HP:                   HP,
@@ -157,6 +184,31 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 		AccessoryEnhancement: AccessoryEnhancement,
 		AccessoryGemUnlock:   AccessoryGemUnlock,
 		AccessoryModifier:    AccessoryModifier,
+=======
+		Name:               Name,
+		MaxHP:              MaxHP,
+		HP:                 HP,
+		OP:                 tempOP1 + tempOP2 + tempOP3,
+		MaxDP:              tempDP1 + tempDP2 + tempDP3,
+		DP:                 tempDP1 + tempDP2 + tempDP3,
+		MaxSP:              MaxSP,
+		SP:                 SP,
+		BaseSP:             BaseSP,
+		Gold:               Gold,
+		Job:                Job,
+		AP:                 AP,
+		Language:           Language,
+		AttackTimer:        tempAttackTimer1 + tempAttackTimer2 + tempAttackTimer3 + tempAttackTimer4,
+		BaseOP:             BaseOP,
+		BaseDP:             BaseDP,
+		BaseAttackTimer:    BaseAttackTimer,
+		PossessedWeapon:    PossessedWeapon,
+		PossessedArmor:     PossessedArmor,
+		PossessedAccessory: PossessedAccessory,
+		EquipmentWeapon:    EquipmentWeapon,
+		EquipmentArmor:     EquipmentArmor,
+		EquipmentAccessory: EquipmentAccessory,
+>>>>>>> c9826ea (武器全種のスキル追加):player/player.go
 	}
 	return PlayerStatusInstance
 }
