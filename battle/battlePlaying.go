@@ -87,7 +87,11 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 var bulletLoading = []bool{false, false, false}
 var bulletDamage = []float64{0.0, 0.0, 0.0}
 
+<<<<<<< HEAD
 func BattleTypingHunter(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+=======
+func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+>>>>>>> 124dadb (スキル調整)
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 100
 	txtPos := pixel.V(0, 0)
@@ -197,7 +201,11 @@ func BattleTypingHunter(win *pixelgl.Window, player *myPlayer.PlayerStatus, elap
 	return myState.CurrentGS
 }
 
+<<<<<<< HEAD
 func BattleTypingMonk(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+=======
+func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+>>>>>>> 124dadb (スキル調整)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -247,7 +255,11 @@ func BattleTypingMonk(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapse
 var magicCollectType = 0.0
 var magicMissType = 0
 
+<<<<<<< HEAD
 func BattleTypingMagicUser(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+=======
+func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+>>>>>>> 124dadb (スキル調整)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -332,7 +344,11 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *myPlayer.PlayerStatus, e
 	return myState.CurrentGS
 }
 
+<<<<<<< HEAD
 func BattleTypingMonster(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+=======
+func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+>>>>>>> 124dadb (スキル調整)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
