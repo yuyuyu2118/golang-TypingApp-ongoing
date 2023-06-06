@@ -53,6 +53,7 @@ func EnemyAttackAnimation(win *pixelgl.Window, player *player.PlayerStatus) {
 			index = 0
 			animationPhase = 0
 			animationInProgress = false
+			player.OP = player.MaxOP
 			player.DP = player.MaxDP
 			enemy.EnemySettings[myGame.StageNum].OP = enemy.EnemySettings[myGame.StageNum].MaxOP
 			RecoveryRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
