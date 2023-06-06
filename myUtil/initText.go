@@ -43,7 +43,7 @@ func InitTxtFontLoading() {
 	StartTxt = InitAnyJapanText(JapanFontPathBold, 70, colornames.White)
 	ScreenTxt = InitAnyJapanText(JapanFontPath, 40, colornames.White)
 	DescriptionTxt = InitAnyJapanText(JapanFontPath, 30, colornames.White)
-	HunterBulletTxt = InitAnyJapanText(JapanFontPathBold, 60, colornames.White)
+	HunterBulletTxt = InitAnyJapanText(JapanFontPathBold, 40, colornames.White)
 	CompletedTxt = InitAnyJapanText(JapanFontPathBold, 70, colornames.White)
 	StatusTxt = InitAnyJapanText(JapanFontPathBold, 35, colornames.White)
 
