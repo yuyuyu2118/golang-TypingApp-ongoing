@@ -133,7 +133,7 @@ const (
 =======
 const (
 	uniqueSkillAnimationSpeed    = 0.04
-	uniqueSkillAnimationFPS      = 60
+	uniqueSkillAnimationFPS      = 180
 	uniqueSkillAnimationDuration = 5 * time.Second
 )
 
@@ -287,38 +287,63 @@ func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txt
 >>>>>>> c9826ea (武器全種のスキル追加)
 
 	if player.EquipmentWeapon[0] == weaponName[3] {
-		tempTxt = "LifeDrain! "
+		tempTxt = assignTxt
 	} else if player.EquipmentWeapon[0] == weaponName[4] {
-		tempTxt = "StunAttack! "
+		tempTxt = assignTxt
 	} else if player.EquipmentWeapon[0] == weaponName[5] {
-		tempTxt = "CriticalSlash! "
+		tempTxt = assignTxt
 	} else if player.EquipmentWeapon[0] == weaponName[6] {
-		tempTxt = "SwiftSlash! "
+		tempTxt = assignTxt
 	} else if player.EquipmentWeapon[0] == weaponName[7] {
-		tempTxt = "Holiness! "
+		tempTxt = assignTxt
 	} else if player.EquipmentWeapon[0] == weaponName[8] {
-		tempTxt = "Mind'sEye! "
+		tempTxt = assignTxt
 	} else if player.EquipmentWeapon[0] == weaponName[9] {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		tempTxt = "EnemyOP "
 >>>>>>> 4715f1e (武器の固有スキルを設定)
 =======
 		tempTxt = "ShadowCurse! "
+=======
+		tempTxt = assignTxt
+>>>>>>> f10e2c1 (防具のスキル追加完了)
 	}
 
 	if player.EquipmentArmor[0] == armorName[3] {
-		tempTxt = "SoulBind! "
+		tempTxt = assignTxt
 	} else if player.EquipmentArmor[0] == armorName[4] {
-		tempTxt = "StampMaster! "
+		tempTxt = assignTxt
 	} else if player.EquipmentArmor[0] == armorName[5] {
-		tempTxt = "IronWall! "
+		tempTxt = assignTxt
 	} else if player.EquipmentArmor[0] == armorName[6] {
-		tempTxt = "Floating! "
+		tempTxt = assignTxt
 	} else if player.EquipmentArmor[0] == armorName[7] {
 		tempTxt = assignTxt
 	} else if player.EquipmentArmor[0] == armorName[8] {
 		tempTxt = assignTxt
+<<<<<<< HEAD
 >>>>>>> c9826ea (武器全種のスキル追加)
+=======
+	} else if player.EquipmentArmor[0] == armorName[9] {
+		tempTxt = assignTxt
+	}
+
+	if player.EquipmentAccessory[0] == accessoryName[3] {
+		tempTxt = assignTxt
+	} else if player.EquipmentAccessory[0] == accessoryName[4] {
+		tempTxt = assignTxt
+	} else if player.EquipmentAccessory[0] == accessoryName[5] {
+		tempTxt = assignTxt
+	} else if player.EquipmentAccessory[0] == accessoryName[6] {
+		tempTxt = assignTxt
+	} else if player.EquipmentAccessory[0] == accessoryName[7] {
+		tempTxt = assignTxt
+	} else if player.EquipmentAccessory[0] == accessoryName[8] {
+		tempTxt = assignTxt
+	} else if player.EquipmentAccessory[0] == accessoryName[9] {
+		tempTxt = assignTxt
+>>>>>>> f10e2c1 (防具のスキル追加完了)
 	}
 
 	anim := &UniqueSkillAnimation{
