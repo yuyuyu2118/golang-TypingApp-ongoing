@@ -51,6 +51,7 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 						DebuffRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
 						AttackRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
 <<<<<<< HEAD
+<<<<<<< HEAD
 						BuffRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
 =======
 						AttackRelationSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
@@ -60,6 +61,9 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 >>>>>>> 4715f1e (武器の固有スキルを設定)
 =======
 >>>>>>> c9826ea (武器全種のスキル追加)
+=======
+						BuffRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
+>>>>>>> f10e2c1 (防具のスキル追加完了)
 						index = 0
 						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage

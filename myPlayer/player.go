@@ -54,6 +54,7 @@ type PlayerStatus struct {
 	Name               string
 	MaxHP              float64
 	HP                 float64
+	MaxOP              float64
 	OP                 float64
 	MaxDP              float64
 	DP                 float64
@@ -188,6 +189,7 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 		Name:               Name,
 		MaxHP:              MaxHP,
 		HP:                 HP,
+		MaxOP:              tempOP1 + tempOP2 + tempOP3,
 		OP:                 tempOP1 + tempOP2 + tempOP3,
 		MaxDP:              tempDP1 + tempDP2 + tempDP3,
 		DP:                 tempDP1 + tempDP2 + tempDP3,

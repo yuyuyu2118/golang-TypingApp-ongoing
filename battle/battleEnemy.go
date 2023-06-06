@@ -62,9 +62,13 @@ func EnemyAttackAnimation(win *pixelgl.Window, player *myPlayer.PlayerStatus) {
 			animationInProgress = false
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			player.OP = player.MaxOP
 =======
 >>>>>>> c9826ea (武器全種のスキル追加)
+=======
+			player.OP = player.MaxOP
+>>>>>>> f10e2c1 (防具のスキル追加完了)
 			player.DP = player.MaxDP
 			enemy.EnemySettings[myGame.StageNum].OP = enemy.EnemySettings[myGame.StageNum].MaxOP
 			RecoveryRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
