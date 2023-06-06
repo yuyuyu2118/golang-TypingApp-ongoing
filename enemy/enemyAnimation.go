@@ -3,6 +3,7 @@ package enemy
 import (
 	"fmt"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	"github.com/faiface/pixel"
@@ -68,8 +69,8 @@ func SetEnemySpriteText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus)
 	// WinHSize := cp.GetConstant()
 	Txt.Clear()
 	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "EnemyHP : ", enemy.HP)
-	myPos.DrawPos(win, Txt, myPos.TopCenPos(win, Txt))
+	fmt.Fprintln(Txt, "HP: ", strconv.FormatFloat(enemy.HP, 'f', 1, 64))
+	myPos.DrawPos(win, Txt, myPos.TopCenPos(win, Txt).Add(pixel.V(0, 0)))
 }
 
 func StartEnemyAnimation(win *pixelgl.Window, last *time.Time, frame *int) {

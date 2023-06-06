@@ -151,6 +151,8 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		magicCollectType, magicMissType = 0, 0
 		player.HP = player.MaxHP
 		player.SP = 0
+		player.OP = player.MaxOP
+		player.DP = player.MaxDP
 		enemy.HP = enemy.MaxHP
 		dropRandomItem = dropRandomItem[:0]
 		dropEvent = false
@@ -164,6 +166,8 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		magicCollectType, magicMissType = 0, 0
 		player.HP = player.MaxHP
 		player.SP = 0
+		player.OP = player.MaxOP
+		player.DP = player.MaxDP
 		enemy.HP = enemy.MaxHP
 		dropRandomItem = dropRandomItem[:0]
 		dropEvent = false
