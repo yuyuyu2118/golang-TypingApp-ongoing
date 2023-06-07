@@ -70,6 +70,8 @@ func run() {
 			initScreenInformation(win, myUtil.ScreenTxt, player)
 		case myState.JobSelect: //職業選択画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
+		case myState.BlackSmithScreen: //職業選択画面
+			initScreenInformation(win, myUtil.ScreenTxt, player)
 		case myState.PlayingScreen: //戦闘画面
 			initScreenInformation(win, myUtil.BasicTxt, player)
 

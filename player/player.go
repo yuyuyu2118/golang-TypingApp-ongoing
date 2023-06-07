@@ -1,8 +1,10 @@
 package player
 
 import (
+	"encoding/csv"
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 
 	"github.com/faiface/pixel"
@@ -14,30 +16,39 @@ import (
 )
 
 type PlayerStatus struct {
-	Name               string
-	MaxHP              float64
-	HP                 float64
-	MaxOP              float64
-	OP                 float64
-	MaxDP              float64
-	DP                 float64
-	MaxSP              float64
-	SP                 float64
-	BaseSP             float64
-	Gold               int
-	Job                string
-	AP                 int
-	Language           string
-	AttackTimer        float64
-	BaseOP             float64
-	BaseDP             float64
-	BaseAttackTimer    float64
-	PossessedWeapon    []string
-	PossessedArmor     []string
-	PossessedAccessory []string
-	EquipmentWeapon    []string
-	EquipmentArmor     []string
-	EquipmentAccessory []string
+	Name                 string
+	MaxHP                float64
+	HP                   float64
+	MaxOP                float64
+	OP                   float64
+	MaxDP                float64
+	DP                   float64
+	MaxSP                float64
+	SP                   float64
+	BaseSP               float64
+	Gold                 int
+	Job                  string
+	AP                   int
+	Language             string
+	AttackTimer          float64
+	BaseOP               float64
+	BaseDP               float64
+	BaseAttackTimer      float64
+	PossessedWeapon      []string
+	PossessedArmor       []string
+	PossessedAccessory   []string
+	EquipmentWeapon      []string
+	EquipmentArmor       []string
+	EquipmentAccessory   []string
+	WeaponEnhancement    []string
+	WeaponGemUnlock      []string
+	WeaponModifier       []string
+	ArmorEnhancement     []string
+	ArmorGemUnlock       []string
+	ArmorModifier        []string
+	AccessoryEnhancement []string
+	AccessoryGemUnlock   []string
+	AccessoryModifier    []string
 }
 
 var (
@@ -45,6 +56,13 @@ var (
 )
 
 var PlayerStatusInstance *PlayerStatus
+
+var (
+	weaponPath = "assets/shop/weapon.csv"
+	descWeapon = csvToSlicePlayer(weaponPath)
+)
+
+var tempOP4 float64
 
 func NewPlayerStatus(value [][]string) *PlayerStatus {
 	Name := value[1][0]
@@ -69,10 +87,26 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 	EquipmentWeapon := value[6]
 	EquipmentArmor := value[7]
 	EquipmentAccessory := value[8]
+	WeaponEnhancement := value[9]
+	WeaponGemUnlock := value[10]
+	WeaponModifier := value[11]
+	ArmorEnhancement := value[12]
+	ArmorGemUnlock := value[13]
+	ArmorModifier := value[14]
+	AccessoryEnhancement := value[15]
+	AccessoryGemUnlock := value[16]
+	AccessoryModifier := value[17]
 
 	tempOP1, _ := strconv.ParseFloat(value[1][13], 64)
 	tempOP2, _ := strconv.ParseFloat(value[6][1], 64)
 	tempOP3, _ := strconv.ParseFloat(value[8][1], 64)
+
+	//TODO: 武器強化
+	if value[6][0] == "木の棒" {
+		coefficient, _ := strconv.ParseFloat(value[9][0], 64)
+		tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[1][25], 64)
+		tempOP4 = tempWeaponEnhancement * coefficient
+	}
 
 	tempDP1, _ := strconv.ParseFloat(value[1][14], 64)
 	tempDP2, _ := strconv.ParseFloat(value[7][2], 64)
@@ -84,30 +118,39 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 	tempAttackTimer4, _ := strconv.ParseFloat(value[8][3], 64)
 
 	PlayerStatusInstance := &PlayerStatus{
-		Name:               Name,
-		MaxHP:              MaxHP,
-		HP:                 HP,
-		MaxOP:              tempOP1 + tempOP2 + tempOP3,
-		OP:                 tempOP1 + tempOP2 + tempOP3,
-		MaxDP:              tempDP1 + tempDP2 + tempDP3,
-		DP:                 tempDP1 + tempDP2 + tempDP3,
-		MaxSP:              MaxSP,
-		SP:                 SP,
-		BaseSP:             BaseSP,
-		Gold:               Gold,
-		Job:                Job,
-		AP:                 AP,
-		Language:           Language,
-		AttackTimer:        tempAttackTimer1 + tempAttackTimer2 + tempAttackTimer3 + tempAttackTimer4,
-		BaseOP:             BaseOP,
-		BaseDP:             BaseDP,
-		BaseAttackTimer:    BaseAttackTimer,
-		PossessedWeapon:    PossessedWeapon,
-		PossessedArmor:     PossessedArmor,
-		PossessedAccessory: PossessedAccessory,
-		EquipmentWeapon:    EquipmentWeapon,
-		EquipmentArmor:     EquipmentArmor,
-		EquipmentAccessory: EquipmentAccessory,
+		Name:                 Name,
+		MaxHP:                MaxHP,
+		HP:                   HP,
+		MaxOP:                tempOP1 + tempOP2 + tempOP3 + tempOP4,
+		OP:                   tempOP1 + tempOP2 + tempOP3 + tempOP4,
+		MaxDP:                tempDP1 + tempDP2 + tempDP3,
+		DP:                   tempDP1 + tempDP2 + tempDP3,
+		MaxSP:                MaxSP,
+		SP:                   SP,
+		BaseSP:               BaseSP,
+		Gold:                 Gold,
+		Job:                  Job,
+		AP:                   AP,
+		Language:             Language,
+		AttackTimer:          tempAttackTimer1 + tempAttackTimer2 + tempAttackTimer3 + tempAttackTimer4,
+		BaseOP:               BaseOP,
+		BaseDP:               BaseDP,
+		BaseAttackTimer:      BaseAttackTimer,
+		PossessedWeapon:      PossessedWeapon,
+		PossessedArmor:       PossessedArmor,
+		PossessedAccessory:   PossessedAccessory,
+		EquipmentWeapon:      EquipmentWeapon,
+		EquipmentArmor:       EquipmentArmor,
+		EquipmentAccessory:   EquipmentAccessory,
+		WeaponEnhancement:    WeaponEnhancement,
+		WeaponGemUnlock:      WeaponGemUnlock,
+		WeaponModifier:       WeaponModifier,
+		ArmorEnhancement:     ArmorEnhancement,
+		ArmorGemUnlock:       ArmorGemUnlock,
+		ArmorModifier:        ArmorModifier,
+		AccessoryEnhancement: AccessoryEnhancement,
+		AccessoryGemUnlock:   AccessoryGemUnlock,
+		AccessoryModifier:    AccessoryModifier,
 	}
 	return PlayerStatusInstance
 }
@@ -345,4 +388,18 @@ func InitPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 
 func TempFunc() {
 	log.Println("temp")
+}
+
+func csvToSlicePlayer(path string) [][]string {
+	file, err := os.Open(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	reader := csv.NewReader(file)
+	records, err := reader.ReadAll()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return records
 }

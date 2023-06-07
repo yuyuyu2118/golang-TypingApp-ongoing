@@ -26,12 +26,13 @@ func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed
 		DispTimer = player.AttackTimer - elapsed.Seconds()
 	}
 
-	xOffSet := myPos.TopRigPos(win, myUtil.ScreenTxt).X - 100
+	xOffSet := myPos.TopRigPos(win, myUtil.ScreenTxt).X - 80
+	yOffSet := myUtil.ScreenTxt.LineHeight - 20
 	myUtil.ScreenTxt.Clear()
 	myUtil.ScreenTxt.Color = colornames.White
 
 	fmt.Fprintln(myUtil.ScreenTxt, "アタックタイマー", strconv.FormatFloat(DispTimer, 'f', 2, 64))
-	yOffSet := myUtil.ScreenTxt.LineHeight
+
 	txtPos := pixel.V(xOffSet, yOffSet)
 	tempPosition := pixel.IM.Moved(txtPos)
 	myUtil.ScreenTxt.Draw(win, tempPosition)
