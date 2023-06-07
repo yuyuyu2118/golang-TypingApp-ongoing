@@ -770,8 +770,171 @@ func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player 
 	SaveGameWeapon(SaveFilePath, 6, player)
 }
 
+<<<<<<< HEAD
 func DescriptionWeaponBlackSmith(win *pixelgl.Window, descWeapon [][]string, num int) {
 	//loadContent = SaveFileLoad(SaveFilePath)
+=======
+func InitWeaponBlackSmithScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
+	win.Clear(colornames.Darkcyan)
+	Txt.Clear()
+
+	botText := "鍛冶/武器"
+	InitWeaponBlackSmith(win, Txt, botText, player)
+}
+
+func InitWeaponBlackSmith(win *pixelgl.Window, Txt *text.Text, botText string, player *player.PlayerStatus) {
+	xOffSet := 100.0
+	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
+	txtPos := pixel.V(0, 0)
+
+	myUtil.ScreenTxt.Clear()
+	myUtil.ScreenTxt.Color = colornames.White
+	fmt.Fprintln(myUtil.ScreenTxt, botText, "Tabで切り替え", "BackSpace.戻る")
+	tempPosition = myPos.BotCenPos(win, myUtil.ScreenTxt)
+	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
+
+	loadContent := SaveFileLoad(SaveFilePath)
+	counts := make(map[string]int)
+	elements := loadContent[3]
+
+	for i, val := range elements {
+		num, err := strconv.Atoi(val)
+		if err == nil {
+			weaponKey := fmt.Sprintf("weapon%d", i)
+			counts[weaponKey] = num
+		}
+	}
+
+	for i, value := range weaponName {
+		if counts["weapon"+strconv.Itoa(i)] != 0 {
+			//tempInt := counts["weapon"+strconv.Itoa(i)]
+			blackSmithSlice = append(blackSmithSlice, strconv.Itoa(i+1)+". "+value /*+": "+strconv.Itoa(tempInt)*/)
+		} else {
+			blackSmithSlice = append(blackSmithSlice, "")
+		}
+	}
+	for i, blackSmithName := range blackSmithSlice {
+		Txt.Clear()
+		Txt.Color = colornames.White
+		fmt.Fprintln(Txt, blackSmithName)
+		yOffSet -= Txt.LineHeight + 25
+		txtPos = pixel.V(xOffSet, yOffSet)
+		tempPosition := pixel.IM.Moved(txtPos)
+		Txt.Draw(win, tempPosition)
+		blackSmithButtonSlice = append(blackSmithButtonSlice, Txt.Bounds().Moved(txtPos))
+
+		if player.EquipmentWeapon[0] == weaponName[i] {
+			Txt.Clear()
+			fmt.Fprintln(Txt, "E. ")
+			txtPos = pixel.V(xOffSet-40, yOffSet)
+			tempPosition = pixel.IM.Moved(txtPos)
+			Txt.Draw(win, tempPosition)
+		}
+	}
+
+	for i := 0; i < len(keyToWeapon)-1; i++ {
+		key := pixelgl.Button(i + int(pixelgl.Key1))
+		if win.Pressed(key) && event.WeaponPurchaseEventInstance.Weapons[i] {
+			currentweaponState = WeaponState(i + 1)
+			tempMyMaterialBool = false
+			tempMyMaterialName = []string{"", "", "", "", "", ""}
+			tempMyMaterialCount = []int{0, 0, 0, 0, 0, 0}
+			break
+		}
+	}
+	if win.Pressed(pixelgl.Key0) && event.WeaponPurchaseEventInstance.Weapons[9] {
+		currentweaponState = weapon10
+		tempMyMaterialBool = false
+		tempMyMaterialName = []string{"", "", "", "", "", ""}
+		tempMyMaterialCount = []int{0, 0, 0, 0, 0, 0}
+	}
+	if currentweaponState >= weapon1 && currentweaponState <= weapon10 {
+		if win.Pressed(pixelgl.KeyTab) {
+			//SubDescriptionWeapon(win, descWeapon, int(currentweaponState)-1)
+		} else {
+			DescriptionWeaponBlackSmith(win, descWeapon, int(currentweaponState)-1)
+		}
+	}
+
+	blackSmithSlice = blackSmithSlice[:0]
+}
+
+func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) {
+	loadContent := SaveFileLoad(SaveFilePath)
+
+	if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key1)) && (player.PossessedWeapon[0] == "1") {
+		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[1][1])
+		player.EquipmentWeapon[1] = descWeapon[1][2]
+		player.EquipmentWeapon[3] = descWeapon[1][3]
+		log.Println("装備1")
+	} else if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key2)) && (player.PossessedWeapon[1] == "1") {
+		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[2][1])
+		player.EquipmentWeapon[1] = descWeapon[2][2]
+		player.EquipmentWeapon[3] = descWeapon[2][3]
+		log.Println("装備2")
+	} else if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key3)) && (player.PossessedWeapon[2] == "1") {
+		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[3][1])
+		player.EquipmentWeapon[1] = descWeapon[3][2]
+		player.EquipmentWeapon[3] = descWeapon[3][3]
+		log.Println("装備3")
+	} else if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key4)) && (player.PossessedWeapon[3] == "1") {
+		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[4][1])
+		player.EquipmentWeapon[1] = descWeapon[4][2]
+		player.EquipmentWeapon[3] = descWeapon[4][3]
+		log.Println("装備4")
+	} else if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key5)) && (player.PossessedWeapon[4] == "1") {
+		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[5][1])
+		player.EquipmentWeapon[1] = descWeapon[5][2]
+		player.EquipmentWeapon[3] = descWeapon[5][3]
+		log.Println("装備5")
+	} else if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key6)) && (player.PossessedWeapon[5] == "1") {
+		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[6][1])
+		player.EquipmentWeapon[1] = descWeapon[6][2]
+		player.EquipmentWeapon[3] = descWeapon[6][3]
+		log.Println("装備6")
+	} else if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key7)) && (player.PossessedWeapon[6] == "1") {
+		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[7][1])
+		player.EquipmentWeapon[1] = descWeapon[7][2]
+		player.EquipmentWeapon[3] = descWeapon[7][3]
+		log.Println("装備7")
+	} else if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key8)) && (player.PossessedWeapon[7] == "1") {
+		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[8][1])
+		player.EquipmentWeapon[1] = descWeapon[8][2]
+		player.EquipmentWeapon[3] = descWeapon[8][3]
+		log.Println("装備8")
+	} else if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key9)) && (player.PossessedWeapon[8] == "1") {
+		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[9][1])
+		player.EquipmentWeapon[1] = descWeapon[9][2]
+		player.EquipmentWeapon[3] = descWeapon[9][3]
+		log.Println("装備9")
+	} else if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key0)) && (player.PossessedWeapon[9] == "1") {
+		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[10][1])
+		player.EquipmentWeapon[1] = descWeapon[10][2]
+		player.EquipmentWeapon[3] = descWeapon[10][3]
+		log.Println("装備0")
+	} else if myState.CurrentBlackSmith == myState.WeaponBlackSmith && (win.JustPressed(pixelgl.KeyBackspace)) {
+		myState.CurrentBlackSmith = myState.WeaponBlackSmith
+		myState.CurrentGS = myState.GoToScreen
+		log.Println("鍛冶/武器->GoTo")
+	}
+	tempOP1, _ := strconv.ParseFloat(loadContent[1][13], 64)
+	tempOP2, _ := strconv.ParseFloat(player.EquipmentWeapon[1], 64)
+	tempOP3, _ := strconv.ParseFloat(player.EquipmentAccessory[1], 64)
+	player.OP = tempOP1 + tempOP2 + tempOP3
+
+	tempAttackTimer1, _ := strconv.ParseFloat(loadContent[1][15], 64)
+	tempAttackTimer2, _ := strconv.ParseFloat(player.EquipmentWeapon[3], 64)
+	tempAttackTimer3, _ := strconv.ParseFloat(player.EquipmentArmor[3], 64)
+	tempAttackTimer4, _ := strconv.ParseFloat(player.EquipmentAccessory[3], 64)
+	player.AttackTimer = tempAttackTimer1 + tempAttackTimer2 + tempAttackTimer3 + tempAttackTimer4
+
+	SaveGame(SaveFilePath, 1, player)
+	SaveGameWeapon(SaveFilePath, 6, player)
+}
+
+func DescriptionWeaponBlackSmith(win *pixelgl.Window, descWeapon [][]string, num int) {
+	loadContent = SaveFileLoad(SaveFilePath)
+>>>>>>> d236a68 (途中)
 	temp, _ := CountMyItems(SaveFilePathItems)
 
 	//TODO: Tabを押している間は強化素材等の情報を表示する
@@ -920,6 +1083,96 @@ func DescriptionWeaponBlackSmith(win *pixelgl.Window, descWeapon [][]string, num
 	tempPosition = pixel.IM.Moved(txtPos)
 	myUtil.DescriptionTxt.Draw(win, tempPosition)
 	buySellSlice = append(buySellSlice, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
+<<<<<<< HEAD
+=======
+
+	// myUtil.DescriptionTxt.Clear()
+	// fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descWeapon[num][5], descWeapon[num][6]+"個, ", descWeapon[num][7], descWeapon[num][8]+"個")
+	// //fmt.Fprintln(myUtil.DescriptionTxt, "所持: "+descWeapon[num][5], tempMaterials[0]+"個, ", descWeapon[num][7], tempMaterials[1]+"個, ", descWeapon[num][9], tempMaterials[2]+"個")
+	// yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
+	// txtPos = pixel.V(xOffSet, yOffSet)
+	// tempPosition = pixel.IM.Moved(txtPos)
+	// myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	// if !tempMyMaterialBool {
+	// 	tempMyMaterialName[0] = descWeapon[num][5]
+	// 	tempMyMaterialName[1] = descWeapon[num][7]
+	// 	for name, count := range temp {
+	// 		if name == descWeapon[num][5] {
+	// 			tempMyMaterialName[0] = name
+	// 			tempMyMaterialCount[0] = count
+	// 		} else if name == descWeapon[num][7] {
+	// 			tempMyMaterialName[1] = name
+	// 			tempMyMaterialCount[1] = count
+	// 		} else if name == descWeapon[num][9] {
+	// 			tempMyMaterialName[2] = name
+	// 			tempMyMaterialCount[2] = count
+	// 		}
+	// 	}
+	// 	tempMyMaterialBool = true
+	// }
+
+	// myUtil.DescriptionTxt.Clear()
+	// fmt.Fprintln(myUtil.DescriptionTxt, "所持:", tempMyMaterialName[0], strconv.Itoa(tempMyMaterialCount[0])+"個,", tempMyMaterialName[1], strconv.Itoa(tempMyMaterialCount[1])+"個")
+	// //fmt.Fprintln(myUtil.DescriptionTxt, "所持: "+descWeapon[num][5], tempMaterials[0]+"個, ", descWeapon[num][7], tempMaterials[1]+"個, ", descWeapon[num][9], tempMaterials[2]+"個")
+	// yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
+	// txtPos = pixel.V(xOffSet, yOffSet)
+	// tempPosition = pixel.IM.Moved(txtPos)
+	// myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	// myUtil.DescriptionTxt.Clear()
+	// fmt.Fprintln(myUtil.DescriptionTxt, "説明: "+descWeapon[num][11])
+	// yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
+	// txtPos = pixel.V(xOffSet, yOffSet)
+	// tempPosition = pixel.IM.Moved(txtPos)
+	// myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	// myUtil.DescriptionTxt.Clear()
+	// fmt.Fprintln(myUtil.DescriptionTxt, " "+descWeapon[num][12])
+	// yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
+	// txtPos = pixel.V(xOffSet, yOffSet)
+	// tempPosition = pixel.IM.Moved(txtPos)
+	// myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	// myUtil.DescriptionTxt.Clear()
+	// fmt.Fprintln(myUtil.DescriptionTxt, "特殊能力: "+descWeapon[num][14])
+	// yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
+	// txtPos = pixel.V(xOffSet, yOffSet)
+	// tempPosition = pixel.IM.Moved(txtPos)
+	// myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	// myUtil.DescriptionTxt.Clear()
+	// fmt.Fprintln(myUtil.DescriptionTxt, " "+descWeapon[num][15])
+	// yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
+	// txtPos = pixel.V(xOffSet, yOffSet)
+	// tempPosition = pixel.IM.Moved(txtPos)
+	// myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	// myUtil.DescriptionTxt.Clear()
+	// fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[num][16])
+	// yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
+	// txtPos = pixel.V(xOffSet, yOffSet)
+	// tempPosition = pixel.IM.Moved(txtPos)
+	// myUtil.DescriptionTxt.Draw(win, tempPosition)
+
+	// if loadContent[3][num-1] == strconv.Itoa(1) {
+	// 	myUtil.DescriptionTxt.Clear()
+	// 	myUtil.DescriptionTxt.Color = colornames.White
+	// 	fmt.Fprintln(myUtil.DescriptionTxt, "作成済み")
+	// 	xOffSet += 400
+	// 	txtPos = pixel.V(xOffSet, yOffSet)
+	// 	tempPosition = pixel.IM.Moved(txtPos)
+	// 	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	// } else {
+	// 	myUtil.DescriptionTxt.Clear()
+	// 	myUtil.DescriptionTxt.Color = colornames.White
+	// 	fmt.Fprintln(myUtil.DescriptionTxt)
+	// 	xOffSet += 400
+	// 	txtPos = pixel.V(xOffSet, yOffSet)
+	// 	tempPosition = pixel.IM.Moved(txtPos)
+	// 	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	// }
+>>>>>>> d236a68 (途中)
 }
 
 func EnhancementWeaponEvent(win *pixelgl.Window, descWeapon [][]string, num int) bool {

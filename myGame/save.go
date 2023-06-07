@@ -88,12 +88,21 @@ func SaveFileCheck(saveFilePath string) {
 		"WeaponName,,,,,,,,,,,,,,,",
 		"ArmorName,,,,,,,,,,,,,,,",
 		"AccessoryName,,,,,,,,,,,,,,,",
+<<<<<<< HEAD
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
+=======
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+>>>>>>> d236a68 (途中)
 		",,,,,,,,,,,,,,,",
 		",,,,,,,,,,,,,,,",
 		",,,,,,,,,,,,,,,",
@@ -404,6 +413,7 @@ func SaveAccessoryPurchaseEvent(saveFilePath string, saveNum int, purchaseAccess
 	time.Sleep(10 * time.Millisecond)
 }
 
+<<<<<<< HEAD
 var weaponNumEnhance = []string{"weapon1", "weapon2", "weapon3", "weapon4", "weapon5", "weapon6", "weapon7", "weapon8", "weapon9", "weapon0"}
 
 func SaveWeaponEnhancementEvent(saveFilePath string, saveNum int, enhancementWeapon string, player *myPlayer.PlayerStatus) {
@@ -418,6 +428,52 @@ func SaveWeaponEnhancementEvent(saveFilePath string, saveNum int, enhancementWea
 		}
 	}
 
+=======
+func SaveWeaponEnhancementEvent(saveFilePath string, saveNum int, enhancementWeapon string, player *player.PlayerStatus) {
+	var tempInt int
+	loadContent := SaveFileLoad(saveFilePath)
+	if enhancementWeapon == "weapon1" {
+		tempInt, _ = strconv.Atoi(loadContent[9][0])
+		loadContent[9][0] = strconv.Itoa(tempInt + 1)
+		player.WeaponEnhancement[0] = loadContent[9][0]
+	} else if enhancementWeapon == "weapon2" {
+		tempInt, _ = strconv.Atoi(loadContent[3][1])
+		loadContent[3][1] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[1] = loadContent[3][1]
+	} else if enhancementWeapon == "weapon3" {
+		tempInt, _ = strconv.Atoi(loadContent[3][2])
+		loadContent[3][2] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[2] = loadContent[3][2]
+	} else if enhancementWeapon == "weapon4" {
+		tempInt, _ = strconv.Atoi(loadContent[3][3])
+		loadContent[3][3] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[3] = loadContent[3][3]
+	} else if enhancementWeapon == "weapon5" {
+		tempInt, _ = strconv.Atoi(loadContent[3][4])
+		loadContent[3][4] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[4] = loadContent[3][4]
+	} else if enhancementWeapon == "weapon6" {
+		tempInt, _ = strconv.Atoi(loadContent[3][5])
+		loadContent[3][5] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[5] = loadContent[3][5]
+	} else if enhancementWeapon == "weapon7" {
+		tempInt, _ = strconv.Atoi(loadContent[3][6])
+		loadContent[3][6] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[6] = loadContent[3][6]
+	} else if enhancementWeapon == "weapon8" {
+		tempInt, _ = strconv.Atoi(loadContent[3][7])
+		loadContent[3][7] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[7] = loadContent[3][7]
+	} else if enhancementWeapon == "weapon9" {
+		tempInt, _ = strconv.Atoi(loadContent[3][8])
+		loadContent[3][8] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[8] = loadContent[3][8]
+	} else if enhancementWeapon == "weapon0" {
+		tempInt, _ = strconv.Atoi(loadContent[3][9])
+		loadContent[3][9] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[9] = loadContent[3][9]
+	}
+>>>>>>> d236a68 (途中)
 	saveContent := strings.Join(loadContent[saveNum], ",")
 
 	content, err := ioutil.ReadFile(saveFilePath)
@@ -443,7 +499,11 @@ func SaveWeaponEnhancementEvent(saveFilePath string, saveNum int, enhancementWea
 	time.Sleep(10 * time.Millisecond)
 }
 
+<<<<<<< HEAD
 // func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, player *myPlayer.PlayerStatus) {
+=======
+// func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, player *player.PlayerStatus) {
+>>>>>>> d236a68 (途中)
 // 	var tempInt int
 // 	loadContent := SaveFileLoad(saveFilePath)
 // 	if sellWeapon == "weapon1" {

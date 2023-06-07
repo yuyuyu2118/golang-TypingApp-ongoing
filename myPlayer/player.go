@@ -17,6 +17,9 @@ import (
 
 type PlayerStatus struct {
 <<<<<<< HEAD:myPlayer/player.go
+<<<<<<< HEAD:myPlayer/player.go
+=======
+>>>>>>> d236a68 (途中):player/player.go
 	Name                 string
 	MaxHP                float64
 	HP                   float64
@@ -50,6 +53,7 @@ type PlayerStatus struct {
 	AccessoryEnhancement []string
 	AccessoryGemUnlock   []string
 	AccessoryModifier    []string
+<<<<<<< HEAD:myPlayer/player.go
 =======
 	Name               string
 	MaxHP              float64
@@ -76,6 +80,8 @@ type PlayerStatus struct {
 	EquipmentArmor     []string
 	EquipmentAccessory []string
 >>>>>>> c9826ea (武器全種のスキル追加):player/player.go
+=======
+>>>>>>> d236a68 (途中):player/player.go
 }
 
 var (
@@ -89,8 +95,11 @@ var (
 	descWeapon = csvToSlicePlayer(weaponPath)
 )
 
+<<<<<<< HEAD:myPlayer/player.go
 var weaponName = []string{"木の棒", "果物ナイフ", "木刀", "ドレインソード", "スタンハンマー", "鉄の剣", "隼の剣", "勇者の剣", "名刀村正", "死神の大鎌"}
 
+=======
+>>>>>>> d236a68 (途中):player/player.go
 var tempOP4 float64
 
 func NewPlayerStatus(value [][]string) *PlayerStatus {
@@ -131,6 +140,7 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 	tempOP3, _ := strconv.ParseFloat(value[8][1], 64)
 
 	//TODO: 武器強化
+<<<<<<< HEAD:myPlayer/player.go
 	for i, name := range weaponName {
 		if value[6][0] == name {
 			coefficient, _ := strconv.ParseFloat(value[9][i], 64)
@@ -139,6 +149,12 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 			//log.Println("player", coefficient, tempWeaponEnhancement)
 			WeaponEnhancement[i] = strconv.FormatFloat(tempOP4, 'f', 2, 64)
 		}
+=======
+	if value[6][0] == "木の棒" {
+		coefficient, _ := strconv.ParseFloat(value[9][0], 64)
+		tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[1][25], 64)
+		tempOP4 = tempWeaponEnhancement * coefficient
+>>>>>>> d236a68 (途中):player/player.go
 	}
 
 	tempDP1, _ := strconv.ParseFloat(value[1][14], 64)
@@ -152,6 +168,9 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 
 	PlayerStatusInstance := &PlayerStatus{
 <<<<<<< HEAD:myPlayer/player.go
+<<<<<<< HEAD:myPlayer/player.go
+=======
+>>>>>>> d236a68 (途中):player/player.go
 		Name:                 Name,
 		MaxHP:                MaxHP,
 		HP:                   HP,
@@ -185,6 +204,7 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 		AccessoryEnhancement: AccessoryEnhancement,
 		AccessoryGemUnlock:   AccessoryGemUnlock,
 		AccessoryModifier:    AccessoryModifier,
+<<<<<<< HEAD:myPlayer/player.go
 =======
 		Name:               Name,
 		MaxHP:              MaxHP,
@@ -211,6 +231,8 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 		EquipmentArmor:     EquipmentArmor,
 		EquipmentAccessory: EquipmentAccessory,
 >>>>>>> c9826ea (武器全種のスキル追加):player/player.go
+=======
+>>>>>>> d236a68 (途中):player/player.go
 	}
 	return PlayerStatusInstance
 }
