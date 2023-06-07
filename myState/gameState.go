@@ -24,7 +24,7 @@ const (
 	WeaponShop
 	ArmorShop
 	AccessoryShop
-	BlackSmith
+	BlackSmithScreen
 )
 
 var CurrentBelong BelongState
@@ -36,4 +36,15 @@ const (
 	ArmorBelong
 	AccessoryBelong
 	MaterialsBelong
+)
+
+var CurrentBlackSmith BlackSmithState
+
+type BlackSmithState int
+
+const (
+	WeaponBlackSmith BlackSmithState = iota
+	ArmorBlackSmith
+	AccessoryBlackSmith
+	MaterialsBlackSmith
 )
