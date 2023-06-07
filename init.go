@@ -102,6 +102,12 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 			myState.CurrentGS = myGame.JobClickEvent(win, win.MousePosition(), player)
 			myGame.SaveGame(myGame.SaveFilePath, 1, player)
 		}
+	case myState.BlackSmithScreen:
+		myGame.InitBlackSmithScreen(win, Txt, player)
+		if myState.CurrentGS == myState.BlackSmithScreen && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.KeyS, pg.KeyU, pg.KeyM, pg.KeyBackspace) {
+			myState.CurrentGS = myGame.BlackSmithClickEvent(win, win.MousePosition(), player)
+			myGame.SaveGame(myGame.SaveFilePath, 1, player)
+		}
 	case myState.PlayingScreen:
 		myGame.InitPlayingScreen(win, Txt)
 	case myState.BattleEnemyScreen:
