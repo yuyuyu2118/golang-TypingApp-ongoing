@@ -9,9 +9,15 @@ import (
 	pg "github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	event "github.com/yuyuyu2118/typingGo/Event"
+<<<<<<< HEAD
 	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
+=======
+	"github.com/yuyuyu2118/typingGo/myState"
+	"github.com/yuyuyu2118/typingGo/myUtil"
+	"github.com/yuyuyu2118/typingGo/player"
+>>>>>>> d236a68 (途中)
 )
 
 // var (
@@ -27,7 +33,11 @@ var blackSmithSlice = []string{}
 
 var tabCountBlackSmith int
 
+<<<<<<< HEAD
 func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
+=======
+func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
+>>>>>>> d236a68 (途中)
 	if win.JustPressed(pixelgl.KeyTab) {
 		if tabCountBlackSmith == 0 {
 			myState.CurrentBlackSmith = myState.ArmorBlackSmith
@@ -67,7 +77,11 @@ func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *myPlayer.Player
 	}
 }
 
+<<<<<<< HEAD
 // func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
+=======
+// func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
+>>>>>>> d236a68 (途中)
 // 	if len(equipmentButtonSlice) > 0 {
 // 		if myState.CurrentGS == myState.EquipmentScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
 // 			myState.CurrentGS = myState.GoToScreen
@@ -109,7 +123,11 @@ var keyToBlackSmith = map[pixelgl.Button]BlackSmithState{
 
 var currentBlackSmithState BlackSmithState
 
+<<<<<<< HEAD
 func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
+=======
+func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
+>>>>>>> d236a68 (途中)
 	var tempBlackSmith = ""
 
 	for i := 0; i < len(keyToBlackSmith)-1; i++ {
@@ -195,6 +213,7 @@ func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPla
 			SaveWeaponEnhancementEvent(SaveFilePath, 9, tempBlackSmith, player)
 			SaveGame(SaveFilePath, 1, player)
 		}
+<<<<<<< HEAD
 
 		//TODO: 関数化
 		loadContent = SaveFileLoad(SaveFilePath)
@@ -221,6 +240,8 @@ func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPla
 
 		SaveGame(SaveFilePath, 1, player)
 		SaveGameWeapon(SaveFilePath, 6, player)
+=======
+>>>>>>> d236a68 (途中)
 	}
 	return myState.CurrentGS
 }

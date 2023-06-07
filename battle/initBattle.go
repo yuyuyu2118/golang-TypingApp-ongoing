@@ -37,10 +37,14 @@ func InitPlayingBattle(win *pixelgl.Window, player *myPlayer.PlayerStatus, elaps
 
 	fmt.Fprintln(myUtil.ScreenTxt, "アタックタイマー", strconv.FormatFloat(DispTimer, 'f', 2, 64))
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 	yOffSet := myUtil.ScreenTxt.LineHeight
 >>>>>>> 4715f1e (武器の固有スキルを設定)
+=======
+
+>>>>>>> d236a68 (途中)
 	txtPos := pixel.V(xOffSet, yOffSet)
 	tempPosition := pixel.IM.Moved(txtPos)
 	myUtil.ScreenTxt.Draw(win, tempPosition)

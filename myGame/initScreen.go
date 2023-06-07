@@ -141,7 +141,11 @@ func InitJobSelect(win *pixelgl.Window, Txt *text.Text) {
 	InitJob(win, Txt)
 }
 
+<<<<<<< HEAD
 func InitBlackSmithScreen(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
+=======
+func InitBlackSmithScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
+>>>>>>> d236a68 (途中)
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
