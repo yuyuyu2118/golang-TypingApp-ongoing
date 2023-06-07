@@ -87,6 +87,15 @@ func SaveFileCheck(saveFilePath string) {
 		"WeaponName,,,,,,,,,,,,,,,",
 		"ArmorName,,,,,,,,,,,,,,,",
 		"AccessoryName,,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
+		",,,,,,,,,,,,,,,",
 	}
 	initializeText := strings.Join(tempInitText, "\n")
 	//initializeText := "Name,MaxHP,HP,OP,DP,MaxSP,SP,BaseSP,Gold,Job,AP,\nNoName,30,30,3,1,50,0,2,0,No Job,0,\nWeaponName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nArmorName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,\nAccessoryName,Buy,Sell,Required Materials,Materials1,Materials2,Materials3,Attack Power,Unique Abilities,,,"
@@ -368,6 +377,75 @@ func SaveAccessoryPurchaseEvent(saveFilePath string, saveNum int, purchaseAccess
 		tempInt, _ = strconv.Atoi(loadContent[saveNum][9])
 		loadContent[saveNum][9] = strconv.Itoa(tempInt + 1)
 		player.PossessedAccessory[9] = loadContent[saveNum][9]
+	}
+	saveContent := strings.Join(loadContent[saveNum], ",")
+
+	content, err := ioutil.ReadFile(saveFilePath)
+	if err != nil {
+		fmt.Println("保存ファイルの読み込みに失敗しました:", err)
+		return
+	}
+	lines := strings.Split(string(content), "\n")
+	if saveNum < 0 || saveNum >= len(lines) {
+		fmt.Println("指定された行番号が範囲外です。")
+		return
+	}
+	lines[saveNum] = saveContent
+
+	output := strings.Join(lines, "\n")
+	err = ioutil.WriteFile(saveFilePath, []byte(output), 0644)
+	if err != nil {
+		fmt.Println("保存ファイルの書き込みに失敗しました:", err)
+		return
+	}
+
+	fmt.Println("保存ファイルを更新しました。")
+	time.Sleep(10 * time.Millisecond)
+}
+
+func SaveWeaponEnhancementEvent(saveFilePath string, saveNum int, enhancementWeapon string, player *player.PlayerStatus) {
+	var tempInt int
+	loadContent := SaveFileLoad(saveFilePath)
+	if enhancementWeapon == "weapon1" {
+		tempInt, _ = strconv.Atoi(loadContent[9][0])
+		loadContent[9][0] = strconv.Itoa(tempInt + 1)
+		player.WeaponEnhancement[0] = loadContent[9][0]
+	} else if enhancementWeapon == "weapon2" {
+		tempInt, _ = strconv.Atoi(loadContent[3][1])
+		loadContent[3][1] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[1] = loadContent[3][1]
+	} else if enhancementWeapon == "weapon3" {
+		tempInt, _ = strconv.Atoi(loadContent[3][2])
+		loadContent[3][2] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[2] = loadContent[3][2]
+	} else if enhancementWeapon == "weapon4" {
+		tempInt, _ = strconv.Atoi(loadContent[3][3])
+		loadContent[3][3] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[3] = loadContent[3][3]
+	} else if enhancementWeapon == "weapon5" {
+		tempInt, _ = strconv.Atoi(loadContent[3][4])
+		loadContent[3][4] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[4] = loadContent[3][4]
+	} else if enhancementWeapon == "weapon6" {
+		tempInt, _ = strconv.Atoi(loadContent[3][5])
+		loadContent[3][5] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[5] = loadContent[3][5]
+	} else if enhancementWeapon == "weapon7" {
+		tempInt, _ = strconv.Atoi(loadContent[3][6])
+		loadContent[3][6] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[6] = loadContent[3][6]
+	} else if enhancementWeapon == "weapon8" {
+		tempInt, _ = strconv.Atoi(loadContent[3][7])
+		loadContent[3][7] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[7] = loadContent[3][7]
+	} else if enhancementWeapon == "weapon9" {
+		tempInt, _ = strconv.Atoi(loadContent[3][8])
+		loadContent[3][8] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[8] = loadContent[3][8]
+	} else if enhancementWeapon == "weapon0" {
+		tempInt, _ = strconv.Atoi(loadContent[3][9])
+		loadContent[3][9] = strconv.Itoa(tempInt + 1)
+		player.PossessedWeapon[9] = loadContent[3][9]
 	}
 	saveContent := strings.Join(loadContent[saveNum], ",")
 
