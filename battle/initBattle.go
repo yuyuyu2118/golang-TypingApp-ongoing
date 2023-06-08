@@ -24,6 +24,11 @@ func InitPlayingBattle(win *pixelgl.Window, player *myPlayer.PlayerStatus, elaps
 =======
 >>>>>>> 4715f1e (武器の固有スキルを設定)
 
+<<<<<<< HEAD
+=======
+func InitPlayingBattle(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) {
+
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 	if !battleTimeBool {
 		elapsed = time.Since(startTime)
 		battleTimeBool = true

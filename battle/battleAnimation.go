@@ -11,7 +11,6 @@ import (
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -232,6 +231,9 @@ var tempTxt string
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txtColor color.Color, player *myPlayer.PlayerStatus, assignTxt string) {
 
 	if player.EquipmentWeapon[0] == weaponName[3] {

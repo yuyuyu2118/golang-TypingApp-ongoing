@@ -9,10 +9,14 @@ import (
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"github.com/yuyuyu2118/typingGo/myPlayer"
 =======
 	"github.com/yuyuyu2118/typingGo/player"
 >>>>>>> 4715f1e (武器の固有スキルを設定)
+=======
+	"github.com/yuyuyu2118/typingGo/myPlayer"
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 	"golang.org/x/image/colornames"
 )
 
@@ -140,12 +144,16 @@ func AttackRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus,
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 func RecoveryRelationWeaponSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
 	if player.EquipmentWeapon[0] == weaponName[3] {
 		if rand.Float64() <= 0.1 {
 			UniqueSkill(win, -(*tempWordDamage)*0.01, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Green, player, "LifeDrain! ")
 =======
 func RecoveryRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
+=======
+func RecoveryRelationWeaponSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 	if player.EquipmentWeapon[0] == weaponName[3] {
 		if rand.Float64() <= 0.1 {
 <<<<<<< HEAD
@@ -216,7 +224,7 @@ func TimerRelationWeaponSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus
 >>>>>>> f10e2c1 (防具のスキル追加完了)
 }
 
-func TimerRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, tempTimer *float64) float64 {
+func TimerRelationWeaponSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, tempTimer *float64) float64 {
 	if player.EquipmentWeapon[0] == weaponName[4] {
 		if rand.Float64() <= 0.1 {
 <<<<<<< HEAD
@@ -237,6 +245,9 @@ func TimerRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 func DebuffRelationWeaponSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if player.EquipmentWeapon[0] == weaponName[9] {
 		if rand.Float64() <= 0.2 {
@@ -294,6 +305,9 @@ func AttackRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 func RecoveryRelationArmorSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
 	if player.EquipmentArmor[0] == armorName[3] {
 		if rand.Float64() <= 0.1 {
@@ -331,6 +345,9 @@ func RecoveryRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 func TimerRelationArmorSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, tempTimer *float64) float64 {
 	if player.EquipmentArmor[0] == armorName[4] {
 		if rand.Float64() <= 0.1 {
@@ -356,6 +373,9 @@ func TimerRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, t
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 func DefenceRelationArmorSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if player.EquipmentArmor[0] == armorName[5] {
 		if rand.Float64() <= 0.1 {
@@ -442,7 +462,7 @@ func DefenceRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus,
 	}
 }
 
-func BuffRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
+func BuffRelationArmorSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if player.EquipmentArmor[0] == armorName[9] {
 		if rand.Float64() <= 0.1 {
 <<<<<<< HEAD
