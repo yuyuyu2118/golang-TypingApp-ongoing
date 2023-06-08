@@ -10,10 +10,10 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	event "github.com/yuyuyu2118/typingGo/Event"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -85,7 +85,7 @@ func InitAccessory(win *pixelgl.Window, Txt *text.Text, botText string) {
 	}
 }
 
-func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
+func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
 	var tempAccessory = ""
 
 	for i := 0; i < len(keyToAccessory)-1; i++ {
@@ -352,7 +352,7 @@ func CreateAccessoryEvent(descAccessory [][]string, num int) bool {
 	}
 }
 
-func InitAccessoryBelongScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
+func InitAccessoryBelongScreen(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
@@ -360,7 +360,7 @@ func InitAccessoryBelongScreen(win *pixelgl.Window, Txt *text.Text, player *play
 	InitAccessoryBelong(win, Txt, botText, player)
 }
 
-func InitAccessoryBelong(win *pixelgl.Window, Txt *text.Text, botText string, player *player.PlayerStatus) {
+func InitAccessoryBelong(win *pixelgl.Window, Txt *text.Text, botText string, player *myPlayer.PlayerStatus) {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
@@ -413,7 +413,7 @@ func InitAccessoryBelong(win *pixelgl.Window, Txt *text.Text, botText string, pl
 	equipmentSlice = equipmentSlice[:0]
 }
 
-func AccessoryBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) {
+func AccessoryBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) {
 	loadContent := SaveFileLoad(SaveFilePath)
 
 	if myState.CurrentBelong == myState.AccessoryBelong && (win.JustPressed(pixelgl.Key1)) && (player.PossessedAccessory[0] == "1") {

@@ -12,14 +12,14 @@ import (
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
-func BattleTypingSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
+func BattleTypingSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if win.JustPressed(pixelgl.KeySpace) {
 		log.Println("Skill!!!")
 		if player.SP == 50 {
@@ -37,7 +37,7 @@ var (
 	RookieSkillWords = []string{"oreno", "kenngiwo", "kurae!!"}
 )
 
-func BattleTypingRookieSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingRookieSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) myState.GameState {
 	question := RookieSkillWords[RookieSkillCount]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -135,7 +135,7 @@ func InitBattleTextRookieSkill(win *pixelgl.Window, Txt *text.Text, elapsed time
 var bulletLoadingSkill = []bool{false, false, false, false, false}
 var bulletDamageSkill = []float64{0.0, 0.0, 0.0, 0.0, 0.0}
 
-func BattleTypingHunterSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingHunterSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) myState.GameState {
 	xOffSet := 50.0
 	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 150
 	txtPos := pixel.V(xOffSet, yOffSet)
@@ -337,7 +337,7 @@ var (
 	MonkSkillWord = ""
 )
 
-func BattleTypingMonkSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingMonkSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) myState.GameState {
 	if MonkSkillWord == "" {
 		MonkSkillWord = MonkSkillWords[rand.Intn(3)]
 	}
@@ -406,7 +406,7 @@ var magicHP float64
 var setTime float64
 var timeBool bool
 
-func BattleTypingMagicUserSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingMagicUserSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -513,7 +513,7 @@ var (
 	MonsterSkillWord = ""
 )
 
-func BattleTypingMonsterSkill(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingMonsterSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) myState.GameState {
 	if MonsterSkillWord == "" {
 		MonsterSkillWord = MonsterSkillWords[rand.Intn(3)]
 	}

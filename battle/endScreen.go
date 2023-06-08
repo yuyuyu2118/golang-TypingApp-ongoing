@@ -11,10 +11,10 @@ import (
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -34,7 +34,7 @@ var unlockElements = [][]string{{"新職業: 見習い剣士", "新武器: 木�
 	{"新武器: 死神の大鎌", "新防具: 冥界の鎧", "新アクセサリー: 霊魂のイヤリング", "新モード解放: 裏"},
 }
 
-func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus, enemy *enemy.EnemyStatus, loadContent [][]string) myState.GameState {
+func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus, loadContent [][]string) myState.GameState {
 	xOffSet := 100.0
 	xOffSet2 := 600.0
 	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 100
@@ -159,6 +159,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		battleTimeBool = false
 		Shuffle(words)
 		myUtil.SetSaveReset(false)
+		myUtil.SetPlayerReset(false)
 		log.Println("Press:Enter -> GameState:Playing")
 	} else if win.JustPressed(pixelgl.KeyBackspace) {
 		myState.CurrentGS = myState.GoToScreen
@@ -174,6 +175,7 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerS
 		battleTimeBool = false
 		Shuffle(words)
 		myUtil.SetSaveReset(false)
+		myUtil.SetPlayerReset(false)
 		log.Println("Press:Enter -> GameState:GoToScreen")
 	}
 

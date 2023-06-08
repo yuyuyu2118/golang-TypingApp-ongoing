@@ -9,3 +9,13 @@ func GetSaveReset() bool {
 func SetSaveReset(flag bool) {
 	saveReset = flag
 }
+
+var playerReset bool = false
+
+func GetPlayerReset() bool {
+	return playerReset
+}
+
+func SetPlayerReset(flag bool) {
+	playerReset = flag
+}

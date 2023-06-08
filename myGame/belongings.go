@@ -7,9 +7,9 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	pg "github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 )
 
 var (
@@ -25,7 +25,7 @@ var equipmentSlice = []string{}
 
 var tabCount int
 
-func InitEquipment(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
+func InitEquipment(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
 	if win.JustPressed(pixelgl.KeyTab) {
 		if tabCount == 0 {
 			myState.CurrentBelong = myState.ArmorBelong
@@ -65,7 +65,7 @@ func InitEquipment(win *pixelgl.Window, Txt *text.Text, player *player.PlayerSta
 	}
 }
 
-func EquipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
+func EquipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
 	if len(equipmentButtonSlice) > 0 {
 		if myState.CurrentGS == myState.EquipmentScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
 			myState.CurrentGS = myState.GoToScreen
