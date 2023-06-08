@@ -8,10 +8,10 @@ import (
 
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -125,7 +125,7 @@ func InitAccessoryShop(win *pixelgl.Window, Txt *text.Text) {
 	InitAccessory(win, Txt, botText)
 }
 
-func InitEquipmentScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
+func InitEquipmentScreen(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
@@ -141,7 +141,7 @@ func InitJobSelect(win *pixelgl.Window, Txt *text.Text) {
 	InitJob(win, Txt)
 }
 
-func InitBlackSmithScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
+func InitBlackSmithScreen(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 

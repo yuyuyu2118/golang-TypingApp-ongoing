@@ -10,10 +10,10 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	event "github.com/yuyuyu2118/typingGo/Event"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -85,7 +85,7 @@ func InitArmor(win *pixelgl.Window, Txt *text.Text, botText string) {
 	}
 }
 
-func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
+func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
 	var tempArmor = ""
 
 	for i := 0; i < len(keyToArmor)-1; i++ {
@@ -351,7 +351,7 @@ func CreateArmorEvent(descArmor [][]string, num int) bool {
 	}
 }
 
-func InitArmorBelongScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
+func InitArmorBelongScreen(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
@@ -359,7 +359,7 @@ func InitArmorBelongScreen(win *pixelgl.Window, Txt *text.Text, player *player.P
 	InitArmorBelong(win, Txt, botText, player)
 }
 
-func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string, player *player.PlayerStatus) {
+func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string, player *myPlayer.PlayerStatus) {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
@@ -412,7 +412,7 @@ func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string, player
 	equipmentSlice = equipmentSlice[:0]
 }
 
-func ArmorBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) {
+func ArmorBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) {
 	loadContent := SaveFileLoad(SaveFilePath)
 
 	if myState.CurrentBelong == myState.ArmorBelong && (win.JustPressed(pixelgl.Key1)) && (player.PossessedArmor[0] == "1") {
