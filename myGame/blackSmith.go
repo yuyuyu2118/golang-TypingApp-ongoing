@@ -10,6 +10,7 @@ import (
 	"github.com/faiface/pixel/text"
 	event "github.com/yuyuyu2118/typingGo/Event"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
@@ -18,6 +19,11 @@ import (
 	"github.com/yuyuyu2118/typingGo/myUtil"
 	"github.com/yuyuyu2118/typingGo/player"
 >>>>>>> d236a68 (途中)
+=======
+	"github.com/yuyuyu2118/typingGo/myPlayer"
+	"github.com/yuyuyu2118/typingGo/myState"
+	"github.com/yuyuyu2118/typingGo/myUtil"
+>>>>>>> 97b2112 (強化要素の追加)
 )
 
 // var (
@@ -34,10 +40,14 @@ var blackSmithSlice = []string{}
 var tabCountBlackSmith int
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
 =======
 func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
 >>>>>>> d236a68 (途中)
+=======
+func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
+>>>>>>> 97b2112 (強化要素の追加)
 	if win.JustPressed(pixelgl.KeyTab) {
 		if tabCountBlackSmith == 0 {
 			myState.CurrentBlackSmith = myState.ArmorBlackSmith
@@ -59,11 +69,11 @@ func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *player.PlayerSt
 		if myState.CurrentBlackSmith == myState.WeaponBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
 			WeaponBlackSmithClickEvent(win, win.MousePosition(), player)
 		}
-		// case myState.ArmorBlackSmith:
-		// 	InitArmorBlackSmithScreen(win, myUtil.DescriptionTxt, player)
-		// 	if myState.CurrentBlackSmith == myState.ArmorBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
-		// 		ArmorBlackSmithClickEvent(win, win.MousePosition(), player)
-		// 	}
+	case myState.ArmorBlackSmith:
+		InitArmorBlackSmithScreen(win, myUtil.DescriptionTxt, player)
+		if myState.CurrentBlackSmith == myState.ArmorBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
+			ArmorBlackSmithClickEvent(win, win.MousePosition(), player)
+		}
 		// case myState.AccessoryBlackSmith:
 		// 	InitAccessoryBlackSmithScreen(win, myUtil.DescriptionTxt, player)
 		// 	if myState.CurrentBlackSmith == myState.AccessoryBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
@@ -78,10 +88,14 @@ func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *player.PlayerSt
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
 =======
 // func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
 >>>>>>> d236a68 (途中)
+=======
+// func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
+>>>>>>> 97b2112 (強化要素の追加)
 // 	if len(equipmentButtonSlice) > 0 {
 // 		if myState.CurrentGS == myState.EquipmentScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
 // 			myState.CurrentGS = myState.GoToScreen
@@ -124,10 +138,14 @@ var keyToBlackSmith = map[pixelgl.Button]BlackSmithState{
 var currentBlackSmithState BlackSmithState
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
 =======
 func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
 >>>>>>> d236a68 (途中)
+=======
+func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
+>>>>>>> 97b2112 (強化要素の追加)
 	var tempBlackSmith = ""
 
 	for i := 0; i < len(keyToBlackSmith)-1; i++ {
@@ -214,6 +232,9 @@ func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *playe
 			SaveGame(SaveFilePath, 1, player)
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 97b2112 (強化要素の追加)
 
 		//TODO: 関数化
 		loadContent = SaveFileLoad(SaveFilePath)
@@ -230,7 +251,11 @@ func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *playe
 				coefficient, _ := strconv.ParseFloat(loadContent[9][i], 64)
 				tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[i+1][25], 64)
 				tempOP4 = tempWeaponEnhancement * coefficient
+<<<<<<< HEAD
 				//log.Println("player", coefficient, tempWeaponEnhancement)
+=======
+				log.Println("player", coefficient, tempWeaponEnhancement)
+>>>>>>> 97b2112 (強化要素の追加)
 			}
 		}
 
@@ -240,8 +265,11 @@ func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *playe
 
 		SaveGame(SaveFilePath, 1, player)
 		SaveGameWeapon(SaveFilePath, 6, player)
+<<<<<<< HEAD
 =======
 >>>>>>> d236a68 (途中)
+=======
+>>>>>>> 97b2112 (強化要素の追加)
 	}
 	return myState.CurrentGS
 }
