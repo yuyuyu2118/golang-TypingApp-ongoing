@@ -9,9 +9,9 @@ import (
 	pg "github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	event "github.com/yuyuyu2118/typingGo/Event"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 )
 
 // var (
@@ -27,7 +27,7 @@ var blackSmithSlice = []string{}
 
 var tabCountBlackSmith int
 
-func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
+func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
 	if win.JustPressed(pixelgl.KeyTab) {
 		if tabCountBlackSmith == 0 {
 			myState.CurrentBlackSmith = myState.ArmorBlackSmith
@@ -49,11 +49,11 @@ func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *player.PlayerSt
 		if myState.CurrentBlackSmith == myState.WeaponBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
 			WeaponBlackSmithClickEvent(win, win.MousePosition(), player)
 		}
-		// case myState.ArmorBlackSmith:
-		// 	InitArmorBlackSmithScreen(win, myUtil.DescriptionTxt, player)
-		// 	if myState.CurrentBlackSmith == myState.ArmorBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
-		// 		ArmorBlackSmithClickEvent(win, win.MousePosition(), player)
-		// 	}
+	case myState.ArmorBlackSmith:
+		InitArmorBlackSmithScreen(win, myUtil.DescriptionTxt, player)
+		if myState.CurrentBlackSmith == myState.ArmorBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
+			ArmorBlackSmithClickEvent(win, win.MousePosition(), player)
+		}
 		// case myState.AccessoryBlackSmith:
 		// 	InitAccessoryBlackSmithScreen(win, myUtil.DescriptionTxt, player)
 		// 	if myState.CurrentBlackSmith == myState.AccessoryBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
@@ -67,7 +67,7 @@ func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *player.PlayerSt
 	}
 }
 
-// func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
+// func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
 // 	if len(equipmentButtonSlice) > 0 {
 // 		if myState.CurrentGS == myState.EquipmentScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
 // 			myState.CurrentGS = myState.GoToScreen
@@ -109,7 +109,7 @@ var keyToBlackSmith = map[pixelgl.Button]BlackSmithState{
 
 var currentBlackSmithState BlackSmithState
 
-func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
+func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
 	var tempBlackSmith = ""
 
 	for i := 0; i < len(keyToBlackSmith)-1; i++ {
@@ -195,6 +195,32 @@ func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *playe
 			SaveWeaponEnhancementEvent(SaveFilePath, 9, tempBlackSmith, player)
 			SaveGame(SaveFilePath, 1, player)
 		}
+
+		//TODO: 関数化
+		loadContent = SaveFileLoad(SaveFilePath)
+
+		tempOP1, _ := strconv.ParseFloat(loadContent[1][13], 64)
+		tempOP2, _ := strconv.ParseFloat(player.EquipmentWeapon[1], 64)
+		tempOP3, _ := strconv.ParseFloat(player.EquipmentAccessory[1], 64)
+
+		var tempOP4 float64
+		tempName := player.EquipmentWeapon[0]
+
+		for i, name := range weaponName {
+			if tempName == name {
+				coefficient, _ := strconv.ParseFloat(loadContent[9][i], 64)
+				tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[i+1][25], 64)
+				tempOP4 = tempWeaponEnhancement * coefficient
+				log.Println("player", coefficient, tempWeaponEnhancement)
+			}
+		}
+
+		log.Println(tempOP1, tempOP2, tempOP3, tempOP4)
+
+		player.OP = tempOP1 + tempOP2 + tempOP3 + tempOP4
+
+		SaveGame(SaveFilePath, 1, player)
+		SaveGameWeapon(SaveFilePath, 6, player)
 	}
 	return myState.CurrentGS
 }
