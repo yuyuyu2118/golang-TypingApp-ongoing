@@ -1112,6 +1112,7 @@ func DescriptionWeaponBlackSmith(win *pixelgl.Window, descWeapon [][]string, num
 	myUtil.DescriptionTxt.Draw(win, tempPosition)
 	buySellSlice = append(buySellSlice, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 	// myUtil.DescriptionTxt.Clear()
@@ -1201,6 +1202,8 @@ func DescriptionWeaponBlackSmith(win *pixelgl.Window, descWeapon [][]string, num
 	// 	myUtil.DescriptionTxt.Draw(win, tempPosition)
 	// }
 >>>>>>> d236a68 (途中)
+=======
+>>>>>>> 97b2112 (強化要素の追加)
 }
 
 func EnhancementWeaponEvent(win *pixelgl.Window, descWeapon [][]string, num int) bool {
