@@ -20,10 +20,14 @@ import (
 var SkillTimer float64
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 func BattleTypingRookie(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 =======
 func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 >>>>>>> 4715f1e (武器の固有スキルを設定)
+=======
+func BattleTypingRookie(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -88,10 +92,14 @@ var bulletLoading = []bool{false, false, false}
 var bulletDamage = []float64{0.0, 0.0, 0.0}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 func BattleTypingHunter(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 =======
 func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 >>>>>>> 124dadb (スキル調整)
+=======
+func BattleTypingHunter(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 100
 	txtPos := pixel.V(0, 0)
@@ -202,10 +210,14 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 func BattleTypingMonk(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 =======
 func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 >>>>>>> 124dadb (スキル調整)
+=======
+func BattleTypingMonk(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -256,10 +268,14 @@ var magicCollectType = 0.0
 var magicMissType = 0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 func BattleTypingMagicUser(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 =======
 func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 >>>>>>> 124dadb (スキル調整)
+=======
+func BattleTypingMagicUser(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -345,10 +361,14 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 func BattleTypingMonster(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 =======
 func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 >>>>>>> 124dadb (スキル調整)
+=======
+func BattleTypingMonster(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()

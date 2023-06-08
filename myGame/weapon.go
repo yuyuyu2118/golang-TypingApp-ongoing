@@ -577,13 +577,18 @@ func WeaponBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myP
 			coefficient, _ := strconv.ParseFloat(loadContent[9][i], 64)
 			tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[i+1][25], 64)
 			tempOP4 = tempWeaponEnhancement * coefficient
+<<<<<<< HEAD
 			//log.Println("player", coefficient, tempWeaponEnhancement)
+=======
+			log.Println("player", coefficient, tempWeaponEnhancement)
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 		}
 	}
 
 	log.Println(tempOP1, tempOP2, tempOP3, tempOP4)
 
 	player.OP = tempOP1 + tempOP2 + tempOP3 + tempOP4
+<<<<<<< HEAD
 
 	tempAttackTimer1, _ := strconv.ParseFloat(loadContent[1][15], 64)
 	tempAttackTimer2, _ := strconv.ParseFloat(player.EquipmentWeapon[3], 64)
@@ -759,6 +764,8 @@ func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player 
 	log.Println(tempOP1, tempOP2, tempOP3, tempOP4)
 
 	player.OP = tempOP1 + tempOP2 + tempOP3 + tempOP4
+=======
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 
 	tempAttackTimer1, _ := strconv.ParseFloat(loadContent[1][15], 64)
 	tempAttackTimer2, _ := strconv.ParseFloat(player.EquipmentWeapon[3], 64)
@@ -768,13 +775,19 @@ func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player 
 
 	SaveGame(SaveFilePath, 1, player)
 	SaveGameWeapon(SaveFilePath, 6, player)
+	SaveWeaponEnhancementEvent(SaveFilePath, 9, tempName, player)
+	log.Println("weapon", player.OP)
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 func DescriptionWeaponBlackSmith(win *pixelgl.Window, descWeapon [][]string, num int) {
 	//loadContent = SaveFileLoad(SaveFilePath)
 =======
 func InitWeaponBlackSmithScreen(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
+=======
+func InitWeaponBlackSmithScreen(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
+>>>>>>> 6ee4331 (playerパッケージの名称変更)
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
@@ -782,7 +795,7 @@ func InitWeaponBlackSmithScreen(win *pixelgl.Window, Txt *text.Text, player *pla
 	InitWeaponBlackSmith(win, Txt, botText, player)
 }
 
-func InitWeaponBlackSmith(win *pixelgl.Window, Txt *text.Text, botText string, player *player.PlayerStatus) {
+func InitWeaponBlackSmith(win *pixelgl.Window, Txt *text.Text, botText string, player *myPlayer.PlayerStatus) {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
 	txtPos := pixel.V(0, 0)
@@ -859,14 +872,15 @@ func InitWeaponBlackSmith(win *pixelgl.Window, Txt *text.Text, botText string, p
 	blackSmithSlice = blackSmithSlice[:0]
 }
 
-func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) {
+func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) {
 	loadContent := SaveFileLoad(SaveFilePath)
 
 	if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key1)) && (player.PossessedWeapon[0] == "1") {
 		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[1][1])
 		player.EquipmentWeapon[1] = descWeapon[1][2]
 		player.EquipmentWeapon[3] = descWeapon[1][3]
-		log.Println("装備1")
+
+		log.Println("装備1", player.EquipmentWeapon[0], player.EquipmentWeapon[1], player.EquipmentWeapon[3])
 	} else if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key2)) && (player.PossessedWeapon[1] == "1") {
 		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[2][1])
 		player.EquipmentWeapon[1] = descWeapon[2][2]
@@ -920,7 +934,21 @@ func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player 
 	tempOP1, _ := strconv.ParseFloat(loadContent[1][13], 64)
 	tempOP2, _ := strconv.ParseFloat(player.EquipmentWeapon[1], 64)
 	tempOP3, _ := strconv.ParseFloat(player.EquipmentAccessory[1], 64)
-	player.OP = tempOP1 + tempOP2 + tempOP3
+
+	var tempOP4 float64
+	tempName := player.EquipmentWeapon[0]
+	log.Println("koko", tempName, player.WeaponEnhancement[0])
+	if tempName == "木の棒" {
+		coefficient, _ := strconv.ParseFloat(loadContent[9][0], 64)
+		tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[1][25], 64)
+		tempOP4 = tempWeaponEnhancement * coefficient
+		log.Println("kore", coefficient, tempWeaponEnhancement)
+		//tempOP4, _ = strconv.ParseFloat(player.WeaponEnhancement[0], 64)
+	}
+
+	log.Println(tempOP1, tempOP2, tempOP3, tempOP4)
+
+	player.OP = tempOP1 + tempOP2 + tempOP3 + tempOP4
 
 	tempAttackTimer1, _ := strconv.ParseFloat(loadContent[1][15], 64)
 	tempAttackTimer2, _ := strconv.ParseFloat(player.EquipmentWeapon[3], 64)
