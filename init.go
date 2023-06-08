@@ -8,9 +8,9 @@ import (
 	pg "github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 )
 
 func initializeWindow() (*pixelgl.Window, pixelgl.WindowConfig) {
@@ -58,8 +58,9 @@ func initializeWindow() (*pixelgl.Window, pixelgl.WindowConfig) {
 // 	return streamer, func() { _ = f.Close() }
 // }
 
-func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.PlayerStatus) {
-
+func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
+	loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
+	player = myPlayer.NewPlayerStatus(loadContent)
 	switch myState.CurrentGS {
 	case myState.GoToScreen:
 		myGame.InitGoToScreen(win, Txt)
@@ -115,6 +116,8 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *player.P
 	case myState.SkillScreen:
 		myGame.InitSkillScreen(win, Txt)
 	}
+	loadContent = myGame.SaveFileLoad(myGame.SaveFilePath)
+	player = myPlayer.NewPlayerStatus(loadContent)
 	player.InitPlayerStatus(win, myUtil.StatusTxt)
 
 }

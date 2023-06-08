@@ -8,10 +8,10 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -19,7 +19,8 @@ var battleTimeBool bool
 var startTime time.Time
 var DispTimer float64
 
-func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
+func InitPlayingBattle(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) {
+
 	if !battleTimeBool {
 		elapsed = time.Since(startTime)
 		battleTimeBool = true
@@ -58,7 +59,7 @@ func InitPlayingBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed
 	}
 }
 
-func InitEnemyBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
+func InitEnemyBattle(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) {
 	InitBattleTextV2(win, myUtil.ScreenTxt, elapsed)
 	if myGame.StageNum == 0 {
 		myState.CurrentGS = BattleTypingEnemySlime(win, player, elapsed)
@@ -83,7 +84,7 @@ func InitEnemyBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed t
 	}
 }
 
-func InitSkillBattle(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) {
+func InitSkillBattle(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) {
 	if player.Job == "No Job" {
 		myState.CurrentGS = myState.PlayingScreen
 	} else if player.Job == "見習い剣士" {

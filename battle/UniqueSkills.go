@@ -8,7 +8,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
-	"github.com/yuyuyu2118/typingGo/player"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"golang.org/x/image/colornames"
 )
 
@@ -16,7 +16,7 @@ var weaponName = []string{"木の棒", "果物ナイフ", "木刀", "ドレイ�
 var armorName = []string{"草織りのローブ", "フルーツアーマー", "木の鎧", "ソウルバインドプレート", "スタンプレート", "鉄の鎧", "飛翔のマント", "勇者の鎧", "刃舞の衣", "冥界の鎧"}
 var accessoryName = []string{"樹木のペンダント", "フルーツブレスレット", "平和のバンド", "ライフリンクのリング", "ショックウェーブリング", "鉄のブレスレット", "疾走のリング", "勇者のペンダント", "刀匠の指輪", "霊魂のイヤリング"}
 
-func AttackRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
+func AttackRelationWeaponSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
 	if player.EquipmentWeapon[0] == weaponName[5] {
 		if rand.Float64() <= 0.1 {
 			UniqueSkill(win, (*tempWordDamage)*1.3, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Aqua, player, "CriticalSlash! ")
@@ -62,7 +62,7 @@ func AttackRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus,
 	}
 }
 
-func RecoveryRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
+func RecoveryRelationWeaponSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
 	if player.EquipmentWeapon[0] == weaponName[3] {
 		if rand.Float64() <= 0.1 {
 			UniqueSkill(win, -(*tempWordDamage)*0.01, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Green, player, "LifeDrain! ")
@@ -92,7 +92,7 @@ func RecoveryRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatu
 	}
 }
 
-func TimerRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, tempTimer *float64) float64 {
+func TimerRelationWeaponSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, tempTimer *float64) float64 {
 	if player.EquipmentWeapon[0] == weaponName[4] {
 		if rand.Float64() <= 0.1 {
 			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Blue, player, "StunAttack! ")
@@ -102,7 +102,7 @@ func TimerRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 	return 0.0
 }
 
-func DebuffRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
+func DebuffRelationWeaponSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if player.EquipmentWeapon[0] == weaponName[9] {
 		if rand.Float64() <= 0.2 {
 			UniqueSkill(win, -1.0, win.Bounds().Center().Sub(pixel.V(0, 150)), colornames.Red, player, "ShadowCurse! ")
@@ -111,7 +111,7 @@ func DebuffRelationWeaponSkill(win *pixelgl.Window, player *player.PlayerStatus,
 	}
 }
 
-func AttackRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
+func AttackRelationArmorSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
 	if player.EquipmentArmor[0] == armorName[8] {
 		for i := 0; i < rand.Intn(3); i++ {
 			randomPotision := 40.0 * float64(i)
@@ -121,7 +121,7 @@ func AttackRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, 
 	}
 }
 
-func RecoveryRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
+func RecoveryRelationArmorSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus, tempWordDamage *float64) {
 	if player.EquipmentArmor[0] == armorName[3] {
 		if rand.Float64() <= 0.1 {
 			UniqueSkill(win, enemy.MaxOP*0.05, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Green, player, "SoulBind! ")
@@ -143,7 +143,7 @@ func RecoveryRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus
 	}
 }
 
-func TimerRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, tempTimer *float64) float64 {
+func TimerRelationArmorSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, tempTimer *float64) float64 {
 	if player.EquipmentArmor[0] == armorName[4] {
 		if rand.Float64() <= 0.1 {
 			UniqueSkill(win, 1.0, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Blue, player, "StampMaster! ")
@@ -153,7 +153,7 @@ func TimerRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, t
 	return 0.0
 }
 
-func DefenceRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
+func DefenceRelationArmorSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if player.EquipmentArmor[0] == armorName[5] {
 		if rand.Float64() <= 0.1 {
 			UniqueSkill(win, player.DP*1.2, win.Bounds().Center().Sub(pixel.V(0, 200)), colornames.Silver, player, "IronWall! DP*")
@@ -189,7 +189,7 @@ func DefenceRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus,
 	}
 }
 
-func BuffRelationArmorSkill(win *pixelgl.Window, player *player.PlayerStatus, enemy *enemy.EnemyStatus) {
+func BuffRelationArmorSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if player.EquipmentArmor[0] == armorName[9] {
 		if rand.Float64() <= 0.1 {
 			UniqueSkill(win, 1.3, win.Bounds().Center().Sub(pixel.V(0, 250)), colornames.Purple, player, "UnderWorld! OP*")

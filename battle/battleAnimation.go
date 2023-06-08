@@ -9,8 +9,8 @@ import (
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -199,7 +199,7 @@ func RemoveUniqueSkillAnimation(anim *UniqueSkillAnimation) {
 
 var tempTxt string
 
-func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txtColor color.Color, player *player.PlayerStatus, assignTxt string) {
+func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txtColor color.Color, player *myPlayer.PlayerStatus, assignTxt string) {
 
 	if player.EquipmentWeapon[0] == weaponName[3] {
 		tempTxt = assignTxt
