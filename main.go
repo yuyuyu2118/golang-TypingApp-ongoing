@@ -11,10 +11,10 @@ import (
 	"github.com/yuyuyu2118/typingGo/battle"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 )
 
 const (
@@ -33,7 +33,7 @@ func run() {
 	myUtil.InitTxtFontLoading()
 	loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
 	myGame.SaveFileItemsCheck(myGame.SaveFilePathItems)
-	player := player.NewPlayerStatus(loadContent)
+	player := myPlayer.NewPlayerStatus(loadContent)
 	event.InitializeEventInstance(loadContent)
 	enemy.CreateEnemySettings()
 
@@ -73,6 +73,13 @@ func run() {
 		case myState.BlackSmithScreen: //職業選択画面
 			initScreenInformation(win, myUtil.ScreenTxt, player)
 		case myState.PlayingScreen: //戦闘画面
+			if !myUtil.GetPlayerReset() {
+				loadContent = myGame.SaveFileLoad(myGame.SaveFilePath)
+				player = myPlayer.NewPlayerStatus(loadContent)
+				myGame.SaveGame(myGame.SaveFilePath, 1, player)
+				myUtil.SetPlayerReset(true)
+			}
+
 			initScreenInformation(win, myUtil.BasicTxt, player)
 
 			enemy.StartEnemyAnimation(win, &Last, &Frame)

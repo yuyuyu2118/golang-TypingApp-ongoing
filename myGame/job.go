@@ -9,9 +9,9 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	event "github.com/yuyuyu2118/typingGo/Event"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
@@ -88,7 +88,7 @@ func InitJob(win *pixelgl.Window, Txt *text.Text) {
 	// }
 }
 
-func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *player.PlayerStatus) myState.GameState {
+func JobClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
 
 	for i := 0; i < len(keyToJob); i++ {
 		key := pixelgl.Button(i + int(pixelgl.Key1))

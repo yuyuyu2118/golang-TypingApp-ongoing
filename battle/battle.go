@@ -9,8 +9,8 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myState"
-	"github.com/yuyuyu2118/typingGo/player"
 )
 
 var (
@@ -31,7 +31,7 @@ var (
 	tempEnemySize  = 0.0
 )
 
-func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed time.Duration, currentGameState myState.GameState) myState.GameState {
+func DeathFlug(player *myPlayer.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed time.Duration, currentGameState myState.GameState) myState.GameState {
 	//自分がやられたとき
 	if player.HP <= 0 {
 		yourTime = float64(elapsed.Seconds())
@@ -76,7 +76,7 @@ func DeathFlug(player *player.PlayerStatus, enemyInf *enemy.EnemyStatus, elapsed
 	return currentGameState
 }
 
-func BattleTypingTest(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingTest(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()

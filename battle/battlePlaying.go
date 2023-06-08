@@ -10,16 +10,16 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
 	"github.com/yuyuyu2118/typingGo/myUtil"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
 var SkillTimer float64
 
-func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+func BattleTypingRookie(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -66,7 +66,7 @@ func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapse
 var bulletLoading = []bool{false, false, false}
 var bulletDamage = []float64{0.0, 0.0, 0.0}
 
-func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+func BattleTypingHunter(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 100
 	txtPos := pixel.V(0, 0)
@@ -176,7 +176,7 @@ func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapse
 	return myState.CurrentGS
 }
 
-func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+func BattleTypingMonk(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -226,7 +226,7 @@ func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed 
 var magicCollectType = 0.0
 var magicMissType = 0
 
-func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+func BattleTypingMagicUser(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -311,7 +311,7 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, ela
 	return myState.CurrentGS
 }
 
-func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
+func BattleTypingMonster(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()

@@ -6,15 +6,15 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/yuyuyu2118/typingGo/enemy"
 	"github.com/yuyuyu2118/typingGo/myGame"
+	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myState"
-	"github.com/yuyuyu2118/typingGo/player"
 	"golang.org/x/image/colornames"
 )
 
 var animationPhase int
 var animationInProgress bool
 
-func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration) myState.GameState {
+func BattleTypingEnemySlime(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration) myState.GameState {
 	if myState.CurrentGS == myState.BattleEnemyScreen {
 		if myState.CurrentGS == myState.BattleEnemyScreen && win.JustPressed(pixelgl.KeyEnter) && !animationInProgress {
 			animationInProgress = true
@@ -31,7 +31,7 @@ func BattleTypingEnemySlime(win *pixelgl.Window, player *player.PlayerStatus, el
 	return myState.CurrentGS
 }
 
-func EnemyAttackAnimation(win *pixelgl.Window, player *player.PlayerStatus) {
+func EnemyAttackAnimation(win *pixelgl.Window, player *myPlayer.PlayerStatus) {
 	switch animationPhase {
 	case 0:
 		if enemy.EnemySettings[myGame.StageNum].EnemySize < tempEnemySize*1.2 {
