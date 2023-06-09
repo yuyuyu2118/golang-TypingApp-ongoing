@@ -69,11 +69,11 @@ func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *myPlayer.Player
 		if myState.CurrentBlackSmith == myState.WeaponBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
 			WeaponBlackSmithClickEvent(win, win.MousePosition(), player)
 		}
-	case myState.ArmorBlackSmith:
-		InitArmorBlackSmithScreen(win, myUtil.DescriptionTxt, player)
-		if myState.CurrentBlackSmith == myState.ArmorBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
-			ArmorBlackSmithClickEvent(win, win.MousePosition(), player)
-		}
+		// case myState.ArmorBlackSmith:
+		// 	InitArmorBlackSmithScreen(win, myUtil.DescriptionTxt, player)
+		// 	if myState.CurrentBlackSmith == myState.ArmorBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
+		// 		ArmorBlackSmithClickEvent(win, win.MousePosition(), player)
+		// 	}
 		// case myState.AccessoryBlackSmith:
 		// 	InitAccessoryBlackSmithScreen(win, myUtil.DescriptionTxt, player)
 		// 	if myState.CurrentBlackSmith == myState.AccessoryBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
@@ -252,10 +252,14 @@ func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPla
 				tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[i+1][25], 64)
 				tempOP4 = tempWeaponEnhancement * coefficient
 <<<<<<< HEAD
+<<<<<<< HEAD
 				//log.Println("player", coefficient, tempWeaponEnhancement)
 =======
 				log.Println("player", coefficient, tempWeaponEnhancement)
 >>>>>>> 97b2112 (強化要素の追加)
+=======
+				//log.Println("player", coefficient, tempWeaponEnhancement)
+>>>>>>> 7d1824f (v1.0.3test)
 			}
 		}
 
