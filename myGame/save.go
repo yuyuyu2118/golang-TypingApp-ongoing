@@ -992,8 +992,6 @@ func SaveFileItemsCheckUpdateV101(saveFilePathItems string) {
 			splitLine[0] = "木材"
 		case "生命のエッセンス", "幻の鋼":
 			splitLine[0] = "魔鉱石"
-		case "魔鉱石":
-			splitLine[0] = "小さな宝石"
 		case "雷の結晶", "エネルギーの粉":
 			splitLine[0] = "鉄鉱石"
 		case "導電金属":
