@@ -109,7 +109,7 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 			coefficient, _ := strconv.ParseFloat(value[9][i], 64)
 			tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[i+1][25], 64)
 			tempOP4 = tempWeaponEnhancement * coefficient
-			log.Println("player", coefficient, tempWeaponEnhancement)
+			//log.Println("player", coefficient, tempWeaponEnhancement)
 			WeaponEnhancement[i] = strconv.FormatFloat(tempOP4, 'f', 2, 64)
 		}
 	}
