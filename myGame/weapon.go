@@ -577,7 +577,7 @@ func WeaponBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myP
 			coefficient, _ := strconv.ParseFloat(loadContent[9][i], 64)
 			tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[i+1][25], 64)
 			tempOP4 = tempWeaponEnhancement * coefficient
-			log.Println("player", coefficient, tempWeaponEnhancement)
+			//log.Println("player", coefficient, tempWeaponEnhancement)
 		}
 	}
 
@@ -683,7 +683,7 @@ func InitWeaponBlackSmith(win *pixelgl.Window, Txt *text.Text, botText string, p
 }
 
 func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) {
-	loadContent := SaveFileLoad(SaveFilePath)
+	//loadContent := SaveFileLoad(SaveFilePath)
 
 	if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key1)) && (player.PossessedWeapon[0] == "1") {
 		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[1][1])
@@ -771,7 +771,7 @@ func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player 
 }
 
 func DescriptionWeaponBlackSmith(win *pixelgl.Window, descWeapon [][]string, num int) {
-	loadContent = SaveFileLoad(SaveFilePath)
+	//loadContent = SaveFileLoad(SaveFilePath)
 	temp, _ := CountMyItems(SaveFilePathItems)
 
 	//TODO: Tabを押している間は強化素材等の情報を表示する
