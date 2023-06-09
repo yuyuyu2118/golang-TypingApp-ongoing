@@ -161,6 +161,7 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 			tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[i+1][25], 64)
 			tempOP4 = tempWeaponEnhancement * coefficient
 <<<<<<< HEAD
+<<<<<<< HEAD
 			//log.Println("player", coefficient, tempWeaponEnhancement)
 			WeaponEnhancement[i] = strconv.FormatFloat(tempOP4, 'f', 2, 64)
 		}
@@ -172,6 +173,9 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 >>>>>>> d236a68 (途中):player/player.go
 =======
 			log.Println("player", coefficient, tempWeaponEnhancement)
+=======
+			//log.Println("player", coefficient, tempWeaponEnhancement)
+>>>>>>> 7d1824f (v1.0.3test)
 			WeaponEnhancement[i] = strconv.FormatFloat(tempOP4, 'f', 2, 64)
 		}
 >>>>>>> 97b2112 (強化要素の追加)

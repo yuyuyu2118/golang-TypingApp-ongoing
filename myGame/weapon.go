@@ -578,10 +578,14 @@ func WeaponBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myP
 			tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[i+1][25], 64)
 			tempOP4 = tempWeaponEnhancement * coefficient
 <<<<<<< HEAD
+<<<<<<< HEAD
 			//log.Println("player", coefficient, tempWeaponEnhancement)
 =======
 			log.Println("player", coefficient, tempWeaponEnhancement)
 >>>>>>> 6ee4331 (playerパッケージの名称変更)
+=======
+			//log.Println("player", coefficient, tempWeaponEnhancement)
+>>>>>>> 7d1824f (v1.0.3test)
 		}
 	}
 
@@ -689,6 +693,7 @@ func InitWeaponBlackSmith(win *pixelgl.Window, Txt *text.Text, botText string, p
 
 func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) {
 	//loadContent := SaveFileLoad(SaveFilePath)
+<<<<<<< HEAD
 
 	if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key1)) && (player.PossessedWeapon[0] == "1") {
 		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[1][1])
@@ -874,6 +879,8 @@ func InitWeaponBlackSmith(win *pixelgl.Window, Txt *text.Text, botText string, p
 
 func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) {
 	loadContent := SaveFileLoad(SaveFilePath)
+=======
+>>>>>>> 7d1824f (v1.0.3test)
 
 	if myState.CurrentBelong == myState.WeaponBelong && (win.JustPressed(pixelgl.Key1)) && (player.PossessedWeapon[0] == "1") {
 		player.EquipmentWeapon[0] = strings.NewReplacer("【", "", "】", "").Replace(descWeapon[1][1])
@@ -961,8 +968,12 @@ func WeaponBlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player 
 }
 
 func DescriptionWeaponBlackSmith(win *pixelgl.Window, descWeapon [][]string, num int) {
+<<<<<<< HEAD
 	loadContent = SaveFileLoad(SaveFilePath)
 >>>>>>> d236a68 (途中)
+=======
+	//loadContent = SaveFileLoad(SaveFilePath)
+>>>>>>> 7d1824f (v1.0.3test)
 	temp, _ := CountMyItems(SaveFilePathItems)
 
 	//TODO: Tabを押している間は強化素材等の情報を表示する
