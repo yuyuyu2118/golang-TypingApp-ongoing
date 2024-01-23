@@ -61,3 +61,6 @@ TypingRPGに使用されている素材は、以下のサイトから提供さ�
 [https://mplus-fonts.osdn.jp/about2.html]
 [https://sushida.net/]
 [https://rosemilktea.booth.pm/]
+
+## TODO
+ちゃんと遊べるように修正して公開
