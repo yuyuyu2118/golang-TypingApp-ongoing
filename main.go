@@ -83,23 +83,21 @@ func run() {
 			initScreenInformation(win, myUtil.BasicTxt, player)
 
 			enemy.StartEnemyAnimation(win, &Last, &Frame)
-			player.SetPlayerBattleInf(win, myUtil.BasicTxt) //TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
+			player.SetPlayerBattleInf(win, myUtil.BasicTxt)
 			battle.InitPlayingBattle(win, player, time.Since(startTime))
-			//myUtil.UpdatePlayingTimer(myState.CurrentGS, &startTime)
 		case myState.BattleEnemyScreen: //敵行動画面
 			initScreenInformation(win, myUtil.BasicTxt, player)
 
 			enemy.StartEnemyAnimation(win, &Last, &Frame)
-			player.SetPlayerBattleInf(win, myUtil.BasicTxt) //TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
+			player.SetPlayerBattleInf(win, myUtil.BasicTxt)
 			battle.InitEnemyBattle(win, player, time.Since(startTime))
 			myUtil.UpdateEnemyTimer(myState.CurrentGS, &startTime)
 		case myState.SkillScreen: //スキル画面
 			initScreenInformation(win, myUtil.BasicTxt, player)
 
 			enemy.StartEnemyAnimation(win, &Last, &Frame)
-			player.SetPlayerBattleInf(win, myUtil.BasicTxt) //TODO 手持ちアイテムバー、攻撃力や防御力の表示UI追加
+			player.SetPlayerBattleInf(win, myUtil.BasicTxt)
 			battle.InitSkillBattle(win, player, time.Since(startTime))
-			//myUtil.UpdateEnemyTimer(myState.CurrentGS, &startTime)
 		case myState.EndScreen: //リザルト画面
 			loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
 			event.InitializeEventInstance(loadContent)
