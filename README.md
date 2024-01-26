@@ -35,6 +35,7 @@ TypingRPGは、キーボードで英単語を入力しながらモンスター�
     - この画面でEnterキーを押すと敵の攻撃が開始します。
 - プレイヤーのスキル発動
     - 職業毎に異なるスキルが発生します。
+![battleGif](assets/readmeGif/battleScreen.gif)
 
 
 
