@@ -37,11 +37,11 @@ func run() {
 	event.InitializeEventInstance(loadContent)              // イベントのインスタンスを初期化します。
 	enemy.CreateEnemySettings()                             // 敵のステータスを初期化します。
 
-	imd := imdraw.New(nil)
-	setTime := time.Now()
-	fadeDuration := 1.0
+	imd := imdraw.New(nil) // フェードイン・アウト用の描画オブジェクトを初期化します。
+	setTime := time.Now()  // フェードイン・アウトの開始時間を設定します。
+	fadeDuration := 1.0    // フェードイン・アウトの時間を設定します。
 
-	startTime = time.Now()
+	startTime = time.Now() // ゲーム開始時間を設定します。
 
 	for !win.Closed() {
 		switch myState.CurrentGS {
