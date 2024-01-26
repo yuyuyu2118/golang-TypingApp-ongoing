@@ -38,7 +38,6 @@ TypingRPGは、キーボードで英単語を入力しながらモンスター�
 ![battleGif](assets/readmeGif/battleScreen.gif)
 
 
-
 ## 依存関係
 TypingRPGは、以下の外部ライブラリに依存しています。
 
