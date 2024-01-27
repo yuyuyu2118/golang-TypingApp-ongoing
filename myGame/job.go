@@ -1,7 +1,6 @@
 package myGame
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 
@@ -12,6 +11,7 @@ import (
 	"github.com/yuyuyu2118/typingGo/myPlayer"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"golang.org/x/image/colornames"
 )
 
@@ -54,26 +54,19 @@ var jobName = []string{"見習い剣士", "狩人", "モンク", "魔法使い",
 var currentjobState JobState
 
 func InitJob(win *pixelgl.Window, Txt *text.Text) {
-	xOffSet := myPos.TopLefPos(win, Txt).X + 400
-	yOffSet := myPos.TopLefPos(win, Txt).Y - 50
-	txtPos := pixel.V(0, 0)
+	jobMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 1, 0.4)
+	jobMessageBox.DrawMessageBox()
 
-	for i, v := range jobName {
+	var jobOptions string
+	for i, job := range jobName {
 		if event.UnlockNewJobEventInstance.Jobs[i] {
-			jobSlice[i] = strconv.Itoa(i+1) + ". " + v
+			jobOptions += strconv.Itoa(i+1) + ". " + job + "\n"
+		} else {
+			jobOptions += strconv.Itoa(i+1) + ". ???\n"
 		}
 	}
 
-	for _, jobName := range jobSlice {
-		Txt.Clear()
-		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, jobName)
-		yOffSet -= Txt.LineHeight + 25
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		Txt.Draw(win, tempPosition)
-		jobButtonSlice = append(jobButtonSlice, Txt.Bounds().Moved(txtPos))
-	}
+	jobMessageBox.DrawMessageTxt("どのジョブを選びますか？キーボードに対応する数字を入力してください。\n" + jobOptions + "\nBackSpaceキーでタイトルに戻る")
 
 	for i := 0; i < len(keyToJob)-1; i++ {
 		key := pixelgl.Button(i + int(pixelgl.Key1))

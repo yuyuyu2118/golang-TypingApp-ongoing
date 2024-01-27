@@ -56,7 +56,6 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 			txtPos = pixel.V(xOffSet, yOffSet1Line)
 			tempPosition := pixel.IM.Moved(txtPos)
 			Txt.Draw(win, tempPosition)
-			gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
 			itemCount++
 		} else if itemCount >= 15 && itemCount <= 29 {
 			xOffSet = 400
@@ -67,7 +66,6 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 			txtPos = pixel.V(xOffSet, yOffSet2Line)
 			tempPosition := pixel.IM.Moved(txtPos)
 			Txt.Draw(win, tempPosition)
-			gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
 			itemCount++
 		} else if itemCount > 30 && itemCount <= 45 {
 			xOffSet += 400
@@ -78,7 +76,6 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 			txtPos = pixel.V(xOffSet, yOffSet3Line)
 			tempPosition := pixel.IM.Moved(txtPos)
 			Txt.Draw(win, tempPosition)
-			gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
 			itemCount++
 		}
 	}

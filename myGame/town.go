@@ -1,7 +1,6 @@
 package myGame
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/faiface/pixel"
@@ -9,6 +8,7 @@ import (
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"golang.org/x/image/colornames"
 )
 
@@ -26,24 +26,9 @@ var (
 )
 
 func InitTown(win *pixelgl.Window, Txt *text.Text) {
-	xOffSet := myPos.TopLefPos(win, Txt).X + 400
-	yOffSet := myPos.TopLefPos(win, Txt).Y - 50
-	txtPos := pixel.V(0, 0)
-
-	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
-	//townSlice := []string{"1. 武器店", "2. 防具店", "3. アクセサリー店", "4. 鍛冶屋", "5. 装備"}
-	townSlice := []string{"1. 武器店", "2. 防具店", "3. アクセサリー店", "4. 装備"}
-
-	for _, townName := range townSlice {
-		Txt.Clear()
-		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, townName)
-		yOffSet -= Txt.LineHeight + 25
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		Txt.Draw(win, tempPosition)
-		townButtonSlice = append(townButtonSlice, Txt.Bounds().Moved(txtPos))
-	}
+	townMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 1, 0.4)
+	townMessageBox.DrawMessageBox()
+	townMessageBox.DrawMessageTxt("どのお店へ行きますか？キーボードに対応する数字を入力してください。\n1. 武器店\n2. 防具店\n3. アクセサリー店\n4. 装備\n\nBackSpaceキーでタイトルに戻る")
 }
 
 func TownClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {

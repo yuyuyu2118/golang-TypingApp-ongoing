@@ -68,8 +68,6 @@ func InitStageSlect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	botText := "だれと戦う? BackSpace.戻る"
-	InitGoTo(win, Txt, botText)
 	InitStage(win, Txt)
 }
 
@@ -77,8 +75,6 @@ func InitTownScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	botText := "どこに行く? BackSpace.戻る"
-	InitGoTo(win, Txt, botText)
 	InitTown(win, Txt)
 }
 
@@ -117,8 +113,6 @@ func InitJobSelect(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	botText := "どれに転職する? BackSpace.戻る"
-	InitGoTo(win, Txt, botText)
 	InitJob(win, Txt)
 }
 

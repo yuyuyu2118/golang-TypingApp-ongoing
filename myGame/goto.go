@@ -1,7 +1,6 @@
 package myGame
 
 import (
-	"fmt"
 	_ "image/png"
 	"log"
 
@@ -10,6 +9,7 @@ import (
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"golang.org/x/image/colornames"
 )
 
@@ -24,40 +24,14 @@ var (
 	goTo6Button = pixel.Rect{}
 )
 
-var (
-	gotoButtonSlice = []pixel.Rect{}
-)
-
+// GoToScreenの初期化
 func InitGoTo(win *pixelgl.Window, Txt *text.Text, bottleText string) {
-
-	xOffSet := 100.0
-	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
-	txtPos := pixel.V(0, 0)
-
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, bottleText)
-	tempPosition = myPos.BotCenPos(win, Txt)
-	myPos.DrawPos(win, Txt, tempPosition)
-
-	//gotoSlice := []string{"1. Dungeon", "2. Town", "3. Equipment", "4. Job", "5. Save", "6. EXIT"}
-	gotoSlice := []string{"1. ダンジョン", "2. 町", "3. ジョブ", "4. 鍛冶屋"}
-
-	for _, gotoName := range gotoSlice {
-		Txt.Clear()
-		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, gotoName)
-		yOffSet -= Txt.LineHeight + 40
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		Txt.Draw(win, tempPosition)
-		gotoButtonSlice = append(gotoButtonSlice, Txt.Bounds().Moved(txtPos))
-	}
+	gotoMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 1, 0.4)
+	gotoMessageBox.DrawMessageBox()
+	gotoMessageBox.DrawMessageTxt("どこへ行きますか？キーボードに対応する数字を入力してください。\n1. ダンジョン\n2. 町\n3. ジョブ\n4. 鍛冶屋\n\nBackSpaceキーでタイトルに戻る")
 }
 
 func GoToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
-	//TODO ページを作成したら追加
-	//TODO: 全部この形式にする　やばいバグ
 	if myState.CurrentGS == myState.GoToScreen && (win.JustPressed(pixelgl.Key1)) {
 		myState.CurrentGS = myState.StageSelect
 		log.Println("GoToScreen->Dungeon")

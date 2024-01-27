@@ -1,7 +1,6 @@
 package myGame
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 
@@ -11,6 +10,7 @@ import (
 	event "github.com/yuyuyu2118/typingGo/Event"
 	"github.com/yuyuyu2118/typingGo/myPos"
 	"github.com/yuyuyu2118/typingGo/myState"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"golang.org/x/image/colornames"
 )
 
@@ -60,29 +60,28 @@ var (
 var currentdungeonState DungeonState
 
 func InitStage(win *pixelgl.Window, Txt *text.Text) {
-	xOffSet := myPos.TopLefPos(win, Txt).X + 400
-	yOffSet := myPos.TopLefPos(win, Txt).Y
-	txtPos := pixel.V(0, 0)
-
 	for i, v := range stageName {
 		if event.UnlockNewDungeonEventInstance.Dungeons[i] {
 			stageSlice[i] = strconv.Itoa(i+1) + ". " + v
 		}
 	}
+	// 10番目のダンジョンの表示を修正
 	if event.UnlockNewDungeonEventInstance.Dungeons[9] {
 		stageSlice[9] = "0. " + stageName[9]
 	}
 
-	for _, dungeonName := range stageSlice {
-		Txt.Clear()
-		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, dungeonName)
-		yOffSet -= Txt.LineHeight + 25
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		Txt.Draw(win, tempPosition)
-		dungeonButtonSlice = append(dungeonButtonSlice, Txt.Bounds().Moved(txtPos))
+	stageMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 1, 0.4)
+	stageMessageBox.DrawMessageBox()
+	var dungeonOptions string
+	for i, dungeonName := range stageSlice {
+		// アンロックされていないダンジョンは "1. ???" のように表示
+		if event.UnlockNewDungeonEventInstance.Dungeons[i] {
+			dungeonOptions += strconv.Itoa(i+1) + ". " + stageName[i] + "\n"
+		} else {
+			dungeonOptions += dungeonName + "\n" // 既に "1. ???" の形式である
+		}
 	}
+	stageMessageBox.DrawMessageTxt("どのモンスターと戦いますか？キーボードに対応する数字を入力してください。\n" + dungeonOptions + "\nBackSpaceキーでタイトルに戻る")
 
 	for i := 0; i < len(keyToDungeon)-1; i++ {
 		key := pixelgl.Button(i + int(pixelgl.Key1))
@@ -94,10 +93,6 @@ func InitStage(win *pixelgl.Window, Txt *text.Text) {
 	if win.Pressed(pixelgl.Key0) && event.UnlockNewDungeonEventInstance.Dungeons[9] {
 		currentdungeonState = dungeon10
 	}
-	//TODO: ダンジョン説明を追加する
-	// if currentdungeonState >= dungeon1 && currentdungeonState <= dungeon10 {
-	// 	DescriptionWeapon(win, descWeapon, int(currentdungeonState)-1)
-	// }
 }
 
 func StageClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
