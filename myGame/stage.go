@@ -81,7 +81,7 @@ func InitStage(win *pixelgl.Window, Txt *text.Text) {
 			dungeonOptions += dungeonName + "\n" // 既に "1. ???" の形式である
 		}
 	}
-	stageMessageBox.DrawMessageTxt("どのモンスターと戦いますか？キーボードに対応する数字を入力してください。\n" + dungeonOptions + "\nBackSpaceキーでタイトルに戻る")
+	stageMessageBox.DrawMessageTxt("どのモンスターと戦いますか？キーボードに対応する数字を入力してください。\n" + dungeonOptions + "BackSpaceキーでタイトルに戻る")
 
 	for i := 0; i < len(keyToDungeon)-1; i++ {
 		key := pixelgl.Button(i + int(pixelgl.Key1))
