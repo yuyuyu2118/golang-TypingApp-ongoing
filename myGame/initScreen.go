@@ -29,13 +29,14 @@ func InitStartScreen(win *pixelgl.Window, StartTxt *text.Text, alpha float64, an
 
 	myUtil.CompletedTxt.Color = txtColor
 
-	startLines := []string{
-		"タイピングバトルRPG",
-		"\n",
-		"Enterキーを押してスタート",
-	}
-
-	myPos.LineCenterAlign(win, startLines, StartTxt, "center")
+	// startLines := []string{
+	// 	"タイピングバトルRPG",
+	// 	"\n",
+	// 	"Enterキーを押してスタート",
+	// }
+	// DrawCenteredText関数を使用してテキストを中央に描画
+	myPos.RelativeDraw(win, StartTxt, "タイピングバトルRPG", 0.5, 0.55)
+	myPos.RelativeDraw(win, StartTxt, "Enterキーを押してスタート", 0.5, 0.45)
 
 	//GoToScreenに行く
 	if win.JustPressed(pixelgl.KeyEnter) {

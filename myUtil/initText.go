@@ -23,6 +23,7 @@ var (
 	HunterBulletTxt *text.Text
 	CompletedTxt    *text.Text
 	StatusTxt       *text.Text
+	MessageTxt      *text.Text
 	Magic1Txt       *text.Text
 	Magic2Txt       *text.Text
 	Magic3Txt       *text.Text
@@ -46,6 +47,7 @@ func InitTxtFontLoading() {
 	HunterBulletTxt = InitAnyJapanText(JapanFontPathBold, 40, colornames.White)
 	CompletedTxt = InitAnyJapanText(JapanFontPathBold, 70, colornames.White)
 	StatusTxt = InitAnyJapanText(JapanFontPathBold, 35, colornames.White)
+	MessageTxt = InitAnyJapanText(JapanFontPathBold, 25, colornames.White)
 
 	var tempKanjiString = "魔法力: "
 	var tempKanji []rune
