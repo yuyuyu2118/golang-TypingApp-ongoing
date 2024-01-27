@@ -15,7 +15,7 @@ import (
 
 var (
 	wordsNum                = 0
-	wordsJapanese, words, _ = LoadWordsFromCSV("assets\\question\\question2_6.csv")
+	wordsJapanese, words, _ = LoadWordsFromCSV("assets\\question\\word_list_2-6_chars.csv")
 	index                   = 0
 	yourTime                = 0.0
 
