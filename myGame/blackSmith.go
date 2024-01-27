@@ -14,13 +14,8 @@ import (
 	"github.com/yuyuyu2118/typingGo/myUtil"
 )
 
-// var (
-// 	japanFontPath = "assets/fonts/PixelMplus12-Regular.ttf"
-// )
-
 var (
 	blackSmithButtonSlice = []pixel.Rect{}
-	// weaponBelongButtonSlice = []pixel.Rect{}
 )
 
 var blackSmithSlice = []string{}
@@ -49,34 +44,8 @@ func InitBlackSmith(win *pixelgl.Window, Txt *text.Text, player *myPlayer.Player
 		if myState.CurrentBlackSmith == myState.WeaponBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
 			WeaponBlackSmithClickEvent(win, win.MousePosition(), player)
 		}
-		// case myState.ArmorBlackSmith:
-		// 	InitArmorBlackSmithScreen(win, myUtil.DescriptionTxt, player)
-		// 	if myState.CurrentBlackSmith == myState.ArmorBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
-		// 		ArmorBlackSmithClickEvent(win, win.MousePosition(), player)
-		// 	}
-		// case myState.AccessoryBlackSmith:
-		// 	InitAccessoryBlackSmithScreen(win, myUtil.DescriptionTxt, player)
-		// 	if myState.CurrentBlackSmith == myState.AccessoryBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
-		// 		AccessoryBlackSmithClickEvent(win, win.MousePosition(), player)
-		// 	}
-		// case myState.MaterialsBlackSmith:
-		// 	InitMaterialsBlackSmithScreen(win, myUtil.DescriptionTxt)
-		// 	if myState.CurrentBlackSmith == myState.MaterialsBlackSmith && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.Key6, pg.Key7, pg.Key8, pg.Key9, pg.Key0, pg.KeyBackspace) {
-		// 		myState.CurrentBlackSmith = BlackSmithClickEvent(win, win.MousePosition())
-		// 	}
 	}
 }
-
-// func BlackSmithClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) myState.GameState {
-// 	if len(equipmentButtonSlice) > 0 {
-// 		if myState.CurrentGS == myState.EquipmentScreen && (win.JustPressed(pixelgl.KeyBackspace)) {
-// 			myState.CurrentGS = myState.GoToScreen
-// 			getItemBool = false
-// 			log.Println("equipment->GoToScreen")
-// 		}
-// 	}
-// 	return myState.CurrentGS
-// }
 
 type BlackSmithState int
 

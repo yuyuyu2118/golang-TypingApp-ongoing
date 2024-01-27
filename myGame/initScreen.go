@@ -35,26 +35,6 @@ func InitStartScreen(win *pixelgl.Window, StartTxt *text.Text, alpha float64, an
 		"Enterキーを押してスタート",
 	}
 
-	// startPos := pixel.V(win.Bounds().Center().X, win.Bounds().Max.Y-StartTxt.LineHeight*float64(len(startLines)))
-
-	// // 各行の終了位置を計算
-	// lineEndPositions := make([]pixel.Vec, len(startLines))
-	// for idx, line := range startLines {
-	// 	centerX := win.Bounds().Center().Sub(StartTxt.BoundsOf(line).Center()).X
-	// 	lineEndPositions[idx] = pixel.V(centerX, win.Bounds().Center().Y-StartTxt.LineHeight*float64(len(startLines)/2-idx))
-	// }
-
-	// for idx, line := range startLines {
-	// 	endPos := lineEndPositions[idx]
-
-	// 	if animationStartTime.IsZero() {
-	// 		animationStartTime = time.Now()
-	// 	}
-
-	// 	//animationStartTime.Add(time.Duration(animationDuration*float64(idx))*time.Second)
-	// 	myUtil.AnimateText(win, StartTxt, myUtil.CompletedText, []string{line}, animationStartTime, startPos, endPos, animationDuration)
-	// }
-
 	myPos.LineCenterAlign(win, startLines, StartTxt, "center")
 
 	//GoToScreenに行く

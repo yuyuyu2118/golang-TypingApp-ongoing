@@ -59,8 +59,6 @@ func InitTxtFontLoading() {
 	Magic4Txt = InitMagicJapanText(JapanFontPath, 55, colornames.White, tempKanji)
 	Magic5Txt = InitMagicJapanText(JapanFontPath, 60, colornames.White, tempKanji)
 	Magic6Txt = InitMagicJapanText(JapanFontPath, 65, colornames.White, tempKanji)
-	// startTxt := initializeAnyText(fontPath, 80, colornames.White)
-	// endTxt := initializeAnyText(fontPath, 60, colornames.White)
 }
 
 func initializeText(face font.Face, color color.Color) *text.Text {

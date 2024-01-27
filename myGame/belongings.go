@@ -77,19 +77,6 @@ func EquipmentClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlay
 }
 
 func BelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.BelongState {
-	// if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key1)) {
-	// 	myState.CurrentBelong = myState.WeaponBelong
-	// 	log.Println("WeaponBelong->WeaponBelong")
-	// } else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key2)) {
-	// 	myState.CurrentBelong = myState.ArmorBelong
-	// 	log.Println("WeaponBelong->ArmorBelong")
-	// } else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key3)) {
-	// 	myState.CurrentBelong = myState.AccessoryBelong
-	// 	log.Println("WeaponBelong->AccessoryBelong")
-	// } else if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.Key4)) {
-	// 	myState.CurrentBelong = myState.MaterialsBelong
-	// 	log.Println("WeaponBelong->MaterialsBelong")
-	// }
 	if (myState.CurrentBelong == myState.WeaponBelong || myState.CurrentBelong == myState.ArmorBelong || myState.CurrentBelong == myState.AccessoryBelong || myState.CurrentBelong == myState.MaterialsBelong) && (win.JustPressed(pixelgl.KeyBackspace)) {
 		myState.CurrentGS = myState.GoToScreen
 		myState.CurrentBelong = myState.WeaponBelong

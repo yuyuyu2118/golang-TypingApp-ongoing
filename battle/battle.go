@@ -86,11 +86,6 @@ func BattleTypingTest(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapse
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
 			if typed != "" {
-				// if (temp[index] == 'j' && index < len(question)) && typed[0] == 'z' {
-				// 	log.Println("koko", temp[index])
-				// 	question = strings.NewReplacer("j", "").Replace(words[wordsNum])
-				// 	temp = []byte(question)
-				// }
 				if typed[0] == temp[index] && index < len(question) {
 					index++
 					collectType++

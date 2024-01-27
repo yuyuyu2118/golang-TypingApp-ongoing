@@ -162,8 +162,6 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 }
 
 func SetPlayerSkillBarVertical(win *pixelgl.Window, player *PlayerStatus) {
-	// log.Println("win.Bounds().Max.X=", win.Bounds().Max.X)
-	// log.Println("win.Bounds().Max.Y=", win.Bounds().Max.Y)
 	rect := pixel.R(
 		win.Bounds().Max.X-win.Bounds().Max.X/15,
 		win.Bounds().Min.Y+win.Bounds().Max.Y/9,
@@ -358,11 +356,6 @@ func SetPlayerSkillBarOutHorizontal(win *pixelgl.Window, player *PlayerStatus) {
 }
 
 func (player *PlayerStatus) SetPlayerBattleInf(win *pixelgl.Window, Txt *text.Text) {
-	// SetPlayerSkillBarVertical(win, player)
-	// SetPlayerSkillBarOutVertical(win, player)
-	// SetPlayerHPBarOutVertical(win, player)
-	// SetPlayerHPBarVertical(win, player)
-
 	SetPlayerSkillBarHorizontal(win, player)
 	SetPlayerSkillBarOutHorizontal(win, player)
 	SetPlayerHPBarOutHorizontal(win, player)
@@ -390,7 +383,6 @@ func InitPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	txtPos := pixel.V(xOffSet, yOffSet)
 	tempPosition := pixel.IM.Moved(myPos.BottleLeftPos(win, Txt).Add(txtPos))
 	Txt.Draw(win, tempPosition)
-	// log.Println("表示", player.OP)
 }
 
 func TempFunc() {
