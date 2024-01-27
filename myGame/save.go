@@ -88,27 +88,12 @@ func SaveFileCheck(saveFilePath string) {
 		"WeaponName,,,,,,,,,,,,,,,",
 		"ArmorName,,,,,,,,,,,,,,,",
 		"AccessoryName,,,,,,,,,,,,,,,",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 97b2112 (強化要素の追加)
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
 		"0,0,0,0,0,0,0,0,0,0,,,,,,",
-<<<<<<< HEAD
-=======
-		",,,,,,,,,,,,,,,",
-		",,,,,,,,,,,,,,,",
-		",,,,,,,,,,,,,,,",
-		",,,,,,,,,,,,,,,",
-		",,,,,,,,,,,,,,,",
-		",,,,,,,,,,,,,,,",
->>>>>>> d236a68 (途中)
-=======
->>>>>>> 97b2112 (強化要素の追加)
 		",,,,,,,,,,,,,,,",
 		",,,,,,,,,,,,,,,",
 		",,,,,,,,,,,,,,,",
@@ -419,8 +404,6 @@ func SaveAccessoryPurchaseEvent(saveFilePath string, saveNum int, purchaseAccess
 	time.Sleep(10 * time.Millisecond)
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 var weaponNumEnhance = []string{"weapon1", "weapon2", "weapon3", "weapon4", "weapon5", "weapon6", "weapon7", "weapon8", "weapon9", "weapon0"}
 
 func SaveWeaponEnhancementEvent(saveFilePath string, saveNum int, enhancementWeapon string, player *myPlayer.PlayerStatus) {
@@ -435,28 +418,6 @@ func SaveWeaponEnhancementEvent(saveFilePath string, saveNum int, enhancementWea
 		}
 	}
 
-=======
-func SaveWeaponEnhancementEvent(saveFilePath string, saveNum int, enhancementWeapon string, player *player.PlayerStatus) {
-=======
-var weaponNumEnhance = []string{"weapon1", "weapon2", "weapon3", "weapon4", "weapon5", "weapon6", "weapon7", "weapon8", "weapon9", "weapon0"}
-
-func SaveWeaponEnhancementEvent(saveFilePath string, saveNum int, enhancementWeapon string, player *myPlayer.PlayerStatus) {
->>>>>>> 97b2112 (強化要素の追加)
-	var tempInt int
-	loadContent := SaveFileLoad(saveFilePath)
-
-	for i, num := range weaponNumEnhance {
-		if enhancementWeapon == num {
-			tempInt, _ = strconv.Atoi(loadContent[9][i])
-			loadContent[9][i] = strconv.Itoa(tempInt + 1)
-			player.WeaponEnhancement[i] = loadContent[9][i]
-		}
-	}
-<<<<<<< HEAD
->>>>>>> d236a68 (途中)
-=======
-
->>>>>>> 97b2112 (強化要素の追加)
 	saveContent := strings.Join(loadContent[saveNum], ",")
 
 	content, err := ioutil.ReadFile(saveFilePath)
@@ -482,15 +443,7 @@ func SaveWeaponEnhancementEvent(saveFilePath string, saveNum int, enhancementWea
 	time.Sleep(10 * time.Millisecond)
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 // func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, player *myPlayer.PlayerStatus) {
-=======
-// func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, player *player.PlayerStatus) {
->>>>>>> d236a68 (途中)
-=======
-// func SaveWeaponSellEvent(saveFilePath string, saveNum int, sellWeapon string, player *myPlayer.PlayerStatus) {
->>>>>>> 97b2112 (強化要素の追加)
 // 	var tempInt int
 // 	loadContent := SaveFileLoad(saveFilePath)
 // 	if sellWeapon == "weapon1" {

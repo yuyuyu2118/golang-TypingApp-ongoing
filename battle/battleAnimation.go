@@ -119,24 +119,12 @@ func PlayerAttack(win *pixelgl.Window, damage float64, position pixel.Vec) {
 	}()
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const (
 	uniqueSkillAnimationSpeed    = 0.04
 	uniqueSkillAnimationFPS      = 180
 	uniqueSkillAnimationDuration = 5 * time.Second
 )
 
-=======
->>>>>>> 4715f1e (武器の固有スキルを設定)
-=======
-const (
-	uniqueSkillAnimationSpeed    = 0.04
-	uniqueSkillAnimationFPS      = 180
-	uniqueSkillAnimationDuration = 5 * time.Second
-)
-
->>>>>>> c9826ea (武器全種のスキル追加)
 type UniqueSkillAnimation struct {
 	Text       string
 	Position   pixel.Vec
@@ -150,18 +138,8 @@ var UniqueSkillAnimations []*UniqueSkillAnimation
 
 func RunUniqueSkillAnimation(win *pixelgl.Window, anim *UniqueSkillAnimation, txtColor color.Color) {
 	for anim.Progress <= 1.0 {
-<<<<<<< HEAD
-<<<<<<< HEAD
 		anim.Progress += uniqueSkillAnimationSpeed
 		time.Sleep(time.Second / uniqueSkillAnimationFPS)
-=======
-		anim.Progress += animationSpeed
-		time.Sleep(time.Second / animationFPS)
->>>>>>> 4715f1e (武器の固有スキルを設定)
-=======
-		anim.Progress += uniqueSkillAnimationSpeed
-		time.Sleep(time.Second / uniqueSkillAnimationFPS)
->>>>>>> c9826ea (武器全種のスキル追加)
 		if anim.RemoveFlag {
 			close(anim.Done)
 			return
@@ -195,15 +173,7 @@ func DrawUniqueSkillAnimation(win *pixelgl.Window, anim *UniqueSkillAnimation, t
 
 		// ランダムなオフセットを生成（初回のみ）
 		if anim.Offset == pixel.ZV {
-<<<<<<< HEAD
-<<<<<<< HEAD
 			anim.Offset = pixel.V(rand.Float64(), rand.Float64())
-=======
-			anim.Offset = pixel.V(rand.Float64()*250-20, rand.Float64()*70-20)
->>>>>>> 4715f1e (武器の固有スキルを設定)
-=======
-			anim.Offset = pixel.V(rand.Float64(), rand.Float64())
->>>>>>> c9826ea (武器全種のスキル追加)
 		}
 
 		alpha := 1.0
@@ -229,11 +199,6 @@ func RemoveUniqueSkillAnimation(anim *UniqueSkillAnimation) {
 
 var tempTxt string
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 6ee4331 (playerパッケージの名称変更)
 func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txtColor color.Color, player *myPlayer.PlayerStatus, assignTxt string) {
 
 	if player.EquipmentWeapon[0] == weaponName[3] {
@@ -282,70 +247,6 @@ func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txt
 		tempTxt = assignTxt
 	} else if player.EquipmentAccessory[0] == accessoryName[9] {
 		tempTxt = assignTxt
-=======
-func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txtColor color.Color, player *player.PlayerStatus) {
-=======
-func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txtColor color.Color, player *player.PlayerStatus, assignTxt string) {
->>>>>>> c9826ea (武器全種のスキル追加)
-
-	if player.EquipmentWeapon[0] == weaponName[3] {
-		tempTxt = assignTxt
-	} else if player.EquipmentWeapon[0] == weaponName[4] {
-		tempTxt = assignTxt
-	} else if player.EquipmentWeapon[0] == weaponName[5] {
-		tempTxt = assignTxt
-	} else if player.EquipmentWeapon[0] == weaponName[6] {
-		tempTxt = assignTxt
-	} else if player.EquipmentWeapon[0] == weaponName[7] {
-		tempTxt = assignTxt
-	} else if player.EquipmentWeapon[0] == weaponName[8] {
-		tempTxt = assignTxt
-	} else if player.EquipmentWeapon[0] == weaponName[9] {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		tempTxt = "EnemyOP "
->>>>>>> 4715f1e (武器の固有スキルを設定)
-=======
-		tempTxt = "ShadowCurse! "
-=======
-		tempTxt = assignTxt
->>>>>>> f10e2c1 (防具のスキル追加完了)
-	}
-
-	if player.EquipmentArmor[0] == armorName[3] {
-		tempTxt = assignTxt
-	} else if player.EquipmentArmor[0] == armorName[4] {
-		tempTxt = assignTxt
-	} else if player.EquipmentArmor[0] == armorName[5] {
-		tempTxt = assignTxt
-	} else if player.EquipmentArmor[0] == armorName[6] {
-		tempTxt = assignTxt
-	} else if player.EquipmentArmor[0] == armorName[7] {
-		tempTxt = assignTxt
-	} else if player.EquipmentArmor[0] == armorName[8] {
-		tempTxt = assignTxt
-<<<<<<< HEAD
->>>>>>> c9826ea (武器全種のスキル追加)
-=======
-	} else if player.EquipmentArmor[0] == armorName[9] {
-		tempTxt = assignTxt
-	}
-
-	if player.EquipmentAccessory[0] == accessoryName[3] {
-		tempTxt = assignTxt
-	} else if player.EquipmentAccessory[0] == accessoryName[4] {
-		tempTxt = assignTxt
-	} else if player.EquipmentAccessory[0] == accessoryName[5] {
-		tempTxt = assignTxt
-	} else if player.EquipmentAccessory[0] == accessoryName[6] {
-		tempTxt = assignTxt
-	} else if player.EquipmentAccessory[0] == accessoryName[7] {
-		tempTxt = assignTxt
-	} else if player.EquipmentAccessory[0] == accessoryName[8] {
-		tempTxt = assignTxt
-	} else if player.EquipmentAccessory[0] == accessoryName[9] {
-		tempTxt = assignTxt
->>>>>>> f10e2c1 (防具のスキル追加完了)
 	}
 
 	anim := &UniqueSkillAnimation{
@@ -367,15 +268,7 @@ func UniqueSkill(win *pixelgl.Window, tempPoint float64, position pixel.Vec, txt
 
 	go func() {
 		select {
-<<<<<<< HEAD
-<<<<<<< HEAD
 		case <-time.After(uniqueSkillAnimationDuration):
-=======
-		case <-time.After(animationDuration):
->>>>>>> 4715f1e (武器の固有スキルを設定)
-=======
-		case <-time.After(uniqueSkillAnimationDuration):
->>>>>>> c9826ea (武器全種のスキル追加)
 			removeChan <- anim
 		case animToRemove := <-removeChan:
 			RemoveUniqueSkillAnimation(animToRemove)

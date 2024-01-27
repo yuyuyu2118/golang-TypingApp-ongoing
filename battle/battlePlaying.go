@@ -19,15 +19,7 @@ import (
 
 var SkillTimer float64
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 func BattleTypingRookie(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
-=======
-func BattleTypingRookie(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
->>>>>>> 4715f1e (武器の固有スキルを設定)
-=======
-func BattleTypingRookie(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
->>>>>>> 6ee4331 (playerパッケージの名称変更)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -45,29 +37,12 @@ func BattleTypingRookie(win *pixelgl.Window, player *myPlayer.PlayerStatus, elap
 					//PlayerAttack(30, pixel.Vec{X: 0, Y: 0})
 					player.SP += player.BaseSP
 					if index == len(question) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c9826ea (武器全種のスキル追加)
 						AttackRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
 						RecoveryRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
 						SkillTimer += TimerRelationWeaponSkill(win, player, tempTimer)
 						DebuffRelationWeaponSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
 						AttackRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
-<<<<<<< HEAD
-<<<<<<< HEAD
 						BuffRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
-=======
-						AttackRelationSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
-						RecoveryRelationSkill(win, player, &tempWordDamage)
-						SkillTimer += TimerRelationSkill(win, player, tempTimer)
-						DebuffRelationSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
->>>>>>> 4715f1e (武器の固有スキルを設定)
-=======
->>>>>>> c9826ea (武器全種のスキル追加)
-=======
-						BuffRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
->>>>>>> f10e2c1 (防具のスキル追加完了)
 						index = 0
 						wordsNum++
 						enemy.EnemySettings[myGame.StageNum].HP += tempWordDamage
@@ -91,15 +66,7 @@ func BattleTypingRookie(win *pixelgl.Window, player *myPlayer.PlayerStatus, elap
 var bulletLoading = []bool{false, false, false}
 var bulletDamage = []float64{0.0, 0.0, 0.0}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 func BattleTypingHunter(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
-=======
-func BattleTypingHunter(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
->>>>>>> 124dadb (スキル調整)
-=======
-func BattleTypingHunter(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
->>>>>>> 6ee4331 (playerパッケージの名称変更)
 	xOffSet := 100.0
 	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 100
 	txtPos := pixel.V(0, 0)
@@ -209,15 +176,7 @@ func BattleTypingHunter(win *pixelgl.Window, player *myPlayer.PlayerStatus, elap
 	return myState.CurrentGS
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 func BattleTypingMonk(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
-=======
-func BattleTypingMonk(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
->>>>>>> 124dadb (スキル調整)
-=======
-func BattleTypingMonk(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
->>>>>>> 6ee4331 (playerパッケージの名称変更)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -267,15 +226,7 @@ func BattleTypingMonk(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapse
 var magicCollectType = 0.0
 var magicMissType = 0
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 func BattleTypingMagicUser(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
-=======
-func BattleTypingMagicUser(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
->>>>>>> 124dadb (スキル調整)
-=======
-func BattleTypingMagicUser(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
->>>>>>> 6ee4331 (playerパッケージの名称変更)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()
@@ -360,15 +311,7 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *myPlayer.PlayerStatus, e
 	return myState.CurrentGS
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 func BattleTypingMonster(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
-=======
-func BattleTypingMonster(win *pixelgl.Window, player *player.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
->>>>>>> 124dadb (スキル調整)
-=======
-func BattleTypingMonster(win *pixelgl.Window, player *myPlayer.PlayerStatus, elapsed time.Duration, tempTimer *float64) myState.GameState {
->>>>>>> 6ee4331 (playerパッケージの名称変更)
 	question := words[wordsNum]
 	temp := []byte(question)
 	typed := win.Typed()

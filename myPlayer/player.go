@@ -16,13 +16,6 @@ import (
 )
 
 type PlayerStatus struct {
-<<<<<<< HEAD
-<<<<<<< HEAD:myPlayer/player.go
-<<<<<<< HEAD:myPlayer/player.go
-=======
->>>>>>> d236a68 (途中):player/player.go
-=======
->>>>>>> 97b2112 (強化要素の追加)
 	Name                 string
 	MaxHP                float64
 	HP                   float64
@@ -56,38 +49,6 @@ type PlayerStatus struct {
 	AccessoryEnhancement []string
 	AccessoryGemUnlock   []string
 	AccessoryModifier    []string
-<<<<<<< HEAD
-<<<<<<< HEAD:myPlayer/player.go
-=======
-	Name               string
-	MaxHP              float64
-	HP                 float64
-	MaxOP              float64
-	OP                 float64
-	MaxDP              float64
-	DP                 float64
-	MaxSP              float64
-	SP                 float64
-	BaseSP             float64
-	Gold               int
-	Job                string
-	AP                 int
-	Language           string
-	AttackTimer        float64
-	BaseOP             float64
-	BaseDP             float64
-	BaseAttackTimer    float64
-	PossessedWeapon    []string
-	PossessedArmor     []string
-	PossessedAccessory []string
-	EquipmentWeapon    []string
-	EquipmentArmor     []string
-	EquipmentAccessory []string
->>>>>>> c9826ea (武器全種のスキル追加):player/player.go
-=======
->>>>>>> d236a68 (途中):player/player.go
-=======
->>>>>>> 97b2112 (強化要素の追加)
 }
 
 var (
@@ -101,16 +62,8 @@ var (
 	descWeapon = csvToSlicePlayer(weaponPath)
 )
 
-<<<<<<< HEAD
-<<<<<<< HEAD:myPlayer/player.go
 var weaponName = []string{"木の棒", "果物ナイフ", "木刀", "ドレインソード", "スタンハンマー", "鉄の剣", "隼の剣", "勇者の剣", "名刀村正", "死神の大鎌"}
 
-=======
->>>>>>> d236a68 (途中):player/player.go
-=======
-var weaponName = []string{"木の棒", "果物ナイフ", "木刀", "ドレインソード", "スタンハンマー", "鉄の剣", "隼の剣", "勇者の剣", "名刀村正", "死神の大鎌"}
-
->>>>>>> 97b2112 (強化要素の追加)
 var tempOP4 float64
 
 func NewPlayerStatus(value [][]string) *PlayerStatus {
@@ -151,34 +104,14 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 	tempOP3, _ := strconv.ParseFloat(value[8][1], 64)
 
 	//TODO: 武器強化
-<<<<<<< HEAD
-<<<<<<< HEAD:myPlayer/player.go
-=======
->>>>>>> 97b2112 (強化要素の追加)
 	for i, name := range weaponName {
 		if value[6][0] == name {
 			coefficient, _ := strconv.ParseFloat(value[9][i], 64)
 			tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[i+1][25], 64)
 			tempOP4 = tempWeaponEnhancement * coefficient
-<<<<<<< HEAD
-<<<<<<< HEAD
 			//log.Println("player", coefficient, tempWeaponEnhancement)
 			WeaponEnhancement[i] = strconv.FormatFloat(tempOP4, 'f', 2, 64)
 		}
-=======
-	if value[6][0] == "木の棒" {
-		coefficient, _ := strconv.ParseFloat(value[9][0], 64)
-		tempWeaponEnhancement, _ := strconv.ParseFloat(descWeapon[1][25], 64)
-		tempOP4 = tempWeaponEnhancement * coefficient
->>>>>>> d236a68 (途中):player/player.go
-=======
-			log.Println("player", coefficient, tempWeaponEnhancement)
-=======
-			//log.Println("player", coefficient, tempWeaponEnhancement)
->>>>>>> 7d1824f (v1.0.3test)
-			WeaponEnhancement[i] = strconv.FormatFloat(tempOP4, 'f', 2, 64)
-		}
->>>>>>> 97b2112 (強化要素の追加)
 	}
 
 	tempDP1, _ := strconv.ParseFloat(value[1][14], 64)
@@ -191,13 +124,6 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 	tempAttackTimer4, _ := strconv.ParseFloat(value[8][3], 64)
 
 	PlayerStatusInstance := &PlayerStatus{
-<<<<<<< HEAD
-<<<<<<< HEAD:myPlayer/player.go
-<<<<<<< HEAD:myPlayer/player.go
-=======
->>>>>>> d236a68 (途中):player/player.go
-=======
->>>>>>> 97b2112 (強化要素の追加)
 		Name:                 Name,
 		MaxHP:                MaxHP,
 		HP:                   HP,
@@ -231,38 +157,6 @@ func NewPlayerStatus(value [][]string) *PlayerStatus {
 		AccessoryEnhancement: AccessoryEnhancement,
 		AccessoryGemUnlock:   AccessoryGemUnlock,
 		AccessoryModifier:    AccessoryModifier,
-<<<<<<< HEAD
-<<<<<<< HEAD:myPlayer/player.go
-=======
-		Name:               Name,
-		MaxHP:              MaxHP,
-		HP:                 HP,
-		MaxOP:              tempOP1 + tempOP2 + tempOP3,
-		OP:                 tempOP1 + tempOP2 + tempOP3,
-		MaxDP:              tempDP1 + tempDP2 + tempDP3,
-		DP:                 tempDP1 + tempDP2 + tempDP3,
-		MaxSP:              MaxSP,
-		SP:                 SP,
-		BaseSP:             BaseSP,
-		Gold:               Gold,
-		Job:                Job,
-		AP:                 AP,
-		Language:           Language,
-		AttackTimer:        tempAttackTimer1 + tempAttackTimer2 + tempAttackTimer3 + tempAttackTimer4,
-		BaseOP:             BaseOP,
-		BaseDP:             BaseDP,
-		BaseAttackTimer:    BaseAttackTimer,
-		PossessedWeapon:    PossessedWeapon,
-		PossessedArmor:     PossessedArmor,
-		PossessedAccessory: PossessedAccessory,
-		EquipmentWeapon:    EquipmentWeapon,
-		EquipmentArmor:     EquipmentArmor,
-		EquipmentAccessory: EquipmentAccessory,
->>>>>>> c9826ea (武器全種のスキル追加):player/player.go
-=======
->>>>>>> d236a68 (途中):player/player.go
-=======
->>>>>>> 97b2112 (強化要素の追加)
 	}
 	return PlayerStatusInstance
 }

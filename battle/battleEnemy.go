@@ -21,14 +21,7 @@ func BattleTypingEnemySlime(win *pixelgl.Window, player *myPlayer.PlayerStatus, 
 			tempEnemySize = enemy.EnemySettings[myGame.StageNum].EnemySize
 			tempWordDamage = 0
 			SkillTimer = 0.0
-<<<<<<< HEAD
-<<<<<<< HEAD
 			DefenceRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
-=======
->>>>>>> 4715f1e (武器の固有スキルを設定)
-=======
-			DefenceRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum])
->>>>>>> c9826ea (武器全種のスキル追加)
 		}
 		if animationInProgress {
 			EnemyAttackAnimation(win, player)
@@ -60,25 +53,11 @@ func EnemyAttackAnimation(win *pixelgl.Window, player *myPlayer.PlayerStatus) {
 			index = 0
 			animationPhase = 0
 			animationInProgress = false
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 			player.OP = player.MaxOP
-=======
->>>>>>> c9826ea (武器全種のスキル追加)
-=======
-			player.OP = player.MaxOP
->>>>>>> f10e2c1 (防具のスキル追加完了)
 			player.DP = player.MaxDP
 			enemy.EnemySettings[myGame.StageNum].OP = enemy.EnemySettings[myGame.StageNum].MaxOP
 			RecoveryRelationArmorSkill(win, player, &enemy.EnemySettings[myGame.StageNum], &tempWordDamage)
 			SkillTimer += TimerRelationArmorSkill(win, player, &tempWordDamage)
-<<<<<<< HEAD
-=======
-			enemy.EnemySettings[myGame.StageNum].OP = enemy.EnemySettings[myGame.StageNum].MaxOP
->>>>>>> 4715f1e (武器の固有スキルを設定)
-=======
->>>>>>> c9826ea (武器全種のスキル追加)
 		}
 	}
 }

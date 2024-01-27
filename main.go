@@ -27,21 +27,21 @@ var Frame = 0
 var Last = time.Now()
 
 func run() {
-	rand.Seed(time.Now().UnixNano())
-	win, _ := initializeWindow()
-	myPos.SetCfg(winHSize)
-	myUtil.InitTxtFontLoading()
-	loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
-	myGame.SaveFileItemsCheck(myGame.SaveFilePathItems)
-	player := myPlayer.NewPlayerStatus(loadContent)
-	event.InitializeEventInstance(loadContent)
-	enemy.CreateEnemySettings()
+	rand.Seed(time.Now().UnixNano())                        // 乱数のシードを設定します。
+	win, _ := initializeWindow()                            // ウィンドウを初期化します。
+	myPos.SetCfg(winHSize)                                  // ウィンドウの高さを設定します。
+	myUtil.InitTxtFontLoading()                             // テキストフォントを初期化します。
+	loadContent := myGame.SaveFileLoad(myGame.SaveFilePath) // セーブファイルをロードします。
+	myGame.SaveFileItemsCheck(myGame.SaveFilePathItems)     // アイテムセーブファイルをロードします。
+	player := myPlayer.NewPlayerStatus(loadContent)         // プレイヤーのステータスを初期化します。
+	event.InitializeEventInstance(loadContent)              // イベントのインスタンスを初期化します。
+	enemy.CreateEnemySettings()                             // 敵のステータスを初期化します。
 
-	imd := imdraw.New(nil)
-	setTime := time.Now()
-	fadeDuration := 1.0
+	imd := imdraw.New(nil) // フェードイン・アウト用の描画オブジェクトを初期化します。
+	setTime := time.Now()  // フェードイン・アウトの開始時間を設定します。
+	fadeDuration := 1.0    // フェードイン・アウトの時間を設定します。
 
-	startTime = time.Now()
+	startTime = time.Now() // ゲーム開始時間を設定します。
 
 	for !win.Closed() {
 		switch myState.CurrentGS {
