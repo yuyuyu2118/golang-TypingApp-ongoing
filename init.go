@@ -29,35 +29,6 @@ func initializeWindow() (*pixelgl.Window, pixelgl.WindowConfig) {
 	return win, cfg
 }
 
-// func initializeCanvas(sheet pixel.Picture, canvasSize int) (*pixelgl.Canvas, *imdraw.IMDraw) {
-// 	bottomLCX := float64(-canvasSize / 2)
-// 	bottomLCY := (-(float64(canvasSize/16) * 9) / 2)
-// 	TopRCX := float64(+canvasSize / 2)
-// 	TopRCY := (+(float64(canvasSize/16) * 9) / 2)
-
-// 	canvas := pixelgl.NewCanvas(pixel.R(bottomLCX, bottomLCY, TopRCX, TopRCY))
-// 	imd := imdraw.New(sheet)
-// 	imd.Precision = 128
-
-// 	return canvas, imd
-// }
-
-// func initializeSound(filePath string) (beep.StreamSeekCloser, func()) {
-// 	soundFile := filePath
-// 	f, err := os.Open(soundFile)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	streamer, format, err := mp3.Decode(f)
-// 	if err != nil {
-// 		f.Close()
-// 		panic(err)
-// 	}
-// 	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
-
-// 	return streamer, func() { _ = f.Close() }
-// }
-
 func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
 	loadContent := myGame.SaveFileLoad(myGame.SaveFilePath)
 	player = myPlayer.NewPlayerStatus(loadContent)

@@ -65,8 +65,6 @@ func SetEnemySprite(win *pixelgl.Window, frame int) {
 }
 
 func SetEnemySpriteText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus) {
-	// cp := constantProvider{}
-	// WinHSize := cp.GetConstant()
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "HP: ", strconv.FormatFloat(enemy.HP, 'f', 1, 64))

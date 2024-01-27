@@ -149,8 +149,6 @@ func SetEnemyPic(win *pixelgl.Window, enemyInf *EnemyStatus, path string, scaleF
 }
 
 func SetEnemyText(win *pixelgl.Window, Txt *text.Text, enemy *EnemyStatus) {
-	// cp := constantProvider{}
-	// WinHSize := cp.GetConstant()
 	Txt.Clear()
 	Txt.Color = colornames.White
 	fmt.Fprintln(Txt, "EnemyHP : ", enemy.HP)
