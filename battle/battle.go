@@ -43,7 +43,7 @@ func DeathFlug(player *myPlayer.PlayerStatus, enemyInf *enemy.EnemyStatus, elaps
 
 		player.Gold -= (lostGold + lostGoldMissType)
 
-		log.Println("DeathFlug: GameOver")
+		log.Println("DeathFlug: ゲームオーバー")
 		currentGameState = myState.EndScreen
 	}
 	//敵を倒したとき
@@ -62,7 +62,7 @@ func DeathFlug(player *myPlayer.PlayerStatus, enemyInf *enemy.EnemyStatus, elaps
 		index = 0
 		wordsNum++
 
-		log.Println("DeathFlug: DefeatEnemy")
+		log.Println("DeathFlug: 敵を倒した")
 		currentGameState = myState.EndScreen
 
 		yourTime = float64(elapsed.Seconds())

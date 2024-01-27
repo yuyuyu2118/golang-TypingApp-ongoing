@@ -390,7 +390,7 @@ func InitPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
 	txtPos := pixel.V(xOffSet, yOffSet)
 	tempPosition := pixel.IM.Moved(myPos.BottleLeftPos(win, Txt).Add(txtPos))
 	Txt.Draw(win, tempPosition)
-	log.Println("表示", player.OP)
+	// log.Println("表示", player.OP)
 }
 
 func TempFunc() {

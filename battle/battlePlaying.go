@@ -256,7 +256,7 @@ func BattleTypingMagicUser(win *pixelgl.Window, player *myPlayer.PlayerStatus, e
 					} else if magicCollectType >= 2500 {
 						magicCollectType += player.OP * 30.0
 					}
-					log.Println(magicCollectType)
+					log.Println("魔法の蓄積量：", magicCollectType)
 					player.SP += player.BaseSP
 					if index == len(question) {
 

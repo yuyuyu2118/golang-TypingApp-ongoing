@@ -21,13 +21,13 @@ import (
 
 func BattleTypingSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus) {
 	if win.JustPressed(pixelgl.KeySpace) {
-		log.Println("Skill!!!")
+		log.Println("スキル発動")
 		if player.SP == 50 {
 			index = 0
 			player.SP = 0
 			myState.CurrentGS = myState.SkillScreen
 		} else {
-			log.Println("skillポイントが足りない")
+			log.Println("スキルポイントが足りません")
 		}
 	}
 }
@@ -194,7 +194,7 @@ func BattleTypingHunterSkill(win *pixelgl.Window, player *myPlayer.PlayerStatus,
 							bulletDamageSkill[4] = tempWordDamage
 						}
 						tempWordDamage = 0.0
-						log.Println(bulletLoadingSkill)
+						log.Println("弾薬のスキルの読み込み状態：", bulletLoadingSkill)
 					}
 				} else {
 					missType++
@@ -418,7 +418,7 @@ func BattleTypingMagicUserSkill(win *pixelgl.Window, player *myPlayer.PlayerStat
 
 	setTime += 0.02
 	tempCount = 10.0 - setTime
-	log.Println(tempCount, setTime)
+	log.Println("残り時間:", tempCount, "設定時間:", setTime)
 
 	if myState.CurrentGS == myState.SkillScreen {
 		if tempCount > 0 {
