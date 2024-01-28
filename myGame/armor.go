@@ -57,19 +57,39 @@ var (
 var currentarmorState ArmorState
 
 func InitArmor(win *pixelgl.Window, Txt *text.Text, botText string) {
-	xOffSet, yOffSet, txtPos := myUtil.ShopInitAndText(win, myUtil.ScreenTxt, botText)
+	// メッセージボックスのインスタンス生成
+	armorMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 0.4, 0.5)
+	// メッセージボックスの表示
+	armorMessageBox.DrawMessageBox()
 
-	for i, v := range armorName {
+	// 防具用メッセージ作成
+	var armorOptions string
+	for i, armor := range armorName {
+		// arrowIconをループの各イテレーションでリセット
+		arrowIcon := ""
+		if currentarmorState == ArmorState(i+1) {
+			arrowIcon = " ←"
+		}
 		if event.ArmorPurchaseEventInstance.Armors[i] {
-			armorSlice[i] = strconv.Itoa(i+1) + ". " + v
+			armorOptions += strconv.Itoa(i+1) + ". " + armor + arrowIcon + "\n"
+		} else {
+			armorOptions += strconv.Itoa(i+1) + ". ???\n"
 		}
 	}
+	// 10番目の防具の表示を修正
 	if event.ArmorPurchaseEventInstance.Armors[9] {
-		armorSlice[9] = "0. " + armorName[9]
+		arrowIcon := "" // ここでもリセット
+		if currentarmorState == armor10 {
+			arrowIcon = " ←"
+		}
+		armorOptions = strings.TrimSuffix(armorOptions, "10. ???\n") // 10番目の"????"を削除
+		armorOptions += "0. " + armorName[9] + arrowIcon + "\n"
 	}
 
-	buttonSliceArmor = myUtil.DisplayShopLineup(win, armorSlice, buttonSliceArmor, 30.0, colornames.White, myUtil.DescriptionTxt, xOffSet, yOffSet, txtPos)
+	// メッセージボックスにテキストを表示
+	armorMessageBox.DrawMessageTxt("どの防具を購入しますか？\nキーボードに対応する数字を入力してください。\n" + armorOptions + "\n\nBackSpaceキーでタイトルに戻る")
 
+	// キー入力による防具選択処理
 	for i := 0; i < len(keyToArmor)-1; i++ {
 		key := pixelgl.Button(i + int(pixelgl.Key1))
 		if win.Pressed(key) && event.ArmorPurchaseEventInstance.Armors[i] {
@@ -80,8 +100,18 @@ func InitArmor(win *pixelgl.Window, Txt *text.Text, botText string) {
 	if win.Pressed(pixelgl.Key0) && event.ArmorPurchaseEventInstance.Armors[9] {
 		currentarmorState = armor10
 	}
+
+	armorDescriptionMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0.4, 0, 1, 0.5)
+
+	armorDescriptionMessageBox.DrawMessageBox()
+
+	// 武器の説明表示処理
 	if currentarmorState >= armor1 && currentarmorState <= armor10 {
-		DescriptionArmor(win, descArmor, int(currentarmorState)-1)
+		if win.Pressed(pixelgl.KeyTab) {
+			// SubDescriptionArmor(win, descArmor, int(currentarmorState)-1)
+		} else {
+			DescriptionArmor(win, descArmor, int(currentarmorState)-1, armorDescriptionMessageBox)
+		}
 	}
 }
 
@@ -115,99 +145,78 @@ func ArmorClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.P
 		tempMyMaterialCount = []int{0, 0}
 	}
 
-	if len(buySellSliceArmor) > 0 {
-		if (win.JustPressed(pixelgl.KeyB)) && player.Gold >= 100 {
-			loadContent := SaveFileLoad(SaveFilePath)
-			//TODO: お金が足りないときの処理を記述
-			for i := 0; i < len(keyToArmor)-1; i++ {
-				if currentarmorState == ArmorState(i+1) {
-					requiredGold, _ := strconv.Atoi(descArmor[i+1][4])
-					belongArmor, _ := strconv.Atoi(loadContent[4][i])
-					//log.Println(loadContent)
-					log.Println(belongArmor)
-					if belongArmor == 0 {
-						if player.Gold >= requiredGold {
-							log.Println(descArmor[i+1][4], "買える", player.Gold)
-							createOk := CreateArmorEvent(descArmor, i)
-							if createOk {
-								player.Gold -= requiredGold
-								tempArmor = "armor" + strconv.Itoa(i+1)
-								tempMyMaterialBool = false
-								tempMyMaterialName = []string{"", ""}
-								tempMyMaterialCount = []int{0, 0}
-							}
-						} else {
-							log.Println(descArmor[i+1][4], "お金が足りない", player.Gold)
+	if (win.JustPressed(pixelgl.KeyB)) && player.Gold >= 100 {
+		loadContent := SaveFileLoad(SaveFilePath)
+		//TODO: お金が足りないときの処理を記述
+		for i := 0; i < len(keyToArmor)-1; i++ {
+			if currentarmorState == ArmorState(i+1) {
+				requiredGold, _ := strconv.Atoi(descArmor[i+1][4])
+				belongArmor, _ := strconv.Atoi(loadContent[4][i])
+				//log.Println(loadContent)
+				log.Println(belongArmor)
+				if belongArmor == 0 {
+					if player.Gold >= requiredGold {
+						log.Println(descArmor[i+1][4], "買える", player.Gold)
+						createOk := CreateArmorEvent(descArmor, i)
+						if createOk {
+							player.Gold -= requiredGold
+							tempArmor = "armor" + strconv.Itoa(i+1)
+							tempMyMaterialBool = false
+							tempMyMaterialName = []string{"", ""}
+							tempMyMaterialCount = []int{0, 0}
 						}
 					} else {
-						log.Println("すでに持っている")
-						break
+						log.Println(descArmor[i+1][4], "お金が足りない", player.Gold)
 					}
-				}
-			}
-			if currentarmorState == armor10 {
-				requiredGold, _ := strconv.Atoi(descArmor[10][4])
-				if player.Gold >= requiredGold {
-					log.Println(descArmor[10][4], "買える", player.Gold)
 				} else {
-					log.Println(descArmor[10][4], "お金が足りない", player.Gold)
+					log.Println("すでに持っている")
+					break
 				}
-				log.Println(descArmor[10][4])
-				tempArmor = "armor" + strconv.Itoa(10)
-			}
-
-			if tempArmor != "" {
-				SaveArmorPurchaseEvent(SaveFilePath, 4, tempArmor, player)
-				SaveGame(SaveFilePath, 1, player)
 			}
 		}
-	}
+		if currentarmorState == armor10 {
+			requiredGold, _ := strconv.Atoi(descArmor[10][4])
+			if player.Gold >= requiredGold {
+				log.Println(descArmor[10][4], "買える", player.Gold)
+			} else {
+				log.Println(descArmor[10][4], "お金が足りない", player.Gold)
+			}
+			log.Println(descArmor[10][4])
+			tempArmor = "armor" + strconv.Itoa(10)
+		}
 
+		if tempArmor != "" {
+			SaveArmorPurchaseEvent(SaveFilePath, 4, tempArmor, player)
+			SaveGame(SaveFilePath, 1, player)
+		}
+	}
 	return myState.CurrentGS
 }
 
-func DescriptionArmor(win *pixelgl.Window, descArmor [][]string, num int) {
+func DescriptionArmor(win *pixelgl.Window, descArmor [][]string, num int, msgBox *myPos.MessageBox) {
 	loadContent = SaveFileLoad(SaveFilePath)
 	temp, _ := CountMyItems(SaveFilePathItems)
+
 	//TODO: Tabを押している間は強化素材等の情報を表示する
 	num++
-	xOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).X + 300
-	yOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).Y - 50
-	txtPos := pixel.V(0, 0)
 
-	myUtil.DescriptionTxt.Color = colornames.White
+	var armorDescriptionOptions string
+	// 防具名
+	armorDescriptionOptions += descArmor[0][1] + ": " + descArmor[num][1] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descArmor[0][1]+": "+descArmor[num][1], "   カラー: "+descArmor[num][17])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition := pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	armorDescriptionOptions += "カラー: " + descArmor[num][17] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descArmor[0][2]+": "+descArmor[num][2], descArmor[0][3]+": "+descArmor[num][3])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	armorDescriptionOptions += descArmor[0][2] + ": " + descArmor[num][2] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descArmor[0][4]+": "+descArmor[num][4]+"S ")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	armorDescriptionOptions += descArmor[0][3] + ": " + descArmor[num][3] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descArmor[num][5], descArmor[num][6]+"個, ", descArmor[num][7], descArmor[num][8]+"個")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	armorDescriptionOptions += descArmor[0][4] + ": " + descArmor[num][4] + "S\n"
+
+	armorDescriptionOptions += "素材: " + descArmor[num][5] + descArmor[num][6] + "個, " + descArmor[num][7] + descArmor[num][8] + "個\n"
 
 	if !tempMyMaterialBool {
-		tempMyMaterialName[0] = descWeapon[num][5]
-		tempMyMaterialName[1] = descWeapon[num][7]
+		tempMyMaterialName[0] = descArmor[num][5]
+		tempMyMaterialName[1] = descArmor[num][7]
 		for name, count := range temp {
 			if name == descArmor[num][5] {
 				tempMyMaterialName[0] = name
@@ -223,68 +232,27 @@ func DescriptionArmor(win *pixelgl.Window, descArmor [][]string, num int) {
 		tempMyMaterialBool = true
 	}
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "所持:", tempMyMaterialName[0], strconv.Itoa(tempMyMaterialCount[0])+"個,", tempMyMaterialName[1], strconv.Itoa(tempMyMaterialCount[1])+"個")
-	//fmt.Fprintln(myUtil.DescriptionTxt, "所持: "+descWeapon[num][5], tempMaterials[0]+"個, ", descWeapon[num][7], tempMaterials[1]+"個, ", descWeapon[num][9], tempMaterials[2]+"個")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	armorDescriptionOptions += "所持: " + tempMyMaterialName[0] + strconv.Itoa(tempMyMaterialCount[0]) + "個, " + tempMyMaterialName[1] + strconv.Itoa(tempMyMaterialCount[1]) + "個\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "説明: "+descArmor[num][11])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	armorDescriptionOptions += "説明: " + descArmor[num][11] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, " "+descArmor[num][12])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	armorDescriptionOptions += "　　  " + descArmor[num][12] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "特殊能力: "+descArmor[num][14])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	armorDescriptionOptions += "特殊能力: " + descArmor[num][14] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, " "+descArmor[num][15])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	armorDescriptionOptions += "　　　　  " + descArmor[num][15] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descArmor[num][16])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	armorDescriptionOptions += "　　　　  " + descArmor[num][16] + "\n\n"
 
-	myUtil.DescriptionTxt.Clear()
-	myUtil.DescriptionTxt.Color = colornames.White
-	fmt.Fprintln(myUtil.DescriptionTxt, "B. 作ってもらう")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
-	buySellSliceArmor = append(buySellSliceArmor, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
+	armorDescriptionOptions += "B. 作ってもらう\n"
 
-	loadContent = SaveFileLoad(SaveFilePath)
-	if loadContent[4][num-1] == strconv.Itoa(1) {
-		myUtil.DescriptionTxt.Clear()
-		myUtil.DescriptionTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.DescriptionTxt, "作成済み")
-		xOffSet += 400
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition = pixel.IM.Moved(txtPos)
-		myUtil.DescriptionTxt.Draw(win, tempPosition)
+	if loadContent[3][num-1] == strconv.Itoa(1) {
+		armorDescriptionOptions += "作成済み\n"
+	} else {
+		armorDescriptionOptions += "\n"
 	}
+
+	msgBox.DrawMessageTxt(armorDescriptionOptions)
 }
 
 func CreateArmorEvent(descArmor [][]string, num int) bool {
