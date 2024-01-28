@@ -1,7 +1,6 @@
 package myGame
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/faiface/pixel"
@@ -17,26 +16,19 @@ func InitMaterialsBelongScreen(win *pixelgl.Window, Txt *text.Text) {
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	botText := "持ち物/素材"
-	InitMaterialsBelong(win, Txt, botText)
+	InitMaterialsBelong(win, Txt)
 }
 
 var getItemBool bool
 var gotoSlice []string
 
-func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
-	xOffSet := 100.0
-	yOffSet1Line := myPos.TopLefPos(win, Txt).Y - 100
-	yOffSet2Line := myPos.TopCenPos(win, Txt).Y - 100
-	yOffSet3Line := myPos.TopCenPos(win, Txt).Y - 100
+func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text) {
 
-	txtPos := pixel.V(0, 0)
+	materialsBelongMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 1, 0.5)
+	materialsBelongMessageBox.DrawMessageBox()
+	var materialsBelongOptions string
 
-	myUtil.ScreenTxt.Clear()
-	myUtil.ScreenTxt.Color = colornames.White
-	fmt.Fprintln(myUtil.ScreenTxt, botText, "Tabで切り替え", "BackSpace.戻る")
-	tempPosition = myPos.BotCenPos(win, myUtil.ScreenTxt)
-	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
+	materialsBelongOptions = "\n持ち物/素材 Tabで切り替え BackSpace.戻る\n\n"
 
 	if !getItemBool {
 		gotoSlice, _ = GetMyItems(SaveFilePathItems)
@@ -46,39 +38,65 @@ func InitMaterialsBelong(win *pixelgl.Window, Txt *text.Text, botText string) {
 	gotoSlice = append(gotoSlice)
 	var itemCount int
 
-	//TODO: 折り返し
+	//45まで繰り返し
 	for _, gotoName := range gotoSlice {
-		if itemCount >= 0 && itemCount <= 14 {
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, gotoName)
-			yOffSet1Line -= Txt.LineHeight + 10
-			txtPos = pixel.V(xOffSet, yOffSet1Line)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
+		if itemCount >= 0 && itemCount <= 4 {
+			materialsBelongOptions += gotoName + " "
 			itemCount++
-		} else if itemCount >= 15 && itemCount <= 29 {
-			xOffSet = 400
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, gotoName)
-			yOffSet2Line -= Txt.LineHeight + 10
-			txtPos = pixel.V(xOffSet, yOffSet2Line)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
+		} else if itemCount == 5 {
+			materialsBelongOptions += gotoName + "\n"
 			itemCount++
-		} else if itemCount > 30 && itemCount <= 45 {
-			xOffSet += 400
-			Txt.Clear()
-			Txt.Color = colornames.White
-			fmt.Fprintln(Txt, gotoName)
-			yOffSet3Line -= Txt.LineHeight + 10
-			txtPos = pixel.V(xOffSet, yOffSet3Line)
-			tempPosition := pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
+		} else if itemCount >= 6 && itemCount <= 9 {
+			materialsBelongOptions += gotoName + " "
+			itemCount++
+		} else if itemCount == 10 {
+			materialsBelongOptions += gotoName + "\n"
+			itemCount++
+		} else if itemCount >= 11 && itemCount <= 14 {
+			materialsBelongOptions += gotoName + " "
+			itemCount++
+		} else if itemCount == 15 {
+			materialsBelongOptions += gotoName + "\n"
+			itemCount++
+		} else if itemCount >= 16 && itemCount <= 19 {
+			materialsBelongOptions += gotoName + " "
+			itemCount++
+		} else if itemCount == 20 {
+			materialsBelongOptions += gotoName + "\n"
+			itemCount++
+		} else if itemCount >= 21 && itemCount <= 24 {
+			materialsBelongOptions += gotoName + " "
+			itemCount++
+		} else if itemCount == 25 {
+			materialsBelongOptions += gotoName + "\n"
+			itemCount++
+		} else if itemCount >= 26 && itemCount <= 29 {
+			materialsBelongOptions += gotoName + " "
+			itemCount++
+		} else if itemCount == 30 {
+			materialsBelongOptions += gotoName + "\n"
+			itemCount++
+		} else if itemCount >= 31 && itemCount <= 34 {
+			materialsBelongOptions += gotoName + " "
+			itemCount++
+		} else if itemCount == 35 {
+			materialsBelongOptions += gotoName + "\n"
+			itemCount++
+		} else if itemCount >= 36 && itemCount <= 39 {
+			materialsBelongOptions += gotoName + " "
+			itemCount++
+		} else if itemCount == 40 {
+			materialsBelongOptions += gotoName + "\n"
+			itemCount++
+		} else if itemCount >= 41 && itemCount <= 44 {
+			materialsBelongOptions += gotoName + " "
+			itemCount++
+		} else if itemCount == 45 {
+			materialsBelongOptions += gotoName + "\n"
 			itemCount++
 		}
 	}
+	materialsBelongMessageBox.DrawMessageTxt(materialsBelongOptions)
 }
 
 func MaterialsBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
