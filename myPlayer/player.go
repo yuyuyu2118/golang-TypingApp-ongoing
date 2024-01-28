@@ -12,6 +12,7 @@ import (
 	"github.com/faiface/pixel/pixelgl"
 	"github.com/faiface/pixel/text"
 	"github.com/yuyuyu2118/typingGo/myPos"
+	"github.com/yuyuyu2118/typingGo/myUtil"
 	"golang.org/x/image/colornames"
 )
 
@@ -365,13 +366,13 @@ func (player *PlayerStatus) SetPlayerBattleInf(win *pixelgl.Window, Txt *text.Te
 }
 
 func (player *PlayerStatus) InitPlayerStatus(win *pixelgl.Window, Txt *text.Text) {
-	Txt.Clear()
-	Txt.Color = colornames.White
-	fmt.Fprintln(Txt, "職業:", player.Job, " お金:", player.Gold, "S")
-	fmt.Fprintln(Txt, "攻撃力:", strconv.FormatFloat(player.OP, 'f', 2, 64), "防御力:", strconv.FormatFloat(player.DP, 'f', 2, 64))
-	fmt.Fprintln(Txt, "アタックタイマー:", strconv.FormatFloat(player.AttackTimer, 'f', 2, 64))
-	tempPosition := myPos.TopLefPos(win, Txt).Add(pixel.V(30, 30))
-	myPos.DrawPos(win, Txt, tempPosition)
+	playerStatusBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 3, 0, 0.775, 0.3, 0.95)
+	playerStatusBox.DrawMessageBox()
+
+	statusText := fmt.Sprintf("職業: %s\nお金: %dS\n攻撃力: %.2f\n防御力: %.2f\nアタックタイマー: %.2f",
+		player.Job, player.Gold, player.OP, player.DP, player.AttackTimer)
+
+	playerStatusBox.DrawMessageTxt(statusText)
 }
 
 func InitPlayerHPSP(win *pixelgl.Window, Txt *text.Text, player *PlayerStatus) {
