@@ -35,16 +35,6 @@ var unlockElements = [][]string{{"新職業: 見習い剣士", "新武器: 木�
 }
 
 func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus, enemy *enemy.EnemyStatus, loadContent [][]string) myState.GameState {
-	xOffSet := 100.0
-	xOffSet2 := 600.0
-	yOffSet := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 100
-	yOffSet2 := myPos.TopLefPos(win, myUtil.ScreenTxt).Y - 260
-	txtPos := pixel.V(0, 0)
-	myUtil.ScreenTxt.Clear()
-	myUtil.ScreenTxt.Color = colornames.White
-	fmt.Fprintln(myUtil.ScreenTxt, "リザルト  再戦 : Press Tab | 町に戻る : Press BackSpace")
-	tempPosition = myPos.TopCenPos(win, myUtil.ScreenTxt)
-	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
 	//DropEvent
 	if !dropEvent {
 		if rand.Float64() <= 0.7 { // 5%の確率でアイテムをドロップ
@@ -63,89 +53,49 @@ func BattleEndScreen(win *pixelgl.Window, Txt *text.Text, player *myPlayer.Playe
 		dropEvent = true
 	}
 
-	ClearTxt := []string{"正解タイプボーナスゴールド: " + strconv.Itoa(collectType) + " * 0.5 = " + strconv.Itoa(gainGoldCollectType),
-		"モンスタードロップゴールド: " + strconv.Itoa(gainGold) + "S",
-		"",
-		" 入力単語数:" + strconv.Itoa(wordsNum),
-		"正解タイプ数:" + strconv.Itoa(collectType),
-		"正解タイプ数:" + strconv.Itoa(collectType),
-		"ミスタイプ数:" + strconv.Itoa(missType),
-		"",
-		"獲得AP:" + strconv.Itoa(enemy.DropAP),
-	}
-	var tempName = "ドロップ素材:"
-	for _, item := range dropRandomItem {
-		tempName += " " + item
-	}
-	ClearTxt = append(ClearTxt, tempName)
+	// 結果表示用のMessageBoxを作成
+	resultMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 1, 0.5)
+	resultMessageBox.DrawMessageBox()
 
-	//新武器や新ダンジョンを解放した旨のメッセージ
-	for i, v := range loadContent[2] {
-		if myGame.StageNum == i && v == strconv.Itoa(1) {
-			for _, v := range unlockElements[i] {
-				ClearTxt = append(ClearTxt, v)
-			}
-		}
-	}
-
+	// 結果テキストの構築
+	var resultText string
 	if player.HP > 0 {
-		for i, value := range ClearTxt {
-			if i < 10 {
-				myUtil.ScreenTxt.Clear()
-				myUtil.ScreenTxt.Color = colornames.White
-				fmt.Fprintln(myUtil.ScreenTxt, value)
-				yOffSet -= myUtil.ScreenTxt.LineHeight + 20
-				txtPos = pixel.V(xOffSet, yOffSet)
-				tempPosition := pixel.IM.Moved(txtPos)
-				myUtil.ScreenTxt.Draw(win, tempPosition)
-			} else if i >= 10 {
-				myUtil.ScreenTxt.Clear()
-				myUtil.ScreenTxt.Color = colornames.White
-				fmt.Fprintln(myUtil.ScreenTxt, value)
-				yOffSet2 -= myUtil.ScreenTxt.LineHeight + 20
-				txtPos = pixel.V(xOffSet2, yOffSet2)
-				tempPosition := pixel.IM.Moved(txtPos)
-				myUtil.ScreenTxt.Draw(win, tempPosition)
+		// クリア時のメッセージ
+		resultText += fmt.Sprintf("正解タイプボーナスゴールド: %d x 0.5 = %dS\n", collectType, gainGoldCollectType)
+		resultText += fmt.Sprintf("モンスタードロップゴールド: %dS\n\n", gainGold)
+		resultText += fmt.Sprintf("入力単語数: %d\n", wordsNum)
+		resultText += fmt.Sprintf("正解タイプ数: %d\n", collectType)
+		resultText += fmt.Sprintf("ミスタイプ数: %d\n\n", missType)
+		resultText += fmt.Sprintf("獲得AP: %d\n", enemy.DropAP)
+
+		var tempName = "ドロップ素材:"
+		for _, item := range dropRandomItem {
+			tempName += " " + item
+		}
+		resultText += tempName + "\n"
+
+		// 新武器や新ダンジョンを解放した旨のメッセージを追加
+		for i, v := range loadContent[2] {
+			if myGame.StageNum == i && v == strconv.Itoa(1) {
+				for _, unlockInfo := range unlockElements[i] {
+					resultText += unlockInfo + "\n"
+				}
 			}
 		}
 
-		//TODO: 最初の討伐時だけ武器の追加を教える.
-		// tempInt, _ := strconv.Atoi(player.PossessedWeapon[0])
-		// if tempInt >= 1 {
-		// 	endLines = append(endLines, "武器屋に新しい武器が追加された<-New!!")
-		// }
-		// log.Println(endLines)
+		resultText += "リザルト  再戦 : Press Tab | 町に戻る : Press BackSpace\n"
 	} else {
-		//平均キータイプ数 回/秒 Escでもう一度,Tabでタイトル
-		endLines := []string{
-			"あなたは負けてしまいました",
-			"失ったゴールド" + strconv.Itoa(lostGold) + " gold",
-			" 入力単語数:" + strconv.Itoa(wordsNum),
-			"正解タイプ数:" + strconv.Itoa(collectType),
-			"正解タイプ数:" + strconv.Itoa(collectType),
-			"ミスタイプ数:" + strconv.Itoa(missType),
-		}
-
-		for i, value := range endLines {
-			if i < 10 {
-				myUtil.ScreenTxt.Clear()
-				myUtil.ScreenTxt.Color = colornames.White
-				fmt.Fprintln(myUtil.ScreenTxt, value)
-				yOffSet -= myUtil.ScreenTxt.LineHeight + 20
-				txtPos = pixel.V(xOffSet, yOffSet)
-				tempPosition := pixel.IM.Moved(txtPos)
-				myUtil.ScreenTxt.Draw(win, tempPosition)
-			} else if i >= 10 {
-				myUtil.ScreenTxt.Clear()
-				myUtil.ScreenTxt.Color = colornames.White
-				fmt.Fprintln(myUtil.ScreenTxt, value)
-				yOffSet2 -= myUtil.ScreenTxt.LineHeight + 20
-				txtPos = pixel.V(xOffSet2, yOffSet2)
-				tempPosition := pixel.IM.Moved(txtPos)
-				myUtil.ScreenTxt.Draw(win, tempPosition)
-			}
-		}
+		// 敗北時のメッセージ
+		resultText += "あなたは負けてしまいました\n"
+		resultText += fmt.Sprintf("失ったゴールド: %dS\n", lostGold)
+		resultText += fmt.Sprintf("入力単語数: %d\n", wordsNum)
+		resultText += fmt.Sprintf("正解タイプ数: %d\n", collectType)
+		resultText += fmt.Sprintf("ミスタイプ数: %d\n", missType)
+		resultText += "リザルト  再戦 : Press Tab | 町に戻る : Press BackSpace\n"
 	}
+
+	// MessageBoxに結果テキストを描画
+	resultMessageBox.DrawMessageTxt(resultText)
 
 	//画面遷移,いろいろリセット
 	if win.JustPressed(pixelgl.KeyTab) {
