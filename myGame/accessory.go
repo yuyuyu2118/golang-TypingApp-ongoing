@@ -57,19 +57,39 @@ var (
 var currentaccessoryState AccessoryState
 
 func InitAccessory(win *pixelgl.Window, Txt *text.Text, botText string) {
-	xOffSet, yOffSet, txtPos := myUtil.ShopInitAndText(win, myUtil.ScreenTxt, botText)
+	// メッセージボックスのインスタンス生成
+	accessoryMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 0.4, 0.5)
+	// メッセージボックスの表示
+	accessoryMessageBox.DrawMessageBox()
 
-	for i, v := range accessoryName {
+	// アクセサリー用メッセージ作成
+	var accessoryOptions string
+	for i, accessory := range accessoryName {
+		// arrowIconをループの各イテレーションでリセット
+		arrowIcon := ""
+		if currentaccessoryState == AccessoryState(i+1) {
+			arrowIcon = " ←"
+		}
 		if event.AccessoryPurchaseEventInstance.Accessorys[i] {
-			accessorySlice[i] = strconv.Itoa(i+1) + ". " + v
+			accessoryOptions += strconv.Itoa(i+1) + ". " + accessory + arrowIcon + "\n"
+		} else {
+			accessoryOptions += strconv.Itoa(i+1) + ". ???\n"
 		}
 	}
+	// 10番目のアクセサリーの表示を修正
 	if event.AccessoryPurchaseEventInstance.Accessorys[9] {
-		accessorySlice[9] = "0. " + accessoryName[9]
+		arrowIcon := "" // ここでもリセット
+		if currentaccessoryState == accessory10 {
+			arrowIcon = " ←"
+		}
+		accessoryOptions = strings.TrimSuffix(accessoryOptions, "10. ???\n") // 10番目の"????"を削除
+		accessoryOptions += "0. " + accessoryName[9] + arrowIcon + "\n"
 	}
 
-	buttonSliceAccessory = myUtil.DisplayShopLineup(win, accessorySlice, buttonSliceAccessory, 30.0, colornames.White, myUtil.DescriptionTxt, xOffSet, yOffSet, txtPos)
+	// メッセージボックスにテキストを表示
+	accessoryMessageBox.DrawMessageTxt("どのアクセサリーを購入しますか？\nキーボードに対応する数字を入力してください。\n" + accessoryOptions + "\n\nBackSpaceキーでタイトルに戻る")
 
+	// キー入力によるアクセサリー選択処理
 	for i := 0; i < len(keyToAccessory)-1; i++ {
 		key := pixelgl.Button(i + int(pixelgl.Key1))
 		if win.Pressed(key) && event.AccessoryPurchaseEventInstance.Accessorys[i] {
@@ -80,8 +100,18 @@ func InitAccessory(win *pixelgl.Window, Txt *text.Text, botText string) {
 	if win.Pressed(pixelgl.Key0) && event.AccessoryPurchaseEventInstance.Accessorys[9] {
 		currentaccessoryState = accessory10
 	}
+
+	accessoryDescriptionMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0.4, 0, 1, 0.5)
+
+	accessoryDescriptionMessageBox.DrawMessageBox()
+
+	// アクセサリーの説明表示処理
 	if currentaccessoryState >= accessory1 && currentaccessoryState <= accessory10 {
-		DescriptionAccessory(win, descAccessory, int(currentaccessoryState)-1)
+		if win.Pressed(pixelgl.KeyTab) {
+			// SubDescriptionAccessory(win, descAccessory, int(currentaccessoryState)-1)
+		} else {
+			DescriptionAccessory(win, descAccessory, int(currentaccessoryState)-1, accessoryDescriptionMessageBox)
+		}
 	}
 }
 
@@ -115,96 +145,75 @@ func AccessoryClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlay
 		tempMyMaterialCount = []int{0, 0}
 	}
 
-	if len(buySellSliceAccessory) > 0 {
-		if (win.JustPressed(pixelgl.KeyB)) && player.Gold >= 100 {
-			loadContent := SaveFileLoad(SaveFilePath)
-			//TODO: お金が足りないときの処理を記述
-			for i := 0; i < len(keyToAccessory)-1; i++ {
-				if currentaccessoryState == AccessoryState(i+1) {
-					requiredGold, _ := strconv.Atoi(descAccessory[i+1][5])
-					belongAccessory, _ := strconv.Atoi(loadContent[5][i])
-					//log.Println(loadContent)
-					log.Println(belongAccessory)
-					if belongAccessory == 0 {
-						if player.Gold >= requiredGold {
-							log.Println(descAccessory[i+1][5], "買える", player.Gold)
-							createOk := CreateAccessoryEvent(descAccessory, i)
-							if createOk {
-								player.Gold -= requiredGold
-								tempAccessory = "accessory" + strconv.Itoa(i+1)
-								tempMyMaterialBool = false
-								tempMyMaterialName = []string{"", ""}
-								tempMyMaterialCount = []int{0, 0}
-							}
-						} else {
-							log.Println(descAccessory[i+1][5], "お金が足りない", player.Gold)
+	if (win.JustPressed(pixelgl.KeyB)) && player.Gold >= 100 {
+		loadContent := SaveFileLoad(SaveFilePath)
+		//TODO: お金が足りないときの処理を記述
+		for i := 0; i < len(keyToAccessory)-1; i++ {
+			if currentaccessoryState == AccessoryState(i+1) {
+				requiredGold, _ := strconv.Atoi(descAccessory[i+1][5])
+				belongAccessory, _ := strconv.Atoi(loadContent[5][i])
+				//log.Println(loadContent)
+				log.Println(belongAccessory)
+				if belongAccessory == 0 {
+					if player.Gold >= requiredGold {
+						log.Println(descAccessory[i+1][5], "買える", player.Gold)
+						createOk := CreateAccessoryEvent(descAccessory, i)
+						if createOk {
+							player.Gold -= requiredGold
+							tempAccessory = "accessory" + strconv.Itoa(i+1)
+							tempMyMaterialBool = false
+							tempMyMaterialName = []string{"", ""}
+							tempMyMaterialCount = []int{0, 0}
 						}
 					} else {
-						log.Println("すでに持っている")
-						break
+						log.Println(descAccessory[i+1][5], "お金が足りない", player.Gold)
 					}
-				}
-			}
-			if currentaccessoryState == accessory10 {
-				requiredGold, _ := strconv.Atoi(descAccessory[10][5])
-				if player.Gold >= requiredGold {
-					log.Println(descAccessory[10][5], "買える", player.Gold)
 				} else {
-					log.Println(descAccessory[10][5], "お金が足りない", player.Gold)
+					log.Println("すでに持っている")
+					break
 				}
-				log.Println(descAccessory[10][5])
-				tempAccessory = "accessory" + strconv.Itoa(10)
-			}
-
-			if tempAccessory != "" {
-				SaveAccessoryPurchaseEvent(SaveFilePath, 5, tempAccessory, player)
-				SaveGame(SaveFilePath, 1, player)
 			}
 		}
-	}
+		if currentaccessoryState == accessory10 {
+			requiredGold, _ := strconv.Atoi(descAccessory[10][5])
+			if player.Gold >= requiredGold {
+				log.Println(descAccessory[10][5], "買える", player.Gold)
+			} else {
+				log.Println(descAccessory[10][5], "お金が足りない", player.Gold)
+			}
+			log.Println(descAccessory[10][5])
+			tempAccessory = "accessory" + strconv.Itoa(10)
+		}
 
+		if tempAccessory != "" {
+			SaveAccessoryPurchaseEvent(SaveFilePath, 5, tempAccessory, player)
+			SaveGame(SaveFilePath, 1, player)
+		}
+	}
 	return myState.CurrentGS
 }
 
-func DescriptionAccessory(win *pixelgl.Window, descAccessory [][]string, num int) {
+func DescriptionAccessory(win *pixelgl.Window, descAccessory [][]string, num int, msgBox *myPos.MessageBox) {
 	loadContent = SaveFileLoad(SaveFilePath)
 	temp, _ := CountMyItems(SaveFilePathItems)
 	//TODO: Tabを押している間は強化素材等の情報を表示する
 	//TODO: 行数削減したい
 	num++
-	xOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).X + 300
-	yOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).Y - 50
-	txtPos := pixel.V(0, 0)
 
 	myUtil.DescriptionTxt.Color = colornames.White
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descAccessory[0][1]+": "+descAccessory[num][1], "   カラー: "+descAccessory[num][18])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition := pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	var accessoryDescriptionOptions string
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descAccessory[0][2]+": "+descAccessory[num][2], descAccessory[0][3]+": "+descAccessory[num][3], descAccessory[0][4]+": "+descAccessory[num][4])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	accessoryDescriptionOptions += descAccessory[0][1] + ": " + descAccessory[num][1] + "\n"
+	accessoryDescriptionOptions += "カラー: " + descAccessory[num][18] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descAccessory[0][5]+": "+descAccessory[num][5]+"S ")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	accessoryDescriptionOptions += descAccessory[0][2] + ": " + descAccessory[num][2] + "\n"
+	accessoryDescriptionOptions += descAccessory[0][3] + ": " + descAccessory[num][3] + "\n"
+	accessoryDescriptionOptions += descAccessory[0][4] + ": " + descAccessory[num][4] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descAccessory[num][6], descAccessory[num][7]+"個, ", descAccessory[num][8], descAccessory[num][9]+"個")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	accessoryDescriptionOptions += descAccessory[0][5] + ": " + descAccessory[num][5] + "S\n"
+
+	accessoryDescriptionOptions += "素材: " + descAccessory[num][6] + " " + descAccessory[num][7] + "個, " + descAccessory[num][8] + " " + descAccessory[num][9] + "個\n"
 
 	if !tempMyMaterialBool {
 		tempMyMaterialName[0] = descAccessory[num][6]
@@ -224,69 +233,27 @@ func DescriptionAccessory(win *pixelgl.Window, descAccessory [][]string, num int
 		tempMyMaterialBool = true
 	}
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "所持:", tempMyMaterialName[0], strconv.Itoa(tempMyMaterialCount[0])+"個,", tempMyMaterialName[1], strconv.Itoa(tempMyMaterialCount[1])+"個")
-	//fmt.Fprintln(myUtil.DescriptionTxt, "所持: "+descWeapon[num][5], tempMaterials[0]+"個, ", descWeapon[num][7], tempMaterials[1]+"個, ", descWeapon[num][9], tempMaterials[2]+"個")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	accessoryDescriptionOptions += "所持: " + tempMyMaterialName[0] + " " + strconv.Itoa(tempMyMaterialCount[0]) + "個, " + tempMyMaterialName[1] + " " + strconv.Itoa(tempMyMaterialCount[1]) + "個\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "説明: "+descAccessory[num][12])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	accessoryDescriptionOptions += "説明: " + descAccessory[num][12] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, " "+descAccessory[num][13])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	accessoryDescriptionOptions += "　　  " + descAccessory[num][13] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "特殊能力: "+descAccessory[num][15])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	accessoryDescriptionOptions += "特殊能力: " + descAccessory[num][15] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, " "+descAccessory[num][16])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	accessoryDescriptionOptions += "　　　　  " + descAccessory[num][16] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descAccessory[num][17])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	accessoryDescriptionOptions += "　　　　  " + descAccessory[num][17] + "\n\n"
 
-	myUtil.DescriptionTxt.Clear()
-	myUtil.DescriptionTxt.Color = colornames.White
-	fmt.Fprintln(myUtil.DescriptionTxt, "B. 作ってもらう")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
-	buySellSliceAccessory = append(buySellSliceAccessory, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
+	accessoryDescriptionOptions += "B. 作ってもらう\n"
 
 	loadContent = SaveFileLoad(SaveFilePath)
 
 	if loadContent[5][num-1] == strconv.Itoa(1) {
-		myUtil.DescriptionTxt.Clear()
-		myUtil.DescriptionTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.DescriptionTxt, "作成済み")
-		xOffSet += 400
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition = pixel.IM.Moved(txtPos)
-		myUtil.DescriptionTxt.Draw(win, tempPosition)
+		accessoryDescriptionOptions += "作成済み\n"
 	}
+
+	msgBox.DrawMessageTxt(accessoryDescriptionOptions)
 }
 
 func CreateAccessoryEvent(descAccessory [][]string, num int) bool {
