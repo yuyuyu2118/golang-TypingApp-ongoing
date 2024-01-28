@@ -57,19 +57,39 @@ var (
 var currentweaponState WeaponState
 
 func InitWeapon(win *pixelgl.Window, Txt *text.Text, botText string) {
-	xOffSet, yOffSet, txtPos := myUtil.ShopInitAndText(win, myUtil.ScreenTxt, botText)
+	// メッセージボックスのインスタンス生成
+	weaponMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 0.4, 0.5)
+	// メッセージボックスの表示
+	weaponMessageBox.DrawMessageBox()
 
-	for i, v := range weaponName {
+	// 武器用メッセージ作成
+	var weaponOptions string
+	for i, weapon := range weaponName {
+		// arrowIconをループの各イテレーションでリセット
+		arrowIcon := ""
+		if currentweaponState == WeaponState(i+1) {
+			arrowIcon = " ←"
+		}
 		if event.WeaponPurchaseEventInstance.Weapons[i] {
-			weaponSlice[i] = strconv.Itoa(i+1) + ". " + v
+			weaponOptions += strconv.Itoa(i+1) + ". " + weapon + arrowIcon + "\n"
+		} else {
+			weaponOptions += strconv.Itoa(i+1) + ". ???\n"
 		}
 	}
+	// 10番目の武器の表示を修正
 	if event.WeaponPurchaseEventInstance.Weapons[9] {
-		weaponSlice[9] = "0. " + weaponName[9]
+		arrowIcon := "" // ここでもリセット
+		if currentweaponState == weapon10 {
+			arrowIcon = " ←"
+		}
+		weaponOptions = strings.TrimSuffix(weaponOptions, "10. ???\n") // 10番目の"????"を削除
+		weaponOptions += "0. " + weaponName[9] + arrowIcon + "\n"
 	}
 
-	buttonSlice = myUtil.DisplayShopLineup(win, weaponSlice, buttonSlice, 30.0, colornames.White, myUtil.DescriptionTxt, xOffSet, yOffSet, txtPos)
+	// メッセージボックスにテキストを表示
+	weaponMessageBox.DrawMessageTxt("どの武器を購入しますか？\nキーボードに対応する数字を入力してください。\n" + weaponOptions + "\n\nBackSpaceキーでタイトルに戻る")
 
+	// キー入力による武器選択処理
 	for i := 0; i < len(keyToWeapon)-1; i++ {
 		key := pixelgl.Button(i + int(pixelgl.Key1))
 		if win.Pressed(key) && event.WeaponPurchaseEventInstance.Weapons[i] {
@@ -80,11 +100,17 @@ func InitWeapon(win *pixelgl.Window, Txt *text.Text, botText string) {
 	if win.Pressed(pixelgl.Key0) && event.WeaponPurchaseEventInstance.Weapons[9] {
 		currentweaponState = weapon10
 	}
+
+	weaponDescriptionMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0.4, 0, 1, 0.5)
+
+	weaponDescriptionMessageBox.DrawMessageBox()
+
+	// 武器の説明表示処理
 	if currentweaponState >= weapon1 && currentweaponState <= weapon10 {
 		if win.Pressed(pixelgl.KeyTab) {
-			SubDescriptionWeapon(win, descWeapon, int(currentweaponState)-1)
+			// SubDescriptionWeapon(win, descWeapon, int(currentweaponState)-1)
 		} else {
-			DescriptionWeapon(win, descWeapon, int(currentweaponState)-1)
+			DescriptionWeapon(win, descWeapon, int(currentweaponState)-1, weaponDescriptionMessageBox)
 		}
 	}
 }
@@ -171,46 +197,27 @@ var tempMyMaterialBool = false
 var tempMyMaterialName = []string{"", "", "", "", "", ""}
 var tempMyMaterialCount = []int{0, 0, 0, 0, 0, 0}
 
-func DescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
+func DescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int, msgBox *myPos.MessageBox) {
 	loadContent = SaveFileLoad(SaveFilePath)
 	temp, _ := CountMyItems(SaveFilePathItems)
 
+	var weaponDescriptionOptions string
+
 	//TODO: Tabを押している間は強化素材等の情報を表示する
 	num++
-	xOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).X + 300
-	yOffSet := myPos.TopLefPos(win, myUtil.DescriptionTxt).Y - 50
-	txtPos := pixel.V(0, 0)
 
-	myUtil.DescriptionTxt.Color = colornames.White
+	// 武器名
+	weaponDescriptionOptions += descWeapon[0][1] + ": " + descWeapon[num][1] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[0][1]+": "+descWeapon[num][1], "   カラー: "+descWeapon[num][17])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition := pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	weaponDescriptionOptions += "カラー: " + descWeapon[num][17] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[0][2]+": "+descWeapon[num][2], descWeapon[0][3]+": "+descWeapon[num][3])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	weaponDescriptionOptions += descWeapon[0][2] + ": " + descWeapon[num][2] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[0][4]+": "+descWeapon[num][4]+"S ")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	weaponDescriptionOptions += descWeapon[0][3] + ": " + descWeapon[num][3] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "素材: "+descWeapon[num][5], descWeapon[num][6]+"個, ", descWeapon[num][7], descWeapon[num][8]+"個")
-	//fmt.Fprintln(myUtil.DescriptionTxt, "所持: "+descWeapon[num][5], tempMaterials[0]+"個, ", descWeapon[num][7], tempMaterials[1]+"個, ", descWeapon[num][9], tempMaterials[2]+"個")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	weaponDescriptionOptions += descWeapon[0][4] + ": " + descWeapon[num][4] + "S\n"
+
+	weaponDescriptionOptions += "素材: " + descWeapon[num][5] + descWeapon[num][6] + "個, " + descWeapon[num][7] + descWeapon[num][8] + "個\n"
 
 	if !tempMyMaterialBool {
 		tempMyMaterialName[0] = descWeapon[num][5]
@@ -230,75 +237,27 @@ func DescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
 		tempMyMaterialBool = true
 	}
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "所持:", tempMyMaterialName[0], strconv.Itoa(tempMyMaterialCount[0])+"個,", tempMyMaterialName[1], strconv.Itoa(tempMyMaterialCount[1])+"個")
-	//fmt.Fprintln(myUtil.DescriptionTxt, "所持: "+descWeapon[num][5], tempMaterials[0]+"個, ", descWeapon[num][7], tempMaterials[1]+"個, ", descWeapon[num][9], tempMaterials[2]+"個")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 30
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	weaponDescriptionOptions += "所持: " + tempMyMaterialName[0] + strconv.Itoa(tempMyMaterialCount[0]) + "個, " + tempMyMaterialName[1] + strconv.Itoa(tempMyMaterialCount[1]) + "個\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "説明: "+descWeapon[num][11])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	weaponDescriptionOptions += "説明: " + descWeapon[num][11] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, " "+descWeapon[num][12])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	weaponDescriptionOptions += "　　  " + descWeapon[num][12] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, "特殊能力: "+descWeapon[num][14])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 50
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	weaponDescriptionOptions += "特殊能力: " + descWeapon[num][14] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, " "+descWeapon[num][15])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	weaponDescriptionOptions += "　　　　  " + descWeapon[num][15] + "\n"
 
-	myUtil.DescriptionTxt.Clear()
-	fmt.Fprintln(myUtil.DescriptionTxt, descWeapon[num][16])
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
+	weaponDescriptionOptions += "　　　　  " + descWeapon[num][16] + "\n\n"
 
-	myUtil.DescriptionTxt.Clear()
-	myUtil.DescriptionTxt.Color = colornames.White
-	fmt.Fprintln(myUtil.DescriptionTxt, "B. 作ってもらう")
-	yOffSet -= myUtil.DescriptionTxt.LineHeight + 10
-	txtPos = pixel.V(xOffSet, yOffSet)
-	tempPosition = pixel.IM.Moved(txtPos)
-	myUtil.DescriptionTxt.Draw(win, tempPosition)
-	buySellSlice = append(buySellSlice, myUtil.DescriptionTxt.Bounds().Moved(txtPos))
+	weaponDescriptionOptions += "B. 作ってもらう\n"
 
 	if loadContent[3][num-1] == strconv.Itoa(1) {
-		myUtil.DescriptionTxt.Clear()
-		myUtil.DescriptionTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.DescriptionTxt, "作成済み")
-		xOffSet += 400
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition = pixel.IM.Moved(txtPos)
-		myUtil.DescriptionTxt.Draw(win, tempPosition)
+		weaponDescriptionOptions += "作成済み\n"
 	} else {
-		myUtil.DescriptionTxt.Clear()
-		myUtil.DescriptionTxt.Color = colornames.White
-		fmt.Fprintln(myUtil.DescriptionTxt)
-		xOffSet += 400
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition = pixel.IM.Moved(txtPos)
-		myUtil.DescriptionTxt.Draw(win, tempPosition)
+		weaponDescriptionOptions += "\n"
 	}
+
+	msgBox.DrawMessageTxt(weaponDescriptionOptions)
 }
 
 func SubDescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int) {
