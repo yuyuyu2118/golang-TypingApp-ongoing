@@ -27,6 +27,11 @@ func BattleTypingRookie(win *pixelgl.Window, player *myPlayer.PlayerStatus, elap
 	*tempTimer = player.AttackTimer - elapsed.Seconds() + SkillTimer
 	tempCount = *tempTimer
 
+	if win.Pressed(pixelgl.KeyT) && win.Pressed(pixelgl.KeyLeftControl) && win.Pressed(pixelgl.KeyLeftShift) {
+		player.OP += 1000
+		log.Println("TestMode")
+	}
+
 	if myState.CurrentGS == myState.PlayingScreen {
 		if tempCount > 0 {
 			if typed != "" {
