@@ -35,7 +35,7 @@ func initScreenInformation(win *pixelgl.Window, Txt *text.Text, player *myPlayer
 	switch myState.CurrentGS {
 	case myState.GoToScreen:
 		myGame.InitGoToScreen(win, Txt)
-		if myState.CurrentGS == myState.GoToScreen && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key4, pg.Key5, pg.KeyBackspace) {
+		if myState.CurrentGS == myState.GoToScreen && myUtil.AnyKeyJustPressed(win, pg.Key1, pg.Key2, pg.Key3, pg.Key5, pg.KeyBackspace) {
 			myState.CurrentGS = myGame.GoToClickEvent(win, win.MousePosition())
 		}
 	case myState.StageSelect:

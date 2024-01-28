@@ -28,7 +28,7 @@ var (
 func InitGoTo(win *pixelgl.Window, Txt *text.Text, bottleText string) {
 	gotoMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 1, 0.4)
 	gotoMessageBox.DrawMessageBox()
-	gotoMessageBox.DrawMessageTxt("どこへ行きますか？キーボードに対応する数字を入力してください。\n1. ダンジョン\n2. 町\n3. ジョブ\n4. 鍛冶屋\n\nBackSpaceキーでタイトルに戻る")
+	gotoMessageBox.DrawMessageTxt("どこへ行きますか？キーボードに対応する数字を入力してください。\n1. ダンジョン\n2. 町\n3. ジョブ\n\nBackSpaceキーでタイトルに戻る")
 }
 
 func GoToClickEvent(win *pixelgl.Window, mousePos pixel.Vec) myState.GameState {
