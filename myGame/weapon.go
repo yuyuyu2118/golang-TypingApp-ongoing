@@ -145,49 +145,47 @@ func WeaponClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.
 		tempMyMaterialCount = []int{0, 0, 0, 0, 0, 0}
 	}
 
-	if len(buySellSlice) > 0 {
-		if (win.JustPressed(pixelgl.KeyB)) && player.Gold >= 100 {
-			loadContent := SaveFileLoad(SaveFilePath)
-			//TODO: お金が足りないときの処理を記述
-			for i := 0; i < len(keyToWeapon)-1; i++ {
-				if currentweaponState == WeaponState(i+1) {
-					requiredGold, _ := strconv.Atoi(descWeapon[i+1][4])
-					belongWeapon, _ := strconv.Atoi(loadContent[3][i])
-					if belongWeapon == 0 {
-						if player.Gold >= requiredGold {
-							log.Println(descWeapon[i+1][4], "買える", player.Gold)
-							createOk := CreateWeaponEvent(win, descWeapon, i)
-							if createOk {
-								player.Gold -= requiredGold
-								tempWeapon = "weapon" + strconv.Itoa(i+1)
-								tempMyMaterialBool = false
-								tempMyMaterialName = []string{"", "", "", "", "", ""}
-								tempMyMaterialCount = []int{0, 0, 0, 0, 0, 0}
-							}
-						} else {
-							log.Println(descWeapon[i+1][4], "お金が足りない", player.Gold)
+	if (win.JustPressed(pixelgl.KeyB)) && player.Gold >= 100 {
+		loadContent := SaveFileLoad(SaveFilePath)
+		//TODO: お金が足りないときの処理を記述
+		for i := 0; i < len(keyToWeapon)-1; i++ {
+			if currentweaponState == WeaponState(i+1) {
+				requiredGold, _ := strconv.Atoi(descWeapon[i+1][4])
+				belongWeapon, _ := strconv.Atoi(loadContent[3][i])
+				if belongWeapon == 0 {
+					if player.Gold >= requiredGold {
+						log.Println(descWeapon[i+1][4], "買える", player.Gold)
+						createOk := CreateWeaponEvent(win, descWeapon, i)
+						if createOk {
+							player.Gold -= requiredGold
+							tempWeapon = "weapon" + strconv.Itoa(i+1)
+							tempMyMaterialBool = false
+							tempMyMaterialName = []string{"", "", "", "", "", ""}
+							tempMyMaterialCount = []int{0, 0, 0, 0, 0, 0}
 						}
 					} else {
-						log.Println("すでに持っている")
-						break
+						log.Println(descWeapon[i+1][4], "お金が足りない", player.Gold)
 					}
-				}
-			}
-			if currentweaponState == weapon10 {
-				requiredGold, _ := strconv.Atoi(descWeapon[10][4])
-				if player.Gold >= requiredGold {
-					log.Println(descWeapon[10][4], "買える", player.Gold)
 				} else {
-					log.Println(descWeapon[10][4], "お金が足りない", player.Gold)
+					log.Println("すでに持っている")
+					break
 				}
-				log.Println(descWeapon[10][4])
-				tempWeapon = "weapon" + strconv.Itoa(10)
 			}
+		}
+		if currentweaponState == weapon10 {
+			requiredGold, _ := strconv.Atoi(descWeapon[10][4])
+			if player.Gold >= requiredGold {
+				log.Println(descWeapon[10][4], "買える", player.Gold)
+			} else {
+				log.Println(descWeapon[10][4], "お金が足りない", player.Gold)
+			}
+			log.Println(descWeapon[10][4])
+			tempWeapon = "weapon" + strconv.Itoa(10)
+		}
 
-			if tempWeapon != "" {
-				SaveWeaponPurchaseEvent(SaveFilePath, 3, tempWeapon, player)
-				SaveGame(SaveFilePath, 1, player)
-			}
+		if tempWeapon != "" {
+			SaveWeaponPurchaseEvent(SaveFilePath, 3, tempWeapon, player)
+			SaveGame(SaveFilePath, 1, player)
 		}
 	}
 	return myState.CurrentGS
@@ -201,11 +199,10 @@ func DescriptionWeapon(win *pixelgl.Window, descWeapon [][]string, num int, msgB
 	loadContent = SaveFileLoad(SaveFilePath)
 	temp, _ := CountMyItems(SaveFilePathItems)
 
-	var weaponDescriptionOptions string
-
 	//TODO: Tabを押している間は強化素材等の情報を表示する
 	num++
 
+	var weaponDescriptionOptions string
 	// 武器名
 	weaponDescriptionOptions += descWeapon[0][1] + ": " + descWeapon[num][1] + "\n"
 
