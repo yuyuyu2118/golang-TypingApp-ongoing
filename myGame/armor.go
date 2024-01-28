@@ -323,20 +323,16 @@ func InitArmorBelongScreen(win *pixelgl.Window, Txt *text.Text, player *myPlayer
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	botText := "持ち物/防具"
-	InitArmorBelong(win, Txt, botText, player)
+	InitArmorBelong(win, Txt, player)
 }
 
-func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string, player *myPlayer.PlayerStatus) {
-	xOffSet := 100.0
-	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
-	txtPos := pixel.V(0, 0)
+func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
 
-	myUtil.ScreenTxt.Clear()
-	myUtil.ScreenTxt.Color = colornames.White
-	fmt.Fprintln(myUtil.ScreenTxt, botText, "Tabで切り替え", "BackSpace.戻る")
-	tempPosition = myPos.BotCenPos(win, myUtil.ScreenTxt)
-	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
+	armorBelongMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 1, 0.5)
+	armorBelongMessageBox.DrawMessageBox()
+	var armorBelongOptions string
+
+	armorBelongOptions = "\n持ち物/防具 Tabで切り替え BackSpace.戻る\n\n"
 
 	loadContent := SaveFileLoad(SaveFilePath)
 	counts := make(map[string]int)
@@ -352,32 +348,21 @@ func InitArmorBelong(win *pixelgl.Window, Txt *text.Text, botText string, player
 
 	for i, value := range armorName {
 		if counts["armor"+strconv.Itoa(i)] != 0 {
-			//tempInt := counts["armor"+strconv.Itoa(i)]
 			equipmentSlice = append(equipmentSlice, strconv.Itoa(i+1)+". "+value /*+": "+strconv.Itoa(tempInt)*/)
 		} else {
 			equipmentSlice = append(equipmentSlice, "")
 		}
 	}
-
 	for i, equipmentName := range equipmentSlice {
-		Txt.Clear()
-		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, equipmentName)
-		yOffSet -= Txt.LineHeight + 25
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		Txt.Draw(win, tempPosition)
-		equipmentButtonSlice = append(equipmentButtonSlice, Txt.Bounds().Moved(txtPos))
-
 		if player.EquipmentArmor[0] == armorName[i] {
-			Txt.Clear()
-			fmt.Fprintln(Txt, "E. ")
-			txtPos = pixel.V(xOffSet-40, yOffSet)
-			tempPosition = pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
+			armorBelongOptions += "E. "
 		}
+		armorBelongOptions += equipmentName + "\n"
+		equipmentButtonSlice = append(equipmentButtonSlice, Txt.Bounds().Moved(pixel.V(0, 0)))
 	}
 	equipmentSlice = equipmentSlice[:0]
+
+	armorBelongMessageBox.DrawMessageTxt(armorBelongOptions)
 }
 
 func ArmorBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) {

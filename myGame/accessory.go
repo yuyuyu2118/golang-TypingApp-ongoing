@@ -323,20 +323,16 @@ func InitAccessoryBelongScreen(win *pixelgl.Window, Txt *text.Text, player *myPl
 	win.Clear(colornames.Darkcyan)
 	Txt.Clear()
 
-	botText := "持ち物/アクセサリー"
-	InitAccessoryBelong(win, Txt, botText, player)
+	InitAccessoryBelong(win, Txt, player)
 }
 
-func InitAccessoryBelong(win *pixelgl.Window, Txt *text.Text, botText string, player *myPlayer.PlayerStatus) {
-	xOffSet := 100.0
-	yOffSet := myPos.TopLefPos(win, Txt).Y - 100
-	txtPos := pixel.V(0, 0)
+func InitAccessoryBelong(win *pixelgl.Window, Txt *text.Text, player *myPlayer.PlayerStatus) {
 
-	myUtil.ScreenTxt.Clear()
-	myUtil.ScreenTxt.Color = colornames.White
-	fmt.Fprintln(myUtil.ScreenTxt, botText, "Tabで切り替え", "BackSpace.戻る")
-	tempPosition = myPos.BotCenPos(win, myUtil.ScreenTxt)
-	myPos.DrawPos(win, myUtil.ScreenTxt, tempPosition)
+	accessoryBelongMessageBox := myPos.NewMessageBox(win, myUtil.MessageTxt, colornames.White, colornames.White, 5, 0, 0, 1, 0.5)
+	accessoryBelongMessageBox.DrawMessageBox()
+	var accessoryBelongOptions string
+
+	accessoryBelongOptions = "\n持ち物/アクセサリー Tabで切り替え BackSpace.戻る\n\n"
 
 	loadContent := SaveFileLoad(SaveFilePath)
 	counts := make(map[string]int)
@@ -352,32 +348,21 @@ func InitAccessoryBelong(win *pixelgl.Window, Txt *text.Text, botText string, pl
 
 	for i, value := range accessoryName {
 		if counts["accessory"+strconv.Itoa(i)] != 0 {
-			//tempInt := counts["accessory"+strconv.Itoa(i)]
 			equipmentSlice = append(equipmentSlice, strconv.Itoa(i+1)+". "+value /*+": "+strconv.Itoa(tempInt)*/)
 		} else {
 			equipmentSlice = append(equipmentSlice, "")
 		}
 	}
-
 	for i, equipmentName := range equipmentSlice {
-		Txt.Clear()
-		Txt.Color = colornames.White
-		fmt.Fprintln(Txt, equipmentName)
-		yOffSet -= Txt.LineHeight + 25
-		txtPos = pixel.V(xOffSet, yOffSet)
-		tempPosition := pixel.IM.Moved(txtPos)
-		Txt.Draw(win, tempPosition)
-		equipmentButtonSlice = append(equipmentButtonSlice, Txt.Bounds().Moved(txtPos))
-
 		if player.EquipmentAccessory[0] == accessoryName[i] {
-			Txt.Clear()
-			fmt.Fprintln(Txt, "E. ")
-			txtPos = pixel.V(xOffSet-40, yOffSet)
-			tempPosition = pixel.IM.Moved(txtPos)
-			Txt.Draw(win, tempPosition)
+			accessoryBelongOptions += "E. "
 		}
+		accessoryBelongOptions += equipmentName + "\n"
+		equipmentButtonSlice = append(equipmentButtonSlice, Txt.Bounds().Moved(pixel.V(0, 0)))
 	}
 	equipmentSlice = equipmentSlice[:0]
+
+	accessoryBelongMessageBox.DrawMessageTxt(accessoryBelongOptions)
 }
 
 func AccessoryBelongClickEvent(win *pixelgl.Window, mousePos pixel.Vec, player *myPlayer.PlayerStatus) {
