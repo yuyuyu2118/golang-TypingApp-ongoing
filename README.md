@@ -4,7 +4,7 @@ TypingRPGは、キーボードで英単語を入力しながらモンスター�
 
 ## インストール方法
 まず、このファイルを解凍します。
-解凍後typingRPG_v1.0.0内のexeファイルを実行することでゲームが開始します。
+解凍後typingRPG_v2.0.0内のexeファイルを実行することでゲームが開始します。
 
 ### 遊び方
 基本的にキーボードのみの操作です。
@@ -64,7 +64,7 @@ github.com/nsf/termbox-go
 TypingRPGは、MITライセンスのもとで公開されています。
 
 ## 著者
-TypingRPGは、[yuyuyu2118]によって開発されました。連絡先は、[sasaryu2118@gmail.com]です。
+TypingRPGは、[yuyuyu2118]によって開発されました。連絡先は、[aiyyy2045@gmail.com]です。
 
 ## クレジット
 TypingRPGに使用されている素材は、以下のサイトから提供されています。
@@ -72,6 +72,3 @@ TypingRPGに使用されている素材は、以下のサイトから提供さ�
 [https://mplus-fonts.osdn.jp/about2.html]
 [https://sushida.net/]
 [https://rosemilktea.booth.pm/]
-
-## TODO
-ちゃんと遊べるように修正して公開
