@@ -35,7 +35,16 @@ TypingRPGは、キーボードで英単語を入力しながらモンスター�
     - この画面でEnterキーを押すと敵の攻撃が開始します。
 - プレイヤーのスキル発動
     - 職業毎に異なるスキルが発生します。
-![battleGif](assets/readmeGif/battleScreen.gif)
+
+### バトルの例
+#### 戦闘はターン制で行われ、プレイヤーは単語を入力して攻撃を行います。
+![rookie](assets/readmeGif/slimeVSrookie.gif)
+
+#### 様々な職業を選択できます。狩人の場合は、単語を装填してからEnterで発射します。更に武器や防具による固有のスキルも存在します。
+![hunter](assets/readmeGif/soldierVSarchar.gif)
+
+#### 魔法使いは魔力をためて大ダメージを狙います。ミスタイプをしたら魔力が解放され、攻撃力が下がります。固有スキルは体力回復効果を持ちます。
+![magic](assets/readmeGif/skullVSmagic.gif)
 
 
 ## 依存関係
