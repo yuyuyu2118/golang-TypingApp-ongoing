@@ -246,7 +246,7 @@ func DescriptionArmor(win *pixelgl.Window, descArmor [][]string, num int, msgBox
 
 	armorDescriptionOptions += "B. 作ってもらう\n"
 
-	if loadContent[3][num-1] == strconv.Itoa(1) {
+	if loadContent[4][num-1] == strconv.Itoa(1) {
 		armorDescriptionOptions += "作成済み\n"
 	} else {
 		armorDescriptionOptions += "\n"
